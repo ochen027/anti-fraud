@@ -1,4 +1,4 @@
 anti-fraud.iml
 .idea/
-src/main/webapp/public/components/
+src/main/resources/static/components/
 target/
