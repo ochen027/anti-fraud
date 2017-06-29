@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-    <title>{{title }}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>AML</title>
+    <meta charset="UTF-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" href="/components/normalize-css/normalize.css"></link>
     <script src="/components/jquery/dist/jquery.js"></script>
     <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css"></link>
     <link rel="stylesheet" href="/components/tether/dist/css/tether.css"></link>
-    <script src="/components/bootstrap/dist/js/bootstrap.js"></script>
-
+    <script src="/components/tether/dist/js/tether.js"></script>
     <script src="/components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/components/angular/angular.js"></script>
     <script src="/components/angular-animate/angular-animate.min.js"></script>
@@ -20,11 +21,14 @@
     <link rel="stylesheet" href="/css/style.css"></link>
     <link rel="stylesheet" href="/components/angular-ui-router-anim-in-out/css/anim-in-out.css"></link>
     <script src="/components/angular-ui-router-anim-in-out/anim-in-out.js"></script>
-
+    <script src="/js/index.js"></script>
 </head>
-<body>
+<body ng-app="AMLapp">
 
-test1
+<div ui-view="header"></div>
+<div ui-view="content" class="anim-in-out anim-fade" data-anim-speed="500"></div>
+<div ui-view="footer"></div>
+
 
 </body>
 </html>
