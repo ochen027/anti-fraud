@@ -4,6 +4,7 @@
 body {
     font-family: Arial, sans-serif;
 }
+
 /****
 end of main
  */
@@ -88,18 +89,17 @@ begin of login page
     outline: none;
     cursor: pointer;
 }
+
 /***
 end of login page
  */
-
-
 
 /***
 begin of footer
  */
 .footer {
     background: #404041;
-    color:#cccccc;
+    color: #cccccc;
     font-size: 12px;
     text-align: center;
     position: fixed;
@@ -108,7 +108,6 @@ begin of footer
     padding: 3px;
 }
 
-
 /****
 end of footer
  */
@@ -116,15 +115,35 @@ end of footer
 /****
 start of header
  */
-
-header .navbar-default {
-    background-color: #f8f8f8;
-    border-color: #e7e7e7;
+header {
+    min-height: 50px;
+    margin-bottom: 20px;
 }
 
-header .navbar-fixed-top {
-    top: 0;
-    border-width: 0 0 1px;
+header .navbar {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+header .dropdown-menu {
+    margin-top: 10px;
+    border-top-width: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+header .navbar-brand img {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+header .navbar-nav .nav-item{
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+}
+
+header .navbar-nav .active{
+    border-bottom-color: #000000;
 }
 
 /***
