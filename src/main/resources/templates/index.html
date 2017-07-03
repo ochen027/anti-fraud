@@ -22,12 +22,14 @@
     <link rel="stylesheet" href="/components/angular-ui-router-anim-in-out/css/anim-in-out.css"></link>
     <script src="/components/angular-ui-router-anim-in-out/anim-in-out.js"></script>
     <script src="/js/index.js"></script>
+    <script src="/js/authModule.js"></script>
+    <script src="/js/alertModule.js"></script>
 </head>
 <body ng-app="AMLapp">
 
-<div ui-view="header"></div>
+<div ui-view="header" class="anim-in-out anim-fade" data-anim-speed="500"></div>
 <div ui-view="content" class="anim-in-out anim-fade" data-anim-speed="500"></div>
-<div ui-view="footer"></div>
+<div ui-view="footer" class="anim-in-out anim-fade" data-anim-speed="500"></div>
 
 
 </body>

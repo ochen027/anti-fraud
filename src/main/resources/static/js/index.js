@@ -49,10 +49,3 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
 });
 
-app.controller('LoginCtrl', function ($scope, $http, $location, $state) {
-
-});
-
-app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state) {
-
-});
