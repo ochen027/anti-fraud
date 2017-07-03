@@ -2,7 +2,7 @@ let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
-    let dashboard={
+    let dashboard = {
         name: 'dashboard',
         url: '/dashboard',
         views: {
@@ -71,13 +71,56 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
 
     $timeout(function () {
-        $scope.user = {name: "default user"};
+        $scope.user = {name: "Default User"};
+        $scope.activeMenu="dashboard";
         $scope.menu = {
-            dashboard:{
-                name:"Dashboard",
-                url:"/#!/dashboard",
+            dashboard: {
+                name: "Dashboard",
+                url: "/#!/dashboard",
             },
-            alert: {},
+            alert: {
+                name: "Alerts",
+                children: [{
+                    name: "My Alerts",
+                    url: "/#!/alert/my_alerts",
+                }, {
+                    name: "Available Alerts",
+                    url: "/#!/alert/available_alerts",
+                }]
+            },
+            query: {
+                name: "Query",
+                children: [{
+                    name: "My Alerts",
+                    url: "/#!/alert/my_alerts",
+                }, {
+                    name: "Available Alerts",
+                    url: "/#!/alert/available_alerts",
+                }]
+            },
+            query: {
+                name: "Query",
+                children: [{
+                    name: "My Alerts",
+                    url: "/#!/alert/my_alerts",
+                }, {
+                    name: "Available Alerts",
+                    url: "/#!/alert/available_alerts",
+                }]
+            },
+            reports: {
+                name: "Reports",
+                children: [{
+                    name: "My Alerts",
+                    url: "/#!/alert/my_alerts",
+                }, {
+                    name: "Available Alerts",
+                    url: "/#!/alert/available_alerts",
+                }]
+            },
         }
+
+
+
     });
 });
