@@ -1,4 +1,4 @@
-package com.pwc.aml.controller;
+package com.pwc.aml.webApp;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
