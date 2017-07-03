@@ -1,8 +1,12 @@
-
+/***
+ main css setting
+ */
 body {
-
+    font-family: Arial, sans-serif;
 }
-
+/****
+end of main
+ */
 
 /**
 begin of login page
@@ -93,9 +97,36 @@ end of login page
 /***
 begin of footer
  */
-
+.footer {
+    background: #404041;
+    color:#cccccc;
+    font-size: 12px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 3px;
+}
 
 
 /****
 end of footer
+ */
+
+/****
+start of header
+ */
+
+header .navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+}
+
+header .navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+}
+
+/***
+end of header
  */
