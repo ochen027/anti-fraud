@@ -55,5 +55,6 @@ app.controller('HeaderCtrl', function ($scope, $http, $location, $state,$timeout
 
     $timeout(function(){
         $scope.user={name:"default user"};
+
     });
 });

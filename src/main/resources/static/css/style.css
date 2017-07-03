@@ -137,14 +137,26 @@ header .navbar-brand img {
 }
 
 header .navbar-nav .nav-item{
-    border-bottom-width: 3px;
+    border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: transparent;
+    cursor: pointer;
+}
+
+header .navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.7);
 }
 
 header .navbar-nav .active{
-    border-bottom-color: #000000;
+    color: rgba(0, 0, 0, 0.7);
+    border-bottom-color: #FF7F24;
 }
+
+header .navbar-light .navbar-nav .nav-item:hover{
+    color: rgba(0, 0, 0, 0.9);
+}
+
+
 
 /***
 end of header
