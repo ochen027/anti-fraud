@@ -1,41 +1,58 @@
-
 let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
-    let loginState = {
-        name: 'login',
-        url: '/login',
-        views:{
-            content:{
-                templateUrl:'/login'
+app.config(function ($stateProvider, $urlRouterProvider) {
+
+    let authModule = [
+        {
+            name: 'login',
+            url: '/login',
+            views: {
+                content: {
+                    templateUrl: '/login'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
             },
-        },
-        controller: 'LoginCtrl'
+            controller: 'LoginCtrl'
+        }
+    ];
+
+    for(var i = 0, len = authModule.length; i < len; i++){
+        $stateProvider.state(authModule[i]);
     }
 
-    let homeState = {
-        name: 'home',
-        url: '/home',
-        views:{
-            header:{
-                templateUrl:'/header'
+    let alertModule = [
+        {
+            name: "available",
+            url: "/alert/available",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/available'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
             },
-            content:{
-                templateUrl:'/home'
-            },
-            footer:{
-                templateUrl:'/footer',
-            }
-        },
-        controller: 'HomeCtrl'
-    }
+            controller: 'AvailableAlertCtrl'
+        }
+    ]
 
-    $stateProvider.state(loginState);
-    //$stateProvider.state(homeState);
+
+    for(var i = 0, len = alertModule.length; i < len; i++){
+        $stateProvider.state(alertModule[i]);
+    }
 
     $urlRouterProvider.otherwise('/login');
 });
 
-app.controller('LoginCtrl', function ($scope, $http,$location,$state) {
+app.controller('LoginCtrl', function ($scope, $http, $location, $state) {
+
+});
+
+app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state) {
 
 });

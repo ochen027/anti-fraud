@@ -1,9 +1,12 @@
 
-
 body {
 
 }
 
+
+/**
+begin of login page
+ */
 .logo {
     width: 213px;
     height: 36px;
@@ -81,3 +84,18 @@ body {
     outline: none;
     cursor: pointer;
 }
+/***
+end of login page
+ */
+
+
+
+/***
+begin of footer
+ */
+
+
+
+/****
+end of footer
+ */
