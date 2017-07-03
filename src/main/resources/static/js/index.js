@@ -2,6 +2,24 @@ let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
+    let dashboard={
+        name: 'dashboard',
+        url: '/dashboard',
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/dashboard'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'DashboardCtrl'
+    }
+    $stateProvider.state(dashboard);
+
     let authModule = [
         {
             name: 'login',
@@ -18,7 +36,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     ];
 
-    for(var i = 0, len = authModule.length; i < len; i++){
+    for (var i = 0, len = authModule.length; i < len; i++) {
         $stateProvider.state(authModule[i]);
     }
 
@@ -42,7 +60,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     ]
 
 
-    for(var i = 0, len = alertModule.length; i < len; i++){
+    for (var i = 0, len = alertModule.length; i < len; i++) {
         $stateProvider.state(alertModule[i]);
     }
 
@@ -50,11 +68,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
+app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
 
-app.controller('HeaderCtrl', function ($scope, $http, $location, $state,$timeout) {
-
-    $timeout(function(){
-        $scope.user={name:"default user"};
-
+    $timeout(function () {
+        $scope.user = {name: "default user"};
+        $scope.menu = {
+            dashboard:{
+                name:"Dashboard",
+                url:"/#!/dashboard",
+            },
+            alert: {},
+        }
     });
 });
