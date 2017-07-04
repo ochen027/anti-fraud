@@ -12,15 +12,19 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
 
-                <li ng-repeat="(key, value) in menu" class="nav-item" id="navbar_{{key}}_link">
-                    <a class="nav-link" ng-href="{{value.url}}">{{value.name}}
-                        <i ng-show="value.children" class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+
+                <li ng-repeat="(key, value) in menu" class="nav-item" >
+                    <a ng-if="value.children" class="nav-link dropdown-toggle" id="navbar_{{key}}_link" ng-href="{{value.url}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{value.name}}
+
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
+                    <div ng-if="value.children"  class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
                         <a class="dropdown-item" ng-repeat="(k,v) in value.children" ng-href="{{v.url}}">{{v.name}}</a>
                     </div>
-                </li>
 
+                    <a ng-if="!value.children" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.url}}">{{value.name}}
+
+                    </a>
+                </li>
             </ul>
             <div class="navbar-text">
                 {{user.name}} | logout

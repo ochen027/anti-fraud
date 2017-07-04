@@ -1,4 +1,4 @@
-let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out','ui.bootstrap']);
+let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out', 'ui.bootstrap']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -71,54 +71,45 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
 
 
-        $scope.user = {name: "Default User"};
-        $scope.activeMenu="dashboard";
-        $scope.menu = {
-            dashboard: {
-                name: "Dashboard",
-                url: "/#!/dashboard",
-            },
-            alert: {
-                name: "Alerts",
-                children: [{
-                    name: "My Alerts",
-                    url: "/#!/alert/my_alerts",
-                }, {
-                    name: "Available Alerts",
-                    url: "/#!/alert/available_alerts",
-                }]
-            },
-            query: {
-                name: "Query",
-                children: [{
-                    name: "My Alerts",
-                    url: "/#!/alert/my_alerts",
-                }, {
-                    name: "Available Alerts",
-                    url: "/#!/alert/available_alerts",
-                }]
-            },
-            query: {
-                name: "Query",
-                children: [{
-                    name: "My Alerts",
-                    url: "/#!/alert/my_alerts",
-                }, {
-                    name: "Available Alerts",
-                    url: "/#!/alert/available_alerts",
-                }]
-            },
-            reports: {
-                name: "Reports",
-                children: [{
-                    name: "My Alerts",
-                    url: "/#!/alert/my_alerts",
-                }, {
-                    name: "Available Alerts",
-                    url: "/#!/alert/available_alerts",
-                }]
-            },
-        }
+    $scope.user = {name: "Default User"};
+    $scope.activeMenu = "dashboard";
+    $scope.menu = {
+        dashboard: {
+            name: "Dashboard",
+            url: "/#!/dashboard",
+        },
+        alert: {
+            name: "Alerts",
+            children: [{
+                name: "My Alerts",
+                url: "/#!/alert/my_alerts",
+            }, {
+                name: "Available Alerts",
+                url: "/#!/alert/available_alerts",
+            }]
+        },
+        query: {
+            name: "Query",
+            children: [{
+                name: "My Query",
+                url: "/#!/alert/my_alerts",
+            }, {
+                name: "Available Query",
+                url: "/#!/alert/available_alerts",
+            }]
+        },
+        reports: {
+            name: "Reports",
+            children: [{
+                name: "My Reports",
+                url: "/#!/alert/my_alerts",
+            }, {
+                name: "Available Reports",
+                url: "/#!/alert/available_alerts",
+            }]
+        },
+    }
+
 
 });
 
