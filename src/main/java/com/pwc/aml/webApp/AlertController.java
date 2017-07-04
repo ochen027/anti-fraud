@@ -50,6 +50,13 @@ public class AlertController {
     }
 
 
+    @RequestMapping("/create")
+    public String create(Model model) {
+        return "alert/create";
+    }
+
+
+
 }
 
 
