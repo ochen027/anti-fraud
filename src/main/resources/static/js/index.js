@@ -74,6 +74,70 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'MyAlertCtrl'
         },
         {
+            name: "myAlertInfo",
+            url: "/alert/myAlertInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/myAlertInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'MyAlertInfoCtrl'
+        },
+        {
+            name: "availableAlertInfo",
+            url: "/alert/availableAlertInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/availableAlertInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'AvailableAlertInfoCtrl'
+        },
+        {
+            name: "suppressedAlertInfo",
+            url: "/alert/suppressedAlertInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/suppressedAlertInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'SuppressedAlertInfoCtrl'
+        },
+        {
+            name: "closedAlertInfo",
+            url: "/alert/closedAlertInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/closedAlertInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'ClosedAlertInfoCtrl'
+        },
+        {
             name: "suppressedAlert",
             url: "/alert/suppress",
             views: {

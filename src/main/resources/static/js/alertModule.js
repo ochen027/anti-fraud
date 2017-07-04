@@ -22,3 +22,19 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
+
+});
+
+app.controller('AvailableAlertInfoCtrl', function ($scope, $http, $location, $state) {
+
+});
+
+app.controller('SuppressedAlertInfoCtrl', function ($scope, $http, $location, $state) {
+
+});
+
+app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state) {
+
+});
+
