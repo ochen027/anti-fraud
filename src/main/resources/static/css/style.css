@@ -5,6 +5,13 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.btn-default {
+    cursor: pointer;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
 /****
 end of main
  */
@@ -137,7 +144,7 @@ header .navbar-brand img {
     margin-left: 20px;
 }
 
-header .navbar-nav .nav-item{
+header .navbar-nav .nav-item {
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: transparent;
@@ -148,16 +155,14 @@ header .navbar-light .navbar-nav .nav-link {
     color: rgba(0, 0, 0, 0.7);
 }
 
-header .navbar-nav .active{
+header .navbar-nav .active {
     color: rgba(0, 0, 0, 0.7);
     border-bottom-color: #FF7F24;
 }
 
-header .navbar-light .navbar-nav .nav-item:hover{
+header .navbar-light .navbar-nav .nav-item:hover {
     color: rgba(0, 0, 0, 0.9);
 }
-
-
 
 /***
 end of header
