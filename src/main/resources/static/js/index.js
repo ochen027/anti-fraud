@@ -1,4 +1,4 @@
-let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out']);
+let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out','ui.bootstrap']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -70,7 +70,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
 
-    $timeout(function () {
+
         $scope.user = {name: "Default User"};
         $scope.activeMenu="dashboard";
         $scope.menu = {
@@ -120,7 +120,7 @@ app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeou
             },
         }
 
-
-
-    });
 });
+
+
+

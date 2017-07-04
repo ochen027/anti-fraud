@@ -1,7 +1,12 @@
-/**
- * Created by whuang072 on 7/3/2017.
- */
-app.controller('LoginCtrl', function ($scope, $http, $location, $state) {
+app.controller('LoginCtrl', function ($scope,$state, $http, $location, $timeout) {
 
+
+    $scope.user = {username: "test1"};
+
+    $scope.doLogin = function () {
+
+        console.log("test");
+        $state.go("dashboard");
+    }
 });
 

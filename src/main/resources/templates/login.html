@@ -1,9 +1,9 @@
-<div app-controller="LoginCtrl">
+<div ng-controller="LoginCtrl">
     <div class="logo"></div>
     <div class="login-block">
         <h1>Login</h1>
-        <input type="text" value="" placeholder="Username" id="username"/>
+        <input type="text" ng-model="user.username" value="" placeholder="Username" id="username"/>
         <input type="password" value="" placeholder="Password" id="password"/>
-        <button>Submit</button>
+        <button ng-click="doLogin()">Submit</button>
     </div>
 </div>
