@@ -56,6 +56,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             },
             controller: 'AvailableAlertCtrl'
+        },
+        {
+            name: "myAlert",
+            url: "/alert/myAlert",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/myAlert'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'MyAlertCtrl'
         }
     ]
 
@@ -82,7 +98,7 @@ app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeou
             name: "Alerts",
             children: [{
                 name: "My Alerts",
-                url: "/#!/alert/my_alerts",
+                url: "/#!/alert/myAlert",
             }, {
                 name: "Available Alerts",
                 url: "/#!/alert/available_alerts",

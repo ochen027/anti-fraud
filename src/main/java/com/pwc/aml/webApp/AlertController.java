@@ -12,6 +12,10 @@ public class AlertController {
         return "alert/available";
     }
 
+    @RequestMapping("/myAlert")
+    public String myAlert(Model model) {
+        return "alert/my_alerts";
+    }
 
 
 }

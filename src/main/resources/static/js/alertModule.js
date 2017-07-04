@@ -4,3 +4,10 @@
 app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
+
+
+
+app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
+
+});
+
