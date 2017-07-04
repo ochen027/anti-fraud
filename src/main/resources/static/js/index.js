@@ -72,6 +72,38 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             },
             controller: 'MyAlertCtrl'
+        },
+        {
+            name: "suppressedAlert",
+            url: "/alert/suppress",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/suppress'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'SuppressedAlertCtrl'
+        },
+        {
+            name: "closedAlert",
+            url: "/alert/closed",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/alert/closed'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'ClosedAlertCtrl'
         }
     ]
 
@@ -101,8 +133,15 @@ app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeou
                 url: "/#!/alert/myAlert",
             }, {
                 name: "Available Alerts",
-                url: "/#!/alert/available_alerts",
-            }]
+                url: "/#!/alert/available",
+            }, {
+                name: "Suppressed Alerts",
+                url: "/#!/alert/suppress",
+            }, {
+                name: "Closed Alerts",
+                url: "/#!/alert/closed",
+            }
+            ]
         },
         query: {
             name: "Query",
