@@ -1,19 +1,19 @@
-package com.pwc.aml.hbase.dao.imp;
+package com.pwc.aml.transation.dao.imp;
 
 /**
  * Created by aliu323 on 6/30/2017.
  */
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Properties;
 
-import com.pwc.aml.hbase.dao.IHbaseDao;
+import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.CellUtil;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
@@ -25,12 +25,70 @@ import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
 public class HbaseDaoImp implements IHbaseDao {
 
 
-    static  final Configuration conf = HBaseConfiguration.create();
+    static final Configuration conf = HBaseConfiguration.create();
+    static Properties pro = new Properties();
+//    public HbaseDaoImp() throws IOException {
+//
+//        FileInputStream fis=new FileInputStream(new File("application.properties"));
+//        this.pro.load(fis);
+//
+//    }
 
-    public  HTable getTable (String name) throws Exception{
+
+    public void deleteTable(String tableName) throws IOException {
+        HBaseAdmin admin = new HBaseAdmin(conf);
+        admin.disableTable(tableName);
+        admin.deleteTable(tableName);
+        System.out.println("Table deleted");
+    }
+
+    public void createTable(String tableName) throws IOException {
+        HBaseAdmin admin = null;
+        try {
+            admin = new HBaseAdmin(conf);
+            HTableDescriptor desc = new HTableDescriptor(TableName.valueOf(tableName));
+            HColumnDescriptor family = new HColumnDescriptor(Bytes.toBytes("cf1"));
+            // 开启列簇 -- store的块缓存
+            family.setBlockCacheEnabled(true);
+            family.setBlocksize(1024 * 1024 * 2);
+            family.setMaxVersions(1);
+            family.setMinVersions(1);
+            desc.addFamily(family);
+
+            //admin.createTable(desc);
+//            byte[][] splitKeys = {
+//                    Bytes.toBytes("100"),
+//                    Bytes.toBytes("200"),
+//                    Bytes.toBytes("300")
+//            };
+//            admin.createTable(desc,splitKeys);
+            admin.createTable(desc);
+
+
+        } catch (MasterNotRunningException e) {
+            e.printStackTrace();
+        } catch (ZooKeeperConnectionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (admin != null)
+                try {
+                    admin.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    public HTable getTable(String name) throws Exception {
 
         //get the hbase table instance
         HTable table = new HTable(conf, name);
@@ -39,14 +97,13 @@ public class HbaseDaoImp implements IHbaseDao {
 
     /**
      * put the data to the hbase table
-     *
+     * <p>
      * put :
-     *         put 'tbname','rowkey','cf:col','value'
-     *
+     * put 'tbname','rowkey','cf:col','value'
      *
      * @throws Exception
      */
-    public  void putData(HTable table,String rowkey,String columnFamily,String column,String value) throws Exception {
+    public void putData(HTable table, String rowkey, String columnFamily, String column, String value) throws Exception {
         //get the put instance
         Put put = new Put(Bytes.toBytes(rowkey));
         //conf the put
@@ -63,25 +120,25 @@ public class HbaseDaoImp implements IHbaseDao {
 
     /**
      * delete the data from the hbase table
-     *
+     * <p>
      * delete :
-     *         delete 'tbname','rowkey','cf:col'
-     *
+     * delete 'tbname','rowkey','cf:col'
      *
      * @throws Exception
      */
-    public  void deleteData(HTable table,String rowkey,String columnFamily,String column) throws Exception {
+    public void deleteData(HTable table, String rowkey, String columnFamily, String column) throws Exception {
         //get the delete instance
         Delete del = new Delete(Bytes.toBytes(rowkey));
         //conf the del
         //del.deleteColumn(Bytes.toBytes("info"),Bytes.toBytes("age"));
         //deleteColumns就是删除所有version
-        del.deleteColumns(Bytes.toBytes(columnFamily),Bytes.toBytes(column));
+        del.deleteColumns(Bytes.toBytes(columnFamily), Bytes.toBytes(column));
         //load the del
         table.delete(del);
     }
+
     //delete by columnFamily
-    public  void deleteByColumnFamily(HTable table,String rowkey,String columnFamily,String column) throws Exception {
+    public void deleteByColumnFamily(HTable table, String rowkey, String columnFamily) throws Exception {
         //get the delete instance
         Delete del = new Delete(Bytes.toBytes(rowkey));
         del.deleteFamily(Bytes.toBytes(columnFamily));
@@ -91,13 +148,13 @@ public class HbaseDaoImp implements IHbaseDao {
 
     /**
      * get the data from the hbase table
-     *
+     * <p>
      * get :
-     *         get 'tbname','rowkey','cf:col'
+     * get 'tbname','rowkey','cf:col'
      *
      * @throws Exception
      */
-    public  Cell[]  getData(HTable table,String rowKey,String columnFamily) throws Exception {
+    public Cell[] getData(HTable table, String rowKey, String columnFamily) throws Exception {
         // TODO Auto-generated method stub
         Get get = new Get(Bytes.toBytes(rowKey));
         //conf the get
@@ -107,32 +164,33 @@ public class HbaseDaoImp implements IHbaseDao {
         //load the get
         Result rs = table.get(get);
         //print the data
-        Cell[] cells=rs.rawCells();
+        Cell[] cells = rs.rawCells();
         return cells;
     }
+
 
 
 
     /**
      * scan the all table
      * scan :
-     *         scan 'tbname'
+     * scan 'tbname'
      */
     public static void scanData(HTable table) throws Exception {
         //get the scan instance
         Scan scan = new Scan();
         //load the scan
         ResultScanner rsscan = table.getScanner(scan);
-        for(Result rs : rsscan){
+        for (Result rs : rsscan) {
             System.out.println(Bytes.toString(rs.getRow()));
-            for(Cell cell : rs.rawCells()){
+            for (Cell cell : rs.rawCells()) {
                 System.out.println(
                         Bytes.toString(CellUtil.cloneFamily(cell))
-                                +"->"+
+                                + "->" +
                                 Bytes.toString(CellUtil.cloneQualifier(cell))
-                                +"->"+
+                                + "->" +
                                 Bytes.toString(CellUtil.cloneValue(cell))
-                                +"->"+
+                                + "->" +
                                 cell.getTimestamp()
                 );
             }
@@ -141,27 +199,27 @@ public class HbaseDaoImp implements IHbaseDao {
     }
 
     //pringt cells
-    public static void pirntCells(Cell[] cells)
-        {
+    public static void pirntCells(Cell[] cells) {
         //rs.cells（）获得cells数组
-        for(Cell cell : cells){
+        for (Cell cell : cells) {
             System.out.println(
                     //用cellUtil来获取cell的值
                     Bytes.toString(CellUtil.cloneFamily(cell))
-                            +"->"+
+                            + "->" +
                             Bytes.toString(CellUtil.cloneQualifier(cell))
-                            +"->"+
+                            + "->" +
                             Bytes.toString(CellUtil.cloneValue(cell))
-                            +"->"+
+                            + "->" +
                             cell.getTimestamp()
             );
             System.out.println("------------------------------");
         }
     }
+
     /**
      * scan the table  with limit
-     *      * scan :
-     *         scan 'tbname',{STARTROW => 'row1',STOPROW => 'row2'}
+     * * scan :
+     * scan 'tbname',{STARTROW => 'row1',STOPROW => 'row2'}
      */
     public static void rangeData(HTable table) throws Exception {
         //get the scan instance
@@ -184,16 +242,16 @@ public class HbaseDaoImp implements IHbaseDao {
 
         //load the scan
         ResultScanner rsscan = table.getScanner(scan);
-        for(Result rs : rsscan){
+        for (Result rs : rsscan) {
             System.out.println(Bytes.toString(rs.getRow()));
-            for(Cell cell : rs.rawCells()){
+            for (Cell cell : rs.rawCells()) {
                 System.out.println(
                         Bytes.toString(CellUtil.cloneFamily(cell))
-                                +"->"+
+                                + "->" +
                                 Bytes.toString(CellUtil.cloneQualifier(cell))
-                                +"->"+
+                                + "->" +
                                 Bytes.toString(CellUtil.cloneValue(cell))
-                                +"->"+
+                                + "->" +
                                 cell.getTimestamp()
                 );
             }
@@ -201,32 +259,33 @@ public class HbaseDaoImp implements IHbaseDao {
         }
     }
 
-    public static List<String> listTable() {
-        try {
-            HBaseAdmin admin = new HBaseAdmin(conf);
-            TableName[] tableNames = admin.listTableNames();
-            List<String> tblArr = new ArrayList<String>();
-            for (int i = 0; i < tableNames.length; i++) {
-                tblArr.add(tableNames[i].getNameAsString());
-                System.out.println("Table: " + tableNames[i].getNameAsString());
-            }
-            return tblArr;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    public void importTsv() {
 
+        RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop",
+                "Welcome1", "utf-8");
+
+
+        String result = tool.exec("./../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/TRANS");
+        System.out.print(result);
+
+
+    }
 
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
-        HbaseDaoImp hdao=new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:trans");
-//       Cell[] cells= (table,"900000000021","f1");
+        HbaseDaoImp hdao = new HbaseDaoImp();
+//        HTable table = hdao.getTable("aml:trans");
+//        Cell[] cells= (table,"900000000021","f1");
 //        pirntCells(cells);
         //putData(table);
         //deleteData(table);
 //        scanData(table);
-        rangeData(table);
+//        rangeData(table);
+//        String proStr=pro.getProperty( "spring.jpa.generate-ddl");
+//
+//        System.out.println(proStr);
+//          hdao.importTsv();
+        hdao.createTable("aml:trans");
     }
+
 }
