@@ -54,7 +54,7 @@ public class HbaseDaoImp implements IHbaseDao {
         try {
             admin = new HBaseAdmin(conf);
             HTableDescriptor desc = new HTableDescriptor(TableName.valueOf(tableName));
-            HColumnDescriptor family = new HColumnDescriptor(Bytes.toBytes("cf1"));
+            HColumnDescriptor family = new HColumnDescriptor(Bytes.toBytes("f1"));
             // 开启列簇 -- store的块缓存
             family.setBlockCacheEnabled(true);
             family.setBlocksize(1024 * 1024 * 2);
@@ -274,7 +274,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-//        HTable table = hdao.getTable("aml:trans");
+        HTable table = hdao.getTable("aml:trans");
 //        Cell[] cells= (table,"900000000021","f1");
 //        pirntCells(cells);
         //putData(table);
@@ -285,7 +285,9 @@ public class HbaseDaoImp implements IHbaseDao {
 //
 //        System.out.println(proStr);
 //          hdao.importTsv();
-        hdao.createTable("aml:trans");
+        hdao.scanData(table);
+//        hdao.deleteTable("aml:trans");
+//        hdao.createTable("aml:trans");
     }
 
 }

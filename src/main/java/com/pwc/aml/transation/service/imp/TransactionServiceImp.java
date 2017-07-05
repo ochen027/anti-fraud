@@ -42,7 +42,8 @@ public class TransactionServiceImp implements ITransactionService {
 
     @Override
     public Cell[] getData(String table, String rowKey, String columnFamily) throws Exception {
-        return new Cell[0];
+        HTable hTable=hbaseDaoImp.getTable(table);
+        return hbaseDaoImp.getData(hTable,rowKey,columnFamily);
     }
 
     @Override
