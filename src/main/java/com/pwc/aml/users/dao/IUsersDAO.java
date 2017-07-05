@@ -10,9 +10,9 @@ public interface IUsersDAO {
 
     public Users checkUserName(Users users);
 
-    public List<UserGroupRoleBean> fetchUserGroups(int userId);
+    public List fetchUserGroups(int userId);
 
-    public List<UserGroupRoleBean> fetchGroupRoles(int groupId);
+    public List fetchGroupRoles(int groupId);
 
     public void addNewUser(Users users);
 
