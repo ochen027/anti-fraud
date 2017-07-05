@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IMenusDAO {
 
-    public List listUserRootMenus(int userId);
+    public List<Menus> listUserRootMenus(int userId);
 
-    public List listUserChildMenus(int menuId);
+    public List<Menus> listUserChildMenus(int menuId);
 }
