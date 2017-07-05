@@ -32,3 +32,25 @@ insert into grouprole values(1, 2);
 insert into grouprole values(3, 2);
 insert into grouprole values(2, 1);
 insert into grouprole values(4, 1);
+
+--initial menu table
+insert into menus values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu1', NULL, '/m1.jsp');
+insert into menus values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu2', NULL, '/m2.jsp');
+insert into menus values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu3', NULL, '/m3.jsp');
+insert into menus values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu4', NULL, '/m4.jsp');
+insert into menus values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu5', NULL, '/m5.jsp');
+insert into menus values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu1-1', 1, '/m1-1.jsp');
+insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu1-2', 1, '/m1-2.jsp');
+insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu1-3', 1, '/m1-3.jsp');
+insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu1-4', 1, '/m1-4.jsp');
+insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu2-1', 2, '/m2-1.jsp');
+insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu3-1', 3, '/m3-1.jsp');
+insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu4-1', 4, '/m4-1.jsp');
+
+--initial role menu table
+insert into rolemenu values (1, 1);
+insert into rolemenu values (2, 1);
+insert into rolemenu values (6, 1);
+insert into rolemenu values (7, 1);
+insert into rolemenu values (8, 1);
+insert into rolemenu values (10, 2);
