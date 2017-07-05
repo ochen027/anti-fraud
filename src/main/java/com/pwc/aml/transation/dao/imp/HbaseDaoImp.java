@@ -167,6 +167,20 @@ public class HbaseDaoImp implements IHbaseDao {
         Cell[] cells = rs.rawCells();
         return cells;
     }
+//    public Cell getData(HTable table, String rowKey, String columnFamily,String column) throws Exception {
+//        // TODO Auto-generated method stub
+//        Get get = new Get(Bytes.toBytes(rowKey));
+//        //conf the get
+//        //get.addColumn(Bytes.toBytes("info"), Bytes.toBytes("name"));
+//
+//        get.addFamily(Bytes.toBytes(columnFamily));
+//        get.addColumn(Bytes.toBytes( " "));
+//        //load the get
+//        Result rs = table.get(get);
+//        //print the data
+//        rs.r
+//        return Cell;
+//    }
 
 
 

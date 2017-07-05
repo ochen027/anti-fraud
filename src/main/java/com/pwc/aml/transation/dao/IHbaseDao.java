@@ -14,6 +14,7 @@ public interface IHbaseDao {
     public  void deleteData(HTable table,String rowkey,String columnFamily,String column) throws Exception;
     public  void deleteByColumnFamily(HTable table,String rowkey,String columnFamily) throws Exception ;
     public  Cell[]  getData(HTable table,String rowKey,String columnFamily) throws Exception;
+//    public  Cell getData(HTable table,String rowKey,String columnFamily,String column) throws Exception;
     public void createTable(String tableName) throws IOException;
     public void deleteTable(String tableName) throws IOException;
 
