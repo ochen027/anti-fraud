@@ -3,11 +3,17 @@ package com.pwc.aml.transation.service.imp;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.service.ITransactionService;
 import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by aliu323 on 7/4/2017.
@@ -15,7 +21,7 @@ import java.io.IOException;
 @Service
 public class TransactionServiceImp implements ITransactionService {
     @Autowired
-    IHbaseDao hbaseDaoImp;
+    private IHbaseDao hbaseDaoImp;
     @Override
     public void truncateTable(String tableName) throws IOException {
         hbaseDaoImp.deleteTable(tableName);
@@ -41,9 +47,15 @@ public class TransactionServiceImp implements ITransactionService {
     }
 
     @Override
-    public Cell[] getData(String table, String rowKey, String columnFamily) throws Exception {
+    public Map<String, String> getData(String table, String rowKey, String columnFamily) throws Exception {
         HTable hTable=hbaseDaoImp.getTable(table);
-        return hbaseDaoImp.getData(hTable,rowKey,columnFamily);
+        Cell[] cells= hbaseDaoImp.getData(hTable,rowKey,columnFamily);
+        Map<String,String> map=new HashMap<String,String>();
+        for (Cell cell : cells) {
+            map.put(Bytes.toString(CellUtil.cloneQualifier(cell)),Bytes.toString(CellUtil.cloneValue(cell)));
+
+        }
+        return map;
     }
 
     @Override
@@ -56,4 +68,5 @@ public class TransactionServiceImp implements ITransactionService {
     public void deleteTable(String tableName) throws IOException {
         hbaseDaoImp.deleteTable(tableName);
     }
+
 }
