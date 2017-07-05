@@ -1,4 +1,4 @@
-package com.pwc.aml.menus.dao;
+package com.pwc.aml.menus.entity;
 
 import com.pwc.aml.entity.BaseEntity;
 import com.pwc.aml.roles.entity.Roles;
@@ -26,6 +26,8 @@ public class Menus extends BaseEntity{
     private String menuICO;
     @Column(name="MENU_PARENTID")
     private int menuParentId;
+    @Transient
+    private List<Menus> childList;
 
 
     @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.MERGE})
@@ -88,5 +90,13 @@ public class Menus extends BaseEntity{
 
     public void setlRoles(List<Roles> lRoles) {
         this.lRoles = lRoles;
+    }
+
+    public List<Menus> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<Menus> childList) {
+        this.childList = childList;
     }
 }
