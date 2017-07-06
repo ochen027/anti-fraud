@@ -3,7 +3,6 @@ package com.pwc.aml.users.service;
 import com.pwc.aml.groups.entity.Groups;
 import com.pwc.aml.roles.entity.Roles;
 import com.pwc.aml.users.dao.IUsersDAO;
-import com.pwc.aml.users.entity.UserGroupRoleBean;
 import com.pwc.aml.users.entity.Users;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +51,31 @@ public class UsersService implements IUsersService {
         }
         return rList;
     }
+
+	@Override
+	public List<Users> listAllUsers() {
+		return usersDAO.listAllUsers();
+	}
+
+	@Override
+	public void createUser(Users u) {
+		usersDAO.addNewUser(u);
+	}
+
+	@Override
+	public void updateUser(Users u) {
+		usersDAO.updateUser(u);
+	}
+
+	@Override
+	public void deleteUser(int userId) {
+		usersDAO.deleteUser(userId);
+	}
+
+	@Override
+	public Users findSingleUser(int userId) {
+		return usersDAO.findUserByUserId(userId);
+	}
 
 
 

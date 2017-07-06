@@ -1,15 +1,12 @@
 package com.pwc.aml.users.dao;
 
-import com.pwc.aml.users.entity.UserGroupRoleBean;
 import com.pwc.aml.users.entity.Users;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ochen027 on 7/3/2017.
@@ -49,20 +46,33 @@ public class UsersDAO implements  IUsersDAO{
 
     @Override
     public void addNewUser(Users users) {
+    	entityManager.persist(users);
     }
 
     @Override
-    public void deleteUser(String userId) {
+    public void deleteUser(int userId) {
+    	entityManager.remove(this.findUserByUserId(userId));
     }
 
     @Override
     public void updateUser(Users users) {
+    	Users u = this.findUserByUserId(users.getUserId());
+    	u.setUserName(users.getUserName());
+    	u.setUserPwd(users.getUserPwd());
+    	entityManager.flush();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Users> listAllUsers() {
-        return new ArrayList<Users>();
+    	String hql = "FROM USERS as u ORDER BY u.userId";
+        return (List<Users>) entityManager.createQuery(hql).getResultList();
     }
+
+	@Override
+	public Users findUserByUserId(int userId) {
+		return entityManager.find(Users.class, userId);
+	}
 
 
 }
