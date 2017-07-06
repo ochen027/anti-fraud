@@ -19,11 +19,17 @@ public class UsersDAO implements  IUsersDAO{
 
     @Override
     public Users checkUserName(Users users) {
-        String hql = "FROM Users as users WHERE users.userName = ? and users.status = 1";
-        List uList = entityManager.createQuery(hql).setParameter(1, users.getUserName()).getResultList();
+        String sql = "SELECT USER_ID, USER_NAME, USER_PASSWORD FROM USERS WHERE USER_NAME = ? and STATUS = 1";
+        List uList = entityManager.createNativeQuery(sql).setParameter(1, users.getUserName()).getResultList();
         Users u = null;
-        if(1 == uList.size()){
-            u = (Users)uList.get(0);
+        if(uList.size() == 1){
+        	for(Object o: uList){
+            	Object[] obj = (Object[])o;
+            	u = new Users();
+            	u.setUserId(obj[0]==null ? 0 : (Integer)obj[0]);
+            	u.setUserName((String)obj[1]);
+            	u.setUserPwd((String)obj[2]);
+            }
         }
         return u;
     }
