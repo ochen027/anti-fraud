@@ -23,7 +23,7 @@ public class TransactionController {
     private ITransactionService transactionServiceImp;
 
     @GetMapping("getSingle/{id}")
-    public ResponseEntity<Map<String, String>> getArticleById(@PathVariable("id") String id) throws Exception {
+    public ResponseEntity<Map<String, String>> getSingle(@PathVariable("id") String id) throws Exception {
         Map<String, String> map=transactionServiceImp.getData("aml:trans",id,"f1");
         return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
     }
