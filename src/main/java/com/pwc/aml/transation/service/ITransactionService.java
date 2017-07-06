@@ -10,11 +10,17 @@ import java.util.Map;
  * Created by aliu323 on 7/4/2017.
  */
 public interface ITransactionService {
-    public void truncateTable(String tableName) throws IOException;
-    public  void putData(String tableName, String rowkey, String columnFamily, String column, String value) throws Exception;
-    public  void deleteData(String tableName,String rowkey,String columnFamily,String column) throws Exception;
-    public  void deleteByColumnFamily(String tableName,String rowkey,String columnFamily,String column) throws Exception ;
-    public Map<String,String> getData(String tableName, String rowKey, String columnFamily) throws Exception;
-    public void createTable(String tableName) throws IOException;
-    public void deleteTable(String tableName) throws IOException;
+    void truncateTable(String tableName) throws IOException;
+
+    void putData(String tableName, String rowkey, String columnFamily, String column, String value) throws Exception;
+
+    void deleteData(String tableName, String rowkey, String columnFamily, String column) throws Exception;
+
+    void deleteByColumnFamily(String tableName, String rowkey, String columnFamily, String column) throws Exception;
+
+    Map<String, String> getData(String tableName, String rowKey, String columnFamily) throws Exception;
+
+    void createTable(String tableName) throws IOException;
+
+    void deleteTable(String tableName) throws IOException;
 }
