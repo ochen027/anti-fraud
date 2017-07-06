@@ -1,18 +1,18 @@
 package com.pwc.aml.users.entity;
 
 import com.pwc.aml.entity.BaseEntity;
-import com.pwc.aml.groups.entity.Groups;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name="USERS")
 public class Users extends BaseEntity {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="USER_ID")
     private int userId;

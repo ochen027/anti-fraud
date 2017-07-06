@@ -1,6 +1,8 @@
 package com.pwc.aml.users.controller;
 
 import com.pwc.aml.groups.entity.Groups;
+import com.pwc.aml.menus.entity.Menus;
+import com.pwc.aml.menus.service.IMenusService;
 import com.pwc.aml.roles.entity.Roles;
 import com.pwc.aml.users.entity.Users;
 import com.pwc.aml.users.service.IUsersService;
@@ -19,6 +21,9 @@ import java.util.*;
 public class UsersController {
     @Autowired
     private IUsersService usersService;
+    
+    @Autowired
+    private IMenusService menusService;
 
     @PostMapping("loginUser")
     public ResponseEntity<Map<String, Object>> LoginUser(@RequestBody Users users, HttpSession session) {
@@ -36,10 +41,13 @@ public class UsersController {
                 for(Groups g : gList){
                     rList = usersService.fetchGroupRole(g.getUserGroupId());
                 }
-                Map<String, Object> userInfo = new HashMap<String, Object>(3);
+                
+                List<Menus> menuList = menusService.listUserMenus(userId);
+                Map<String, Object> userInfo = new HashMap<String, Object>(4);
                 userInfo.put("User", u);
                 userInfo.put("Groups", gList);
                 userInfo.put("Roles", rList);
+                userInfo.put("Menus", menuList);
                 session.setAttribute("UserInfo", userInfo);
                 return new ResponseEntity<Map<String, Object>>(userInfo, HttpStatus.OK);
 
