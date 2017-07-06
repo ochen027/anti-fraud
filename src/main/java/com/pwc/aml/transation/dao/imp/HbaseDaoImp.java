@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.jcraft.jsch.JSchException;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
@@ -274,15 +275,14 @@ public class HbaseDaoImp implements IHbaseDao {
     }
 
     public void importTsv() {
-
-        RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop",
-                "Welcome1", "utf-8");
-
-
-        String result = tool.exec("./../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/TRANS");
+        RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop", "Welcome1", 22, "utf-8");
+        String result = null;
+		try {
+			result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/TRANS");
+		} catch (IOException | JSchException e) {
+			e.printStackTrace();
+		}
         System.out.print(result);
-
-
     }
 
     public static void main(String[] args) throws Exception {
