@@ -16,6 +16,15 @@ public interface IUsersService {
     public List<Groups> fetchUserGroup(int userId);
 
     public List<Roles> fetchGroupRole(int groupId);
-
+    
+    public List<Users> listAllUsers();
+    
+    public void createUser(Users u);
+    
+    public void updateUser(Users u);
+    
+    public void deleteUser(int userId);
+    
+    public Users findSingleUser(int userId);
 
 }

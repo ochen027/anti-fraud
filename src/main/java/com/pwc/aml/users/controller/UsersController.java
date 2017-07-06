@@ -1,24 +1,17 @@
 package com.pwc.aml.users.controller;
 
 import com.pwc.aml.groups.entity.Groups;
-import com.pwc.aml.groups.service.IGroupsService;
 import com.pwc.aml.roles.entity.Roles;
-import com.pwc.aml.users.entity.UserGroupRoleBean;
 import com.pwc.aml.users.entity.Users;
 import com.pwc.aml.users.service.IUsersService;
-import jdk.net.SocketFlow;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import java.util.*;
 
 @Controller
@@ -53,4 +46,36 @@ public class UsersController {
             }
         }
     }
+    
+    @GetMapping("getSingleUser/{id}")
+    public ResponseEntity<Users> GetSingleUser(@PathVariable("id") Integer id){
+    	Users u = usersService.findSingleUser(id);
+		return new ResponseEntity<Users>(u, HttpStatus.OK);
+    }
+    
+    @GetMapping("listAllUsers")
+    public ResponseEntity<List<Users>> ListAllUsers(){
+    	List<Users> uList = usersService.listAllUsers();
+    	return new ResponseEntity<List<Users>>(uList, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("deleteUser/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") int id){
+    	usersService.deleteUser(id);
+    	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PutMapping("updateUser")
+    public ResponseEntity<Users> updateUser(@RequestBody Users u){
+    	usersService.updateUser(u);
+    	return new ResponseEntity<Users>(u, HttpStatus.OK);
+    }
+    
+    @PostMapping("createUser")
+    public ResponseEntity<Void> createUser(@RequestBody Users u){
+    	usersService.createUser(u);
+    	return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    
+    
 }
