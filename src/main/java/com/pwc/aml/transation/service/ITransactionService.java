@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by aliu323 on 7/4/2017.
  */
 public interface ITransactionService {
-    void truncateTable(String tableName) throws IOException;
+    void truncateTable() throws IOException;
 
     void putData(String tableName, String rowkey, String columnFamily, String column, String value) throws Exception;
 
@@ -23,4 +23,6 @@ public interface ITransactionService {
     void createTable(String tableName) throws IOException;
 
     void deleteTable(String tableName) throws IOException;
+
+    void importData()throws Exception;
 }

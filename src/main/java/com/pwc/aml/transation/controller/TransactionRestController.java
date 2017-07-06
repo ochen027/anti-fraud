@@ -1,6 +1,6 @@
 package com.pwc.aml.transation.controller;
 
-import com.pwc.aml.entity.Article;
+
 import com.pwc.aml.transation.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,18 @@ public class TransactionRestController {
     public ResponseEntity<Map<String, String>> getSingle(@PathVariable("id") String id) throws Exception {
         Map<String, String> map=transactionServiceImp.getData("aml:trans",id,"f1");
         return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("import")
+    public ResponseEntity<String> getSingle() throws Exception {
+        transactionServiceImp.importData();
+        return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
+    @GetMapping("truncate")
+    public ResponseEntity<String> truncate() throws Exception {
+        transactionServiceImp.truncateTable();
+        return new ResponseEntity<String>("success", HttpStatus.OK);
     }
 
 }

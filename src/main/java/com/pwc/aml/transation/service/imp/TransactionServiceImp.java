@@ -22,37 +22,39 @@ import java.util.Map;
 public class TransactionServiceImp implements ITransactionService {
     @Autowired
     private IHbaseDao hbaseDaoImp;
+    private String tableName="aml:trans";
+
     @Override
-    public void truncateTable(String tableName) throws IOException {
+    public void truncateTable() throws IOException {
         hbaseDaoImp.deleteTable(tableName);
         hbaseDaoImp.createTable(tableName);
     }
 
     @Override
     public void putData(String table, String rowkey, String columnFamily, String column, String value) throws Exception {
-        HTable hTable=hbaseDaoImp.getTable(table);
-        hbaseDaoImp.putData(hTable,rowkey,columnFamily,column,value);
+        HTable hTable = hbaseDaoImp.getTable(table);
+        hbaseDaoImp.putData(hTable, rowkey, columnFamily, column, value);
     }
 
     @Override
     public void deleteData(String table, String rowkey, String columnFamily, String column) throws Exception {
-        HTable hTable=hbaseDaoImp.getTable(table);
-        hbaseDaoImp.deleteData(hTable,rowkey, columnFamily,column);
+        HTable hTable = hbaseDaoImp.getTable(table);
+        hbaseDaoImp.deleteData(hTable, rowkey, columnFamily, column);
     }
 
     @Override
     public void deleteByColumnFamily(String table, String rowkey, String columnFamily, String column) throws Exception {
-        HTable hTable=hbaseDaoImp.getTable(table);
-        hbaseDaoImp.deleteByColumnFamily(hTable,rowkey, columnFamily);
+        HTable hTable = hbaseDaoImp.getTable(table);
+        hbaseDaoImp.deleteByColumnFamily(hTable, rowkey, columnFamily);
     }
 
     @Override
     public Map<String, String> getData(String table, String rowKey, String columnFamily) throws Exception {
-        HTable hTable=hbaseDaoImp.getTable(table);
-        Cell[] cells= hbaseDaoImp.getData(hTable,rowKey,columnFamily);
-        Map<String,String> map=new HashMap<String,String>();
+        HTable hTable = hbaseDaoImp.getTable(table);
+        Cell[] cells = hbaseDaoImp.getData(hTable, rowKey, columnFamily);
+        Map<String, String> map = new HashMap<String, String>();
         for (Cell cell : cells) {
-            map.put(Bytes.toString(CellUtil.cloneQualifier(cell)),Bytes.toString(CellUtil.cloneValue(cell)));
+            map.put(Bytes.toString(CellUtil.cloneQualifier(cell)), Bytes.toString(CellUtil.cloneValue(cell)));
 
         }
         return map;
@@ -67,6 +69,10 @@ public class TransactionServiceImp implements ITransactionService {
     @Override
     public void deleteTable(String tableName) throws IOException {
         hbaseDaoImp.deleteTable(tableName);
+    }
+
+    public void importData() throws Exception {
+        hbaseDaoImp.importTsv();
     }
 
 }
