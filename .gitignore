@@ -2,3 +2,6 @@ anti-fraud.iml
 .idea/
 src/main/resources/static/components/
 target/
+.classpath
+.project
+.settings
