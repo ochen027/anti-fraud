@@ -107,7 +107,7 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
+		
 
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -175,7 +175,14 @@
             <artifactId>ganymed-ssh2</artifactId>
             <version>build210-hudson-1</version>
         </dependency>
-
+		
+		<dependency>
+            <groupId>jdk.tools</groupId>
+            <artifactId>jdk.tools</artifactId>
+            <version>${java.version}</version>
+            <scope>system</scope>
+            <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+		</dependency>
     </dependencies>
 
     <build>
