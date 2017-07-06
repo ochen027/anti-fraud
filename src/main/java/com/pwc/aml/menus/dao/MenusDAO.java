@@ -10,9 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ochen027 on 7/5/2017.
- */
+
 @Transactional
 @Repository
 public class MenusDAO implements IMenusDAO {

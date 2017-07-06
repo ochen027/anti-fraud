@@ -51,7 +51,9 @@ public class ClockTest {
                 "        c.setMinute(0);\n" +
                 "        update(c);\n" +
                 "end";
-
+        
+        System.out.println(clockRule);
+        
         StatefulKnowledgeSession kSession = null;
         try {
             KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();

@@ -6,9 +6,6 @@ import com.pwc.aml.roles.entity.Roles;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by ochen027 on 7/4/2017.
- */
 @Entity
 @Table(name="MENUS")
 public class Menus extends BaseEntity{
