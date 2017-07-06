@@ -14,20 +14,20 @@
 
 
                 <li ng-repeat="(key, value) in menu" class="nav-item" >
-                    <a ng-if="value.children" class="nav-link dropdown-toggle" id="navbar_{{key}}_link" ng-href="{{value.url}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{value.name}}
+                    <a ng-if="value.childList" class="nav-link dropdown-toggle" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{value.menuName}}
 
                     </a>
-                    <div ng-if="value.children"  class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
-                        <a class="dropdown-item" ng-repeat="(k,v) in value.children" ng-href="{{v.url}}">{{v.name}}</a>
+                    <div ng-if="value.childList"  class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
+                        <a class="dropdown-item" ng-repeat="(k,v) in value.childList" ng-href="{{v.menuURL}}">{{v.menuName}}</a>
                     </div>
 
-                    <a ng-if="!value.children" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.url}}">{{value.name}}
+                    <a ng-if="!value.childList" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}">{{value.menuName}}
 
                     </a>
                 </li>
             </ul>
             <div class="navbar-text">
-                {{user.name}} | logout
+                {{user.userName}} | logout
             </div>
         </div>
     </nav>

@@ -1,4 +1,4 @@
-app.controller('LoginCtrl', function ($scope,$state, $http, $location, $timeout) {
+app.controller('LoginCtrl', function ($scope,$state, $http, $location,$cookies,$cookieStore, $timeout) {
     $scope.user = {};
 
     $scope.doLogin = function () {
@@ -11,7 +11,9 @@ app.controller('LoginCtrl', function ($scope,$state, $http, $location, $timeout)
                    return;
             }
 
-            window.$$userInfo=res.data;
+            var dt = new Date();
+            dt.setMinutes(dt.getMinutes() + 30);
+            $cookieStore.put('userInfo', res.data,{ expires: dt });
             $state.go("dashboard");
         });
     }

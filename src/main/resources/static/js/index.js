@@ -1,4 +1,4 @@
-let app = angular.module('AMLapp', ['ngAnimate', 'ui.router', 'anim-in-out', 'ui.bootstrap']);
+let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out', 'ui.bootstrap']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -215,72 +215,75 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
-
-      if(!window.$$userInfo) {
+app.controller('HeaderCtrl', function ($scope, $http, $location,$cookies,$cookieStore, $state, $timeout) {
+    let userInfo=$cookieStore.get('userInfo');
+      if(!userInfo) {
           alert("login expired! please login again!");
           $state.go('login');
           return;
       }
 
-    $scope.user = window.$$userInfo.User;
+
+
+    $scope.user = userInfo.User;
+    $scope.menu=userInfo.Menus;
     //$scope.activeMenu = "dashboard";
-    $scope.menu = {
-        dashboard: {
-            name: "Dashboard",
-            url: "/#!/dashboard",
-        },
-        alert: {
-            name: "Alerts",
-            children: [{
-                name: "My Alerts",
-                url: "/#!/alert/myAlert",
-            }, {
-                name: "Available Alerts",
-                url: "/#!/alert/available",
-            }, {
-                name: "Suppressed Alerts",
-                url: "/#!/alert/suppress",
-            }, {
-                name: "Closed Alerts",
-                url: "/#!/alert/closed",
-            }, {
-                name: "Create Alert",
-                url: "/#!/alert/create",
-            }
-            ]
-        },
-        query: {
-            name: "Query",
-            children: [{
-                name: "My Query",
-                url: "/#!/alert/my_alerts",
-            }, {
-                name: "Available Query",
-                url: "/#!/alert/available_alerts",
-            }]
-        },
-        reports: {
-            name: "Reports",
-            children: [{
-                name: "My Reports",
-                url: "/#!/alert/my_alerts",
-            }, {
-                name: "Available Reports",
-                url: "/#!/alert/available_alerts",
-            }]
-        },
-        scenario: {
-            name: "Scenario",
-            children: [{
-                name: "My Scenario",
-                url: "/#!/alert/my_alerts",
-            }, {
-                name: "Available Scenario",
-                url: "/#!/alert/available_alerts",
-            }]
-        }
-    }
+    // $scope.menu = {
+    //     dashboard: {
+    //         name: "Dashboard",
+    //         url: "/#!/dashboard",
+    //     },
+    //     alert: {
+    //         name: "Alerts",
+    //         children: [{
+    //             name: "My Alerts",
+    //             url: "/#!/alert/myAlert",
+    //         }, {
+    //             name: "Available Alerts",
+    //             url: "/#!/alert/available",
+    //         }, {
+    //             name: "Suppressed Alerts",
+    //             url: "/#!/alert/suppress",
+    //         }, {
+    //             name: "Closed Alerts",
+    //             url: "/#!/alert/closed",
+    //         }, {
+    //             name: "Create Alert",
+    //             url: "/#!/alert/create",
+    //         }
+    //         ]
+    //     },
+    //     query: {
+    //         name: "Query",
+    //         children: [{
+    //             name: "My Query",
+    //             url: "/#!/alert/my_alerts",
+    //         }, {
+    //             name: "Available Query",
+    //             url: "/#!/alert/available_alerts",
+    //         }]
+    //     },
+    //     reports: {
+    //         name: "Reports",
+    //         children: [{
+    //             name: "My Reports",
+    //             url: "/#!/alert/my_alerts",
+    //         }, {
+    //             name: "Available Reports",
+    //             url: "/#!/alert/available_alerts",
+    //         }]
+    //     },
+    //     scenario: {
+    //         name: "Scenario",
+    //         children: [{
+    //             name: "My Scenario",
+    //             url: "/#!/alert/my_alerts",
+    //         }, {
+    //             name: "Available Scenario",
+    //             url: "/#!/alert/available_alerts",
+    //         }]
+    //     }
+    // }
 
 
 });
