@@ -28,4 +28,16 @@ public class TransactionRestController {
         return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
     }
 
+    @GetMapping("import")
+    public ResponseEntity<String> getSingle() throws Exception {
+        transactionServiceImp.importData();
+        return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
+    @GetMapping("truncate")
+    public ResponseEntity<String> truncate() throws Exception {
+        transactionServiceImp.truncateTable();
+        return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
 }
