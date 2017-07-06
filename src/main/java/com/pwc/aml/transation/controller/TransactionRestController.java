@@ -1,6 +1,6 @@
 package com.pwc.aml.transation.controller;
 
-import com.pwc.aml.entity.Article;
+
 import com.pwc.aml.transation.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
