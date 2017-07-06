@@ -20,6 +20,24 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     }
     $stateProvider.state(dashboard);
 
+    let transExample = {
+        name: 'transExample',
+        url: '/trans',
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/trans'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'TransCtrl'
+    }
+    $stateProvider.state(transExample);
+
     let authModule = [
         {
             name: 'login',
