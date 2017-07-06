@@ -33,7 +33,7 @@ begin of login page
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    background: rgba(248, 243, 209, 0.65);
+    background: rgba(255, 250, 250, 0.65);
 }
 
 .login {

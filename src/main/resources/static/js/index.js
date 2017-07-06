@@ -199,9 +199,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeout) {
 
+      if(!window.$$userInfo) {
+          alert("login expired! please login again!");
+          $state.go('login');
+          return;
+      }
 
-    $scope.user = {name: "Default User"};
-    $scope.activeMenu = "dashboard";
+    $scope.user = window.$$userInfo.User;
+    //$scope.activeMenu = "dashboard";
     $scope.menu = {
         dashboard: {
             name: "Dashboard",
@@ -257,7 +262,6 @@ app.controller('HeaderCtrl', function ($scope, $http, $location, $state, $timeou
                 url: "/#!/alert/available_alerts",
             }]
         }
-
     }
 
 

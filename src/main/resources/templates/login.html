@@ -3,11 +3,11 @@
         <div class="wrapper">
             <form class="login">
                 <p class="title">Log in</p>
-                <input type="text" placeholder="Username" autofocus="true"/>
+                <input id="userName" type="text" placeholder="Username" autofocus="true" ng-model="user.userName"/>
                 <i class="fa fa-user"></i>
-                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Password" ng-model="user.userPwd" />
                 <i class="fa fa-key"></i>
-                <button>
+                <button ng-click="doLogin()">
                     <span class="state">Log in</span>
                 </button>
             </form>
