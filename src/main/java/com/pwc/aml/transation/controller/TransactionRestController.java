@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("transaction")
-public class TransactionController {
+public class TransactionRestController {
     @Autowired
     private ITransactionService transactionServiceImp;
 
