@@ -56,5 +56,5 @@ insert into rolemenu values (5, 1);
 insert into rolemenu values (6, 1);
 insert into rolemenu values (7, 1);
 insert into rolemenu values (8, 1);
-insert into rolemenu values (9, 1);
+--insert into rolemenu values (9, 1);
 insert into rolemenu values (10, 1);
