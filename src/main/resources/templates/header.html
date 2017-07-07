@@ -13,21 +13,24 @@
             <ul class="navbar-nav mr-auto">
 
 
-                <li ng-repeat="(key, value) in menu" class="nav-item" >
-                    <a ng-if="value.childList" class="nav-link dropdown-toggle" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{value.menuName}}
+                <li ng-repeat="(key, value) in menu" class="nav-item">
+                    <a ng-if="hasChildren(value)" class="nav-link dropdown-toggle" id="navbar_{{key}}_link"
+                       ng-href="{{value.menuURL}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{value.menuName}}
 
                     </a>
-                    <div ng-if="value.childList"  class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
+                    <div ng-if="hasChildren(value)" class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
                         <a class="dropdown-item" ng-repeat="(k,v) in value.childList" ng-href="{{v.menuURL}}">{{v.menuName}}</a>
                     </div>
 
-                    <a ng-if="!value.childList" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}">{{value.menuName}}
+                    <a ng-if="!hasChildren(value)" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}">{{value.menuName}}
 
                     </a>
                 </li>
             </ul>
             <div class="navbar-text">
-                {{user.userName}} | logout
+                <span class="header-userName">{{user.userName}}</span>
+                <span>|</span>
+                <span class="header-logout" ng-click="logout()">Logout</span>
             </div>
         </div>
     </nav>

@@ -215,77 +215,38 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-app.controller('HeaderCtrl', function ($scope, $http, $location,$cookies,$cookieStore, $state, $timeout) {
-    let userInfo=$cookieStore.get('userInfo');
-      if(!userInfo) {
-          alert("login expired! please login again!");
-          $state.go('login');
-          return;
-      }
+app.controller('HeaderCtrl', function ($scope, $http, $location,$cookies,$cookieStore, $state, $timeout,$loginService) {
 
+    /**
+     * initial header
+     */
+    $timeout(function(){
+        let user=$cookieStore.get('user');
+        if(!user) {
+            alert("login expired! please login again!");
+            $state.go('login');
+            return;
+        }
 
+        if(!window.$$userInfo){
+            $loginService(user,function(res){
+                $scope.user = window.$$userInfo.User;
+                $scope.menu=window.$$userInfo.Menus;
+            });
+        }else{
+            $scope.user = window.$$userInfo.User;
+            $scope.menu=window.$$userInfo.Menus;
+        }
+    });
 
-    $scope.user = userInfo.User;
-    $scope.menu=userInfo.Menus;
-    //$scope.activeMenu = "dashboard";
-    // $scope.menu = {
-    //     dashboard: {
-    //         name: "Dashboard",
-    //         url: "/#!/dashboard",
-    //     },
-    //     alert: {
-    //         name: "Alerts",
-    //         children: [{
-    //             name: "My Alerts",
-    //             url: "/#!/alert/myAlert",
-    //         }, {
-    //             name: "Available Alerts",
-    //             url: "/#!/alert/available",
-    //         }, {
-    //             name: "Suppressed Alerts",
-    //             url: "/#!/alert/suppress",
-    //         }, {
-    //             name: "Closed Alerts",
-    //             url: "/#!/alert/closed",
-    //         }, {
-    //             name: "Create Alert",
-    //             url: "/#!/alert/create",
-    //         }
-    //         ]
-    //     },
-    //     query: {
-    //         name: "Query",
-    //         children: [{
-    //             name: "My Query",
-    //             url: "/#!/alert/my_alerts",
-    //         }, {
-    //             name: "Available Query",
-    //             url: "/#!/alert/available_alerts",
-    //         }]
-    //     },
-    //     reports: {
-    //         name: "Reports",
-    //         children: [{
-    //             name: "My Reports",
-    //             url: "/#!/alert/my_alerts",
-    //         }, {
-    //             name: "Available Reports",
-    //             url: "/#!/alert/available_alerts",
-    //         }]
-    //     },
-    //     scenario: {
-    //         name: "Scenario",
-    //         children: [{
-    //             name: "My Scenario",
-    //             url: "/#!/alert/my_alerts",
-    //         }, {
-    //             name: "Available Scenario",
-    //             url: "/#!/alert/available_alerts",
-    //         }]
-    //     }
-    // }
+    $scope.hasChildren=function(menu){
+        return (menu.childList&&menu.childList.length!==0)?true:false;
+    }
 
-
+    $scope.logout=function(){
+        $cookieStore.remove('user');
+        $state.go('login');
+    }
 });
 
 
