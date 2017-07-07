@@ -34,7 +34,8 @@ public class MenusDAO implements IMenusDAO {
                 "AND U.STATUS = 1\n" +
                 "AND R.STATUS = 1\n" +
                 "AND M.STATUS = 1\n" +
-                "AND M.MENU_PARENTID IS NULL";
+                "AND M.MENU_PARENTID IS NULL"
+                + "ORDER BY M.MENU_ID";
         return this.convertData(entityManager.createNativeQuery(sql).setParameter(1, userId).getResultList());
     }
 
@@ -44,7 +45,8 @@ public class MenusDAO implements IMenusDAO {
                 "FROM MENUS M\n" +
                 "WHERE\n" +
                 " M.MENU_PARENTID = ?\n" +
-                "AND M.STATUS = 1";
+                "AND M.STATUS = 1"
+                + "ORDER BY M.MENU_ID";
 
         return this.convertData(entityManager.createNativeQuery(sql).setParameter(1, menuId).getResultList());
     }
