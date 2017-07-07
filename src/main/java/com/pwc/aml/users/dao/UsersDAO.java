@@ -71,7 +71,7 @@ public class UsersDAO implements  IUsersDAO{
     @SuppressWarnings("unchecked")
 	@Override
     public List<Users> listAllUsers() {
-    	String hql = "FROM USERS as u ORDER BY u.userId";
+    	String hql = "FROM Users as u ORDER BY u.userId";
         return (List<Users>) entityManager.createQuery(hql).getResultList();
     }
 
