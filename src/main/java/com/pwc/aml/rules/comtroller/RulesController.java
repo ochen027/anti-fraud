@@ -40,7 +40,7 @@ public class RulesController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@DeleteMapping("deleteRule/{id}")
+	@GetMapping("deleteRule/{id}")
     public ResponseEntity<Void> deleteRule(@PathVariable("id") int id){
 		rulesService.deleteRuleScenario(id);
     	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

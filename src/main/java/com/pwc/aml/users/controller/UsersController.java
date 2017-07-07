@@ -56,7 +56,7 @@ public class UsersController {
     }
     
     @GetMapping("getSingleUser/{id}")
-    public ResponseEntity<Users> GetSingleUser(@PathVariable("id") Integer id){
+    public ResponseEntity<Users> GetSingleUser(@PathVariable("id") int id){
     	Users u = usersService.findSingleUser(id);
 		return new ResponseEntity<Users>(u, HttpStatus.OK);
     }
@@ -67,7 +67,7 @@ public class UsersController {
     	return new ResponseEntity<List<Users>>(uList, HttpStatus.OK);
     }
     
-    @DeleteMapping("deleteUser/{id}")
+    @GetMapping("deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") int id){
     	usersService.deleteUser(id);
     	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
