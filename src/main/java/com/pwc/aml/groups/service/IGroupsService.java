@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface IGroupsService {
 
-    public List<Groups> listAllGroups();
+    List<Groups> listAllGroups();
+     
+    void createGroups(Groups g);
 
-    public boolean createGroups(Groups g);
+    void updateGroups(Groups g);
 
-    public boolean updateGroups(int groupId);
+    void deleteGroups(int groupId);
 
-    public boolean deleteGroups(int groupId);
-
-    public Groups getSingleGroups(int groupId);
+    Groups getSingleGroups(int groupId);
 }
