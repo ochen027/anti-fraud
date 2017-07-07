@@ -18,26 +18,27 @@ public class GroupsService implements IGroupsService {
 
     @Override
     public List<Groups> listAllGroups() {
-        return null;
+        return groupsDAO.listAllGroups();
     }
 
-    @Override
-    public boolean createGroups(Groups g) {
-        return false;
-    }
+	@Override
+	public void createGroups(Groups g) {
+		groupsDAO.createGroups(g);
+	}
 
-    @Override
-    public boolean updateGroups(int groupId) {
-        return false;
-    }
+	@Override
+	public void updateGroups(Groups g) {
+		groupsDAO.updateGroups(g);
+	}
 
-    @Override
-    public boolean deleteGroups(int groupId) {
-        return false;
-    }
+	@Override
+	public void deleteGroups(int groupId) {
+		groupsDAO.deleteGroups(groupId);
+	}
 
-    @Override
-    public Groups getSingleGroups(int groupId) {
-        return null;
-    }
+	@Override
+	public Groups getSingleGroups(int groupId) {
+		return groupsDAO.getGroups(groupId);
+	}
+
 }

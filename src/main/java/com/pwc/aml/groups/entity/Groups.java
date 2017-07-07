@@ -23,7 +23,7 @@ public class Groups extends BaseEntity {
     private String userGroupName;
 
 
-    @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.ALL})
     @JoinTable(name="USERGROUP",
             joinColumns = @JoinColumn(name = "groupId", referencedColumnName = "GROUP_ID"),
             inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "USER_ID"))
