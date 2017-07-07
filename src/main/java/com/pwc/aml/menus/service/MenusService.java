@@ -17,17 +17,17 @@ public class MenusService implements IMenusService {
     public List<Menus> listUserMenus(int userId) {
         List<Menus> rootMenus = menuDAO.listUserRootMenus(userId);
         for (Menus m : rootMenus) {
-            List childMenus = this.listUserChildMenus(m.getMenuId());
+            List childMenus = this.listUserChildMenus(userId, m.getMenuId());
             m.setChildList(childMenus);
         }
         return rootMenus;
     }
 
     @Override
-    public List<Menus> listUserChildMenus(int menuId) {
-        List<Menus> list = menuDAO.listUserChildMenus(menuId);
+    public List<Menus> listUserChildMenus(int userId, int menuId) {
+        List<Menus> list = menuDAO.listUserChildMenus(userId, menuId);
         for(Menus m : list){
-            List<Menus> l =this.listUserChildMenus(m.getMenuId());
+            List<Menus> l =this.listUserChildMenus(userId, m.getMenuId());
             m.setChildList(l);
         }
         return list;

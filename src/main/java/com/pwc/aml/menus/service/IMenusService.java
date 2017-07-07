@@ -7,5 +7,5 @@ import java.util.List;
 public interface IMenusService {
     public List<Menus> listUserMenus(int userId);
 
-    public List<Menus> listUserChildMenus(int menuId);
+    public List<Menus> listUserChildMenus(int userId, int menuId);
 }
