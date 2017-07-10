@@ -11,11 +11,6 @@ public class FlowPoint extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="POINT_ID")
-    private int pointId;
-
     @Column(name="TYPE")
     private String type;
 
@@ -25,27 +20,20 @@ public class FlowPoint extends BaseEntity {
     @Column(name="PRINT")
     private String print;
 
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="FLOW_ID")
-//    private Workflow workflow;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="Flow_ID")
+    private Workflow workflow;
 
     @Column(name="DESCRIPTION")
     private String description;
 
-//    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "eventId")
-//    private List<FlowEvent> lflowEvents;
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
+    private List<FlowEvent> lflowEvents;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public int getPointId() {
-        return pointId;
-    }
-
-    public void setPointId(int pointId) {
-        this.pointId = pointId;
-    }
 
     public String getType() {
         return type;
@@ -71,13 +59,13 @@ public class FlowPoint extends BaseEntity {
         this.print = print;
     }
 
-//    public Workflow getWorkflow() {
-//        return workflow;
-//    }
-//
-//    public void setWorkflow(Workflow workflow) {
-//        this.workflow = workflow;
-//    }
+    public Workflow getWorkflow() {
+        return workflow;
+    }
+
+    public void setWorkflow(Workflow workflow) {
+        this.workflow = workflow;
+    }
 
     public String getDescription() {
         return description;
@@ -87,11 +75,11 @@ public class FlowPoint extends BaseEntity {
         this.description = description;
     }
 
-//    public List<FlowEvent> getLflowEvents() {
-//        return lflowEvents;
-//    }
-//
-//    public void setLflowEvents(List<FlowEvent> lflowEvents) {
-//        this.lflowEvents = lflowEvents;
-//    }
+    public List<FlowEvent> getLflowEvents() {
+        return lflowEvents;
+    }
+
+    public void setLflowEvents(List<FlowEvent> lflowEvents) {
+        this.lflowEvents = lflowEvents;
+    }
 }

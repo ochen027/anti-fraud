@@ -14,10 +14,7 @@ public class Workflow extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="FLOW_ID")
-    private int flowId;
+
 
     @Column(name="CHART_JSON")
     private String chartJson;
@@ -32,13 +29,13 @@ public class Workflow extends BaseEntity {
     private String description;
 
 
-//    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pointId")
-//
-//    private List<FlowPoint> lflowPoints;
-//
-//    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "eventId")
-//
-//    private List<FlowEvent> lflowEvents;
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
+
+    private List<FlowPoint> lflowPoints;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
+
+    private List<FlowEvent> lflowEvents;
 
 
 
@@ -46,13 +43,7 @@ public class Workflow extends BaseEntity {
         return serialVersionUID;
     }
 
-    public int getFlowId() {
-        return flowId;
-    }
 
-    public void setFlowId(int flowId) {
-        this.flowId = flowId;
-    }
 
     public String getChartJson() {
         return chartJson;
@@ -87,19 +78,19 @@ public class Workflow extends BaseEntity {
     }
 
 
-//    public List<FlowPoint> getLflowPoints() {
-//        return lflowPoints;
-//    }
-//
-//    public void setLflowPoints(List<FlowPoint> lflowPoints) {
-//        this.lflowPoints = lflowPoints;
-//    }
-//
-//    public List<FlowEvent> getLflowEvents() {
-//        return lflowEvents;
-//    }
-//
-//    public void setLflowEvents(List<FlowEvent> lflowEvents) {
-//        this.lflowEvents = lflowEvents;
-//    }
+    public List<FlowPoint> getLflowPoints() {
+        return lflowPoints;
+    }
+
+    public void setLflowPoints(List<FlowPoint> lflowPoints) {
+        this.lflowPoints = lflowPoints;
+    }
+
+    public List<FlowEvent> getLflowEvents() {
+        return lflowEvents;
+    }
+
+    public void setLflowEvents(List<FlowEvent> lflowEvents) {
+        this.lflowEvents = lflowEvents;
+    }
 }
