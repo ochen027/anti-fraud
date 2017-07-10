@@ -2,15 +2,10 @@ window.targetProperty = new Object();
 window.project = new Object();
 
 
+app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService) {
 
 
-app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$cookieStore, $state, $timeout,$loginService) {
-
-
-
-
-
-    $timeout(function(){
+    $timeout(function () {
         var initClick = function () {
             saveProjectClick();
             btnCancelClick();
@@ -38,11 +33,21 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
         /**
          * setting role list
          */
-        var initialRole=function(){
+        var initialRole = function () {
             $("#processStartRole").append("<option></option>");
 
-        }
+            $http.get("/roles/listAll").then(function (res) {
+                if (res.status != 200) {
+                    console.log("get role list error");
+                }
 
+                res.data.each(function(item){
+                    $("#processStartRole").append("<option value='"+item.id+"'>"+item.roleName+"</option>");
+                });
+
+            });
+
+        }
 
 
         var initialEdit = function (flowId) {
@@ -57,7 +62,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
 
 
         var setWorkflowHeader = function () {
-            $("#projectName").html(project.name.replace(/</g,'&lt;'));
+            $("#projectName").html(project.name.replace(/</g, '&lt;'));
         }
 
         var saveProjectClick = function () {
@@ -88,7 +93,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
         var btnCancelClick = function () {
 
             $("#btnCancel").click(function () {
-                location.href ="";
+                location.href = "";
             });
 
         };
@@ -137,7 +142,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
             });
         }
 
-        window.targetPropertyDialogInit=function() {
+        window.targetPropertyDialogInit = function () {
             $("#propertyDialogLabel").html(targetProperty.title);
             $("#propertyName").val(targetProperty.name);
             $("#propertyID").val(targetProperty.customerID);
@@ -151,8 +156,6 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
             targetPropertyDialogInit();
             $("#propertyDialog").modal("show");
         }
-
-
 
 
 //save property
@@ -206,9 +209,10 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location,$cookies,$
 
 
         var setProjectValue = function () {
-            project.name = $("#projectID").val().replace("<","&lt;");
-            project.type = $("#type").val().replace("<","&lt;");;
-            project.description = $("#description").val().replace("<","&lt;");
+            project.name = $("#projectID").val().replace("<", "&lt;");
+            project.type = $("#type").val().replace("<", "&lt;");
+            ;
+            project.description = $("#description").val().replace("<", "&lt;");
         }
 
 
