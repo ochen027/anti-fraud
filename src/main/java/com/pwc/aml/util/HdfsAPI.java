@@ -10,7 +10,9 @@ import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
-
+/*
+* 使用此api需要添加HADOOP_USER_NAME=hadoop环境变量,否则会报权限问题
+* */
 public class HdfsAPI {
 
 
@@ -88,19 +90,20 @@ public class HdfsAPI {
         return  fs.delete(deletePath, true);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // TODO Auto-generated method stub
 //        FileSystem fs= getHDFileSystem();
-//        Path readPath=new Path("/user/hadoop/tmp/sampleData/TRANS");
+        Path writePath=new Path("/user/hadoop/tmp/sampleData/TRANS");
         //创建目录
 //		boolean b =fs.mkdirs(Path);
 
 //        System.out.println(b);
         FileSystem lfs=getLocalFileSystem();
-        System.out.println(lfs);
-        Path readPath=new Path("C:\\Andrew");
-        boolean b=lfs.exists(readPath);
-        System.out.println(b);
+//        System.out.println(lfs);
+//        Path readPath=new Path("C:\\Andrew");
+//        boolean b=lfs.exists(readPath);
+//        System.out.println(b);
+        write("C:\\Andrew\\abc.py","/user/hadoop/tmp/sampleData/abc.py");
 
 
     }
