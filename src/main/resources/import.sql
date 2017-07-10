@@ -49,6 +49,7 @@ insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 
 
 --initial role menu table
+<<<<<<< HEAD
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
 insert into rolemenu values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 1);
 insert into rolemenu values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 1);
@@ -59,3 +60,15 @@ insert into rolemenu values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 
 insert into rolemenu values (8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
 insert into rolemenu values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 1);
 insert into rolemenu values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 1);
+=======
+insert into rolemenu values (1, 1);
+insert into rolemenu values (2, 1);
+insert into rolemenu values (3, 1);
+insert into rolemenu values (4, 1);
+insert into rolemenu values (5, 1);
+insert into rolemenu values (6, 1);
+insert into rolemenu values (7, 1);
+insert into rolemenu values (8, 1);
+--insert into rolemenu values (9, 1);
+insert into rolemenu values (10, 1);
+>>>>>>> refs/remotes/origin/master

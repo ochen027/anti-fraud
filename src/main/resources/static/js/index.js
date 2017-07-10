@@ -1,4 +1,4 @@
-let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out', 'ui.bootstrap']);
+let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out', 'ui.bootstrap','chart.js']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 

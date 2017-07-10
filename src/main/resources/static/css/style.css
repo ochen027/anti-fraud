@@ -208,6 +208,15 @@ header .navbar-nav .nav-item {
 header .navbar-light .navbar-nav .nav-link {
     color: rgba(0, 0, 0, 0.7);
 }
+header .header-userName {
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+header .header-logout{
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
 
 header .navbar-nav .active {
     color: rgba(0, 0, 0, 0.7);
