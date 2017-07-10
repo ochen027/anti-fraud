@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ochen027 on 7/3/2017.
- */
+
 @Service
 public class WorkflowService implements IWorkflowService {
 
