@@ -32,7 +32,7 @@ public class RulesDAO implements IRulesDAO {
 
 	@Override
 	public void updateRules(RuleScenario rScenario) {
-		RuleScenario rs = this.findSingleScenario(rScenario.getScenarioId());
+		RuleScenario rs = this.findSingleScenario(rScenario.getId());
 		rs.setScenarioName(rScenario.getScenarioName());
 		entityManager.flush();
 	}
