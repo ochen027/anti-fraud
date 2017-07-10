@@ -18,8 +18,6 @@ public class HdfsAPI {
     {
         Configuration conf =new Configuration();
         FileSystem fs=FileSystem.get(conf);
-        //访问本地文件系统
-//		FileSystem.getLocal(conf);
         return fs;
     }
     public static FileSystem getLocalFileSystem() throws IOException
@@ -28,6 +26,7 @@ public class HdfsAPI {
 		FileSystem fs=FileSystem.getLocal(conf);
         return fs;
     }
+    //读文件
     public static void read(String fileName) throws Exception
     {
         FileSystem fs=getHDFileSystem();
@@ -35,6 +34,7 @@ public class HdfsAPI {
         FSDataInputStream inStream =fs.open(readPath);
 
         try {
+            //这边我直接输出到控制台,根据业务重写
             IOUtils.copyBytes(inStream, System.out, 4096,false);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -46,7 +46,8 @@ public class HdfsAPI {
         }
 
     }
-
+    //写文件
+    //第一参数是本地路径,或者服务器路径,第二个参数是要存到的hdfs的路径
     public static void write(String inputLocalFile,String outputHDFSFile) throws Exception
     {
         FileSystem hdfs=getHDFileSystem();
@@ -57,7 +58,6 @@ public class HdfsAPI {
         FSDataInputStream inStream =lfs.open(readPath);
 
         //create方法是为了可以创建不存在的目录，包括父目录
-
         //同时它还实现了Progessable接口用来返回IO进度
 		FSDataOutputStream outStream=hdfs.create(writePath,new Progressable() {
 
@@ -82,6 +82,7 @@ public class HdfsAPI {
         }
 
     }
+    //删除目录或文件
     public static boolean deleteFile(FileSystem fs,String deletePathStr) throws IOException {
         Path deletePath=new Path(deletePathStr);
         return  fs.delete(deletePath, true);
