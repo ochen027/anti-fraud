@@ -1,6 +1,9 @@
 package com.pwc.aml.groups.controller;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,7 @@ import com.pwc.aml.groups.service.IGroupsService;
 
 @Controller
 @RequestMapping("group")
-public class GroupsController {
+public class GroupsController{
 	
 	@Autowired
 	private IGroupsService groupsService;
@@ -34,20 +37,21 @@ public class GroupsController {
 	}
 	
 	@GetMapping("deleteGroup/{id}")
-	public ResponseEntity<Void> DeleteGroup(@PathVariable int id){
-		groupsService.deleteGroups(id);
+	public ResponseEntity<Void> DeleteGroup(@PathVariable int id, HttpSession session){
+		groupsService.deleteGroups(id, (String)session.getAttribute("userName"));
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@PostMapping("createGroup")
-	public ResponseEntity<Void> CreateGroup(@RequestBody Groups g){
-		groupsService.createGroups(g);
+	public ResponseEntity<Void> CreateGroup(@RequestBody Groups g, HttpSession session){
+		g.setCreationDate(new Date());
+		groupsService.createGroups(g, (String)session.getAttribute("userName"));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping("updateGroup")
-	public ResponseEntity<Void> UpdateGroup(@RequestBody Groups g){
-		groupsService.updateGroups(g);
+	public ResponseEntity<Void> UpdateGroup(@RequestBody Groups g, HttpSession session){
+		groupsService.updateGroups(g, (String)session.getAttribute("userName"));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

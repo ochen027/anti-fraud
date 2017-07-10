@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.RuleStep;
 
 @Transactional
 @Repository
@@ -16,12 +17,10 @@ public class RulesDAO implements IRulesDAO {
 	
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<RuleScenario> listAllRuleScenario() {
-		String hql = "FROM RuleScenario ORDER BY scenarioId";
+		String hql = "FROM RuleScenario where status = 1 ORDER BY id";
         return (List<RuleScenario>) entityManager.createQuery(hql).getResultList();
 	}
 
@@ -46,7 +45,10 @@ public class RulesDAO implements IRulesDAO {
 	public RuleScenario findSingleScenario(int scenarioId) {
 		return entityManager.find(RuleScenario.class, scenarioId);
 	}
-	
-	
-	
+
+	@Override
+	public void createStep(RuleStep rStep) {
+		entityManager.persist(rStep);
+	}
+
 }

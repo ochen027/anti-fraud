@@ -211,6 +211,30 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state(alertModule[i]);
     }
 
+
+    let workflow =[
+        {
+            name: "EditWorkflow",
+            url: "/workflow/edit",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/workflow/edit'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'EditWorkflowCtrl'
+        }
+    ];
+
+    for (var i = 0, len = workflow.length; i < len; i++) {
+        $stateProvider.state(workflow[i]);
+    }
+
     $urlRouterProvider.otherwise('/login');
 });
 
@@ -248,6 +272,7 @@ app.controller('HeaderCtrl', function ($scope, $http, $location,$cookies,$cookie
         $state.go('login');
     }
 });
+
 
 
 

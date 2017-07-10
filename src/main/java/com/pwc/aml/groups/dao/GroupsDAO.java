@@ -38,16 +38,8 @@ public class GroupsDAO implements IGroupsDAO {
 	}
 
 	@Override
-	public void deleteGroups(int groupId) {
-		entityManager.remove((Groups)this.getGroups(groupId));
-	}
-
-	@Override
 	public Groups getGroups(int groupId) {
 		return entityManager.find(Groups.class, groupId);
 	}
-	
-	
-	
-	
+
 }

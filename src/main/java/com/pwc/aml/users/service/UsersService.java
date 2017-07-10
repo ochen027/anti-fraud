@@ -10,9 +10,6 @@ import com.pwc.aml.roles.entity.Roles;
 import com.pwc.aml.users.dao.IUsersDAO;
 import com.pwc.aml.users.entity.Users;
 
-/**
- * Created by ochen027 on 7/3/2017.
- */
 @Service
 public class UsersService implements IUsersService {
 

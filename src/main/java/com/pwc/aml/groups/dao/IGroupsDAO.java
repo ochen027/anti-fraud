@@ -12,7 +12,5 @@ public interface IGroupsDAO {
     
     void updateGroups(Groups ug);
     
-    void deleteGroups(int groupId);
-    
     Groups getGroups(int groupId);
 }

@@ -1,0 +1,231 @@
+.workflow-container .control-container {
+    width: 180px;
+    position: absolute;
+}
+
+.workflow-container .canvas-container {
+    display: inline-block;
+    min-width: 400px;
+    overflow: hidden;
+    width: calc(100% - 180px);
+    margin-left: 180px;
+}
+
+.workflow-container svg {
+    left: 0 !important;
+    top: 0 !important;
+    position: relative !important;
+}
+
+.workflow-container .canvas-container>div {
+    border: solid #9acfea 1px;
+    height: 740px;
+    background: #fef7e6;
+    margin: 0;
+}
+
+.workflow-container .menu-container {
+    height: 50px;
+    text-align: right;
+}
+
+.workflow-container .button-group {
+    text-align: center;
+    border: solid #9acfea 1px;
+    /*border-radius: 5px;*/
+    padding: 20px;
+    height: 740px;
+    margin-bottom: 0;
+    border-right: 0;
+    background-color: #dddddd;
+}
+
+
+/*left button group*/
+
+.workflow-container .button-group div {
+    margin: 15px auto;
+}
+
+.workflow-container .button-group button {
+    border-style: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.workflow-container #start-button,
+#end-button {
+    width: 100px;
+    height: 100px;
+    background: #602320;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.workflow-container #end-button {
+    background: #666666;
+}
+
+.workflow-container #process-queue-button {
+    width: 105px;
+    height: 100px;
+    background: #999999;
+    border-radius: 15px;
+}
+
+.workflow-container #process-point-button {
+    width: 105px;
+    height: 100px;
+    background: #999999;
+}
+
+.workflow-container #process-point-button {
+    border-radius: 0;
+}
+
+
+/*buttons on the top*/
+
+.workflow-container .menu-container button {
+    margin: auto 2px;
+}
+
+
+/*grid*/
+
+.workflow-container svg {
+    background: -webkit-linear-gradient(top, transparent 19px, #c3c3c3 20px), -webkit-linear-gradient(left, transparent 19px, #c3c3c3 20px);
+    background-size: 20px 20px;
+}
+
+.work_title h4 {
+    margin-top: 30px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    font-weight: bold; 
+    padding-top: 2px;
+    font-family: Georgia;
+    font-style: italic;
+}
+
+
+/*menu hide*/
+
+.workflow-container .context-menu-list,
+.context-menu-layer {
+    display: none !important;
+}
+
+.workflow-container section {
+    min-height: 1000px;
+}
+
+.workflow-container #btnHowToUse {
+    position: absolute;
+    z-index: 9;
+    top: 58px;
+    right: 15px;
+}
+
+.help_modal {
+    border-radius: 0;
+    width: 912px;
+}
+
+.carousel-inner>.carousel-item>a>img,
+.carousel-inner>.carousel-item>img {
+    width: 912px;
+    height: 580px;
+}
+
+.help_modal .modal-body {
+    padding: 4px !important;
+    border-radius: 0;
+}
+
+.workflow-container #howToUse {
+    background-color: #888888;
+    z-index: 100000;
+    position: fixed;
+    width: 95%;
+    height: 95%;
+    top: 2.5%;
+    left: 2.5%;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    padding: 20px;
+    opacity: 0.95;
+    display: none;
+}
+
+.workflow-container #howToUse .content {
+    height: 50%;
+    width: 50%;
+    float: left;
+    border: solid 5px #666;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+
+#circle {
+    /*height: 34px;*/
+    background: #eb8c00;
+    padding: 2px 10px;
+}
+
+#circle span {
+    position: relative;
+    top: -1px;
+    margin-left: 4px;
+    text-transform: uppercase;
+}
+
+#canvas .WorkflowShape_WorkflowStart {
+    fill: #602320;
+    stroke: #602320;
+}
+
+#canvas rect.WorkflowShape_WorkflowProcessqueue {
+    fill: #999999;
+    stroke: #999999;
+}
+
+#canvas rect.WorkflowShape_WorkflowProcess {
+    fill: #adadad;
+    stroke: #adadad;
+}
+
+#canvas .WorkflowShape_WorkflowEnd {
+    fill: #666666;
+    stroke: #666666;
+}
+
+.caseBtn {
+    position: absolute;
+    /* bottom: 33px; */
+    /* text-align: right; */
+    right: 42px;
+    text-align: right;
+    bottom: 36px;
+}
+
+.processSelect {
+    min-width: 100px;
+    float: right;
+    right: 140px;
+    position: absolute;
+    top: 5px;
+}
+
+#assignButton {
+    right: 0px;
+    height: 32px;
+    line-height: 7px;
+    top: -1px;
+    float: right;
+    position: inherit;
+}
