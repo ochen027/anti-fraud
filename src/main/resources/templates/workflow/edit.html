@@ -1,3 +1,150 @@
-<div>
-    edit
+<link href="/css/workflow.css" rel="stylesheet"></link>
+
+
+<div class="container" ng-controller="EditWorkflowCtrl">
+    <input type="hidden" id="flowUID" value="{{flowUID}}" />
+    <section class="workflow-container">
+        <div class="row">
+            <div class="col-md-4 work_title">
+                <h4>Select Workflow Process</h4>
+            </div>
+            <div class="col-md-4 work_title">
+                <h4 class="text-center" id="projectName">
+                </h4>
+            </div>
+            <div class="col-md-4 menu-container">
+
+                <button id="btnCancel" class="btn cancel-btn">Cancel</button>
+                <button id="btnSaveProject" data-target="#projectDialog" class="btn orange-btn ">Save Project </button>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="control-container">
+                    <form class="form-group button-group">
+                        <div>
+                            <button id="start-button" type="button">Start</button>
+                        </div>
+                        <div>
+                            <button id="process-queue-button" type="button">Process Queue</button>
+                        </div>
+                        <div>
+                            <button id="process-point-button" type="button">Process Point</button>
+                        </div>
+                        <div>
+                            <button id="end-button" type="button">End</button>
+                        </div>
+                    </form>
+                </div>
+                <div class=" canvas-container">
+                    <div id="canvas"></div>
+                </div>
+            </div>
+        </div>
+        <!--dialog-->
+        <div id="projectDialog" tabindex="-1" role="dialog" aria-labelledby="projectDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="projectDialogLabel" class="modal-title">Save Project</h4></div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <form role="form" class="form-horizontal row">
+                                        <div class="form-group row">
+                                            <label for="projectID" class="col-md-3 control-label">Name:</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="projectID" placeholder="Project name" class="form-control input-md" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="projectID" class="col-md-3 control-label">Type:</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="type" placeholder="Type" class="form-control input-md" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="projectID" class="col-md-3 control-label">Description:</label>
+                                            <div class="col-md-9">
+                                                <textarea id="description" placeholder="Description of project" class="form-control materialize-textarea input-md"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSaveWorkflow" class="btn orange-btn"> Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="propertyDialog" tabindex="-1" role="dialog" aria-labelledby="propertyDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="propertyDialogLabel" class="modal-title"></h4></div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <form role="form" class="form-horizontal">
+                                    <div class="form-group row">
+                                        <label for="propertyName" class="col-md-3 control-label">Name:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="propertyName" placeholder="Property name" class="form-control input-md" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="propertyID" class="col-md-3 control-label">Id:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="propertyID" placeholder="ID" class="form-control input-md" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="processStartRole" class="col-md-3 control-label">Role:</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control input-md" id="processStartRole">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSaveProperty" class="btn orange-btn">Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="messageDialog" tabindex="-1" role="dialog" aria-labelledby="propertyDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="messageDialogLabel" class="modal-title">Success message</h4></div>
+                    <div class="modal-body">
+                        <p class="text-success">Workflow saved!</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
 </div>
+
+
+
+
+
+

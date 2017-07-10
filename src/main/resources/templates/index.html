@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" href="/components/normalize-css/normalize.css"></link>
     <link rel="stylesheet" href="/components/font-awesome/css/font-awesome.css"></link>
-    <script src="/components/jquery/dist/jquery.js"></script>
+    <script src="/components/jquery/jquery.js"></script>
     <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css"></link>
     <link rel="stylesheet" href="/components/tether/dist/css/tether.css"></link>
     <script src="/components/tether/dist/js/tether.js"></script>
@@ -26,10 +26,35 @@
     <link rel="stylesheet" href="/css/style.css"></link>
     <link rel="stylesheet" href="/components/angular-ui-router-anim-in-out/css/anim-in-out.css"></link>
     <script src="/components/angular-ui-router-anim-in-out/anim-in-out.js"></script>
+
+
+    <!-- start of workflow support-->
+    <script src="/components/draw2d/dist/shifty.js"></script>
+    <script src="/components/draw2d/dist/patched_raphael.js"></script>
+    <script src="/components/draw2d/dist/jquery.autoresize.js"></script>
+    <script src="/components/draw2d/dist/jquery-touch_punch.js"></script>
+    <script src="/components/draw2d/dist/jquery.contextmenu.js"></script>
+    <script src="/components/draw2d/dist/rgbcolor.js"></script>
+    <script src="/components/draw2d/dist/patched_canvg.js"></script>
+    <script src="/components/draw2d/dist/patched_Class.js"></script>
+    <script src="/components/draw2d/dist/json2.js"></script>
+    <script src="/components/draw2d/dist/pathfinding-browser.min.js"></script>
+    <script src="/components/draw2d/dist/draw2d.js"></script>
+    <!-- end of workflow support-->
+
     <script src="/js/index.js"></script>
     <script src="/js/dashboardModule.js"></script>
     <script src="/js/authModule.js"></script>
     <script src="/js/alertModule.js"></script>
+
+
+    <!-- start of workflow-->
+
+    <script src="/js/workflow/scripts/override_draw2d.js"></script>
+    <script src="/js/workflow/scripts/workflow.js"></script>
+    <script src="/js/workflow/controllers/workflow.js"></script>
+
+    <!--end of workflow -->
 </head>
 <body ng-app="AMLapp">
 
