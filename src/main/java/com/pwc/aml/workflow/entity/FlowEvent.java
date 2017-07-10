@@ -25,16 +25,16 @@ public class FlowEvent extends BaseEntity {
     @Column(name="PRINT")
     private String print;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="FLOW_ID")
-    private Workflow workflow;
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="FLOW_ID")
+//    private Workflow workflow;
 
     @Column(name="DESCRIPTION")
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ENDPOINT")
-    private FlowPoint endPoint;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ENDPOINT")
+//    private FlowPoint endPoint;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -72,13 +72,13 @@ public class FlowEvent extends BaseEntity {
         this.print = print;
     }
 
-    public Workflow getWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(Workflow workflow) {
-        this.workflow = workflow;
-    }
+//    public Workflow getWorkflow() {
+//        return workflow;
+//    }
+//
+//    public void setWorkflow(Workflow workflow) {
+//        this.workflow = workflow;
+//    }
 
     public String getDescription() {
         return description;
@@ -88,11 +88,11 @@ public class FlowEvent extends BaseEntity {
         this.description = description;
     }
 
-    public FlowPoint getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(FlowPoint endPoint) {
-        this.endPoint = endPoint;
-    }
+//    public FlowPoint getEndPoint() {
+//        return endPoint;
+//    }
+//
+//    public void setEndPoint(FlowPoint endPoint) {
+//        this.endPoint = endPoint;
+//    }
 }
