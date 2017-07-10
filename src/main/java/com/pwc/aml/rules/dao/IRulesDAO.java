@@ -3,6 +3,7 @@ package com.pwc.aml.rules.dao;
 import java.util.List;
 
 import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.RuleStep;
 
 public interface IRulesDAO {
 	
@@ -14,6 +15,7 @@ public interface IRulesDAO {
 	
 	void deleteRules(int scenarioId);
 	
-	public RuleScenario findSingleScenario(int scenarioId);
-
+	RuleScenario findSingleScenario(int scenarioId);
+	
+	void createStep(RuleStep rStep);
 }

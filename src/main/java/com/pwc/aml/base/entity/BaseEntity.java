@@ -1,7 +1,7 @@
 package com.pwc.aml.base.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -25,9 +25,9 @@ public class BaseEntity implements Serializable{
     @Column(name="LAST_UPDATED_BY")
     private String lastUpdatedBy;
     @Column(name="LAST_UPDATE_DATE")
-    private Date lastUpdateDate;
+    private Date lastUpdateDate = new Date();
     @Column(name="STATUS")
-    private boolean status;
+    private boolean status = true;
     
     public int getId() {
 		return id;
@@ -46,7 +46,7 @@ public class BaseEntity implements Serializable{
     }
 
     public Date getCreationDate() {
-        return creationDate;
+    	return creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
@@ -62,7 +62,7 @@ public class BaseEntity implements Serializable{
     }
 
     public Date getLastUpdateDate() {
-        return lastUpdateDate;
+        return new Date();
     }
 
     public void setLastUpdateDate(Date lastUpdateDate) {
