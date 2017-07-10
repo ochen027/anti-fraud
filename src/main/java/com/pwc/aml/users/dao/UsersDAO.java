@@ -23,8 +23,9 @@ public class UsersDAO implements IUsersDAO{
     @SuppressWarnings("unchecked")
 	@Override
     public Users checkUserName(Users users) {
-        String hql = "FROM Users WHERE userName = ? and status = 1";        
+        String hql = "FROM Users WHERE userName = ? and status = 1";
         List<Users> uList = (List<Users>)entityManager.createQuery(hql).setParameter(1, users.getUserName()).getResultList();
+        entityManager.clear();
         Users u = null;
         if(1 == uList.size()){
         	u = uList.get(0);
