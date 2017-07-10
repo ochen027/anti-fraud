@@ -1,16 +1,24 @@
 package com.pwc.aml.entity;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.sql.Date;
 
-/**
- * Created by ochen027 on 7/4/2017.
- */
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 @MappedSuperclass
 public class BaseEntity implements Serializable{
-    @Column(name="CREATED_BY")
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name="ID")
+    private int id;
+	@Column(name="CREATED_BY")
     private String createdBy;
     @Column(name="CREATION_DATE")
     private Date creationDate;
@@ -20,8 +28,16 @@ public class BaseEntity implements Serializable{
     private Date lastUpdateDate;
     @Column(name="STATUS")
     private boolean status;
+    
+    public int getId() {
+		return id;
+	}
 
-    public String getCreatedBy() {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getCreatedBy() {
         return createdBy;
     }
 

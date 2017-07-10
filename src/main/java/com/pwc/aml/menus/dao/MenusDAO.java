@@ -1,14 +1,17 @@
 package com.pwc.aml.menus.dao;
 
 
-import com.pwc.aml.menus.entity.Menus;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pwc.aml.menus.entity.Menus;
 
 
 @Transactional
@@ -18,45 +21,60 @@ public class MenusDAO implements IMenusDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Menus> listUserRootMenus(int userId) {
-        String sql = "SELECT M.MENU_ID, M.MENU_NAME, M.MENU_URL, M.MENU_DESC,M.MENU_ICO,M.MENU_PARENTID "+
-                "FROM MENUS M, ROLEMENU RM, ROLES R, USERS U, GROUPS G, USERGROUP UG, GROUPROLE GR " +
+        String hql = "SELECT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR " +
                 "WHERE" +
-                "  U.USER_ID = UG.USER_ID" +
-                " AND G.GROUP_ID = UG.GROUP_ID" +
-                " AND G.GROUP_ID = GR.GROUP_ID" +
-                " AND R.ROLE_ID = GR.ROLE_ID" +
-                " AND M.MENU_ID = RM.MENU_ID" +
-                " AND R.ROLE_ID = RM.ROLE_ID" +
-                " AND U.USER_ID = ?" +
-                " AND U.STATUS = 1" +
-                " AND R.STATUS = 1" +
-                " AND M.STATUS = 1" +
-                " AND M.MENU_PARENTID IS NULL ORDER BY M.MENU_ID";
-        return this.convertData(entityManager.createNativeQuery(sql).setParameter(1, userId).getResultList());
+                "  U.id = UG.userId" +
+                " AND G.id = UG.groupId" +
+                " AND G.id = GR.groupId" +
+                " AND R.id = GR.roleId" +
+                " AND M.id = RM.menuId" +
+                " AND R.id = RM.roleId" +
+                " AND U.id = ?" +
+                " AND U.status = 1" +
+                " AND R.status = 1" +
+                " AND M.status = 1" +
+                " AND M.menuParentId IS NULL ORDER BY M.id";
+        List<Object[]> list = entityManager.createQuery(hql).setParameter(1, userId).getResultList();
+        
+        return this.convertMenuData(list);
     }
 
     @Override
     public List<Menus> listUserChildMenus(int userId, int menuId) {
-        String sql = "SELECT M.MENU_ID, M.MENU_NAME, M.MENU_URL, M.MENU_DESC,M.MENU_ICO,M.MENU_PARENTID FROM MENUS M, ROLEMENU RM, ROLES R, USERS U, GROUPS G, USERGROUP UG, GROUPROLE GR WHERE U.USER_ID = UG.USER_ID AND G.GROUP_ID = UG.GROUP_ID AND G.GROUP_ID = GR.GROUP_ID AND R.ROLE_ID = GR.ROLE_ID AND M.MENU_ID = RM.MENU_ID AND R.ROLE_ID = RM.ROLE_ID AND U.USER_ID = ? AND U.STATUS = 1 AND R.STATUS = 1 AND M.STATUS = 1 AND M.MENU_PARENTID = ? ORDER BY M.MENU_ID";
-        return this.convertData(entityManager.createNativeQuery(sql).setParameter(1, userId).setParameter(2, menuId).getResultList());
+        String hql = "SELECT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR "
+        		+"WHERE U.id = UG.userId "
+        		+ "AND G.id = UG.groupId "
+        		+ "AND G.id = GR.groupId "
+        		+ "AND R.id = GR.roleId "
+        		+ "AND M.id = RM.menuId "
+        		+ "AND R.id = RM.roleId "
+        		+ "AND U.id = ? "
+        		+ "AND U.status = 1 AND R.status = 1 AND M.status = 1 "
+        		+ "AND M.menuParentId = ? ORDER BY M.id";
+        return this.convertMenuData(entityManager.createQuery(hql).setParameter(1, userId).setParameter(2, menuId).getResultList());
+    }
+    
+    private List<Menus> convertMenuData(List<Object[]> list){
+    	if(null != list  && list.size() > 0){
+    		Iterator iter = list.iterator();
+    		List<Menus> mList = new ArrayList<Menus>();
+    		while(iter.hasNext()){
+    			Object[] obj = (Object[]) iter.next();
+    			Menus m = new Menus();
+    			m.setId((Integer)obj[0]);
+    			m.setMenuName((String)obj[1]);
+    			m.setMenuURL((String)obj[2]);
+    			m.setMenuICO((String)obj[3]);
+    			m.setMenuDesc((String)obj[4]);
+    			m.setMenuParentId(null == obj[5] ? 0 : (Integer)obj[5]);
+    			mList.add(m);
+    		}
+    		return mList;
+    	}
+		return null;
     }
 
-    private List<Menus> convertData(List l){
-        List<Menus> list = new ArrayList<Menus>();
-        for(Object o : l){
-            Object[] obj = (Object[]) o;
-            Menus menus = new Menus();
-            menus.setMenuId((Integer) obj[0]);
-            menus.setMenuName((String) obj[1]);
-            menus.setMenuURL((String) obj[2]);
-            menus.setMenuDesc((String) obj[3]);
-            menus.setMenuICO((String) obj[4]);
-            menus.setMenuParentId(obj[5] == null ? 0 : (Integer) obj[5]);
-            list.add(menus);
-        }
-        return list;
-    }
 }

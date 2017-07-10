@@ -1,15 +1,13 @@
 package com.pwc.aml.groups.service;
 
-import com.pwc.aml.groups.dao.IGroupsDAO;
-import com.pwc.aml.groups.entity.Groups;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.pwc.aml.groups.dao.IGroupsDAO;
+import com.pwc.aml.groups.entity.Groups;
 
-/**
- * Created by ochen027 on 7/4/2017.
- */
 @Service
 public class GroupsService implements IGroupsService {
 

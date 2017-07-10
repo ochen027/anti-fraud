@@ -1,30 +1,28 @@
 package com.pwc.aml.users.service;
 
+import java.util.List;
+
 import com.pwc.aml.groups.entity.Groups;
 import com.pwc.aml.roles.entity.Roles;
 import com.pwc.aml.users.entity.Users;
 
-import java.util.*;
 
-/**
- * Created by ochen027 on 7/3/2017.
- */
 public interface IUsersService {
 
-    public Users checkUserName(Users users);
-
-    public List<Groups> fetchUserGroup(int userId);
-
-    public List<Roles> fetchGroupRole(int groupId);
-    
-    public List<Users> listAllUsers();
-    
-    public void createUser(Users u);
-    
-    public void updateUser(Users u);
-    
-    public void deleteUser(int userId);
-    
-    public Users findSingleUser(int userId);
+	 Users checkUserName(Users users);
+	
+	 List<Groups> fetchUserGroup(int userId);
+	
+	 List<Roles> fetchGroupRole(int groupId);
+	
+	 List<Users> listAllUsers();
+	
+	 void createUser(Users u);
+	
+	 void updateUser(Users u);
+	
+	 void deleteUser(int userId);
+	
+	 Users findSingleUser(int userId);
 
 }

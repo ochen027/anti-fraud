@@ -1,13 +1,14 @@
 package com.pwc.aml.groups.dao;
 
-import com.pwc.aml.groups.entity.Groups;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pwc.aml.groups.entity.Groups;
 
 
 @Transactional
@@ -20,7 +21,7 @@ public class GroupsDAO implements IGroupsDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Groups> listAllGroups() {
-		String hql = "FROM Groups WHERE status = 1 ORDER BY userGroupId";
+		String hql = "FROM Groups WHERE status = 1 ORDER BY id";
 		return (List<Groups>)entityManager.createQuery(hql).getResultList();
 	}
 
@@ -31,8 +32,8 @@ public class GroupsDAO implements IGroupsDAO {
 
 	@Override
 	public void updateGroups(Groups ug) {
-		Groups g = this.getGroups(ug.getUserGroupId());
-		g.setUserGroupName(ug.getUserGroupName());
+		Groups g = this.getGroups(ug.getId());
+		g.setGroupName(ug.getGroupName());
 		entityManager.flush();
 	}
 

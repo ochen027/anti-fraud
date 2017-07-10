@@ -1,11 +1,12 @@
 package com.pwc.aml.menus.service;
 
-import com.pwc.aml.menus.dao.IMenusDAO;
-import com.pwc.aml.menus.entity.Menus;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.pwc.aml.menus.dao.IMenusDAO;
+import com.pwc.aml.menus.entity.Menus;
 
 @Service
 public class MenusService implements IMenusService {
@@ -17,7 +18,10 @@ public class MenusService implements IMenusService {
     public List<Menus> listUserMenus(int userId) {
         List<Menus> rootMenus = menuDAO.listUserRootMenus(userId);
         for (Menus m : rootMenus) {
-            List childMenus = this.listUserChildMenus(userId, m.getMenuId());
+            List<Menus> childMenus = this.listUserChildMenus(userId, m.getId());
+            if(null == childMenus){
+            	continue;
+            }
             m.setChildList(childMenus);
         }
         return rootMenus;
@@ -26,12 +30,14 @@ public class MenusService implements IMenusService {
     @Override
     public List<Menus> listUserChildMenus(int userId, int menuId) {
         List<Menus> list = menuDAO.listUserChildMenus(userId, menuId);
-        for(Menus m : list){
-            List<Menus> l =this.listUserChildMenus(userId, m.getMenuId());
-            m.setChildList(l);
+        if(null != list && list.size() > 0){
+	        for(Menus m : list){
+	            List<Menus> l =this.listUserChildMenus(userId, m.getId());
+	            m.setChildList(l);
+	        }
         }
         return list;
     }
-
-
+    
+    
 }
