@@ -75,4 +75,17 @@ public class TransactionServiceImp implements ITransactionService {
         hbaseDaoImp.importTsv();
     }
 
+	@Override
+	public List<HashMap<String, String>> getAllData(String tableName, String columFamily) throws Exception {
+		HTable hTable = hbaseDaoImp.getTable(tableName);
+		List<Cell> cellList = hbaseDaoImp.getAllData(hTable, columFamily);
+		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		for(Cell c : cellList){
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(Bytes.toString(CellUtil.cloneQualifier(c)), Bytes.toString(CellUtil.cloneValue(c)));
+			list.add(map);
+		}
+		return list;
+	}
+
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +40,11 @@ public class TransactionRestController {
     public ResponseEntity<String> truncate() throws Exception {
         transactionServiceImp.truncateTable();
         return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+    
+    @GetMapping("listAll")
+    public ResponseEntity<List<HashMap<String, String>>> listAll() throws Exception{
+		return new ResponseEntity<List<HashMap<String, String>>>(transactionServiceImp.getAllData("aml:trans", "f1"), HttpStatus.OK);
     }
 
 }

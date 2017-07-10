@@ -4,6 +4,8 @@ import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.HTable;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +27,6 @@ public interface ITransactionService {
     void deleteTable(String tableName) throws IOException;
 
     void importData()throws Exception;
+    
+    List<HashMap<String, String>> getAllData(String tableName, String columFamily) throws Exception;
 }
