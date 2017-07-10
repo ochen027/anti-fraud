@@ -194,8 +194,6 @@ public class HbaseDaoImp implements IHbaseDao {
     	List<Cell> list = new ArrayList<Cell>();
     	for (Result rs : rsscan) {
     		for (Cell cell : rs.rawCells()) {
-    			System.out.println(Bytes.toString(CellUtil.cloneQualifier(cell)));
-    			System.out.println(Bytes.toString(CellUtil.cloneValue(cell)));
     			list.add(cell);
     		}
     	}
