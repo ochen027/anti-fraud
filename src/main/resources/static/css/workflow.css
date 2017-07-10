@@ -5,7 +5,7 @@
 
 .workflow-container .canvas-container {
     display: inline-block;
-    /* min-width: 400px; */
+    min-width: 400px;
     overflow: hidden;
     width: calc(100% - 180px);
     margin-left: 180px;
@@ -18,22 +18,21 @@
 }
 
 .workflow-container .canvas-container>div {
-    /*border: solid #9acfea 1px;*/
+    border: solid #9acfea 1px;
     height: 740px;
-    /*background: #fef7e6;*/
-    background: #fff;
-    margin-top: 5px;
+    background: #fef7e6;
+    margin: 0;
 }
 
 .workflow-container .menu-container {
-    /*height: 50px;*/
+    height: 50px;
     text-align: right;
 }
 
 .workflow-container .button-group {
     text-align: center;
-    /*border: solid #9acfea 1px;*/
-    /* border-radius: 5px; */
+    border: solid #9acfea 1px;
+    /*border-radius: 5px;*/
     padding: 20px;
     height: 740px;
     margin-bottom: 0;
@@ -98,7 +97,7 @@
 /*grid*/
 
 .workflow-container svg {
-    /*background: -webkit-linear-gradient(top, transparent 19px, #c3c3c3 20px), -webkit-linear-gradient(left, transparent 19px, #c3c3c3 20px);*/
+    background: -webkit-linear-gradient(top, transparent 19px, #c3c3c3 20px), -webkit-linear-gradient(left, transparent 19px, #c3c3c3 20px);
     background-size: 20px 20px;
 }
 
@@ -171,21 +170,6 @@
     background-size: 100% 100%;
 }
 
-.workflow-container #howToUse .content:nth-child(1) {
-    background-image: url("../img/workflow/picture1.png");
-}
-
-.workflow-container #howToUse .content:nth-child(2) {
-    background-image: url("../img/workflow/picture2.png");
-}
-
-.workflow-container #howToUse .content:nth-child(3) {
-    background-image: url("../img/workflow/picture3.png");
-}
-
-.workflow-container #howToUse .content:nth-child(4) {
-    background-image: url("../img/workflow/picture4.png");
-}
 
 #circle {
     /*height: 34px;*/
