@@ -61,6 +61,7 @@ public class UsersController {
                 userInfo.put("Roles", rSet);
                 userInfo.put("Menus", menuList);
                 session.setAttribute("UserInfo", userInfo);
+                session.setAttribute("userName", u.getUserName());
                 return new ResponseEntity<Map<String, Object>>(userInfo, HttpStatus.OK);
 
             }

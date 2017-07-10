@@ -3,17 +3,20 @@ package com.pwc.aml.rules.service;
 import java.util.List;
 
 import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.RuleStep;
 
 public interface IRulesService {
 	
-	public List<RuleScenario> listAllRuleScenario();
+	List<RuleScenario> listAllRuleScenario();
 	
-	public RuleScenario findSingleRuleScenario(int scenarioId);
+	RuleScenario findSingleRuleScenario(int scenarioId);
 	
-	public void createRuleScenario(RuleScenario rScenario);
+	void createRuleScenario(RuleScenario rScenario);
 	
-	public void updateRuleScenario(RuleScenario rScenario);
+	void updateRuleScenario(RuleScenario rScenario);
 	
-	public void deleteRuleScenario(int scenarioId);
+	void deleteRuleScenario(int scenarioId);
+	
+	void createRuleStep(RuleStep rStep);
 
 }

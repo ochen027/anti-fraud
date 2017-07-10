@@ -2,21 +2,24 @@ package com.pwc.aml.roles.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pwc.aml.roles.dao.IRolesDAO;
 import com.pwc.aml.roles.entity.Roles;
 
-/**
- * Created by ochen027 on 7/4/2017.
- */
 @Transactional
 @Repository
 public class RolesService implements IRolesService {
 
+	@Autowired
+	private IRolesDAO rolesDAO;
+	
+	
     @Override
     public List<Roles> listAllRoles() {
-        return null;
+        return rolesDAO.listAll();
     }
 
     @Override

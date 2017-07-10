@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pwc.aml.rules.dao.IRulesDAO;
 import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.RuleStep;
 
 @Service
 public class RulesService implements IRulesService{
@@ -37,6 +38,11 @@ public class RulesService implements IRulesService{
 	@Override
 	public void deleteRuleScenario(int scenarioId) {
 		rulesDAO.deleteRules(scenarioId);
+	}
+
+	@Override
+	public void createRuleStep(RuleStep rStep) {
+		rulesDAO.createStep(rStep);
 	}
 
 }
