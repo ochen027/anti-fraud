@@ -1,8 +1,8 @@
 package com.pwc.aml.menus.dao;
 
-import com.pwc.aml.menus.entity.Menus;
-
 import java.util.List;
+
+import com.pwc.aml.menus.entity.Menus;
 
 
 public interface IMenusDAO {

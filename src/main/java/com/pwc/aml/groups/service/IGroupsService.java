@@ -1,13 +1,8 @@
 package com.pwc.aml.groups.service;
 
-import com.pwc.aml.groups.entity.Groups;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-/**
- * Created by ochen027 on 7/4/2017.
- */
+import com.pwc.aml.groups.entity.Groups;
 
 public interface IGroupsService {
 

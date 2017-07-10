@@ -1,53 +1,70 @@
 package com.pwc.aml.users.dao;
 
-import com.pwc.aml.users.entity.Users;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
-/**
- * Created by ochen027 on 7/3/2017.
- */
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pwc.aml.groups.entity.Groups;
+import com.pwc.aml.roles.entity.Roles;
+import com.pwc.aml.users.entity.Users;
+
 @Transactional
 @Repository
-public class UsersDAO implements  IUsersDAO{
+public class UsersDAO implements IUsersDAO{
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Users checkUserName(Users users) {
-        String sql = "SELECT USER_ID, USER_NAME, USER_PASSWORD FROM USERS WHERE USER_NAME = ? and STATUS = 1";
-        List uList = entityManager.createNativeQuery(sql).setParameter(1, users.getUserName()).getResultList();
+        String hql = "FROM Users WHERE userName = ? and status = 1";
+        List<Users> uList = (List<Users>)entityManager.createQuery(hql).setParameter(1, users.getUserName()).getResultList();
         Users u = null;
-        if(uList.size() == 1){
-        	for(Object o: uList){
-            	Object[] obj = (Object[])o;
-            	u = new Users();
-            	u.setUserId(obj[0]==null ? 0 : (Integer)obj[0]);
-            	u.setUserName((String)obj[1]);
-            	u.setUserPwd((String)obj[2]);
-            }
+        if(1 == uList.size()){
+        	u = uList.get(0);
         }
         return u;
     }
 
-    @Override
-    public List fetchUserGroups(int userId) {
-        String sql = "SELECT DISTINCT G.GROUP_ID, G.GROUP_NAME " +
-                "FROM USERS AS U, GROUPS AS G, USERGROUP AS UG" +
-                " WHERE U.USER_ID = UG.USER_ID AND G.GROUP_ID = UG.GROUP_ID AND U.STATUS = 1 AND G.STATUS = 1 AND U.USER_ID = ?";
-        return entityManager.createNativeQuery(sql).setParameter(1, userId).getResultList();
+	@Override
+    public List<Groups> fetchUserGroups(int userId) {
+        String hql = "SELECT G.id, G.groupName FROM Users AS U, Groups AS G, UserGroup AS UG" +
+                " WHERE U.id = UG.userId AND G.id = UG.groupId AND U.status = 1 AND G.status = 1 AND U.id = ?";
+        List rlist = entityManager.createQuery(hql).setParameter(1, userId).getResultList();
+        Iterator iter = rlist.iterator();
+        List<Groups> groupList = new ArrayList<Groups>(); 
+        while(iter.hasNext()){
+        	Object[] obj = (Object[]) iter.next();
+        	Groups g = new Groups();
+        	g.setId(null == obj[0] ? 0 : (Integer)obj[0]);
+        	g.setGroupName((String)obj[1]);
+        	groupList.add(g);
+        }
+        
+        return groupList;
     }
 
-    @Override
-    public List fetchGroupRoles(int groupId) {
-        String sql = "SELECT DISTINCT R.ROLE_ID, R.ROLE_NAME " +
-                "FROM ROLES AS R, GROUPS AS G, GROUPROLE AS GR" +
-                " WHERE R.ROLE_ID = GR.ROLE_ID AND G.GROUP_ID = GR.GROUP_ID AND R.STATUS = 1 AND G.STATUS = 1 AND G.GROUP_ID = ?";
-        return entityManager.createNativeQuery(sql).setParameter(1, groupId).getResultList();
+	@Override
+    public List<Roles> fetchGroupRoles(int groupId) {
+        String hql = "SELECT R.id, R.roleName FROM Roles AS R, Groups AS G, GroupRole AS GR" +
+                " WHERE R.id = GR.roleId AND G.id = GR.groupId AND R.status = 1 AND G.status = 1 AND G.id = ?";
+        List rlist = entityManager.createQuery(hql).setParameter(1, groupId).getResultList();
+        Iterator iter = rlist.iterator();
+        List<Roles> roleList = new ArrayList<Roles>(); 
+        while(iter.hasNext()){
+        	Object[] obj = (Object[]) iter.next();
+        	Roles r = new Roles();
+        	r.setId(null == obj[0] ? 0 : (Integer)obj[0]);
+        	r.setRoleName((String)obj[1]);
+        	roleList.add(r);
+        }
+        return roleList;
     }
 
     @Override
@@ -62,7 +79,7 @@ public class UsersDAO implements  IUsersDAO{
 
     @Override
     public void updateUser(Users users) {
-    	Users u = this.findUserByUserId(users.getUserId());
+    	Users u = this.findUserByUserId(users.getId());
     	u.setUserName(users.getUserName());
     	u.setUserPwd(users.getUserPwd());
     	entityManager.flush();
@@ -71,7 +88,7 @@ public class UsersDAO implements  IUsersDAO{
     @SuppressWarnings("unchecked")
 	@Override
     public List<Users> listAllUsers() {
-    	String hql = "FROM Users as u ORDER BY u.userId";
+    	String hql = "FROM Users ORDER BY userId";
         return (List<Users>) entityManager.createQuery(hql).getResultList();
     }
 
@@ -79,6 +96,7 @@ public class UsersDAO implements  IUsersDAO{
 	public Users findUserByUserId(int userId) {
 		return entityManager.find(Users.class, userId);
 	}
-
+	
+	
 
 }

@@ -1,19 +1,20 @@
 package com.pwc.aml.menus.entity;
 
-import com.pwc.aml.entity.BaseEntity;
-import com.pwc.aml.roles.entity.Roles;
-
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.pwc.aml.entity.BaseEntity;
 
 @Entity
 @Table(name="MENUS")
 public class Menus extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="MENU_ID")
-    private int menuId;
-    @Column(name="MENU_NAME")
+
+	private static final long serialVersionUID = 1L;
+	@Column(name="MENU_NAME")
     private String menuName;
     @Column(name="MENU_URL")
     private String menuURL;
@@ -25,21 +26,6 @@ public class Menus extends BaseEntity{
     private int menuParentId;
     @Transient
     private List<Menus> childList;
-
-
-    @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name="ROLEMENU",
-            joinColumns = @JoinColumn(name = "menuId", referencedColumnName = "MENU_ID"),
-            inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "ROLE_ID"))
-    private List<Roles> lRoles;
-
-    public int getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
-    }
 
     public String getMenuName() {
         return menuName;
@@ -81,13 +67,6 @@ public class Menus extends BaseEntity{
         this.menuParentId = menuParentId;
     }
 
-    public List<Roles> getlRoles() {
-        return lRoles;
-    }
-
-    public void setlRoles(List<Roles> lRoles) {
-        this.lRoles = lRoles;
-    }
 
     public List<Menus> getChildList() {
         return childList;
