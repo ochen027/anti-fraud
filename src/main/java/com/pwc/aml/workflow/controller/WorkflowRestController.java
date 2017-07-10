@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("workflow")
-public class WorkflowController {
-    @Autowired
-    private IWorkflowService usersService;
+public class WorkflowRestController {
+
 
     @PostMapping("get")
     public ResponseEntity<Void> get(@RequestBody Workflow u){
