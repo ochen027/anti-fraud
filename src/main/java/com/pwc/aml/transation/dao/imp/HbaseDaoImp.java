@@ -1,22 +1,22 @@
 package com.pwc.aml.transation.dao.imp;
 
-/**
- * Created by aliu323 on 6/30/2017.
- */
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
-import com.jcraft.jsch.JSchException;
-import com.pwc.aml.transation.dao.IHbaseDao;
-import com.pwc.aml.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.MasterNotRunningException;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
@@ -25,8 +25,11 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.springframework.stereotype.Repository;
+
+import com.jcraft.jsch.JSchException;
+import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.util.RunShellTool;
 
 
 @Repository
@@ -183,8 +186,22 @@ public class HbaseDaoImp implements IHbaseDao {
 //        return Cell;
 //    }
 
-
-
+    
+	@Override
+	public List<Cell> getAllData(HTable table, String cloumnFamily) throws Exception {
+		Scan scan = new Scan();
+    	ResultScanner rsscan = table.getScanner(scan);
+    	List<Cell> list = new ArrayList<Cell>();
+    	for (Result rs : rsscan) {
+    		for (Cell cell : rs.rawCells()) {
+    			System.out.println(Bytes.toString(CellUtil.cloneQualifier(cell)));
+    			System.out.println(Bytes.toString(CellUtil.cloneValue(cell)));
+    			list.add(cell);
+    		}
+    	}
+    	return list;
+	}
+    
 
     /**
      * scan the all table
@@ -303,5 +320,7 @@ public class HbaseDaoImp implements IHbaseDao {
 //        hdao.deleteTable("aml:trans");
 //        hdao.createTable("aml:trans");
     }
+
+
 
 }

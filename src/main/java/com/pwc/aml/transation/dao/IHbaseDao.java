@@ -1,9 +1,10 @@
 package com.pwc.aml.transation.dao;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.HTable;
-
-import java.io.IOException;
 
 /**
  * Created by aliu323 on 6/30/2017.
@@ -18,4 +19,5 @@ public interface IHbaseDao {
      void createTable(String tableName) throws IOException;
      void deleteTable(String tableName) throws IOException;
     void importTsv();
+    List<Cell> getAllData(HTable table, String cloumnFamily) throws Exception;
 }
