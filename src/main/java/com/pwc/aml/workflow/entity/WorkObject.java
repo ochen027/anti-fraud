@@ -1,8 +1,8 @@
 package com.pwc.aml.workflow.entity;
 
-import com.pwc.aml.entity.BaseEntity;
-
 import javax.persistence.*;
+
+import com.pwc.aml.base.entity.BaseEntity;
 
 @Entity
 @Table(name="WorkObject")

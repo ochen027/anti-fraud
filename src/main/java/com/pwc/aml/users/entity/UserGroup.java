@@ -1,8 +1,10 @@
-package com.pwc.aml.entity;
+package com.pwc.aml.users.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.pwc.aml.base.entity.BaseEntity;
 
 @Entity
 @Table(name="USERGROUP")

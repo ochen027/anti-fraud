@@ -1,8 +1,10 @@
-package com.pwc.aml.entity;
+package com.pwc.aml.roles.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.pwc.aml.base.entity.BaseEntity;
 
 @Entity
 @Table(name="ROLEMENU")
@@ -26,7 +28,5 @@ public class RoleMenu extends BaseEntity{
 	public void setMenuId(int menuId) {
 		this.menuId = menuId;
 	}
-	
-	
 
 }
