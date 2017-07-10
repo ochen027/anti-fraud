@@ -1,4 +1,4 @@
-package com.pwc.aml.entity;
+package com.pwc.aml.base.entity;
 
 import java.io.Serializable;
 import java.sql.Date;

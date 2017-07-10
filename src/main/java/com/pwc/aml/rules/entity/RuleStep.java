@@ -3,21 +3,17 @@ package com.pwc.aml.rules.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.pwc.aml.base.entity.BaseEntity;
+
 @Entity
 @Table(name="RULESTEP")
-public class RuleStep {
+public class RuleStep extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name="STEP_ID")
-	private int stepId;
+	private static final long serialVersionUID = 1L;
 	@Column(name="STEP_ORDER")
 	private int stepOrder;
 	@Column(name="STEP_WHEN")
@@ -28,13 +24,7 @@ public class RuleStep {
 	@JoinColumn(name="SCENARIO_ID", nullable = false)
 	private RuleScenario ruleScenario;
 	
-	
-	public int getStepId() {
-		return stepId;
-	}
-	public void setStepId(int stepId) {
-		this.stepId = stepId;
-	}
+
 	public int getStepOrder() {
 		return stepOrder;
 	}

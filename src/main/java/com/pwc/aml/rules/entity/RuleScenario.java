@@ -2,27 +2,18 @@ package com.pwc.aml.rules.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.pwc.aml.base.entity.BaseEntity;
 
 @Entity
 @Table(name="RULESCENARIO")
-public class RuleScenario {
+public class RuleScenario extends BaseEntity{
 	
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name="SCENARIO_ID")
-	private int scenarioId;
+	private static final long serialVersionUID = 1L;
 	@Column(name="SCENARIO_NAME")
 	private String scenarioName;
-	public int getScenarioId() {
-		return scenarioId;
-	}
-	public void setScenarioId(int scenarioId) {
-		this.scenarioId = scenarioId;
-	}
+	
 	public String getScenarioName() {
 		return scenarioName;
 	}
