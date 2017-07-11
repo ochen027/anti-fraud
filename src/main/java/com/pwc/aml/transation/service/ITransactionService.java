@@ -1,12 +1,10 @@
 package com.pwc.aml.transation.service;
 
-import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.client.HTable;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.pwc.aml.transation.entity.Transactions;
 
 /**
  * Created by aliu323 on 7/4/2017.
@@ -28,5 +26,5 @@ public interface ITransactionService {
 
     void importData()throws Exception;
     
-    List<HashMap<String, String>> getAllData(String tableName, String columFamily) throws Exception;
+    List<Transactions> getAllData(String tableName, String columFamily) throws Exception;
 }

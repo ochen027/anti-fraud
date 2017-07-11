@@ -1,6 +1,5 @@
 package com.pwc.aml.rules.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pwc.aml.base.controller.BaseController;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
 import com.pwc.aml.rules.service.IRulesService;
 
 @Controller
 @RequestMapping("rules")
-public class RulesController {
+public class RulesController extends BaseController{
 
 	@Autowired
 	private IRulesService rulesService;
@@ -39,9 +39,8 @@ public class RulesController {
 	
 	@PostMapping("createRule")
 	public ResponseEntity<Void> CreateRule(@RequestBody RuleScenario rScenario, HttpSession session){
-		//String userName = (String)session.getAttribute("userName");
-		//rScenario.setCreatedBy(userName);
-		///rScenario.setLastUpdatedBy(userName);
+		rScenario.setCreatedBy(userName);
+		rScenario.setLastUpdatedBy(userName);
 		rulesService.createRuleScenario(rScenario);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -62,6 +61,11 @@ public class RulesController {
 	public ResponseEntity<Void> CreateStep(@RequestBody RuleStep rStep){
 		rulesService.createRuleStep(rStep);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping("listStepByRule/{id}")
+	public ResponseEntity<List<RuleStep>> ListStepByRule(@PathVariable("id") int id){
+		return new ResponseEntity<List<RuleStep>>(rulesService.listStepByRule(id),HttpStatus.OK);
 	}
 	
 

@@ -29,6 +29,8 @@ import org.springframework.stereotype.Repository;
 
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.util.DateUtil;
 import com.pwc.aml.util.RunShellTool;
 
 
@@ -188,14 +190,51 @@ public class HbaseDaoImp implements IHbaseDao {
 
     
 	@Override
-	public List<Cell> getAllData(HTable table, String cloumnFamily) throws Exception {
+	public List<Transactions> getAllData(HTable table, String cloumnFamily) throws Exception {
 		Scan scan = new Scan();
     	ResultScanner rsscan = table.getScanner(scan);
-    	List<Cell> list = new ArrayList<Cell>();
+    	List<Transactions> list = new ArrayList<Transactions>();
     	for (Result rs : rsscan) {
-    		for (Cell cell : rs.rawCells()) {
-    			list.add(cell);
+    		Transactions tbean = new Transactions();
+    		//System.out.println(Bytes.toString(rs.getRow()));
+    		tbean.setTransId(Bytes.toString(rs.getRow()));
+    		
+    		for (Cell c : rs.rawCells()) {
+    			
+    			switch(Bytes.toString(CellUtil.cloneQualifier(c))){
+    			case "acct_id":
+    				tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "as_of_date":
+    				//tbean.setAsOfDate(DateUtil.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+    				tbean.setAsOfDate(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "counterparty_id_1":
+    				tbean.setCounterPartyId(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "currency_cd":
+    				tbean.setCurrencyCd(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_base_amt":
+    				//tbean.setTransBaseAmt(Double.parseDouble(Bytes.toString(CellUtil.cloneValue(c))));
+    				tbean.setTransBaseAmt(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_br":
+    				tbean.setTransBr(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_by":
+    				tbean.setTransBy(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_cdt_cd":
+    				tbean.setTransCdtCd(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_chanel":
+    				//tbean.setTransChanel(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+    				tbean.setTransChanel(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_desc":
+    				tbean.setTransDesc(Bytes.toString(CellUtil.cloneValue(c)));
+    			case "trans_dt":
+    				tbean.setTransDt(Bytes.toString(CellUtil.cloneValue(c)));
+    				//tbean.setTransDt(DateUtil.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+    			case "trans_seq":
+    				tbean.setTransSeq(Bytes.toString(CellUtil.cloneValue(c)));
+    				//tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+    			}
+    			
     		}
+    		list.add(tbean);
     	}
     	return list;
 	}
