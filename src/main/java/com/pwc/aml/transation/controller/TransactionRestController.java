@@ -1,7 +1,10 @@
 package com.pwc.aml.transation.controller;
 
 
-import com.pwc.aml.transation.service.ITransactionService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.transation.service.ITransactionService;
 
 /**
  * Created by aliu323 on 7/5/2017.
@@ -43,8 +45,8 @@ public class TransactionRestController {
     }
     
     @GetMapping("listAll")
-    public ResponseEntity<List<HashMap<String, String>>> listAll() throws Exception{
-		return new ResponseEntity<List<HashMap<String, String>>>(transactionServiceImp.getAllData("aml:trans", "f1"), HttpStatus.OK);
+    public ResponseEntity<List<Transactions>> listAll() throws Exception{
+		return new ResponseEntity<List<Transactions>>(transactionServiceImp.getAllData("aml:trans", "f1"), HttpStatus.OK);
     }
 
 }

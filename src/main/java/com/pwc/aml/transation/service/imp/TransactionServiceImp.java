@@ -1,7 +1,11 @@
 package com.pwc.aml.transation.service.imp;
 
-import com.pwc.aml.transation.dao.IHbaseDao;
-import com.pwc.aml.transation.service.ITransactionService;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
@@ -9,11 +13,10 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.transation.service.ITransactionService;
+import com.pwc.aml.util.DateUtil;
 
 /**
  * Created by aliu323 on 7/4/2017.
@@ -76,15 +79,9 @@ public class TransactionServiceImp implements ITransactionService {
     }
 
 	@Override
-	public List<HashMap<String, String>> getAllData(String tableName, String columFamily) throws Exception {
+	public List<Transactions> getAllData(String tableName, String columFamily) throws Exception {
 		HTable hTable = hbaseDaoImp.getTable(tableName);
-		List<Cell> cellList = hbaseDaoImp.getAllData(hTable, columFamily);
-		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-		for(Cell c : cellList){
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(Bytes.toString(CellUtil.cloneQualifier(c)), Bytes.toString(CellUtil.cloneValue(c)));
-			list.add(map);
-		}
+		List<Transactions> list = hbaseDaoImp.getAllData(hTable, columFamily);
 		return list;
 	}
 
