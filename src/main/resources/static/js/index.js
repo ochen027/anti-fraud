@@ -20,23 +20,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     }
     $stateProvider.state(dashboard);
 
-    let transExample = {
-        name: 'transExample',
-        url: '/trans',
+    let batch = {
+        name: 'transBatch',
+        url: '/batch',
         views: {
             header: {
                 templateUrl: '/header'
             },
             content: {
-                templateUrl: '/trans'
+                templateUrl: '/batch/trans'
             },
             footer: {
                 templateUrl: '/footer',
             }
         },
-        controller: 'TransCtrl'
+        controller: 'TransBatchCtrl'
     }
-    $stateProvider.state(transExample);
+    $stateProvider.state(batch);
 
     let authModule = [
         {

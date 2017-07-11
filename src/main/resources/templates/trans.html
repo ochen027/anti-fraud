@@ -1,4 +1,46 @@
-<div>
+<div class="container" ng-controller="TransBatchCtrl">
 
-    for testing transaction function
+
+    <h4>Transaction Example</h4>
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default">Import Transactions</button>
+        <button class="btn btn-default">Delete All</button>
+        <button class="btn btn-default">Refresh Data</button>
+    </div>
+
+    <div class="col-md-12">
+        <!--  table part -->
+        <table class="table table-striped table-bordered table-hover"
+               st-table="dataDisplay" st-safe-src="data">
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Description</th>
+                <th>Create Date</th>
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <!-- ng-repeat="row in dataDisplay"-->
+            <tr>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Create Date</td>
+                <td>Action</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage"
+                         st-displayed-pages="7"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
 </div>

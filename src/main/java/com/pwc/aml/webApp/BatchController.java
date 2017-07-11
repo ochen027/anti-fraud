@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class TransactionController {
+@RequestMapping("batch")
+public class BatchController {
 
 
     @RequestMapping("/trans")
