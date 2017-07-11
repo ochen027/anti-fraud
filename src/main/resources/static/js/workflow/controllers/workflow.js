@@ -1,8 +1,11 @@
-window.targetProperty = new Object();
-window.project = new Object();
 
 
-app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService) {
+
+app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService,draw2dService) {
+
+
+    window.targetProperty = {};
+    window.project = {};
 
 
     $timeout(function () {
@@ -41,7 +44,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                     console.log("get role list error");
                 }
 
-                res.data.each(function(item){
+                res.data.forEach(function(item){
                     $("#processStartRole").append("<option value='"+item.id+"'>"+item.roleName+"</option>");
                 });
 
@@ -61,9 +64,9 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
         }
 
 
-        var setWorkflowHeader = function () {
-            $("#projectName").html(project.name.replace(/</g, '&lt;'));
-        }
+        // var setWorkflowHeader = function () {
+        //     $("#projectName").html(project.name.replace(/</g, '&lt;'));
+        // }
 
         var saveProjectClick = function () {
 
@@ -194,12 +197,13 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
          */
         var btnSaveProjectClick = function () {
             $("#btnSaveWorkflow").click(function () {
+                debugger;
                 var result = Workflow.writeWorkflow();
-                var model = self.draw2dToModel(result);
+                var model = draw2dService.draw2dToModel(result);
                 project.draw2d = JSON.stringify(result);
                 project.flowEvents = model.flowEvents;
                 project.flowPoints = model.flowPoints;
-                setProjectValue();
+                // setProjectValue();
                 console.log(result);
 
 
@@ -208,12 +212,11 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
         }
 
 
-        var setProjectValue = function () {
-            project.name = $("#projectID").val().replace("<", "&lt;");
-            project.type = $("#type").val().replace("<", "&lt;");
-            ;
-            project.description = $("#description").val().replace("<", "&lt;");
-        }
+        // var setProjectValue = function () {
+        //     project.name = $("#projectID").val().replace("<", "&lt;");
+        //     project.type = $("#type").val().replace("<", "&lt;");
+        //     project.description = $("#description").val().replace("<", "&lt;");
+        // }
 
 
         var openEditDialog = function (setting) {
