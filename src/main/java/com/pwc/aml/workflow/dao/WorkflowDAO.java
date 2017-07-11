@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.dao;
 
 import com.pwc.aml.workflow.entity.Workflow;
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,4 +30,23 @@ public class WorkflowDAO implements IWorkflowDAO {
         TypedQuery<Workflow> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
+
+    @Override
+    public void save(Workflow workflow) {
+        em.persist(workflow);
+    }
+
+    @Override
+    public void deleteOne(Workflow workflow) {
+         Workflow wf= em.find(Workflow.class,workflow.getId());
+         em.remove(wf);
+    }
+
+    @Override
+    public Workflow update(Workflow workflow) {
+       Workflow wf= em.merge(workflow);
+        return wf;
+    }
+
+
 }

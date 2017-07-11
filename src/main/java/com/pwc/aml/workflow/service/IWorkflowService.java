@@ -10,4 +10,10 @@ public interface IWorkflowService {
 
     List<Workflow> getAllworkflow();
 
+    void save(Workflow workflow);
+
+    void deleteOne(Workflow workflow);
+
+    Workflow update(Workflow workflow);
+
 }
