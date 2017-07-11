@@ -37,7 +37,9 @@ public class TransactionServiceImp implements ITransactionService {
     public void putData(String table, String rowkey, String columnFamily, String column, String value) throws Exception {
         HTable hTable = hbaseDaoImp.getTable(table);
         hbaseDaoImp.putData(hTable, rowkey, columnFamily, column, value);
+
     }
+
 
     @Override
     public void deleteData(String table, String rowkey, String columnFamily, String column) throws Exception {

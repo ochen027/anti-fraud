@@ -92,7 +92,6 @@ public class HbaseDaoImp implements IHbaseDao {
 
         //get the hbase table instance
         HTable table = (HTable) connection.getTable(name);
-
 //        HTable table = new HTable(conf, name);
         System.out.println(System.currentTimeMillis());
         return table;
