@@ -33,15 +33,15 @@ public class TransactionRestController {
     }
 
     @GetMapping("import")
-    public ResponseEntity<String> getSingle() throws Exception {
+    public ResponseEntity<Void> getSingle() throws Exception {
         transactionServiceImp.importData();
-        return new ResponseEntity<String>("success", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @GetMapping("truncate")
-    public ResponseEntity<String> truncate() throws Exception {
+    public ResponseEntity<Void> truncate() throws Exception {
         transactionServiceImp.truncateTable();
-        return new ResponseEntity<String>("success", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
     
     @GetMapping("listAll")
