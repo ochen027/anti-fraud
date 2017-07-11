@@ -63,7 +63,7 @@ public class RulesController extends BaseController{
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@GetMapping("listStepByRule")
+	@GetMapping("listStepByRule/{id}")
 	public ResponseEntity<List<RuleStep>> ListStepByRule(@PathVariable("id") int id){
 		return new ResponseEntity<List<RuleStep>>(rulesService.listStepByRule(id),HttpStatus.OK);
 	}

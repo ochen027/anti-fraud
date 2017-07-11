@@ -1,5 +1,7 @@
 package com.pwc.aml.rules.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -55,8 +57,21 @@ public class RulesDAO implements IRulesDAO {
 
 	@Override
 	public List<RuleStep> listStepByRule(int scenarioId) {
-		String hql = "from RuleStep where scenarioId = ? order by stepOrder";
-		return (List<RuleStep>)entityManager.createQuery(hql).setParameter(1, scenarioId).getResultList();
+		String hql = "select rs.stepOrder, rs.stepWhen, rs.stepThen from RuleStep as rs, RuleScenario rso where rso.id = ? order by rs.stepOrder";
+		List<Object[]> list = entityManager.createQuery(hql).setParameter(1, scenarioId).getResultList();
+		List<RuleStep> rList = new ArrayList<RuleStep>();
+		Iterator<Object []> iter = list.iterator();
+		
+		while(iter.hasNext()){
+			RuleStep rs = new RuleStep();
+			Object[] obj = iter.next();
+			rs.setStepOrder((Integer)obj[0]);
+			rs.setStepThen((String)obj[1]);
+			rs.setStepWhen((String)obj[2]);
+			rList.add(rs);
+		}
+		return rList;
+		
 	}
 	
 
