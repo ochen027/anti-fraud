@@ -1,3 +1,51 @@
-<div>
-    index
+<div class="container" ng-controller="IndexWorkflowCtrl">
+
+    <h3>workflow:</h3>
+    <hr/>
+
+
+    <div class="col-md-12">
+        <div class="col-md-12 text-right"><button class="btn btn-default" ng-click="createWorkflow()">Create New Workflow</button></div>
+        <div class="card">
+            <div class="card-header">
+                Workflow:
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="dataDisplay" st-safe-src="data">
+                    <thead>
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Create Date</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- ng-repeat="row in dataDisplay"-->
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Create Date</td>
+                        <td>Action</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            <div st-pagination="" st-items-by-page="itemsByPage"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>

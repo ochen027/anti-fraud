@@ -214,6 +214,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     let workflow =[
         {
+            name: "IndexWorkflow",
+            url: "/workflow/index",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/workflow/index'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'IndexWorkflowCtrl'
+        },
+        {
             name: "EditWorkflow",
             url: "/workflow/edit",
             views: {
