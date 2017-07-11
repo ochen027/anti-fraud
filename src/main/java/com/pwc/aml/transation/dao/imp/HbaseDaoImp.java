@@ -1,37 +1,22 @@
 package com.pwc.aml.transation.dao.imp;
 
+import com.jcraft.jsch.JSchException;
+import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.util.RunShellTool;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.PrefixFilter;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.datanucleus.store.connection.ConnectionFactory;
+import org.springframework.stereotype.Repository;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.CellUtil;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.MasterNotRunningException;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.ZooKeeperConnectionException;
-import org.apache.hadoop.hbase.client.Delete;
-import org.apache.hadoop.hbase.client.Get;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.PrefixFilter;
-import org.apache.hadoop.hbase.util.Bytes;
-import org.springframework.stereotype.Repository;
-
-import com.jcraft.jsch.JSchException;
-import com.pwc.aml.transation.dao.IHbaseDao;
-import com.pwc.aml.transation.entity.Transactions;
-import com.pwc.aml.util.DateUtil;
-import com.pwc.aml.util.RunShellTool;
 
 
 @Repository
@@ -40,6 +25,15 @@ public class HbaseDaoImp implements IHbaseDao {
 
     static final Configuration conf = HBaseConfiguration.create();
     static Properties pro = new Properties();
+    static HConnection connection;
+
+    static {
+        try {
+            connection = HConnectionManager.createConnection(conf);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 //    public HbaseDaoImp() throws IOException {
 //
 //        FileInputStream fis=new FileInputStream(new File("application.properties"));
@@ -97,7 +91,10 @@ public class HbaseDaoImp implements IHbaseDao {
     public HTable getTable(String name) throws Exception {
 
         //get the hbase table instance
-        HTable table = new HTable(conf, name);
+        HTable table = (HTable) connection.getTable(name);
+
+//        HTable table = new HTable(conf, name);
+        System.out.println(System.currentTimeMillis());
         return table;
     }
 
@@ -263,6 +260,7 @@ public class HbaseDaoImp implements IHbaseDao {
                                 cell.getTimestamp()
                 );
             }
+            rsscan.close();
             System.out.println("------------------------------");
         }
     }
@@ -353,6 +351,7 @@ public class HbaseDaoImp implements IHbaseDao {
 //
 //        System.out.println(proStr);
 //          hdao.importTsv();
+
         hdao.scanData(table);
 //        hdao.deleteTable("aml:trans");
 //        hdao.createTable("aml:trans");
