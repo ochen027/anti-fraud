@@ -15,6 +15,8 @@ import com.pwc.aml.rules.entity.RuleStep;
 @Repository
 public class RulesDAO implements IRulesDAO {
 	
+	
+	
 	@PersistenceContext
     private EntityManager entityManager;
 
@@ -50,5 +52,14 @@ public class RulesDAO implements IRulesDAO {
 	public void createStep(RuleStep rStep) {
 		entityManager.persist(rStep);
 	}
+
+	@Override
+	public List<RuleStep> listStepByRule(int scenarioId) {
+		String hql = "from RuleStep where scenarioId = ? order by stepOrder";
+		return (List<RuleStep>)entityManager.createQuery(hql).setParameter(1, scenarioId).getResultList();
+	}
+	
+
+	
 
 }

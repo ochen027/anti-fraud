@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pwc.aml.base.controller.BaseController;
 import com.pwc.aml.groups.entity.Groups;
 import com.pwc.aml.menus.entity.Menus;
 import com.pwc.aml.menus.service.IMenusService;
@@ -29,7 +30,7 @@ import com.pwc.aml.users.service.IUsersService;
 
 @Controller
 @RequestMapping("user")
-public class UsersController {
+public class UsersController extends BaseController{
     @Autowired
     private IUsersService usersService;
     
@@ -62,6 +63,7 @@ public class UsersController {
                 userInfo.put("Menus", menuList);
                 session.setAttribute("UserInfo", userInfo);
                 session.setAttribute("userName", u.getUserName());
+                userName = u.getUserName();
                 return new ResponseEntity<Map<String, Object>>(userInfo, HttpStatus.OK);
 
             }

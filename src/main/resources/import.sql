@@ -62,3 +62,11 @@ insert into rolemenu values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 
 insert into rolemenu values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 1);
 insert into rolemenu values (11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 1);
 
+--initial rule scenario
+insert into rulescenario values (1, 'sysadmin', sysadte, sysdate, 'sysadmin', 1, 'Scenario 1');
+
+--initial rule step
+insert into rulestep values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 'Step 1-1 ThenXXXX', 'Step 1-1 When XXX', 1);
+insert into rulestep values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 'Step 1-2 ThenXXXX', 'Step 1-2 When XXX', 1);
+insert into rulestep values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 'Step 1-3 ThenXXXX', 'Step 1-3 When XXX', 1);
+

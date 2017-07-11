@@ -18,4 +18,6 @@ public interface IRulesDAO {
 	RuleScenario findSingleScenario(int scenarioId);
 	
 	void createStep(RuleStep rStep);
+	
+	List<RuleStep> listStepByRule(int scenarioId);
 }

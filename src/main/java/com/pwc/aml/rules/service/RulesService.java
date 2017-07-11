@@ -45,4 +45,9 @@ public class RulesService implements IRulesService{
 		rulesDAO.createStep(rStep);
 	}
 
+	@Override
+	public List<RuleStep> listStepByRule(int scenarioId) {
+		return rulesDAO.listStepByRule(scenarioId);
+	}
+
 }

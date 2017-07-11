@@ -18,5 +18,6 @@ public interface IRulesService {
 	void deleteRuleScenario(int scenarioId);
 	
 	void createRuleStep(RuleStep rStep);
-
+	
+	List<RuleStep> listStepByRule(int scenarioId);
 }
