@@ -7,13 +7,18 @@ import java.util.List;
 
 public interface IWorkflowService {
 
-
-    List<Workflow> getAllworkflow();
+    /**
+     * list workflow basic information
+     * @return
+     */
+    List<Workflow> getAllWorkflow();
 
     void save(Workflow workflow);
 
-    void deleteOne(Workflow workflow);
+    void delete(Workflow workflow);
 
     Workflow update(Workflow workflow);
+
+    Workflow getWorkflowByFlowId(String FlowId);
 
 }

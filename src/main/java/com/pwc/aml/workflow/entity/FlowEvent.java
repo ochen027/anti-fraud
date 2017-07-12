@@ -12,6 +12,11 @@ public class FlowEvent extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 
+    @Column(name="FLOWEVENTID")
+    private String flowEventId;
+
+    @Column(name="FLOWPOINTID")
+    private String flowPointId;
 
     @Column(name="TYPE")
 	private String type;
@@ -22,16 +27,14 @@ public class FlowEvent extends BaseEntity {
     @Column(name="PRINT")
     private String print;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="FLOW_ID")
-    private Workflow workflow;
+    @Column(name="FLOWID")
+    private String flowId;
 
     @Column(name="DESCRIPTION")
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ENDPOINT")
-    private FlowPoint endPoint;
+    @Column(name="endpoint")
+    private String endpoint;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -61,14 +64,6 @@ public class FlowEvent extends BaseEntity {
         this.print = print;
     }
 
-    public Workflow getWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(Workflow workflow) {
-        this.workflow = workflow;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -77,11 +72,36 @@ public class FlowEvent extends BaseEntity {
         this.description = description;
     }
 
-    public FlowPoint getEndPoint() {
-        return endPoint;
+
+    public String getFlowEventId() {
+        return flowEventId;
     }
 
-    public void setEndPoint(FlowPoint endPoint) {
-        this.endPoint = endPoint;
+    public void setFlowEventId(String flowEventId) {
+        this.flowEventId = flowEventId;
+    }
+
+    public String getFlowPointId() {
+        return flowPointId;
+    }
+
+    public void setFlowPointId(String flowPointId) {
+        this.flowPointId = flowPointId;
+    }
+
+    public String getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 }

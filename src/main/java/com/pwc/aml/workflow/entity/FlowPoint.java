@@ -12,6 +12,9 @@ public class FlowPoint extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+    @Column(name="FLOWPOINTID")
+	private String flowPointId;
+
     @Column(name="TYPE")
     private String type;
 
@@ -21,20 +24,15 @@ public class FlowPoint extends BaseEntity {
     @Column(name="PRINT")
     private String print;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="Flow_ID")
-    private Workflow workflow;
+    @Column(name="FLOWID")
+    private String flowId;
 
     @Column(name="DESCRIPTION")
     private String description;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
-    private List<FlowEvent> lflowEvents;
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
-
 
     public String getType() {
         return type;
@@ -60,14 +58,6 @@ public class FlowPoint extends BaseEntity {
         this.print = print;
     }
 
-    public Workflow getWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(Workflow workflow) {
-        this.workflow = workflow;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -76,11 +66,19 @@ public class FlowPoint extends BaseEntity {
         this.description = description;
     }
 
-    public List<FlowEvent> getLflowEvents() {
-        return lflowEvents;
+    public String getFlowPointId() {
+        return flowPointId;
     }
 
-    public void setLflowEvents(List<FlowEvent> lflowEvents) {
-        this.lflowEvents = lflowEvents;
+    public void setFlowPointId(String flowPointId) {
+        this.flowPointId = flowPointId;
+    }
+
+    public String getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 }

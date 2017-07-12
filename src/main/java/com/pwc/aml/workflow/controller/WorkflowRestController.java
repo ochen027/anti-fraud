@@ -24,7 +24,7 @@ public class WorkflowRestController {
     @GetMapping("getAllWorkflow")
     public ResponseEntity<List<Workflow>> getAllWorkflow() {
 
-        List<Workflow> workflows = workflowService.getAllworkflow();
+        List<Workflow> workflows = workflowService.getAllWorkflow();
 
         return new ResponseEntity<List<Workflow>>(workflows, HttpStatus.OK);
     }

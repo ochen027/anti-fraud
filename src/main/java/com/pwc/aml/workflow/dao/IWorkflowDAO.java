@@ -8,11 +8,14 @@ import java.util.List;
 
 public interface IWorkflowDAO {
 
-    List<Workflow> getAllworkflow();
+    List<Workflow> findAll();
 
     void save(Workflow workflow);
 
-    void deleteOne(Workflow workflow);
+    void delete(String flowId);
 
     Workflow update(Workflow workflow);
+
+    Workflow findByFlowId(String flowId);
+
 }

@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class WorkflowDAO implements IWorkflowDAO {
 
 
     @Override
-    public List<Workflow> getAllworkflow() {
+    public List<Workflow> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Workflow> cq = cb.createQuery(Workflow.class);
         Root<Workflow> rootEntry = cq.from(Workflow.class);
@@ -37,14 +38,28 @@ public class WorkflowDAO implements IWorkflowDAO {
     }
 
     @Override
-    public void deleteOne(Workflow workflow) {
-         Workflow wf= em.find(Workflow.class,workflow.getId());
-         em.remove(wf);
+    public void delete(String flowId) {
+        Workflow wf = findByFlowId(flowId);
+        em.remove(wf);
     }
 
     @Override
     public Workflow update(Workflow workflow) {
-       Workflow wf= em.merge(workflow);
+        Workflow target =findByFlowId(workflow.getFlowId());
+        workflow.setId(target.getId());
+        Workflow wf = em.merge(workflow);
+        return wf;
+    }
+
+    @Override
+    public Workflow findByFlowId(String flowId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Workflow> cq = cb.createQuery(Workflow.class);
+        Root<Workflow> rootEntry = cq.from(Workflow.class);
+        Predicate predicate = cb.equal(rootEntry.get("flowId"), flowId);
+        CriteriaQuery<Workflow> single = cq.select(rootEntry).where(predicate);
+        TypedQuery<Workflow> query = em.createQuery(single);
+        Workflow wf = query.getSingleResult();
         return wf;
     }
 

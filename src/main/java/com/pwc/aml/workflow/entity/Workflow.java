@@ -16,6 +16,8 @@ public class Workflow extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 
+    @Column(name="FLOWID")
+    private String flowId;
 
     @Column(name="CHART_JSON",columnDefinition="CLOB NOT NULL")
     private String chartJson;
@@ -29,22 +31,16 @@ public class Workflow extends BaseEntity {
     @Column(name="DESCRIPTION")
     private String description;
 
-
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
-
+    @Transient
     private List<FlowPoint> flowPoints;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
-
+    @Transient
     private List<FlowEvent> flowEvents;
-
 
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
-
-
 
     public String getChartJson() {
         return chartJson;
@@ -77,6 +73,15 @@ public class Workflow extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
+    }
+
 
     public List<FlowPoint> getFlowPoints() {
         return flowPoints;
