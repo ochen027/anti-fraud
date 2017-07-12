@@ -17,20 +17,23 @@ import java.util.List;
 @RequestMapping("workflow")
 public class WorkflowRestController {
 
+    @Autowired
+    private IWorkflowService workflowService;
 
-//    @PostMapping("get")
-//    public ResponseEntity<Void> get(@RequestBody Workflow u){
-//
-//    	return new ResponseEntity<Void>(HttpStatus.OK);
-//    }
 
     @GetMapping("getAllWorkflow")
-    public ResponseEntity<List<Workflow>> getAllWorkflow(){
+    public ResponseEntity<List<Workflow>> getAllWorkflow() {
 
-        List<Workflow> workflows=new ArrayList<Workflow>();
+        List<Workflow> workflows = workflowService.getAllworkflow();
 
-        return new ResponseEntity<List<Workflow>>(workflows,HttpStatus.OK);
+        return new ResponseEntity<List<Workflow>>(workflows, HttpStatus.OK);
     }
 
-    
+    @PostMapping("saveOrUpdate")
+    public ResponseEntity<Void> saveWorkflow(@RequestBody Workflow workflow) {
+        workflowService.save(workflow);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
 }

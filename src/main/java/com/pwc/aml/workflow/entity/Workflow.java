@@ -17,7 +17,7 @@ public class Workflow extends BaseEntity {
 
 
 
-    @Column(name="CHART_JSON")
+    @Column(name="CHART_JSON",columnDefinition="CLOB NOT NULL")
     private String chartJson;
 
     @Column(name="NAME")
@@ -32,11 +32,11 @@ public class Workflow extends BaseEntity {
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
 
-    private List<FlowPoint> lflowPoints;
+    private List<FlowPoint> flowPoints;
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
 
-    private List<FlowEvent> lflowEvents;
+    private List<FlowEvent> flowEvents;
 
 
 
@@ -78,20 +78,19 @@ public class Workflow extends BaseEntity {
         this.description = description;
     }
 
-
-    public List<FlowPoint> getLflowPoints() {
-        return lflowPoints;
+    public List<FlowPoint> getFlowPoints() {
+        return flowPoints;
     }
 
-    public void setLflowPoints(List<FlowPoint> lflowPoints) {
-        this.lflowPoints = lflowPoints;
+    public void setFlowPoints(List<FlowPoint> flowPoints) {
+        this.flowPoints = flowPoints;
     }
 
-    public List<FlowEvent> getLflowEvents() {
-        return lflowEvents;
+    public List<FlowEvent> getFlowEvents() {
+        return flowEvents;
     }
 
-    public void setLflowEvents(List<FlowEvent> lflowEvents) {
-        this.lflowEvents = lflowEvents;
+    public void setFlowEvents(List<FlowEvent> flowEvents) {
+        this.flowEvents = flowEvents;
     }
 }

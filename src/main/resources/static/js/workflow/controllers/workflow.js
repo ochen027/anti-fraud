@@ -200,12 +200,22 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 debugger;
                 var result = Workflow.writeWorkflow();
                 var model = draw2dService.draw2dToModel(result);
-                project.draw2d = JSON.stringify(result);
+                project.chartJson = JSON.stringify(result);
                 project.flowEvents = model.flowEvents;
                 project.flowPoints = model.flowPoints;
-                // setProjectValue();
-                console.log(result);
+                project.name=$('#projectID').val();
+                project.type=$('#type').val();
+                project.description=$('#description').val();
 
+                $http.post("/workflow/saveOrUpdate",project).then(function(res){
+                    if(res.data!==200){
+                        console.log("save workflow error!");
+                        return;
+                    }
+
+                    debugger;
+
+                });
 
             });
 
