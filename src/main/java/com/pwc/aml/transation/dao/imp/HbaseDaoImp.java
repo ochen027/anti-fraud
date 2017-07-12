@@ -3,6 +3,7 @@ package com.pwc.aml.transation.dao.imp;
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.util.FormatUtils;
 import com.pwc.aml.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
@@ -196,37 +197,45 @@ public class HbaseDaoImp implements IHbaseDao {
     		tbean.setTransId(Bytes.toString(rs.getRow()));
     		
     		for (Cell c : rs.rawCells()) {
+    			String key = Bytes.toString(CellUtil.cloneQualifier(c));
+    			switch(key){
     			
-    			switch(Bytes.toString(CellUtil.cloneQualifier(c))){
     			case "acct_id":
     				tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "as_of_date":
-    				//tbean.setAsOfDate(DateUtil.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
-    				tbean.setAsOfDate(Bytes.toString(CellUtil.cloneValue(c)));
+    				tbean.setAsOfDate(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+    				continue;
     			case "counterparty_id_1":
     				tbean.setCounterPartyId(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "currency_cd":
     				tbean.setCurrencyCd(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "trans_base_amt":
-    				//tbean.setTransBaseAmt(Double.parseDouble(Bytes.toString(CellUtil.cloneValue(c))));
-    				tbean.setTransBaseAmt(Bytes.toString(CellUtil.cloneValue(c)));
+    				tbean.setTransBaseAmt(Double.valueOf(Bytes.toString(CellUtil.cloneValue(c))));
+    				continue;
     			case "trans_br":
     				tbean.setTransBr(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "trans_by":
     				tbean.setTransBy(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "trans_cdt_cd":
     				tbean.setTransCdtCd(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "trans_chanel":
-    				//tbean.setTransChanel(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
-    				tbean.setTransChanel(Bytes.toString(CellUtil.cloneValue(c)));
+    				tbean.setTransChanel(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+    				continue;
     			case "trans_desc":
     				tbean.setTransDesc(Bytes.toString(CellUtil.cloneValue(c)));
+    				continue;
     			case "trans_dt":
-    				tbean.setTransDt(Bytes.toString(CellUtil.cloneValue(c)));
-    				//tbean.setTransDt(DateUtil.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+    				tbean.setTransDt(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+    				continue;
     			case "trans_seq":
-    				tbean.setTransSeq(Bytes.toString(CellUtil.cloneValue(c)));
-    				//tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+    				tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+    				continue;
     			}
     			
     		}
@@ -340,6 +349,10 @@ public class HbaseDaoImp implements IHbaseDao {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
         HTable table = hdao.getTable("aml:trans");
+        
+        
+        //hdao.deleteByColumnFamily(table, "trans_id", "f1");
+        
 //        Cell[] cells= (table,"900000000021","f1");
 //        pirntCells(cells);
         //putData(table);

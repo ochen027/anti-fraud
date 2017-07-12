@@ -6,28 +6,36 @@ public class Transactions {
 	
 	private String transId;
 	private String acctId;
-	//private Date asOfDate;
+	private Date asOfDate;
 	private String counterPartyId;
 	private String currencyCd;
-	//private Double transBaseAmt;
+	private Double transBaseAmt;
 	private String transBr;
 	private String transBy;
 	private String transCdtCd;
-	//private Integer transChanel;
+	private Integer transChanel;
 	private String transDesc;
-	//private Date transDt;
-	//private Integer transSeq;
+	private Date transDt;
+	private Integer transSeq;
+	private String alertType;
 	
-	private String asOfDate;
-	private String transBaseAmt;
-	private String transChanel;
-	private String transDt;
-	private String transSeq;
+	public String getTransId() {
+		return transId;
+	}
+	public void setTransId(String transId) {
+		this.transId = transId;
+	}
 	public String getAcctId() {
 		return acctId;
 	}
 	public void setAcctId(String acctId) {
 		this.acctId = acctId;
+	}
+	public Date getAsOfDate() {
+		return asOfDate;
+	}
+	public void setAsOfDate(Date asOfDate) {
+		this.asOfDate = asOfDate;
 	}
 	public String getCounterPartyId() {
 		return counterPartyId;
@@ -40,6 +48,12 @@ public class Transactions {
 	}
 	public void setCurrencyCd(String currencyCd) {
 		this.currencyCd = currencyCd;
+	}
+	public Double getTransBaseAmt() {
+		return transBaseAmt;
+	}
+	public void setTransBaseAmt(Double transBaseAmt) {
+		this.transBaseAmt = transBaseAmt;
 	}
 	public String getTransBr() {
 		return transBr;
@@ -59,47 +73,35 @@ public class Transactions {
 	public void setTransCdtCd(String transCdtCd) {
 		this.transCdtCd = transCdtCd;
 	}
+	public Integer getTransChanel() {
+		return transChanel;
+	}
+	public void setTransChanel(Integer transChanel) {
+		this.transChanel = transChanel;
+	}
 	public String getTransDesc() {
 		return transDesc;
 	}
 	public void setTransDesc(String transDesc) {
 		this.transDesc = transDesc;
 	}
-	public String getAsOfDate() {
-		return asOfDate;
-	}
-	public void setAsOfDate(String asOfDate) {
-		this.asOfDate = asOfDate;
-	}
-	public String getTransBaseAmt() {
-		return transBaseAmt;
-	}
-	public void setTransBaseAmt(String transBaseAmt) {
-		this.transBaseAmt = transBaseAmt;
-	}
-	public String getTransChanel() {
-		return transChanel;
-	}
-	public void setTransChanel(String transChanel) {
-		this.transChanel = transChanel;
-	}
-	public String getTransDt() {
+	public Date getTransDt() {
 		return transDt;
 	}
-	public void setTransDt(String transDt) {
+	public void setTransDt(Date transDt) {
 		this.transDt = transDt;
 	}
-	public String getTransSeq() {
+	public Integer getTransSeq() {
 		return transSeq;
 	}
-	public void setTransSeq(String transSeq) {
+	public void setTransSeq(Integer transSeq) {
 		this.transSeq = transSeq;
 	}
-	public String getTransId() {
-		return transId;
+	public String getAlertType() {
+		return alertType;
 	}
-	public void setTransId(String transId) {
-		this.transId = transId;
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 	
 	

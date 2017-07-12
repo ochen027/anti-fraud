@@ -14,6 +14,8 @@ import com.pwc.aml.base.entity.BaseEntity;
 public class RuleStep extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
+	@Column(name="STEP_NAME")
+	private String stepName;
 	@Column(name="STEP_ORDER")
 	private int stepOrder;
 	@Column(name="STEP_WHEN")
@@ -24,7 +26,12 @@ public class RuleStep extends BaseEntity{
 	@JoinColumn(name="SCENARIO_ID", nullable = false)
 	private RuleScenario ruleScenario;
 	
-
+	public String getStepName() {
+		return stepName;
+	}
+	public void setStepName(String stepName) {
+		this.stepName = stepName;
+	}
 	public int getStepOrder() {
 		return stepOrder;
 	}

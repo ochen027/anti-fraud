@@ -57,7 +57,7 @@ public class RulesDAO implements IRulesDAO {
 
 	@Override
 	public List<RuleStep> listStepByRule(int scenarioId) {
-		String hql = "select rs.stepOrder, rs.stepWhen, rs.stepThen from RuleStep as rs, RuleScenario rso where rso.id = ? order by rs.stepOrder";
+		String hql = "select rs.stepName, rs.stepOrder, rs.stepWhen, rs.stepThen from RuleStep as rs, RuleScenario rso where rso.id = ? order by rs.stepOrder";
 		List<Object[]> list = entityManager.createQuery(hql).setParameter(1, scenarioId).getResultList();
 		List<RuleStep> rList = new ArrayList<RuleStep>();
 		Iterator<Object []> iter = list.iterator();
@@ -65,9 +65,10 @@ public class RulesDAO implements IRulesDAO {
 		while(iter.hasNext()){
 			RuleStep rs = new RuleStep();
 			Object[] obj = iter.next();
-			rs.setStepOrder((Integer)obj[0]);
-			rs.setStepThen((String)obj[1]);
-			rs.setStepWhen((String)obj[2]);
+			rs.setStepName((String)obj[0]);
+			rs.setStepOrder((Integer)obj[1]);
+			rs.setStepThen((String)obj[2]);
+			rs.setStepWhen((String)obj[3]);
 			rList.add(rs);
 		}
 		return rList;

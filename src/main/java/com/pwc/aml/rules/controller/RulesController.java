@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.base.controller.BaseController;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
@@ -68,5 +69,14 @@ public class RulesController extends BaseController{
 		return new ResponseEntity<List<RuleStep>>(rulesService.listStepByRule(id),HttpStatus.OK);
 	}
 	
-
+	@GetMapping("getRuleScript/{id}")
+	public ResponseEntity<String> GetRuleScript(@PathVariable("id") int id){
+		String s = rulesService.getRuleScript(id);
+		return new ResponseEntity<String>(s, HttpStatus.OK);
+	}
+	
+	@GetMapping("executeRules/{id}")
+	public ResponseEntity<List<Alerts>> ExecuteRules(@PathVariable("id") int id){
+		return new ResponseEntity<List<Alerts>>(rulesService.executeRuleEngine(id), HttpStatus.OK);
+	}
 }

@@ -1,13 +1,20 @@
 package com.pwc.aml.rules.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.rules.dao.IRulesDAO;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
+import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.util.ExecuteDrools;
 
 @Service
 public class RulesService implements IRulesService{
@@ -15,6 +22,10 @@ public class RulesService implements IRulesService{
 	@Autowired
 	private IRulesDAO rulesDAO;
 	
+	@Autowired
+	private IHbaseDao hBaseDAO;
+	
+
 	@Override
 	public List<RuleScenario> listAllRuleScenario() {
 		return rulesDAO.listAllRuleScenario();
@@ -50,4 +61,57 @@ public class RulesService implements IRulesService{
 		return rulesDAO.listStepByRule(scenarioId);
 	}
 
+	@Override
+	public String getRuleScript(int scenarioId) {
+		List<RuleStep> rList = this.listStepByRule(scenarioId);
+		if(null == rList || 0 == rList.size()){
+			return null;
+		}
+		StringBuffer sb = new StringBuffer("package com.pwc.aml.rules.service\n"
+				+ "import com.pwc.aml.transation.entity.Transactions\n");
+		for(RuleStep rs : rList){
+			sb.append("\n");
+			sb.append("rule \"").append(rs.getStepName()).append("\"\n");
+			sb.append("  salience ").append(rs.getStepOrder()).append("\n");
+			sb.append("  when\n");
+			sb.append("    ").append(rs.getStepWhen()).append("\n");
+			sb.append("  then\n");
+			sb.append("    ").append(rs.getStepThen()).append("\n");
+			sb.append("end\n");
+		}
+		System.out.println(sb.toString());
+		return sb.toString();
+	}
+
+	@Override
+	public List<Alerts> executeRuleEngine(int scenarioId){
+		List<Transactions> tList = new ArrayList<Transactions>();
+		try {
+			tList = hBaseDAO.getAllData(hBaseDAO.getTable("aml:trans"), "f1");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		String ruleScript = this.getRuleScript(scenarioId);
+		
+		List<Alerts> aList = new ArrayList<Alerts>();
+		for(Transactions t : tList){
+			Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+			if(StringUtils.isNotEmpty(tResult.getAlertType())){
+				Alerts a = new Alerts();
+				a.setAlterId("ALT"+tResult.getTransId());
+				a.setAlertName(tResult.getAlertType());
+				a.setAlertContents(tResult.getAlertType());
+				a.setAlertCreatedDate(new Date());
+				a.setTransId(tResult.getTransId());
+				aList.add(a);
+			}
+		}
+		
+		return aList;
+	}
+
+	
+	
+	
 }
