@@ -232,6 +232,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         {
             name: "EditWorkflow",
             url: "/workflow/edit",
+            params: {
+                flowId: null
+            },
             views: {
                 header: {
                     templateUrl: '/header'

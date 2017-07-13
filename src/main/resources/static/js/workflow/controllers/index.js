@@ -5,15 +5,24 @@ app.controller('IndexWorkflowCtrl', function ($scope, $http, $location, $cookieS
 
 
     $scope.workflows = [];
+    $scope.workflowsDisplay=[];
 
     $scope.createWorkflow = function () {
         $state.go("EditWorkflow");
     };
 
+    $scope.delete=function(row){
+        $http.post("/workflow/delete",row).then(function(res){
+            refreshPageData();
+        });
+    }
 
-    $timeout(function () {
+    $scope.editWorkflow=function(row){
+        $state.go("EditWorkflow",{flowId:row.flowId});
+    }
 
-        //get workflows
+    var refreshPageData=function (){
+
         $http.get("/workflow/getAllWorkflow").then(function (res) {
             if (res.status !== 200) {
                 console.log("get workflow data error");
@@ -21,9 +30,13 @@ app.controller('IndexWorkflowCtrl', function ($scope, $http, $location, $cookieS
             }
 
             $scope.workflows=res.data;
-
-
+            $scope.workflowsDisplay=res.data.slice();
         });
+    }
+
+    $timeout(function () {
+
+        refreshPageData();
 
     });
 

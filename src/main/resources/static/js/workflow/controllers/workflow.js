@@ -1,17 +1,17 @@
-
-
-
-app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService,draw2dService,uuid2) {
+app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $stateParams, $loginService, draw2dService, uuid2) {
 
 
     window.targetProperty = {};
     window.project = {};
-    window.flowId= uuid2.newuuid();
+    window.flowId = uuid2.newuuid();
+
+    $scope.goBack = function () {
+        $state.go("IndexWorkflow");
+    };
 
     $timeout(function () {
         var initClick = function () {
             saveProjectClick();
-            btnCancelClick();
             btnStartClick();
             btnEndClick();
             btnProcessQueueClick();
@@ -27,11 +27,24 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
          */
         var initial = function () {
             Workflow.init("canvas", targetProperty);
-            //window.flowId = $("#flowUID").val();
-            //initialEdit(flowId);
+            loadEdit($stateParams.flowId);
             initialRole();
         };
 
+        var loadEdit = function (flowId) {
+            debugger;
+            if(flowId!==null){
+                $scope.flowId = flowId;
+                $http.post("/workflow/find", {'flowId':flowId}).then(function (res) {
+                    if (200 !== res.status) {
+                        console.log("get workflow error!")
+                        return;
+                    }
+                    project = res.data;
+                    Workflow.readWorkflow(project.chartJson);
+                });
+            }
+        }
 
         /**
          * setting role list
@@ -44,8 +57,8 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                     console.log("get role list error");
                 }
 
-                res.data.forEach(function(item){
-                    $("#processStartRole").append("<option value='"+item.id+"'>"+item.roleName+"</option>");
+                res.data.forEach(function (item) {
+                    $("#processStartRole").append("<option value='" + item.id + "'>" + item.roleName + "</option>");
                 });
 
             });
@@ -91,16 +104,6 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
             });
 
         }
-
-
-        var btnCancelClick = function () {
-
-            $("#btnCancel").click(function () {
-                location.href = "";
-            });
-
-        };
-
 
         var btnStartClick = function () {
 
@@ -155,7 +158,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
         var openCreateDialog = function (targetProperty) {
             targetProperty.name = "";
             targetProperty.customerID = "";
-            targetProperty.flowId=flowId;
+            targetProperty.flowId = flowId;
             targetProperty.editDialog = openEditDialog;
             targetPropertyDialogInit();
             $("#propertyDialog").modal("show");
@@ -177,7 +180,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
             targetProperty.name = $("#propertyName").val();
             targetProperty.customerID = $("#propertyID").val();
             targetProperty.rGuid = $("#processStartRole").val();
-            targetProperty.flowId=flowId;
+            targetProperty.flowId = flowId;
         }
 
         var createConnection = function (sPort, tPort) {
@@ -199,25 +202,24 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
          */
         var btnSaveProjectClick = function () {
             $("#btnSaveWorkflow").click(function () {
-                debugger;
                 var result = Workflow.writeWorkflow();
                 var model = draw2dService.draw2dToModel(result);
                 project.chartJson = JSON.stringify(result);
                 project.flowEvents = model.flowEvents;
                 project.flowPoints = model.flowPoints;
-                project.name=$('#projectID').val();
-                project.type=$('#type').val();
-                project.description=$('#description').val();
-                project.flowId=flowId;
+                project.name = $('#projectID').val();
+                project.type = $('#type').val();
+                project.description = $('#description').val();
+                project.flowId = flowId;
 
-                $http.post("/workflow/saveOrUpdate",project).then(function(res){
-                    if(res.data!==200){
+                $http.post("/workflow/saveOrUpdate", project).then(function (res) {
+                    if (res.status !== 200) {
                         console.log("save workflow error!");
                         return;
                     }
 
-                    debugger;
-
+                    alert("workflow saved!");
+                    $("#projectDialog").modal("hide");
                 });
 
             });
@@ -243,7 +245,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 targetProperty.type = "connection";
                 targetProperty.title = "Connection";
                 targetProperty.label = setting;
-                targetProperty.flowId=flowId;
+                targetProperty.flowId = flowId;
             } else {
                 targetProperty.id = setting.id;
                 targetProperty.customerID = setting.userData.customerID;
@@ -251,7 +253,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 targetProperty.type = setting.userData.type;
                 targetProperty.title = setting.userData.title;
                 targetProperty.rGuid = setting.userData.rGuid;
-                targetProperty.flowId=flowId;
+                targetProperty.flowId = flowId;
             }
             targetPropertyDialogInit();
         }

@@ -36,4 +36,20 @@ public class WorkflowRestController {
     }
 
 
+    @PostMapping("delete")
+    public ResponseEntity<Void> delete(@RequestBody Workflow workflow) {
+        workflowService.delete(workflow);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
+    @PostMapping("find")
+    public ResponseEntity<Workflow> get(@RequestBody Workflow workflow) {
+
+        Workflow result = workflowService.getWorkflowByFlowId(workflow.getFlowId());
+
+        return new ResponseEntity<Workflow>(result, HttpStatus.OK);
+    }
+
+
 }
