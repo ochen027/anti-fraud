@@ -1,5 +1,6 @@
 package com.pwc.aml.rules.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,6 @@ import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
-import com.pwc.aml.util.ExecuteDrools;
 
 @Service
 public class RulesService implements IRulesService{
@@ -25,7 +25,9 @@ public class RulesService implements IRulesService{
 	@Autowired
 	private IHbaseDao hBaseDAO;
 	
-
+	@Autowired
+	private IDroolsService droolsService;
+	
 	@Override
 	public List<RuleScenario> listAllRuleScenario() {
 		return rulesDAO.listAllRuleScenario();
@@ -94,9 +96,35 @@ public class RulesService implements IRulesService{
 		
 		String ruleScript = this.getRuleScript(scenarioId);
 		
+		/**
+		String ruleScript = "package com.pwc.aml.rules.service\n"
+				+ "import com.pwc.aml.transation.entity.Transactions\n"
+				+"\n"
+				+"rule \"run\"\n"
+				+"salience 1\n"
+				+"when\n"
+				+" t: Transactions(transBaseAmt <= 500000);\n"
+				+"then\n"
+				+"t.setAlertType(\"Warning!\");\n"
+				+"end\n"
+				+"\n"
+				+"rule \"step\"\n"
+				+"salience 2\n"
+				+"when\n"
+				+" t: Transactions(transBaseAmt > 500000);\n"
+				+"then\n"
+				+"t.setAlertType(\"Error!\");\n"
+				+"end\n";
+		**/
+		
 		List<Alerts> aList = new ArrayList<Alerts>();
 		for(Transactions t : tList){
-			Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+			//Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+			Transactions tResult;
+			
+			//tResult = fireRule(t, ruleScript);
+			tResult = droolsService.callStatic(t, ruleScript);
+			
 			if(StringUtils.isNotEmpty(tResult.getAlertType())){
 				Alerts a = new Alerts();
 				a.setAlterId("ALT"+tResult.getTransId());
@@ -106,12 +134,11 @@ public class RulesService implements IRulesService{
 				a.setTransId(tResult.getTransId());
 				aList.add(a);
 			}
+			
 		}
 		
 		return aList;
 	}
+	
 
-	
-	
-	
 }

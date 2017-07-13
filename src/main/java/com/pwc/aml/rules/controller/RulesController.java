@@ -18,6 +18,7 @@ import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.base.controller.BaseController;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
+import com.pwc.aml.rules.service.IDroolsService;
 import com.pwc.aml.rules.service.IRulesService;
 
 @Controller
@@ -26,6 +27,9 @@ public class RulesController extends BaseController{
 
 	@Autowired
 	private IRulesService rulesService;
+	
+	@Autowired
+	private IDroolsService droolsService;
 	
 	@GetMapping("listAll")
 	public ResponseEntity<List<RuleScenario>> ListAllRules(){
@@ -78,5 +82,10 @@ public class RulesController extends BaseController{
 	@GetMapping("executeRules/{id}")
 	public ResponseEntity<List<Alerts>> ExecuteRules(@PathVariable("id") int id){
 		return new ResponseEntity<List<Alerts>>(rulesService.executeRuleEngine(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("testRules")
+	public ResponseEntity<String> StartRule(){
+		return new ResponseEntity<String>(droolsService.fireRule(), HttpStatus.OK);
 	}
 }

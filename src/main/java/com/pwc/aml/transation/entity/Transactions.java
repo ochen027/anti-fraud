@@ -103,7 +103,6 @@ public class Transactions {
 	public void setAlertType(String alertType) {
 		this.alertType = alertType;
 	}
-	
-	
+
 	
 }

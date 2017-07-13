@@ -27,6 +27,7 @@
         <hdfs.version>2.5.0-cdh5.3.6</hdfs.version>
         <hive.version>0.13.1-cdh5.3.6</hive.version>
     </properties>
+
     <repositories>
         <repository>
             <id>cloudera</id>
@@ -39,6 +40,7 @@
         </repository>
     </repositories>
 
+	 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,19 +79,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-api</artifactId>
             <version>${drool.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.drools/drools-compiler -->
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
             <version>${drool.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.drools/drools-core -->
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
@@ -100,7 +102,15 @@
             <artifactId>knowledge-api</artifactId>
             <version>${drool.version}</version>
         </dependency>
-
+		
+		<dependency>
+		    <groupId>org.kie</groupId>
+		    <artifactId>kie-spring</artifactId>
+		    <version>${drool.version}</version>
+		</dependency>
+		
+		
+		
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -1,0 +1,20 @@
+package com.pwc.aml.rules.service
+import com.pwc.aml.transation.entity.Transactions
+
+rule "run"
+  salience 1
+  when
+    t: Transactions(transBaseAmt <= 500000);
+  then
+  	System.out.println("111111");
+    t.setAlertType("Warning!");
+end
+
+rule "step"
+  salience 2
+  when
+    t: Transactions(transBaseAmt > 500000);
+  then
+  	System.out.println("22222");
+    t.setAlertType("Error!");
+end
