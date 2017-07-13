@@ -204,13 +204,32 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'CreateAlertCtrl'
         }
-    ]
+    ];
 
 
     for (var i = 0, len = alertModule.length; i < len; i++) {
         $stateProvider.state(alertModule[i]);
     }
 
+
+    let document={
+            name: "documentExample",
+            url: "/document/index",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/document/index'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'DocumentCtrl'
+        };
+
+    $stateProvider.state(document);
 
     let workflow =[
         {
