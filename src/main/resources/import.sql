@@ -50,6 +50,7 @@ insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 10, '/#!/dashboard');
 insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 10, '/#!/workflow/index');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 10, '/#!/batch');
+insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 10, '/#!/document/index');
 
 --initial role menu table
 
@@ -66,6 +67,7 @@ insert into rolemenu values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10
 insert into rolemenu values (11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 1);
 insert into rolemenu values (12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 12, 1);
 insert into rolemenu values (13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 13, 1);
+insert into rolemenu values (14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 14, 1);
 
 --initial rule scenario
 insert into rulescenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'Scenario 1');

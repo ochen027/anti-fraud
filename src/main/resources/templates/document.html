@@ -1,3 +1,48 @@
-<div class="container">
-    for document engine
+<div class="container" ng-controller="DocumentCtrl">
+    <h3>Document:</h3>
+    <hr/>
+
+    <!--  table part -->
+    <table class="table table-striped table-bordered table-hover"
+           st-table="dataDisplay" st-safe-src="data">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Alert ID</th>
+            <th>Acct Number</th>
+            <th>Cust Name</th>
+            <th>Creat Date</th>
+            <th>Scenario</th>
+            <th>Description</th>
+            <th>Triggering Values (USD)</th>
+            <th>Status</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ng-repeat="row in dataDisplay"-->
+        <tr>
+            <td>Select</td>
+            <td><a ui-sref="availableAlertInfo({id:'12345'})">12345</a></td>
+            <td>Acct Number</td>
+            <td>Cust Name</td>
+            <td>Creat Date</td>
+            <td>Scenario</td>
+            <td>Description</td>
+            <td>Triggering Values (USD)</td>
+            <td>Status</td>
+            <td>Age</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="10" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage"
+                     st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+
+    </table>
+
 </div>
