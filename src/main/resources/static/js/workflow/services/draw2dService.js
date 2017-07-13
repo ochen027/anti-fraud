@@ -9,7 +9,7 @@ app.factory('draw2dService', [function () {
                  type: obj.type, //obj.userData.type or obj.type
                  name: obj.userData.name,
                  print:obj.userData.name+"("+obj.userData.customerID+")",
-                 flowid: obj.userData.customerID,
+                 flowid: flowId,
                  api: '',
                  events: [],
                  description: '',
@@ -25,7 +25,7 @@ app.factory('draw2dService', [function () {
                     type:obj.type,
                     name: obj.userData.name,
                     print: obj.labels.length>0?obj.labels[0].labelData.text:"",
-                    flowid: obj.userData.customerID,
+                    flowid: flowId,
                     api:'',
                     endpoint:obj.target.node,
                     description:'',

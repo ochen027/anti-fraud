@@ -1,12 +1,12 @@
 
 
 
-app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService,draw2dService) {
+app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService,draw2dService,uuid2) {
 
 
     window.targetProperty = {};
     window.project = {};
-
+    window.flowId= uuid2.newuuid();
 
     $timeout(function () {
         var initClick = function () {
@@ -27,8 +27,8 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
          */
         var initial = function () {
             Workflow.init("canvas", targetProperty);
-            window.flowId = $("#flowUID").val();
-            initialEdit(flowId);
+            //window.flowId = $("#flowUID").val();
+            //initialEdit(flowId);
             initialRole();
         };
 
@@ -155,6 +155,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
         var openCreateDialog = function (targetProperty) {
             targetProperty.name = "";
             targetProperty.customerID = "";
+            targetProperty.flowId=flowId;
             targetProperty.editDialog = openEditDialog;
             targetPropertyDialogInit();
             $("#propertyDialog").modal("show");
@@ -176,6 +177,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
             targetProperty.name = $("#propertyName").val();
             targetProperty.customerID = $("#propertyID").val();
             targetProperty.rGuid = $("#processStartRole").val();
+            targetProperty.flowId=flowId;
         }
 
         var createConnection = function (sPort, tPort) {
@@ -206,6 +208,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 project.name=$('#projectID').val();
                 project.type=$('#type').val();
                 project.description=$('#description').val();
+                project.flowId=flowId;
 
                 $http.post("/workflow/saveOrUpdate",project).then(function(res){
                     if(res.data!==200){
@@ -240,6 +243,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 targetProperty.type = "connection";
                 targetProperty.title = "Connection";
                 targetProperty.label = setting;
+                targetProperty.flowId=flowId;
             } else {
                 targetProperty.id = setting.id;
                 targetProperty.customerID = setting.userData.customerID;
@@ -247,6 +251,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 targetProperty.type = setting.userData.type;
                 targetProperty.title = setting.userData.title;
                 targetProperty.rGuid = setting.userData.rGuid;
+                targetProperty.flowId=flowId;
             }
             targetPropertyDialogInit();
         }

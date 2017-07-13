@@ -25,6 +25,8 @@
     "font-awesome": "^4.7.0",
     "angular-bootstrap": "^2.5.0",
     "angular-chart.js": "^1.1.1",
-    "draw2d": "6.1.57"
+    "draw2d": "6.1.57",
+    "node-uuid": "^3.0.0",
+    "angular.uuid2": "angular-uuid2#*"
   }
 }
