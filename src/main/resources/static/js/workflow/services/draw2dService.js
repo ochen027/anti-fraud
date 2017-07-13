@@ -5,11 +5,11 @@ app.factory('draw2dService', [function () {
     var  self={
         flowPoint:function(obj){
              var j= {
-                 uid: obj.id,
+                 flowPointId: obj.id,
                  type: obj.type, //obj.userData.type or obj.type
                  name: obj.userData.name,
                  print:obj.userData.name+"("+obj.userData.customerID+")",
-                 flowid: flowId,
+                 flowId: flowId,
                  api: '',
                  events: [],
                  description: '',
@@ -21,14 +21,15 @@ app.factory('draw2dService', [function () {
         },
         flowEvent:function(obj){
             var j={
-                    uid:obj.id,//obj.labels.type
+                    flowEventId:obj.id,//obj.labels.type
                     type:obj.type,
                     name: obj.userData.name,
                     print: obj.labels.length>0?obj.labels[0].labelData.text:"",
-                    flowid: flowId,
+                    flowId: flowId,
                     api:'',
                     endpoint:obj.target.node,
                     description:'',
+                    flowPointId:obj.source.node
             }
             return j;
 

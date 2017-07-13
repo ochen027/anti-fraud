@@ -4,8 +4,6 @@ import javax.persistence.*;
 
 import com.pwc.aml.base.entity.BaseEntity;
 
-import java.util.List;
-
 @Entity
 @Table(name="FlowPoint")
 public class FlowPoint extends BaseEntity {
