@@ -1,16 +1,14 @@
 package com.pwc.aml.workflow.dao;
 
 import com.pwc.aml.workflow.entity.FlowEvent;
+import com.sun.tools.javac.comp.Flow;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Transactional
@@ -28,14 +26,14 @@ public class FlowEventDAO implements IFlowEventDAO {
 
     @Override
     public void delete(String flowEventId) {
-        FlowEvent fe=findByFlowEventId( flowEventId);
+        FlowEvent fe = findByFlowEventId(flowEventId);
         em.remove(fe);
     }
 
 
     @Override
     public FlowEvent update(FlowEvent flowEvent) {
-        FlowEvent target=findByFlowEventId( flowEvent.getFlowEventId());
+        FlowEvent target = findByFlowEventId(flowEvent.getFlowEventId());
         flowEvent.setId(target.getId());
         return em.merge(flowEvent);
     }
@@ -45,7 +43,7 @@ public class FlowEventDAO implements IFlowEventDAO {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<FlowEvent> cq = cb.createQuery(FlowEvent.class);
         Root<FlowEvent> rootEntry = cq.from(FlowEvent.class);
-        Predicate predicate = cb.equal(rootEntry.get("flowId"),flowId );
+        Predicate predicate = cb.equal(rootEntry.get("flowId"), flowId);
         CriteriaQuery<FlowEvent> single = cq.select(rootEntry).where(predicate);
         TypedQuery<FlowEvent> query = em.createQuery(single);
         List<FlowEvent> fes = query.getResultList();
@@ -72,7 +70,22 @@ public class FlowEventDAO implements IFlowEventDAO {
         Predicate predicate = cb.equal(rootEntry.get("flowEventId"), flowEventId);
         CriteriaQuery<FlowEvent> single = cq.select(rootEntry).where(predicate);
         TypedQuery<FlowEvent> query = em.createQuery(single);
-        FlowEvent fe = query.getSingleResult();
-        return fe;
+        List<FlowEvent> fes = query.getResultList();
+        if (fes.isEmpty()) {
+            return null;
+        } else {
+            return fes.get(0);
+        }
+
+    }
+
+    @Override
+    public void deleteByFlowId(String flowId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<FlowEvent> cq = cb.createCriteriaDelete(FlowEvent.class);
+        Root<FlowEvent> rootEntry = cq.from(FlowEvent.class);
+        Predicate predicate = cb.equal(rootEntry.get("flowId"),flowId);
+        cq.where(predicate);
+        em.createQuery(cq).executeUpdate();
     }
 }

@@ -45,7 +45,7 @@ public class WorkflowDAO implements IWorkflowDAO {
 
     @Override
     public Workflow update(Workflow workflow) {
-        Workflow target =findByFlowId(workflow.getFlowId());
+        Workflow target = findByFlowId(workflow.getFlowId());
         workflow.setId(target.getId());
         Workflow wf = em.merge(workflow);
         return wf;
@@ -59,8 +59,14 @@ public class WorkflowDAO implements IWorkflowDAO {
         Predicate predicate = cb.equal(rootEntry.get("flowId"), flowId);
         CriteriaQuery<Workflow> single = cq.select(rootEntry).where(predicate);
         TypedQuery<Workflow> query = em.createQuery(single);
-        Workflow wf = query.getSingleResult();
-        return wf;
+        List<Workflow> wfs = query.getResultList();
+        if (wfs.isEmpty()) {
+            return null;
+        } else {
+            return wfs.get(0);
+        }
+
+
     }
 
 

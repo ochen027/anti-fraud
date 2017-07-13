@@ -19,4 +19,6 @@ public interface IFlowEventDAO {
     List<FlowEvent> findByPointId(String pointId);
 
     FlowEvent findByFlowEventId(String flowEventId);
+
+    void deleteByFlowId(String flowId);
 }

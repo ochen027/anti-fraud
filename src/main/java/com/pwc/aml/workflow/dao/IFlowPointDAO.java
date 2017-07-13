@@ -18,4 +18,5 @@ public interface IFlowPointDAO {
     List<FlowPoint> findByFlowId(String flowId);
 
 
+    void deleteByFlowId(String flowId);
 }

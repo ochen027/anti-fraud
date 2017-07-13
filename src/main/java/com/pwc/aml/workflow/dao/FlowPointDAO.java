@@ -2,16 +2,14 @@ package com.pwc.aml.workflow.dao;
 
 import com.pwc.aml.workflow.entity.FlowPoint;
 
+import com.sun.tools.javac.comp.Flow;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Transactional
@@ -48,8 +46,14 @@ public class FlowPointDAO implements IFlowPointDAO {
         Predicate predicate = cb.equal(rootEntry.get("flowPointId"), flowPointId);
         CriteriaQuery<FlowPoint> single = cq.select(rootEntry).where(predicate);
         TypedQuery<FlowPoint> query = em.createQuery(single);
-        FlowPoint fp = query.getSingleResult();
-        return fp;
+
+        List<FlowPoint> fps = query.getResultList();
+        if (fps.isEmpty()) {
+            return null;
+        } else {
+            return fps.get(0);
+        }
+
     }
 
     @Override
@@ -62,5 +66,15 @@ public class FlowPointDAO implements IFlowPointDAO {
         TypedQuery<FlowPoint> query = em.createQuery(all);
         List<FlowPoint> fps = query.getResultList();
         return fps;
+    }
+
+    @Override
+    public void deleteByFlowId(String flowId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<FlowPoint> cq = cb.createCriteriaDelete(FlowPoint.class);
+        Root<FlowPoint> rootEntry = cq.from(FlowPoint.class);
+        Predicate predicate = cb.equal(rootEntry.get("flowId"),flowId);
+        cq.where(predicate);
+        em.createQuery(cq).executeUpdate();
     }
 }

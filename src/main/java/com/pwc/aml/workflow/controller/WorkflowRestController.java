@@ -31,7 +31,7 @@ public class WorkflowRestController {
 
     @PostMapping("saveOrUpdate")
     public ResponseEntity<Void> saveWorkflow(@RequestBody Workflow workflow) {
-        workflowService.save(workflow);
+        workflowService.saveOrUpdate(workflow);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

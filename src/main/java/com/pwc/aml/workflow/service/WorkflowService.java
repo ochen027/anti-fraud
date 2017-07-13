@@ -38,12 +38,18 @@ public class WorkflowService implements IWorkflowService {
         return workflows;
     }
 
-
-    /***
-     * todo: save flowpoint and event
-     * @param workflow
-     */
     @Override
+    public void saveOrUpdate(Workflow workflow) {
+        Workflow target = workflowDAO.findByFlowId(workflow.getFlowId());
+        if(null!=target){
+            update(workflow);
+        }else
+        {
+            save(workflow);
+        }
+    }
+
+
     public void save(Workflow workflow) {
 
         workflowDAO.save(workflow);
@@ -63,9 +69,26 @@ public class WorkflowService implements IWorkflowService {
         workflowDAO.delete(workflow.getFlowId());
     }
 
-    @Override
+
     public Workflow update(Workflow workflow) {
-        return workflowDAO.update(workflow);
+
+        Workflow result= workflowDAO.update(workflow);
+
+        flowPointDAO.deleteByFlowId(workflow.getFlowId());
+
+        flowEventDAO.deleteByFlowId(workflow.getFlowId());
+
+
+        for (FlowPoint fp : workflow.getFlowPoints()) {
+            flowPointDAO.save(fp);
+        }
+
+        for (FlowEvent fe : workflow.getFlowEvents()) {
+            flowEventDAO.save(fe);
+        }
+
+
+        return result;
     }
 
     @Override

@@ -13,11 +13,11 @@ public interface IWorkflowService {
      */
     List<Workflow> getAllWorkflow();
 
-    void save(Workflow workflow);
+    void saveOrUpdate(Workflow workflow);
 
     void delete(Workflow workflow);
 
-    Workflow update(Workflow workflow);
+
 
     Workflow getWorkflowByFlowId(String FlowId);
 
