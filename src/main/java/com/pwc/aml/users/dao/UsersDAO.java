@@ -1,6 +1,8 @@
 package com.pwc.aml.users.dao;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -69,20 +71,27 @@ public class UsersDAO implements IUsersDAO{
     }
 
     @Override
-    public void addNewUser(Users users) {
-    	entityManager.persist(users);
+    public void addNewUser(Users users, String userName) {
+        users.setCreatedBy(userName);
+        users.setCreationDate(new Date());
+        users.setLastUpdatedBy(userName);
+        entityManager.persist(users);
     }
 
     @Override
-    public void deleteUser(int userId) {
-    	entityManager.remove(this.findUserByUserId(userId));
+    public void deleteUser(int userId, String userName) {
+        Users u = this.findUserByUserId(userId);
+        u.setStatus(false);
+        entityManager.flush();
+    	//entityManager.remove(this.findUserByUserId(userId));
     }
 
     @Override
-    public void updateUser(Users users) {
+    public void updateUser(Users users, String userName) {
     	Users u = this.findUserByUserId(users.getId());
     	u.setUserName(users.getUserName());
     	u.setUserPwd(users.getUserPwd());
+    	u.setLastUpdatedBy(userName);
     	entityManager.flush();
     }
 

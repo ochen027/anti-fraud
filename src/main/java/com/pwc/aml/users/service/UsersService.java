@@ -37,18 +37,18 @@ public class UsersService implements IUsersService {
 	}
 
 	@Override
-	public void createUser(Users u) {
-		usersDAO.addNewUser(u);
+	public void createUser(Users u, String userName) {
+		usersDAO.addNewUser(u, userName);
 	}
 
 	@Override
-	public void updateUser(Users u) {
-		usersDAO.updateUser(u);
+	public void updateUser(Users u, String userName) {
+		usersDAO.updateUser(u, userName);
 	}
 
 	@Override
-	public void deleteUser(int userId) {
-		usersDAO.deleteUser(userId);
+	public void deleteUser(int userId, String userName) {
+		usersDAO.deleteUser(userId, userName);
 	}
 
 	@Override

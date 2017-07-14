@@ -84,19 +84,19 @@ public class UsersController extends BaseController{
     
     @GetMapping("deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") int id){
-    	usersService.deleteUser(id);
+    	usersService.deleteUser(id, userName);
     	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
     
     @PutMapping("updateUser")
     public ResponseEntity<Users> updateUser(@RequestBody Users u){
-    	usersService.updateUser(u);
+    	usersService.updateUser(u, userName);
     	return new ResponseEntity<Users>(u, HttpStatus.OK);
     }
     
     @PostMapping("createUser")
     public ResponseEntity<Void> createUser(@RequestBody Users u){
-    	usersService.createUser(u);
+    	usersService.createUser(u, userName);
     	return new ResponseEntity<Void>(HttpStatus.OK);
     }
     

@@ -14,11 +14,11 @@ public interface IUsersDAO {
 
      List<Roles> fetchGroupRoles(int groupId);
 
-     void addNewUser(Users users);
+     void addNewUser(Users users, String userName);
 
-     void deleteUser(int userId);
+     void deleteUser(int userId, String userName);
 
-     void updateUser(Users users);
+     void updateUser(Users users, String userName);
 
      List<Users> listAllUsers();
     

@@ -17,11 +17,11 @@ public interface IUsersService {
 	
 	 List<Users> listAllUsers();
 	
-	 void createUser(Users u);
+	 void createUser(Users u, String userName);
 	
-	 void updateUser(Users u);
+	 void updateUser(Users u, String userName);
 	
-	 void deleteUser(int userId);
+	 void deleteUser(int userId, String userName);
 	
 	 Users findSingleUser(int userId);
 

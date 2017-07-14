@@ -1,6 +1,7 @@
 package com.pwc.aml.base.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
