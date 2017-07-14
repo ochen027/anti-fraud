@@ -45,13 +45,6 @@ public class BaseEntity implements Serializable{
         this.createdBy = createdBy;
     }
 
-    public Date getCreationDate() {
-    	return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
 
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
@@ -61,14 +54,6 @@ public class BaseEntity implements Serializable{
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public Date getLastUpdateDate() {
-        return new Date();
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -76,4 +61,22 @@ public class BaseEntity implements Serializable{
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Date getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
+	}
+    
+    
 }
