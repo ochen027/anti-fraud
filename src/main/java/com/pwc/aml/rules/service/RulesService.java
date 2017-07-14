@@ -1,10 +1,10 @@
 package com.pwc.aml.rules.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.pwc.aml.util.ExecuteDrools;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,7 @@ public class RulesService implements IRulesService{
 	@Autowired
 	private IHbaseDao hBaseDAO;
 	
-	@Autowired
-	private IDroolsService droolsService;
-	
+
 	@Override
 	public List<RuleScenario> listAllRuleScenario() {
 		return rulesDAO.listAllRuleScenario();
@@ -119,12 +117,8 @@ public class RulesService implements IRulesService{
 		
 		List<Alerts> aList = new ArrayList<Alerts>();
 		for(Transactions t : tList){
-			//Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
-			Transactions tResult;
-			
-			//tResult = fireRule(t, ruleScript);
-			tResult = droolsService.callStatic(t, ruleScript);
-			
+			Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+
 			if(StringUtils.isNotEmpty(tResult.getAlertType())){
 				Alerts a = new Alerts();
 				a.setAlterId("ALT"+tResult.getTransId());
