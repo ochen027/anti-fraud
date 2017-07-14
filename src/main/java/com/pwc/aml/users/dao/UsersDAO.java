@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.pwc.aml.users.entity.UserGroup;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -106,7 +107,36 @@ public class UsersDAO implements IUsersDAO{
 	public Users findUserByUserId(int userId) {
 		return entityManager.find(Users.class, userId);
 	}
-	
-	
+
+    @Override
+    public void addUserIntoGroup(UserGroup ug, String userName) {
+        ug.setCreatedBy(userName);
+        ug.setLastUpdatedBy(userName);
+        ug.setCreationDate(new Date());
+        entityManager.persist(ug);
+    }
+
+    @Override
+    public void updateUserGroup(UserGroup ug, String userName) {
+        UserGroup uGroup = this.getUserGroupRelationship(ug.getId());
+        uGroup.setLastUpdatedBy(userName);
+        uGroup.setGroupId(ug.getGroupId());
+        uGroup.setUserId(ug.getUserId());
+        entityManager.flush();
+    }
+
+    @Override
+    public void deleteUserFromGroup(int id, String userName) {
+        UserGroup uGroup = this.getUserGroupRelationship(id);
+        uGroup.setLastUpdatedBy(userName);
+        uGroup.setStatus(false);
+        entityManager.flush();
+    }
+
+    @Override
+    public UserGroup getUserGroupRelationship(int id) {
+        return entityManager.find(UserGroup.class, id);
+    }
+
 
 }

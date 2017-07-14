@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.aml.users.entity.UserGroup;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,6 +100,22 @@ public class UsersController extends BaseController{
     	usersService.createUser(u, userName);
     	return new ResponseEntity<Void>(HttpStatus.OK);
     }
-    
-    
+
+    @PutMapping("createUserIntoGroup")
+    public ResponseEntity<Void> createUserIntoGroup(@RequestBody UserGroup ug){
+        usersService.addUserIntoGroup(ug, userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PutMapping("updateUserGroup")
+    public ResponseEntity<Void> updateUserGroup(@RequestBody UserGroup ug){
+        usersService.updateUserGroup(ug, userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("deleteUserGroup/{id}")
+    public ResponseEntity<Void> deleteUserGroup(@PathVariable int id){
+        usersService.deleteUserFromGroup(id, userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

@@ -2,6 +2,7 @@ package com.pwc.aml.users.service;
 
 import java.util.List;
 
+import com.pwc.aml.users.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,25 @@ public class UsersService implements IUsersService {
 		return usersDAO.findUserByUserId(userId);
 	}
 
+	@Override
+	public void addUserIntoGroup(UserGroup ug, String userName) {
+		usersDAO.addUserIntoGroup(ug,userName);
+	}
+
+	@Override
+	public void updateUserGroup(UserGroup ug, String userName) {
+		usersDAO.updateUserGroup(ug,userName);
+	}
+
+	@Override
+	public void deleteUserFromGroup(int id, String userName) {
+		usersDAO.deleteUserFromGroup(id,userName);
+	}
+
+	@Override
+	public UserGroup getUserGroupRelationship(int id) {
+		return usersDAO.getUserGroupRelationship(id);
+	}
 
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pwc.aml.groups.entity.Groups;
 import com.pwc.aml.roles.entity.Roles;
+import com.pwc.aml.users.entity.UserGroup;
 import com.pwc.aml.users.entity.Users;
 
 public interface IUsersDAO {
@@ -24,4 +25,11 @@ public interface IUsersDAO {
     
      Users findUserByUserId(int userId);
 
+     void addUserIntoGroup(UserGroup ug, String userName);
+
+     void updateUserGroup(UserGroup ug, String userName);
+
+     void deleteUserFromGroup(int id, String userName);
+
+     UserGroup getUserGroupRelationship(int id);
 }
