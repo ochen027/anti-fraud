@@ -1,4 +1,4 @@
-package com.pwc.aml;
+package com.pwc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
