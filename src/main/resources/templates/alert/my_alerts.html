@@ -1,4 +1,4 @@
-<div class="container" app-controller="MyAlertCtrl">
+<div class="container" ng-controller="MyAlertCtrl">
 
     <h3>My Alerts:</h3>
     <hr/>
@@ -34,17 +34,17 @@
             <td>Status</td>
             <td>Age</td>
         </tr>
-        <tr>
+        <tr ng-repeat="data in result">
             <td><select></select></td>
-            <td><a>12345</a> </td>
-            <td>Acct Number</td>
-            <td>Cust Name</td>
-            <td>Creat Date</td>
-            <td>Scenario</td>
-            <td>Description</td>
-            <td>Triggering Values (USD)</td>
-            <td>Status</td>
-            <td>Age</td>
+            <td><a ui-sref="myAlertInfo({{data.alertId}})">{{data.alertId}}</a></td>
+            <td>{{data.accNumber}}</td>
+            <td>{{data.custName}}</td>
+            <td>{{data.createDate}}</td>
+            <td>{{data.scenario}}</td>
+            <td>{{data.description}}</td>
+            <td>{{data.triggeringValues|currency}}</td>
+            <td>{{data.status}}</td>
+            <td>{{data.age}}</td>
         </tr>
         </tbody>
         <tfoot>
