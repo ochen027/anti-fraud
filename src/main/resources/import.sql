@@ -14,9 +14,10 @@ insert into groups values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'User 
 insert into groups values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'Quality Assurance');
 insert into groups values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'Quality Control');
 insert into groups values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'Money Laundry');
+insert into groups values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'sysadmin');
 
 --initial user group table
-insert into usergroup values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
+insert into usergroup values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 1);
 insert into usergroup values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 2);
 insert into usergroup values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 1);
 insert into usergroup values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 2);
@@ -33,6 +34,7 @@ insert into roles values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1,'Level 
 insert into roles values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1,'Quality Assurance');
 insert into roles values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1,'Quality Control');
 insert into roles values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1,'Money Laundry');
+insert into roles values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1,'sysadmin');
 
 --initial group role table
 insert into grouprole values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
@@ -40,7 +42,8 @@ insert into grouprole values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2,
 insert into grouprole values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 3);
 insert into grouprole values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 4);
 insert into grouprole values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
-
+insert into grouprole values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
+insert into grouprole values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 6);
 
 --initial menu table
 insert into menus values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Dashboard', NULL, '/#!/dashboard');
@@ -60,20 +63,26 @@ insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 
 --initial role menu table
 
-insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
-insert into rolemenu values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 1);
-insert into rolemenu values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 1);
-insert into rolemenu values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 1);
-insert into rolemenu values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 1);
-insert into rolemenu values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 1);
-insert into rolemenu values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 1);
-insert into rolemenu values (8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
-insert into rolemenu values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 1);
-insert into rolemenu values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 1);
-insert into rolemenu values (11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 1);
-insert into rolemenu values (12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 12, 1);
-insert into rolemenu values (13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 13, 1);
-insert into rolemenu values (14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 14, 1);
+insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
+insert into rolemenu values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 6);
+insert into rolemenu values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 6);
+insert into rolemenu values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 6);
+insert into rolemenu values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 6);
+insert into rolemenu values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 6);
+insert into rolemenu values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 6);
+insert into rolemenu values (8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 6);
+insert into rolemenu values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 6);
+insert into rolemenu values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 6);
+insert into rolemenu values (11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 6);
+insert into rolemenu values (12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 12, 6);
+insert into rolemenu values (13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 13, 6);
+insert into rolemenu values (14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 14, 6);
+insert into rolemenu values (15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
+insert into rolemenu values (16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 2);
+insert into rolemenu values (17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 3);
+insert into rolemenu values (18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 4);
+insert into rolemenu values (19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 5);
+
 
 --initial rule scenario
 insert into rulescenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'Scenario 1');
