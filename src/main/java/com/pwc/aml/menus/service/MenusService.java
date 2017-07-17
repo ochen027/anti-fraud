@@ -17,10 +17,13 @@ public class MenusService implements IMenusService {
     @Override
     public List<Menus> listUserMenus(int userId) {
         List<Menus> rootMenus = menuDAO.listUserRootMenus(userId);
+        if(null == rootMenus){
+            return null;
+        }
         for (Menus m : rootMenus) {
             List<Menus> childMenus = this.listUserChildMenus(userId, m.getId());
             if(null == childMenus){
-            	continue;
+                continue;
             }
             m.setChildList(childMenus);
         }
