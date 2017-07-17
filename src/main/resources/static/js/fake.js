@@ -1,60 +1,16 @@
-Mock.mock("/alert/myalert",[{
-    "alertId": 1,
-    "accNumber|1-10": 1,
-    "custName": "@first @last",
-    "createDate": "@date('yyyy-MM-dd')",
-    "scenario|1": ["level-1","level-2","level-3","level-4","level-5"],
-    "description": "@sentence(3,10)",
-    "triggeringValues|1-10.2-7": 1.00,
-    "status|1": ["Active","Closed","Deleted","Canceled"],
-    "age|1-100": 100
-    },
-    {
-        "alertId": 2,
-        "accNumber|1-10": 1,
-        "custName": "@first @last",
-        "createDate": "@date('yyyy-MM-dd')",
-        "scenario|1": ["level-1","level-2","level-3","level-4","level-5"],
-        "description": "@sentence(3,10)",
-        "triggeringValues|1-10.2-7": 1.00,
-        "status|1": ["Active","Closed","Deleted","Canceled"],
-        "age|1-100": 100
-    },
-    {
-        "alertId": 3,
-        "accNumber|1-10": 1,
-        "custName": "@first @last",
-        "createDate": "@date('yyyy-MM-dd')",
-        "scenario|1": ["level-1","level-2","level-3","level-4","level-5"],
-        "description": "@sentence(3,10)",
-        "triggeringValues|1-10.2-7": 1.00,
-        "status|1": ["Active","Closed","Deleted","Canceled"],
-        "age|1-100": 100
-    },
-    {
-        "alertId": 4,
-        "accNumber|1-10": 1,
-        "custName": "@first @last",
-        "createDate": "@date('yyyy-MM-dd')",
-        "scenario|1": ["level-1","level-2","level-3","level-4","level-5"],
-        "description": "@sentence(3,10)",
-        "triggeringValues|1-10.2-7": 1.00,
-        "status|1": ["Active","Closed","Deleted","Canceled"],
-        "age|1-100": 100
-    },
-    {
-        "alertId": 5,
-        "accNumber|1-10": 1,
-        "custName": "@first @last",
-        "createDate": "@date('yyyy-MM-dd')",
-        "scenario|1": ["level-1","level-2","level-3","level-4","level-5"],
-        "description": "@sentence(3,10)",
-        "triggeringValues|1-10.2-7": 1.00,
-        "status|1": ["Active","Closed","Deleted","Canceled"],
-        "age|1-100": 100
-    }
-
-])
+Mock.mock("/alert/myalert", {
+        "result|35": [{
+            "alertId|+1": 1,
+            "accNumber": /\d{5}/,
+            "custName": "@first @last",
+            "createDate": "@date('yyyy-MM-dd')",
+            "scenario|1": ["level-1", "level-2", "level-3", "level-4", "level-5"],
+            "description": "@sentence(3,10)",
+            "triggeringValues|1-10.2-7": 1.00,
+            "status|1": ["Active", "Closed", "Deleted", "Canceled"],
+            "age|1-100": 100
+        }]
+    })
 Mock.mock("/alert/myAlertInfo/12345", {
     "summary": {
         "alertId": 1,
@@ -93,36 +49,19 @@ Mock.mock("/alert/myAlertInfo/12345", {
         "isNonResident": "@boolean()",
         "isAMLSuspect": "@boolean()"
     },
-    "tableRecords": [
+    "tableRecords|15": [
         {
             "transactionDate": "@date('yyyy-MM-dd')",
             "accountType|1": ["type-1","type-2","type-3"],
-            "accountNum|1-10": 1,
+            "accountNum":/\d{5}/,
             "currency": "USD",
-            "transactionAmount|1-10.2": "1.00",
+            "transactionAmount|1-10.2": 1.00,
             "TransactionType|1": ["trans-1","trans-2","trans-3"],
             "fundReceivePay|1": ["receive","pay"],
             "transactionPurpose": "@sentence(1)",
             "accountOpenDate": "@date('yyyy-MM-dd')",
             "accountCloseDate": "@date('yyyy-MM-dd')",
-            "Counterparty|1-10.2": "1.00",
-            "counterBankLocation": "shanghai",
-            "representative": "@last",
-            "representativeId": "@id()",
-            "representativeType|1": ["teacher", "farmer", "doctor", "clerk"]
-        },
-        {
-            "transactionDate": "@date('yyyy-MM-dd')",
-            "accountType|1": ["type-1","type-2","type-3"],
-            "accountNum|1-10": 1,
-            "currency": "USD",
-            "transactionAmount|1-10.2": "1.00",
-            "TransactionType|1": ["trans-1","trans-2","trans-3"],
-            "fundReceivePay|1": ["receive","pay"],
-            "transactionPurpose": "@sentence(1)",
-            "accountOpenDate": "@date('yyyy-MM-dd')",
-            "accountCloseDate": "@date('yyyy-MM-dd')",
-            "Counterparty|1-10.2": "1.00",
+            "Counterparty|1-10.2": 1.00,
             "counterBankLocation": "shanghai",
             "representative": "@last",
             "representativeId": "@id()",
@@ -130,6 +69,6 @@ Mock.mock("/alert/myAlertInfo/12345", {
         }
 
     ],
-    "total|1-10.2" : "1.00",
+    "total|1-10.2" : 1.00,
     "comments": "this is comments"
 })

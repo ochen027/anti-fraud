@@ -8,12 +8,13 @@
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     console.log("/alert/myalert");
     $http.get("/alert/myalert")
-        .then(function(result){
-            console.log(result);
-            $scope.result = result.data;
+        .then(function(response){
+            console.log(response);
+            $scope.result = response.data.result;
+
+
         })
-
-
+    $scope.itemsByPage = 10;
 });
 
 
@@ -46,8 +47,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
             $scope.individual = result.data.individual;
             $scope.corporate = result.data.corporate;
             $scope.legalRepresentative = result.data.legalRepresentative;
-            $scope.records = result.data.tableRecords;
+            $scope.data = result.data.tableRecords;
         })
+    $scope.itemsByPage = 4;
 
 });
 

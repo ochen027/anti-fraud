@@ -1,5 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap','chart.js','ngFileUpload','angularUUID2']);
+    'ui.bootstrap','chart.js','ngFileUpload','angularUUID2','smart-table']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 

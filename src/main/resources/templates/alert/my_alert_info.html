@@ -136,25 +136,33 @@
             </thead>
             <tbody>
             <!-- ng-repeat="row in dataDisplay"-->
-            <tr ng-repeat="data in records">
-                <td>{{data.transactionDate}}</td>
-                <td>{{data.accountType}}</td>
-                <td>{{data.accountNum}}</td>
-                <td>{{data.currency|currency}}</td>
-                <td>{{data.transactionAmount}}</td>
-                <td>{{data.TransactionType}}</td>
-                <td>{{data.fundReceivePay}}</td>
-                <td>{{data.transactionPurpose}}</td>
-                <td>{{data.accountOpenDate}}</td>
-                <td>{{data.accountCloseDate}}</td>
-                <td>{{data.Counterparty}}</td>
-                <td>{{data.counterBankLocation}}</td>
-                <td>{{data.representative}}</td>
-                <td>{{data.representativeId}}</td>
-                <td>{{data.representativeType}}</td>
+            <tr ng-repeat="row in dataDisplay">
+                <td>{{row.transactionDate}}</td>
+                <td>{{row.accountType}}</td>
+                <td>{{row.accountNum}}</td>
+                <td>{{row.currency}}</td>
+                <td>{{row.transactionAmount}}</td>
+                <td>{{row.TransactionType}}</td>
+                <td>{{row.fundReceivePay}}</td>
+                <td>{{row.transactionPurpose}}</td>
+                <td>{{row.accountOpenDate}}</td>
+                <td>{{row.accountCloseDate}}</td>
+                <td>{{row.Counterparty}}</td>
+                <td>{{row.counterBankLocation}}</td>
+                <td>{{row.representative}}</td>
+                <td>{{row.representativeId}}</td>
+                <td>{{row.representativeType}}</td>
             </tr>
 
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="15" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="4"></div>
+
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
     <div class="sepeartor"></div>
@@ -176,6 +184,14 @@
         <textarea id="inputComment" class="text-area text" rows="5" placeholder="comments detail"></textarea>
     </div>
     <div class="sepeartor"></div>
-
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default">Save Only</button>
+        <button class="btn btn-default">Cancle</button>
+        <button class="btn btn-default">Escalate</button>
+        <button class="btn btn-default">Suppress</button>
+        <button class="btn btn-default">Close</button>
+        <button class="btn btn-default">Report to Authority</button>
+    </div>
+    <div class="sepeartor"></div>
 
 </div>
