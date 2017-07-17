@@ -1,4 +1,4 @@
-package com.pwc.aml.common.base.controller;
+package com.pwc.common.base.controller;
 
 public class BaseController {
 	

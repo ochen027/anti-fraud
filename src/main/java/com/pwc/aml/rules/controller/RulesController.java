@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.common.base.controller.BaseController;
+import com.pwc.common.base.controller.BaseController;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
 import com.pwc.aml.rules.service.IRulesService;

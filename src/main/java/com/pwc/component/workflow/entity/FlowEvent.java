@@ -2,7 +2,7 @@ package com.pwc.component.workflow.entity;
 
 import javax.persistence.*;
 
-import com.pwc.aml.common.base.entity.BaseEntity;
+import com.pwc.common.base.entity.BaseEntity;
 
 @Entity
 @Table(name="FlowEvent")

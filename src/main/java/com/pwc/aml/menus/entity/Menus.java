@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.pwc.aml.common.base.entity.BaseEntity;
+import com.pwc.common.base.entity.BaseEntity;
 
 @Entity
 @Table(name="MENUS")
