@@ -35,7 +35,7 @@ public class MenusService implements IMenusService {
         List<Menus> list = menuDAO.listUserChildMenus(userId, menuId);
         if(null != list && list.size() > 0){
 	        for(Menus m : list){
-	            List<Menus> l =this.listUserChildMenus(userId, m.getId());
+                List<Menus> l =this.listUserChildMenus(userId, m.getId());
 	            m.setChildList(l);
 	        }
         }
