@@ -24,7 +24,7 @@ public class MenusDAO implements IMenusDAO {
     @SuppressWarnings("unchecked")
 	@Override
     public List<Menus> listUserRootMenus(int userId) {
-        String hql = "SELECT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR " +
+        String hql = "SELECT DISTINCT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR " +
                 "WHERE" +
                 "  U.id = UG.userId" +
                 " AND G.id = UG.groupId" +
@@ -44,7 +44,7 @@ public class MenusDAO implements IMenusDAO {
 
     @Override
     public List<Menus> listUserChildMenus(int userId, int menuId) {
-        String hql = "SELECT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR "
+        String hql = "SELECT DISTINCT M.id, M.menuName, M.menuURL, M.menuICO, M.menuDesc, M.menuParentId FROM Menus M, RoleMenu RM, Roles R, Users U, Groups G, UserGroup UG, GroupRole GR "
         		+"WHERE U.id = UG.userId "
         		+ "AND G.id = UG.groupId "
         		+ "AND G.id = GR.groupId "
@@ -59,12 +59,16 @@ public class MenusDAO implements IMenusDAO {
     
     private List<Menus> convertMenuData(List<Object[]> list){
     	if(null != list  && list.size() > 0){
+			List<Menus> mList = new ArrayList<Menus>();
     		Iterator iter = list.iterator();
-    		List<Menus> mList = new ArrayList<Menus>();
     		while(iter.hasNext()){
     			Object[] obj = (Object[]) iter.next();
     			Menus m = new Menus();
-    			m.setId((Integer)obj[0]);
+    			int mId = (Integer)obj[0];
+    			if(this.isDuplicateMenus(mList, mId)){
+    				continue;
+				}
+    			m.setId(mId);
     			m.setMenuName((String)obj[1]);
     			m.setMenuURL((String)obj[2]);
     			m.setMenuICO((String)obj[3]);
@@ -76,5 +80,14 @@ public class MenusDAO implements IMenusDAO {
     	}
 		return null;
     }
+
+    private boolean isDuplicateMenus(List<Menus> mList, int menuId){
+    	for(Menus m : mList){
+    		if(menuId == m.getId()){
+    			return true;
+			}
+		}
+		return false;
+	}
 
 }

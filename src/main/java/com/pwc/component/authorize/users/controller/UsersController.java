@@ -55,7 +55,7 @@ public class UsersController extends BaseController{
                     List<Roles> rList = usersService.fetchGroupRole(g.getId());
                     rSet.addAll(rList);
                 }
-                
+
                 List<Menus> menuList = menusService.listUserMenus(userId);
                 Map<String, Object> userInfo = new HashMap<String, Object>(4);
                 userInfo.put("User", u);
