@@ -28,6 +28,7 @@
     "draw2d": "6.1.57",
     "node-uuid": "^3.0.0",
     "angular.uuid2": "angular-uuid2#*",
-    "ng-file-upload": "^12.2.13"
+    "ng-file-upload": "^12.2.13",
+    "mockjs": "1.0.1-beta3"
   }
 }

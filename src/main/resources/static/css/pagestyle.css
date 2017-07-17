@@ -1,0 +1,144 @@
+.container {
+    border: 1px solid #999999;
+    position: relative;
+    margin: 0 50px 50px ;
+    width: 90%;
+}
+.container .span-title {
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+}
+.container .text {
+    font-family: arial;
+    font-size:14px;
+    font-weight:normal;
+}
+.container .block {
+    margin-bottom: 20px;
+}
+/*.container .dropdown-toggle.triangle-down{*/
+    /*mask-size: cover;*/
+    /*-webkit-mask-size: cover;*/
+    /*background-color: #666666;*/
+    /*position: relative;*/
+/*}*/
+.container .customer-summary{
+    display: table;
+    width: 90%;
+    height: auto;
+    font-family: arial;
+    font-size: 14px;
+    position: relative;
+    margin-left: 50px;
+
+}
+.container .block .sub-block{
+    padding-left: 20px;
+}
+.container .customer-summary .table-tr{
+    display: table-row;
+    width: 90%;
+    height: 30px;
+}
+
+.container .customer-summary .table-tr .label{
+    display: table-cell;
+    width: 16%;
+}
+.container .customer-summary .table-tr .value-detail{
+    display: table-cell;
+    width: 160px;
+}
+.container .detail-table{
+    width: 100%;
+    height: 18.75rem;
+    overflow: auto;
+    font-family: arial;
+    font-size: 12px;
+
+}
+.container .detail-table .detail-table-head {
+    background-color: #999999;
+    height: auto;
+    line-height:2.25rem;
+}
+.container .detail-table .detail-table-head th{
+    white-space: nowrap;
+}
+.container .sepeartor{
+    height: 1.25rem;
+    width: auto;
+}
+.container .comment {
+    width: 50%;
+    margin-left: 0;
+    margin-right: 0;
+    clear: both;
+}
+.container .comment .label-comment {
+    padding-left: 1.25rem;
+    position: relative;
+}
+.container .comment .suspicious {
+    padding-right: 1.25rem;
+    position: relative;
+}
+.container .text-area {
+    width: 100%;
+    position: relative;
+    padding: 0.75rem;
+    border: 0.0625rem solid #eceeef;
+
+}
+.row {
+    padding: 0.652rem 0;
+}
+.pull-left {
+    float: left;
+}
+.pull-right {
+    float: right;
+}
+.display-block {
+    display: inline-block;
+}
+.container .dropdown .dropdown-small {
+    width: 7.5rem;
+
+}
+.container i {
+    cursor: pointer;
+
+}
+/*
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('/components/bootstrap/fonts/glyphicons-halflings-regular.eot');
+    src: url('/components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-triangle-right:before {
+    content: "\e250";
+}
+.glyphicon-triangle-left:before {
+    content: "\e251";
+}
+.glyphicon-triangle-bottom:before {
+    content: "\e252";
+}
+.glyphicon-triangle-top:before {
+    content: "\e253";
+}*/
