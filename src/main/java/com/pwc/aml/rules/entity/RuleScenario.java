@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.pwc.aml.base.entity.BaseEntity;
+import com.pwc.aml.common.base.entity.BaseEntity;
 
 @Entity
 @Table(name="RULESCENARIO")

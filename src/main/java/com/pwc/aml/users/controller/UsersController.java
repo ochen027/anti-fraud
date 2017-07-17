@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pwc.aml.base.controller.BaseController;
+import com.pwc.aml.common.base.controller.BaseController;
 import com.pwc.aml.groups.entity.Groups;
 import com.pwc.aml.menus.entity.Menus;
 import com.pwc.aml.menus.service.IMenusService;

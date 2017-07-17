@@ -1,7 +1,6 @@
 package com.pwc.aml.transation.service.imp;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.transation.service.ITransactionService;
-import com.pwc.aml.util.FormatUtils;
 
 /**
  * Created by aliu323 on 7/4/2017.

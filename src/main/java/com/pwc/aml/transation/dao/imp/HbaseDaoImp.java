@@ -3,15 +3,14 @@ package com.pwc.aml.transation.dao.imp;
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
-import com.pwc.aml.util.FormatUtils;
-import com.pwc.aml.util.RunShellTool;
+import com.pwc.aml.common.util.FormatUtils;
+import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.datanucleus.store.connection.ConnectionFactory;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
