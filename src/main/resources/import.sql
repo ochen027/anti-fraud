@@ -1,9 +1,3 @@
-insert into  articles values (1,'test1','title1');
-insert into  articles values (2,'test2','title2');
-insert into  articles values (3,'test3','title3');
-insert into  articles values (4,'test4','title4');
-insert into  articles values (5,'test5','title5');
-
 --initial user table
 insert into users values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'sysadmin', 'sysadmin');
 insert into users values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'guest', 'guest');
