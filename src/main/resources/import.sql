@@ -227,18 +227,12 @@ insert into WORKFLOW values(1,'sysadmin', sysdate, sysdate, 'sysadmin', 1,'[{"ty
 
 
 ---initial work_point
-insert into FLOW_POINT values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- 'f7f837a6-bc31-c39d-6cdb-bcb6ceaa7d19','start','start(start)','WorkflowShape.WorkflowStart');
-insert into FLOW_POINT values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- 'e8be3955-29a8-7519-2467-c3d0418df771','L1 review','L1 review(l1review)','WorkflowShape.WorkflowProcess');
-insert into FLOW_POINT values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- 'd54e5ad1-50b2-5b47-4f95-09023b4e2a90','l2 review','l2 review(l2Reivew)','WorkflowShape.WorkflowProcess');
-insert into FLOW_POINT values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- 'ea63ad61-9911-dd41-9129-f3b027aefe50','end','end(end)','WorkflowShape.WorkflowEnd');
-insert into FLOW_POINT values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- '84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','QC Review','QC Review(QCReview)','WorkflowShape.WorkflowProcess');
-insert into FLOW_POINT values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875',
- '30102a75-9f3e-e60c-ea6f-597b730af7d5','MLRO Review','MLRO Review(MLROReview)','WorkflowShape.WorkflowProcess');
+insert into FLOW_POINT values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', 'f7f837a6-bc31-c39d-6cdb-bcb6ceaa7d19','start','start(start)','WorkflowShape.WorkflowStart');
+insert into FLOW_POINT values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', 'e8be3955-29a8-7519-2467-c3d0418df771','L1 review','L1 review(l1review)','WorkflowShape.WorkflowProcess');
+insert into FLOW_POINT values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', 'd54e5ad1-50b2-5b47-4f95-09023b4e2a90','l2 review','l2 review(l2Reivew)','WorkflowShape.WorkflowProcess');
+insert into FLOW_POINT values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', 'ea63ad61-9911-dd41-9129-f3b027aefe50','end','end(end)','WorkflowShape.WorkflowEnd');
+insert into FLOW_POINT values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', '84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','QC Review','QC Review(QCReview)','WorkflowShape.WorkflowProcess');
+insert into FLOW_POINT values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', '30102a75-9f3e-e60c-ea6f-597b730af7d5','MLRO Review','MLRO Review(MLROReview)','WorkflowShape.WorkflowProcess');
 
 --initial work event
 
