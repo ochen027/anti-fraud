@@ -24,6 +24,10 @@ public class KeyValueConfig extends BaseEntity {
     @Column(name="VALUE")
     private String value;
 
+    public KeyValueConfig(){
+        super();
+    }
+
     public KeyValueConfig(String key, String value) {
         super();
         this.key=key;

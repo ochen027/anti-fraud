@@ -2,7 +2,6 @@ package com.pwc.component.systemConfig.dao;
 
 
 import com.pwc.component.systemConfig.entity.KeyValueConfig;
-import com.pwc.component.workflow.entity.Workflow;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +24,7 @@ public class KeyValueDao implements IKeyValueDao {
     private EntityManager em;
 
 
-    @Override
-    public String get(String key) {
+    private KeyValueConfig findbyKey(String key){
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<KeyValueConfig> cq = cb.createQuery(KeyValueConfig.class);
         Root<KeyValueConfig> rootEntry = cq.from(KeyValueConfig.class);
@@ -37,18 +35,29 @@ public class KeyValueDao implements IKeyValueDao {
         if (kvs.isEmpty()) {
             return null;
         } else {
-            return kvs.get(0).getValue();
+            return kvs.get(0);
+        }
+    }
+
+    @Override
+    public String get(String key) {
+        KeyValueConfig kv=findbyKey( key);
+        if (kv==null) {
+            return null;
+        } else {
+            return kv.getValue();
         }
     }
 
     @Override
     public void put(String key, String value) {
-        String targetValue = get(key);
+        KeyValueConfig target= findbyKey(key);
         KeyValueConfig kv = new KeyValueConfig(key, value);
-        if (null == targetValue) {
+        if (null == target) {
             em.persist(kv);
         } else {
-            em.merge(kv);
+            target.setValue(value);
+            em.merge(target);
         }
     }
 
