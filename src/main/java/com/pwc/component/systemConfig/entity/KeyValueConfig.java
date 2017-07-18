@@ -19,24 +19,30 @@ public class KeyValueConfig extends BaseEntity {
 
 
     @Column(name="KEY")
-    private String name;
+    private String key;
 
     @Column(name="VALUE")
-    private String type;
+    private String value;
 
-    public String getName() {
-        return name;
+    public KeyValueConfig(String key, String value) {
+        super();
+        this.key=key;
+        this.value=value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getKey() {
+        return key;
     }
 
-    public String getType() {
-        return type;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

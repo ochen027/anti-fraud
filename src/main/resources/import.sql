@@ -246,3 +246,6 @@ insert into FLOW_EVENT values(7,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63
 insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','b8427923-d5cd-aae2-e4d3-009559be6ddb','954dc267-c3e2-43d1-abdb-a83ca2881875','d54e5ad1-50b2-5b47-4f95-09023b4e2a90','end','end(end)','WorkflowShape.Connection');
 
 
+--insert default bussinessDay
+
+insert into KeyValueConfig (1,'BUSINESS_DAY','2017-07-18');
