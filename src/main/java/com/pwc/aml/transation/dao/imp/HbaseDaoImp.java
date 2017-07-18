@@ -1,6 +1,7 @@
 package com.pwc.aml.transation.dao.imp;
 
 import com.jcraft.jsch.JSchException;
+import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.common.util.FormatUtils;
@@ -186,9 +187,10 @@ public class HbaseDaoImp implements IHbaseDao {
 
     
 	@Override
-	public List<Transactions> getAllData(HTable table, String cloumnFamily) throws Exception {
+	public List<Transactions> getAllTransData() throws Exception {
 		Scan scan = new Scan();
-    	ResultScanner rsscan = table.getScanner(scan);
+        HTable hTable = this.getTable("aml:trans");
+    	ResultScanner rsscan = hTable.getScanner(scan);
     	List<Transactions> list = new ArrayList<Transactions>();
     	for (Result rs : rsscan) {
     		Transactions tbean = new Transactions();
@@ -242,7 +244,40 @@ public class HbaseDaoImp implements IHbaseDao {
     	}
     	return list;
 	}
-    
+
+    @Override
+    public List<Alerts> getAllAlertsData() throws Exception {
+        Scan scan = new Scan();
+        HTable hTable = this.getTable("aml:alerts");
+        ResultScanner rsscan = hTable.getScanner(scan);
+        List<Alerts> list = new ArrayList<Alerts>();
+        for (Result rs : rsscan) {
+            Alerts aBean = new Alerts();
+            aBean.setAlterId(Bytes.toString(rs.getRow()));
+            for (Cell c : rs.rawCells()) {
+                String key = Bytes.toString(CellUtil.cloneQualifier(c));
+                switch(key){
+
+                    case "alertName":
+                        aBean.setAlertName(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "alertContents":
+                        aBean.setAlertContents(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "transId":
+                        aBean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "alertCreatedDate":
+                        aBean.setAlertCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                }
+
+            }
+            list.add(aBean);
+        }
+        return list;
+    }
+
 
     /**
      * scan the all table
@@ -356,7 +391,10 @@ public class HbaseDaoImp implements IHbaseDao {
         
 //        Cell[] cells= (table,"900000000021","f1");
 //        pirntCells(cells);
-        //putData(table);
+        //hdao.putData(table, "10000000001", "f1", "alertId", "ALT900000000001");
+        //hdao.putData(table, "10000000001", "f1", "", "ALT900000000001");
+
+
         //deleteData(table);
 //        scanData(table);
 //        rangeData(table);
@@ -366,7 +404,7 @@ public class HbaseDaoImp implements IHbaseDao {
 //          hdao.importTsv();
 
         hdao.scanData(table);
-//        hdao.deleteTable("aml:trans");
+        //hdao.deleteTable("aml:alerts");
         //hdao.createTable("aml:alerts");
     }
 

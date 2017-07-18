@@ -24,7 +24,7 @@ public interface IRulesService {
 	
 	String getRuleScript(int scenarioId);
 	
-	List<Alerts> executeRuleEngine(int scenarioId);
+	void executeRuleEngine(int scenarioId) throws Exception;
 	
 	
 }

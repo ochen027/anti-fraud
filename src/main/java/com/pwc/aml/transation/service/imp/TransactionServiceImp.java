@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pwc.aml.alert.entity.Alerts;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
@@ -79,10 +80,10 @@ public class TransactionServiceImp implements ITransactionService {
     }
 
 	@Override
-	public List<Transactions> getAllData(String tableName, String columFamily) throws Exception {
-		HTable hTable = hbaseDaoImp.getTable(tableName);
-		List<Transactions> list = hbaseDaoImp.getAllData(hTable, columFamily);
-		return list;
+	public List<Transactions> getAllTransData() throws Exception {
+		return hbaseDaoImp.getAllTransData();
 	}
+
+
 
 }

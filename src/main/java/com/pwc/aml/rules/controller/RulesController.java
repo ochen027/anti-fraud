@@ -77,8 +77,9 @@ public class RulesController extends BaseController{
 	}
 	
 	@GetMapping("executeRules/{id}")
-	public ResponseEntity<List<Alerts>> ExecuteRules(@PathVariable("id") int id){
-		return new ResponseEntity<List<Alerts>>(rulesService.executeRuleEngine(id), HttpStatus.OK);
+	public ResponseEntity<Void> ExecuteRules(@PathVariable("id") int id) throws Exception{
+		rulesService.executeRuleEngine(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 }

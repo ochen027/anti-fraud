@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.transation.entity.Transactions;
 
 /**
@@ -26,5 +27,6 @@ public interface ITransactionService {
 
     void importData()throws Exception;
     
-    List<Transactions> getAllData(String tableName, String columFamily) throws Exception;
+    List<Transactions> getAllTransData() throws Exception;
+
 }

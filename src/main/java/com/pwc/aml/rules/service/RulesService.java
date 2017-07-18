@@ -1,11 +1,14 @@
 package com.pwc.aml.rules.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.pwc.aml.transation.dao.imp.HbaseDaoImp;
 import com.pwc.aml.util.ExecuteDrools;
 import org.apache.commons.lang.StringUtils;
+import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,15 +82,15 @@ public class RulesService implements IRulesService{
 			sb.append("    ").append(rs.getStepThen()).append("\n");
 			sb.append("end\n");
 		}
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
 		return sb.toString();
 	}
 
 	@Override
-	public List<Alerts> executeRuleEngine(int scenarioId){
+	public void executeRuleEngine(int scenarioId) throws Exception{
 		List<Transactions> tList = new ArrayList<Transactions>();
 		try {
-			tList = hBaseDAO.getAllData(hBaseDAO.getTable("aml:trans"), "f1");
+			tList = hBaseDAO.getAllTransData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +118,7 @@ public class RulesService implements IRulesService{
 				+"end\n";
 		**/
 		
-		List<Alerts> aList = new ArrayList<Alerts>();
+		//List<Alerts> aList = new ArrayList<Alerts>();
 		for(Transactions t : tList){
 			Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
 
@@ -123,15 +126,22 @@ public class RulesService implements IRulesService{
 				Alerts a = new Alerts();
 				a.setAlterId("ALT"+tResult.getTransId());
 				a.setAlertName(tResult.getAlertType());
-				a.setAlertContents(tResult.getAlertType());
-				a.setAlertCreatedDate(new Date());
+				a.setAlertContents(tResult.getAlertType()+"==>Amount is:"+tResult.getTransBaseAmt());
+				a.setAlertCreatedDate(LocalDateTime.now().toString());
 				a.setTransId(tResult.getTransId());
-				aList.add(a);
+
+				HbaseDaoImp hdao = new HbaseDaoImp();
+				HTable table = hdao.getTable("aml:alerts");
+				hdao.putData(table, a.getAlterId(), "f1", "alertName", a.getAlertName());
+				hdao.putData(table, a.getAlterId(), "f1", "alertContents", a.getAlertContents());
+				hdao.putData(table, a.getAlterId(), "f1", "alertCreatedDate", a.getAlertCreatedDate());
+				hdao.putData(table, a.getAlterId(), "f1", "transId", a.getTransId());
+
+				//aList.add(a);
 			}
 			
 		}
-		
-		return aList;
+
 	}
 	
 

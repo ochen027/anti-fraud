@@ -1,7 +1,5 @@
 package com.pwc.aml.alert.entity;
 
-import java.util.Date;
-
 public class Alerts {
 	
 	private String alterId;

@@ -3,6 +3,7 @@ package com.pwc.aml.transation.dao;
 import java.io.IOException;
 import java.util.List;
 
+import com.pwc.aml.alert.entity.Alerts;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.HTable;
 
@@ -21,5 +22,6 @@ public interface IHbaseDao {
 	void createTable(String tableName) throws IOException;
 	void deleteTable(String tableName) throws IOException;
 	void importTsv();
-	List<Transactions> getAllData(HTable table, String cloumnFamily) throws Exception;
+	List<Transactions> getAllTransData() throws Exception;
+	List<Alerts> getAllAlertsData() throws Exception;
 }

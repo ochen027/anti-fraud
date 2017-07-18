@@ -44,9 +44,9 @@ public class TransactionRestController {
         return new ResponseEntity<Void>( HttpStatus.OK);
     }
     
-    @GetMapping("listAll")
+    @GetMapping("listAllTrans")
     public ResponseEntity<List<Transactions>> listAll() throws Exception{
-		return new ResponseEntity<List<Transactions>>(transactionServiceImp.getAllData("aml:trans", "f1"), HttpStatus.OK);
+		return new ResponseEntity<List<Transactions>>(transactionServiceImp.getAllTransData(), HttpStatus.OK);
     }
 
 }
