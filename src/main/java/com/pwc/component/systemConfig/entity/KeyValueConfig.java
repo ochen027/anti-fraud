@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 import java.util.List;
 
 @Entity
-@Table(name="KeyValueConfig")
+@Table(name="KEYVALUECONFIG")
 public class KeyValueConfig extends BaseEntity {
 
 
