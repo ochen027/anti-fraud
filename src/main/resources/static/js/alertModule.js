@@ -1,17 +1,25 @@
-/**
- * Created by whuang072 on 7/3/2017.
- */
 
 
 
+app.controller('MyAlertCtrl', function ($scope, $http, $location, $state, $timeout) {
 
-app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
-    console.log("/alert/myalert");
-    $http.get("/alert/myalert")
-        .then(function(result){
-            console.log(result);
-            $scope.result = result.data;
-        })
+
+    $scope.myAlertData = [];
+    $scope.myAlertDataDisplay=[];
+    $timeout(function () {
+
+        $http.get("/alerts/getAllAlerts").then(function (res) {
+            if (res.code !== 200) {
+                console.log(res);
+                return;
+            }
+
+            $scope.myAlertData=res.data;
+            $scope.myAlertDataDisplay=res.data.splice();
+
+
+        });
+    })
 
 
 });
@@ -31,16 +39,16 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
     console.log("myalertinfoctrl");
-    $(document).ready(function() {
-        $(".dropdown-toggle").bind("click", function(event){
+    $(document).ready(function () {
+        $(".dropdown-toggle").bind("click", function (event) {
             $(event.currentTarget).parent().toggleClass("dropup");
-            $(event.currentTarget).parent().find(".customer-summary").length ?  $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
+            $(event.currentTarget).parent().find(".customer-summary").length ? $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
 
         })
 
     })
-   $http.get("/alert/myAlertInfo/12345")
-        .then(function(result){
+    $http.get("/alert/myAlertInfo/12345")
+        .then(function (result) {
             console.log(result);
             $scope.summary = result.data.summary;
             $scope.individual = result.data.individual;

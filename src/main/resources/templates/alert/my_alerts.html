@@ -5,7 +5,7 @@
 
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
-           st-table="dataDisplay" st-safe-src="data">
+           st-table="myAlertDataDisplay" st-safe-src="myAlertData">
         <thead>
         <tr>
             <th>Select</th>
@@ -16,35 +16,22 @@
             <th>Scenario</th>
             <th>Description</th>
             <th>Triggering Values (USD)</th>
-            <th>Status</th>
-            <th>Age</th>
+            <th>Days</th>
         </tr>
         </thead>
         <tbody>
-        <!-- ng-repeat="row in dataDisplay"-->
-        <tr>
-            <td><select></select></td>
-            <td><a ui-sref="myAlertInfo({id:'12345'})">12345</a> </td>
-            <td>Acct Number</td>
-            <td>Cust Name</td>
-            <td>Creat Date</td>
-            <td>Scenario</td>
-            <td>Description</td>
-            <td>Triggering Values (USD)</td>
-            <td>Status</td>
-            <td>Age</td>
-        </tr>
-        <tr ng-repeat="data in result">
-            <td><select></select></td>
-            <td><a ui-sref="myAlertInfo({{data.alertId}})">{{data.alertId}}</a></td>
-            <td>{{data.accNumber}}</td>
-            <td>{{data.custName}}</td>
-            <td>{{data.createDate}}</td>
-            <td>{{data.scenario}}</td>
-            <td>{{data.description}}</td>
-            <td>{{data.triggeringValues|currency}}</td>
-            <td>{{data.status}}</td>
-            <td>{{data.age}}</td>
+
+        <tr ng-repeat="row in myAlertData">
+            <td><input type="checkbox" /></td>
+            <td><a ui-sref="myAlertInfo({{row.alterId}})">{{row.alterId}}</a></td>
+            <td>{{row.accNumber}}</td>
+            <td>{{row.custName}}</td>
+            <td>{{row.createDate}}</td>
+            <td>{{row.scenario}}</td>
+            <td>{{row.description}}</td>
+            <td>{{row.triggeringValues|currency}}</td>
+            <td>{{row.status}}</td>
+
         </tr>
         </tbody>
         <tfoot>
