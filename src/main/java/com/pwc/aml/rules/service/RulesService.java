@@ -1,5 +1,6 @@
 package com.pwc.aml.rules.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,7 @@ public class RulesService implements IRulesService{
 				a.setAlterId("ALT"+tResult.getTransId());
 				a.setAlertName(tResult.getAlertType());
 				a.setAlertContents(tResult.getAlertType());
-				a.setAlertCreatedDate(new Date());
+				a.setAlertCreatedDate(LocalDateTime.now().toString());
 				a.setTransId(tResult.getTransId());
 				aList.add(a);
 			}
