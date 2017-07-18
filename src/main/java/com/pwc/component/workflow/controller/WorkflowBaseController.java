@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("workflow")
-public class WorkflowRestController {
+public class WorkflowBaseController {
 
     @Autowired
     private IWorkflowService workflowService;
