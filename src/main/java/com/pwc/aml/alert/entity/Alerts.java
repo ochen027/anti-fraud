@@ -8,11 +8,18 @@ public class Alerts {
 	private String alertName;
 	private String transId;
 	private String alertContents;
-	private Date alertCreatedDate;
+	private String alertCreatedDate;
 	private int customerId;
-	
-	
-	
+	private int accountId;
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+
 	public String getAlterId() {
 		return alterId;
 	}
@@ -37,12 +44,15 @@ public class Alerts {
 	public void setAlertContents(String alertContents) {
 		this.alertContents = alertContents;
 	}
-	public Date getAlertCreatedDate() {
+
+	public String getAlertCreatedDate() {
 		return alertCreatedDate;
 	}
-	public void setAlertCreatedDate(Date alertCreatedDate) {
+
+	public void setAlertCreatedDate(String alertCreatedDate) {
 		this.alertCreatedDate = alertCreatedDate;
 	}
+
 	public int getCustomerId() {
 		return customerId;
 	}
