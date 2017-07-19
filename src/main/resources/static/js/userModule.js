@@ -13,7 +13,6 @@ app.controller('IndexUsersCtrl', function($scope, $http, $location, $state, $tim
                 console.log(res);
                 return;
             }
-            console.log(res.data);
             $scope.allUsersData=res.data;
             $scope.allUsersDataDisplay=res.data.splice();
 

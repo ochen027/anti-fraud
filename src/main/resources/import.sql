@@ -67,9 +67,7 @@ insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, '/#!/query/case');
 insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, '/#!/case/myCase');
 insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, '/#!/case/closed');
-insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', NULL, NULL);
-insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Show Users', 22, '/#!/users/list');
-insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create User', 22, '/#!/users/edit');
+insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', 11, '/#!/users/list');
 
 --initial role menu table
 
@@ -95,8 +93,6 @@ insert into rolemenu values (19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19
 insert into rolemenu values (20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 6);
 insert into rolemenu values (21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 6);
 insert into rolemenu values (22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 22, 6);
-insert into rolemenu values (23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 23, 6);
-insert into rolemenu values (24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 24, 6);
 
 
 ---l1 menu
