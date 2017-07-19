@@ -1,4 +1,4 @@
-package com.pwc.aml.common.HBase;
+package com.pwc.aml.common.hbase;
 
 import java.io.IOException;
 import java.util.List;

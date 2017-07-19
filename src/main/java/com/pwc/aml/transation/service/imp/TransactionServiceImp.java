@@ -12,7 +12,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pwc.aml.common.HBase.IHbaseDao;
+import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.transation.service.ITransactionService;
 

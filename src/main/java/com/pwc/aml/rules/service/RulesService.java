@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pwc.aml.common.HBase.HbaseDaoImp;
+import com.pwc.aml.common.hbase.HbaseDaoImp;
 import com.pwc.aml.common.util.ExecuteDrools;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.HTable;
@@ -15,7 +15,7 @@ import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.rules.dao.IRulesDAO;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.RuleStep;
-import com.pwc.aml.common.HBase.IHbaseDao;
+import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 
 @Service

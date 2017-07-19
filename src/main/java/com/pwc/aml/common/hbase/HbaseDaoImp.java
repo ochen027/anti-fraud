@@ -1,4 +1,4 @@
-package com.pwc.aml.common.HBase;
+package com.pwc.aml.common.hbase;
 
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.alert.entity.Alerts;
