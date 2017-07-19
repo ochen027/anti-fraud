@@ -68,8 +68,8 @@ insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, '/#!/case/myCase');
 insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, '/#!/case/closed');
 insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', NULL, NULL);
-insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Show Users', 22, '/#!/user/index');
-insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create User', 22, '/#!/user/create');
+insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Show Users', 22, '/#!/users/list');
+insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create User', 22, '/#!/users/edit');
 
 --initial role menu table
 

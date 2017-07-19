@@ -270,8 +270,49 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     ];
 
+
     for (var i = 0, len = workflow.length; i < len; i++) {
         $stateProvider.state(workflow[i]);
+    }
+
+
+    let users =[
+        {
+            name: "IndexUsers",
+            url: "/users/list",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/users/list'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'IndexUsersCtrl'
+        },
+        {
+            name: "EditUsers",
+            url: "/users/update",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/users/update'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'EditUsersCtrl'
+        }
+    ];
+
+    for (var i = 0, len = users.length; i < len; i++) {
+        $stateProvider.state(users[i]);
     }
 
     $urlRouterProvider.otherwise('/login');
