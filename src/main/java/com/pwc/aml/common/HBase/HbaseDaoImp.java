@@ -1,11 +1,10 @@
-package com.pwc.aml.transation.dao.imp;
+package com.pwc.aml.common.HBase;
 
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.transation.dao.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.common.util.FormatUtils;
-import com.pwc.aml.util.RunShellTool;
+import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;

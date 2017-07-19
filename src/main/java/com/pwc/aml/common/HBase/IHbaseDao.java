@@ -1,4 +1,4 @@
-package com.pwc.aml.transation.dao;
+package com.pwc.aml.common.HBase;
 
 import java.io.IOException;
 import java.util.List;

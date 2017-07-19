@@ -1,4 +1,4 @@
-package com.pwc.aml.util;
+package com.pwc.aml.common.util;
 
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;

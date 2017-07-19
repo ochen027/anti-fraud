@@ -1,7 +1,12 @@
 package com.pwc.aml.workflow.entity;
 
-/**
- * Created by whuang072 on 7/17/2017.
- */
-public class WorkObj {
+import com.pwc.common.base.entity.BaseEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
+public class WorkObj extends BaseEntity {
+
+
 }

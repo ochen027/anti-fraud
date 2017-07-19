@@ -1,7 +1,7 @@
 package com.pwc.aml.alert.service;
 
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.common.HBase.IHbaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

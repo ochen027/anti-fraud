@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pwc.aml.alert.entity.Alerts;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
@@ -13,7 +12,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pwc.aml.transation.dao.IHbaseDao;
+import com.pwc.aml.common.HBase.IHbaseDao;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.transation.service.ITransactionService;
 

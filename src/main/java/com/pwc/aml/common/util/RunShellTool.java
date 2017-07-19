@@ -1,4 +1,4 @@
-package com.pwc.aml.util;
+package com.pwc.aml.common.util;
 
 /**
  * Created by aliu323 on 7/4/2017.

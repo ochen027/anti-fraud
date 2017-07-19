@@ -1,4 +1,4 @@
-package com.pwc.aml.util;
+package com.pwc.aml.common.util;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
