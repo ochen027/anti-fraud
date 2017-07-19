@@ -15,6 +15,9 @@ public class AuthController {
         return "login";
     }
 
-
+    @RequestMapping("/user/index")
+    public String users(Model model){
+        return "user/list_users";
+    }
 
 }
