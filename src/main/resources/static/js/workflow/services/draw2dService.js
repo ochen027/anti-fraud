@@ -13,6 +13,7 @@ app.factory('draw2dService', [function () {
                  api: '',
                  events: [],
                  description: '',
+                 roleId:obj.userData.rGuid,
                  attributes: {
                      x: obj.x, y: obj.y, height: obj.height, width:obj.width, color:obj.color, shape:obj.userData.type
                  }

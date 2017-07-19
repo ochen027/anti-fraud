@@ -7,28 +7,28 @@ import com.pwc.common.base.entity.BaseEntity;
 import java.util.List;
 
 @Entity
-@Table(name="Workflow")
+@Table(name = "Workflow")
 public class Workflow extends BaseEntity {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
 
-    @Column(name="FLOWID")
+    @Column(name = "FLOWID")
     private String flowId;
 
-    @Column(name="CHART_JSON",columnDefinition="CLOB NOT NULL")
+    @Column(name = "CHART_JSON", columnDefinition = "CLOB NOT NULL")
     private String chartJson;
 
-    @Column(name="NAME")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name="TYPE")
+    @Column(name = "TYPE")
     private String type;
 
-    @Column(name="DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @Transient
@@ -37,6 +37,20 @@ public class Workflow extends BaseEntity {
     @Transient
     private List<FlowEvent> flowEvents;
 
+
+    public Workflow() {
+        super();
+    }
+
+    public Workflow(String flowId, String chartJson, String name, String type, String description, List<FlowPoint> flowPoints, List<FlowEvent> flowEvents) {
+        this.flowId = flowId;
+        this.chartJson = chartJson;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.flowPoints = flowPoints;
+        this.flowEvents = flowEvents;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

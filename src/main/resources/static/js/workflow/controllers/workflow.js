@@ -32,7 +32,7 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
         };
 
         var loadEdit = function (flowId) {
-            debugger;
+
             if(flowId!==null){
                 $scope.flowId = flowId;
                 $http.post("/workflow/find", {'flowId':flowId}).then(function (res) {
@@ -207,12 +207,13 @@ app.controller('EditWorkflowCtrl', function ($scope, $http, $location, $cookies,
                 project.chartJson = JSON.stringify(result);
                 project.flowEvents = model.flowEvents;
                 project.flowPoints = model.flowPoints;
+                project.flowPointsEx = model.flowPoints;
                 project.name = $('#projectID').val();
                 project.type = $('#type').val();
                 project.description = $('#description').val();
                 project.flowId = window.flowId;
 
-                $http.post("/workflow/saveOrUpdate", project).then(function (res) {
+                $http.post("/workflow/saveOrUpdateWithRoles", project).then(function (res) {
                     if (res.status !== 200) {
                         console.log("save workflow error!");
                         return;
