@@ -1,12 +1,12 @@
 --initial user table
-insert into users values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'sysadmin', 'sysadmin');
-insert into users values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'guest', 'guest');
-insert into users values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'admin', 'admin');
-insert into users values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'l1', '123456');
-insert into users values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'l2', '123456');
-insert into users values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'qa', '123456');
-insert into users values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'qc', '123456');
-insert into users values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'ml', '123456');
+insert into users values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'sysadmin', 'SKNltM4eMipVrpAX89rwwA==');
+insert into users values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'guest', 'CE4DQ6BIb/BVMN9scFyLtA==');
+insert into users values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'admin', 'ISMvKXpXpadDiUoOSoAfww==');
+insert into users values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'l1', '4QrcOUm6Wau+VuBX8g+IPg==');
+insert into users values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'l2', '4QrcOUm6Wau+VuBX8g+IPg==');
+insert into users values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'qa', '4QrcOUm6Wau+VuBX8g+IPg==');
+insert into users values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'qc', '4QrcOUm6Wau+VuBX8g+IPg==');
+insert into users values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'ml', '4QrcOUm6Wau+VuBX8g+IPg==');
 
 --initial group table
 insert into groups values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'User Group L1');

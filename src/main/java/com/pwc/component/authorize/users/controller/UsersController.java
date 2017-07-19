@@ -1,5 +1,8 @@
 package com.pwc.component.authorize.users.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.common.util.EncodeString;
 import com.pwc.component.authorize.users.entity.UserGroup;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.authorize.users.service.IUsersService;
@@ -28,6 +32,7 @@ import com.pwc.component.authorize.groups.entity.Groups;
 import com.pwc.aml.menus.entity.Menus;
 import com.pwc.aml.menus.service.IMenusService;
 import com.pwc.component.authorize.roles.entity.Roles;
+import sun.misc.BASE64Encoder;
 
 @Controller
 @RequestMapping("user")
@@ -39,36 +44,45 @@ public class UsersController extends BaseController{
     private IMenusService menusService;
 
     @PostMapping("loginUser")
-    public ResponseEntity<Map<String, Object>> LoginUser(@RequestBody Users users, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> LoginUser(@RequestBody Users users, HttpSession session){
         Users u = usersService.checkUserName(users);
         if(null == u){
             return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
         }else{
-            if(!StringUtils.equals(u.getUserPwd(), users.getUserPwd())){
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }else{
-                int userId = u.getId();
-                u.setUserPwd(null);
-                List<Groups> gList = usersService.fetchUserGroup(userId);
-                Set<Roles> rSet = new HashSet<Roles>();
-                for(Groups g : gList){
-                    List<Roles> rList = usersService.fetchGroupRole(g.getId());
-                    rSet.addAll(rList);
+
+            try {
+                if(!StringUtils.equals(u.getUserPwd(), EncodeString.EncoderByMd5(users.getUserPwd()))){
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }else{
+                    int userId = u.getId();
+                    u.setUserPwd(null);
+                    List<Groups> gList = usersService.fetchUserGroup(userId);
+                    Set<Roles> rSet = new HashSet<Roles>();
+                    for(Groups g : gList){
+                        List<Roles> rList = usersService.fetchGroupRole(g.getId());
+                        rSet.addAll(rList);
+                    }
+
+                    List<Menus> menuList = menusService.listUserMenus(userId);
+                    Map<String, Object> userInfo = new HashMap<String, Object>(4);
+                    userInfo.put("User", u);
+                    userInfo.put("Groups", gList);
+                    userInfo.put("Roles", rSet);
+                    userInfo.put("Menus", menuList);
+                    session.setAttribute("UserInfo", userInfo);
+                    session.setAttribute("userName", u.getUserName());
+                    userName = u.getUserName();
+                    return new ResponseEntity<Map<String, Object>>(userInfo, HttpStatus.OK);
+
                 }
-
-                List<Menus> menuList = menusService.listUserMenus(userId);
-                Map<String, Object> userInfo = new HashMap<String, Object>(4);
-                userInfo.put("User", u);
-                userInfo.put("Groups", gList);
-                userInfo.put("Roles", rSet);
-                userInfo.put("Menus", menuList);
-                session.setAttribute("UserInfo", userInfo);
-                session.setAttribute("userName", u.getUserName());
-                userName = u.getUserName();
-                return new ResponseEntity<Map<String, Object>>(userInfo, HttpStatus.OK);
-
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+
         }
+        return null;
     }
     
     @GetMapping("getSingleUser/{id}")
@@ -91,13 +105,27 @@ public class UsersController extends BaseController{
     
     @PutMapping("updateUser")
     public ResponseEntity<Users> updateUser(@RequestBody Users u){
-    	usersService.updateUser(u, userName);
+        try {
+            u.setUserPwd(EncodeString.EncoderByMd5(u.getUserPwd()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        usersService.updateUser(u, userName);
     	return new ResponseEntity<Users>(u, HttpStatus.OK);
     }
     
     @PostMapping("createUser")
     public ResponseEntity<Void> createUser(@RequestBody Users u){
-    	usersService.createUser(u, userName);
+        try {
+            u.setUserPwd(EncodeString.EncoderByMd5(u.getUserPwd()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        usersService.createUser(u, userName);
     	return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -118,4 +146,5 @@ public class UsersController extends BaseController{
         usersService.deleteUserFromGroup(id, userName);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
 }
