@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.pwc.common.base.controller.BaseController;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public class AlertsController extends BaseController {
     @RequestMapping("getAllAlerts")
     public ResponseEntity<List<Alerts>> getAllAlerts() throws  Exception{
         return new ResponseEntity<List<Alerts>>(alertService.getAllAlertsData(), HttpStatus.OK);
+    }
+
+    @RequestMapping("getSingleAlert/{id}")
+    public ResponseEntity<Alerts> getSingleAlert(@PathVariable String alertId){
+        return null;
     }
 
 }

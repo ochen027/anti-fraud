@@ -126,15 +126,15 @@ public class RulesService implements IRulesService{
 				a.setAlterId("ALT"+tResult.getTransId());
 				a.setAlertName(tResult.getAlertType());
 				a.setAlertContents(tResult.getAlertType()+"==>Amount is:"+tResult.getTransBaseAmt());
-				a.setAlertCreatedDate(LocalDateTime.now().toString());
-				a.setTransId(tResult.getTransId());
+				//a.setAlertCreatedDate(LocalDateTime.now().toString());
+				//a.setTransId(tResult.getTransId());
 
 				HbaseDaoImp hdao = new HbaseDaoImp();
 				HTable table = hdao.getTable("aml:alerts");
 				hdao.putData(table, a.getAlterId(), "f1", "alertName", a.getAlertName());
 				hdao.putData(table, a.getAlterId(), "f1", "alertContents", a.getAlertContents());
-				hdao.putData(table, a.getAlterId(), "f1", "alertCreatedDate", a.getAlertCreatedDate());
-				hdao.putData(table, a.getAlterId(), "f1", "transId", a.getTransId());
+				//hdao.putData(table, a.getAlterId(), "f1", "alertCreatedDate", a.getAlertCreatedDate());
+				//hdao.putData(table, a.getAlterId(), "f1", "transId", a.getTransId());
 
 				//aList.add(a);
 			}
