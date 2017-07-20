@@ -8,6 +8,9 @@ import com.pwc.aml.transation.entity.Transactions;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +27,23 @@ public class AlertDAO implements IAlertDAO {
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
         Cell[] cells= hBaseDAO.getData(hBaseDAO.getTable("aml:alerts"),alertId, "f1");
+        return this.consistAlerts(cells);
+    }
+
+    @Override
+    public List<Alerts> getAllAlertsData() throws Exception {
+        Scan scan = new Scan();
+        HTable hTable = hBaseDAO.getTable("aml:alerts");
+        ResultScanner rsscan = hTable.getScanner(scan);
+        List<Alerts> list = new ArrayList<Alerts>();
+        for (Result rs : rsscan) {
+            Alerts aBean = this.consistAlerts(rs.rawCells());
+            list.add(aBean);
+        }
+        return list;
+    }
+
+    private Alerts consistAlerts(Cell[] cells){
         Alerts aBean = new Alerts();
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
@@ -115,4 +135,6 @@ public class AlertDAO implements IAlertDAO {
         }
         return aBean;
     }
+
+
 }

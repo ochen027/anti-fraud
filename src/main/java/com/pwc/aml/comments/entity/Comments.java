@@ -1,12 +1,14 @@
 package com.pwc.aml.comments.entity;
 
+import java.time.LocalDateTime;
+
 public class Comments {
 
     private String commentId;
     private String alertId;
     private String commentContents;
     private String commentCreatedBy;
-    private String commentCreatedDate;
+    private LocalDateTime commentCreatedDate;
 
     public String getCommentId() {
         return commentId;
@@ -40,11 +42,11 @@ public class Comments {
         this.commentCreatedBy = commentCreatedBy;
     }
 
-    public String getCommentCreatedDate() {
+    public LocalDateTime getCommentCreatedDate() {
         return commentCreatedDate;
     }
 
-    public void setCommentCreatedDate(String commentCreatedDate) {
+    public void setCommentCreatedDate(LocalDateTime commentCreatedDate) {
         this.commentCreatedDate = commentCreatedDate;
     }
 }

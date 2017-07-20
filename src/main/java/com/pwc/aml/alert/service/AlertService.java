@@ -12,14 +12,11 @@ import java.util.List;
 public class AlertService implements IAlertService{
 
     @Autowired
-    private IHbaseDao hBaseDao;
-
-    @Autowired
     private IAlertDAO alertDAO;
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
-        return hBaseDao.getAllAlertsData();
+        return alertDAO.getAllAlertsData();
     }
 
     @Override

@@ -16,6 +16,7 @@ public interface IHbaseDao {
 	HTable getTable(String name) throws Exception;
 	void putData(HTable table,String rowkey,String columnFamily,String column,String value) throws Exception;
 	void deleteData(HTable table,String rowkey,String columnFamily,String column) throws Exception;
+	void deleteData(HTable table,String rowkey) throws Exception;
 	void deleteByColumnFamily(HTable table,String rowkey,String columnFamily) throws Exception ;
 	Cell[]  getData(HTable table,String rowKey,String columnFamily) throws Exception;
 	//public  Cell getData(HTable table,String rowKey,String columnFamily,String column) throws Exception;
@@ -23,5 +24,4 @@ public interface IHbaseDao {
 	void deleteTable(String tableName) throws IOException;
 	void importTsv();
 	List<Transactions> getAllTransData() throws Exception;
-	List<Alerts> getAllAlertsData() throws Exception;
 }
