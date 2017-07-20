@@ -1,4 +1,64 @@
-
+.content-body {
+    border: 1px solid #999999;
+    position: relative;
+    margin: 0 50px 50px ;
+    width: auto;
+}
+.container {
+    margin: 20px 0;
+    font-size: 14px;
+    width: auto;
+}
+.container .pagination{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    /* padding-left: 0; */
+    list-style: none;
+    border-radius: 0.25rem;
+    justify-content: center;
+}
+.container .table th {
+    white-space: nowrap;
+}
+.container .table th.st-sort-ascent::before{
+    content: "\25B2";
+}
+.container .table th.st-sort-descent::before{
+    content: "\25BC";
+}
+.container .table td.description,
+.container .table th.description{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    border: none;
+    max-width: 250px;
+}
+.container .table td.td-date{
+    white-space: nowrap;
+}
+.container .span-title {
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+}
+.container .text {
+    font-family: arial;
+    font-size:14px;
+    font-weight:normal;
+}
+.container .block {
+    margin-bottom: 20px;
+}
+/*.container .dropdown-toggle.triangle-down{*/
+    /*mask-size: cover;*/
+    /*-webkit-mask-size: cover;*/
+    /*background-color: #666666;*/
+    /*position: relative;*/
+/*}*/
 .container .customer-summary{
     display: table;
     width: 90%;
@@ -22,7 +82,7 @@
     display: table-cell;
     width: 16%;
 }
-.container .customer-summary .table-tr .value-detail{
+.container .customer-summary .table-tr .text-input{
     display: table-cell;
     width: 160px;
 }
@@ -86,4 +146,9 @@
 .container i {
     cursor: pointer;
 
+}
+.container .form-check-input.custom-size{
+    width: 16px;
+    height: 16px;
+    margin: 0;
 }

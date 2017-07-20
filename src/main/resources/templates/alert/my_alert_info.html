@@ -1,23 +1,26 @@
 
 <div class="container" ng-controller="MyAlertInfoCtrl">
+    <h5>Available Alerts Info:</h5>
+    <hr/>
+
     <fieldset class="block">
         <div>
-            <i class="dropdown-toggle"></i>
+            <i class="fa fa-caret-down"></i>
             <span class="span-title">Customer Summary</span>
             <div class="customer-summary">
                 <div class="table-tr">
                     <label class="label" for="alertid">Alert ID</label>
-                    <input class="value-detail" id="alertid" type="text" ng-disabled="true" value="{{summary.alertId}}"></input>
+                    <input class="text-input" id="alertid" type="text" ng-disabled="true" value="{{summary.alertId}}"></input>
                     <label class="label" for="alertdate">Alert Date</label>
-                    <input class="value-detail" id="alertdate" type="text" colspan="2" ng-disabled="true" value="{{summary.alertDate}}"></input>
+                    <input class="text-input" id="alertdate" type="text" colspan="2" ng-disabled="true" value="{{summary.alertDate}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="customerid">Customer ID</label>
-                    <input class="value-detail" id="customerid" type="text" ng-disabled="true" value="{{summary.customerId}}"></input>
+                    <input class="text-input" id="customerid" type="text" ng-disabled="true" value="{{summary.customerId}}"></input>
                     <label class="label" for="customername">Customer Name</label>
-                    <input class="value-detail" id="customername" type="text" ng-disabled="true" value="{{summary.custName}}"></input>
+                    <input class="text-input" id="customername" type="text" ng-disabled="true" value="{{summary.custName}}"></input>
                     <label class="label" for="customertype">Customer Type</label>
-                    <input class="value-detail" id="customertype" type="text" ng-disabled="true" value="{{summary.customerType}}"></input>
+                    <input class="text-input" id="customertype" type="text" ng-disabled="true" value="{{summary.customerType}}"></input>
                 </div>
             </div>
         </div>
@@ -25,90 +28,90 @@
 
     <fieldset class="block">
         <div>
-            <i class="dropdown-toggle"></i>
+            <i class="fa fa-caret-down"></i>
             <span class="span-title">Customer Information</span>
         </div>
         <div class="sub-block">
-            <i class="dropdown-toggle"></i>
+            <i class="fa fa-caret-down"></i>
             <span class="span-title">Individual</span>
             <div class="customer-summary">
                 <div class="table-tr">
                     <label class="label" for="individualBirthdate">Date of Birth</label>
-                    <input class="value-detail" id="individualBirthdate" type="text" ng-disabled="true" value="{{individual.brithdate}}"></input>
+                    <input class="text-input" id="individualBirthdate" type="text" ng-disabled="true" value="{{individual.brithdate}}"></input>
                     <label class="label" for="individualId">ID</label>
-                    <input class="value-detail" id="individualId" type="text" ng-disabled="true" value="{{individual.ID}}"></input>
+                    <input class="text-input" id="individualId" type="text" ng-disabled="true" value="{{individual.ID}}"></input>
                     <label class="label" for="individualOccupation">Occupation</label>
-                    <input class="value-detail" id="individualOccupation" type="text" ng-disabled="true" value="{{individual.occupation}}"></input>
+                    <input class="text-input" id="individualOccupation" type="text" ng-disabled="true" value="{{individual.occupation}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="individualCity">City</label>
-                    <input class="value-detail" id="individualCity" type="text" ng-disabled="true" vlaue="{{individual.city}}"></input>
+                    <input class="text-input" id="individualCity" type="text" ng-disabled="true" vlaue="{{individual.city}}"></input>
                     <label class="label" for="individualCountry">Country</label>
-                    <input class="value-detail" id="individualCountry" type="text" ng-disabled="true" value="{{individual.country}}"></input>
+                    <input class="text-input" id="individualCountry" type="text" ng-disabled="true" value="{{individual.country}}"></input>
                     <label class="label" for="individualPhone">Phone</label>
-                    <input class="value-detail" id="individualPhone" type="text" ng-disabled="true" value="{{individual.phone}}"></input>
+                    <input class="text-input" id="individualPhone" type="text" ng-disabled="true" value="{{individual.phone}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="individualPEP">Is PEP</label>
-                    <input class="value-detail" id="individualPEP" type="text" ng-disabled="true" value="{{individual.isPEP}}"></input>
+                    <input class="text-input" id="individualPEP" type="text" ng-disabled="true" value="{{individual.isPEP}}"></input>
                     <label class="label" for="individualNonResident">Is Non Resident</label>
-                    <input class="value-detail" id="individualNonResident" type="text" ng-disabled="true" value="{{individual.isNonResident}}"></input>
+                    <input class="text-input" id="individualNonResident" type="text" ng-disabled="true" value="{{individual.isNonResident}}"></input>
                     <label class="label" for="individualAMLSuspect">Is AML Suspect</label>
-                    <input class="value-detail" id="individualAMLSuspect" type="text" ng-disabled="true" vlaue="{{individual.isAMLSuspect}}"></input>
+                    <input class="text-input" id="individualAMLSuspect" type="text" ng-disabled="true" vlaue="{{individual.isAMLSuspect}}"></input>
                 </div>
             </div>
         </div>
 
         <div class="sub-block">
-            <i class="dropdown-toggle"></i>
+            <i class="fa fa-caret-down"></i>
             <span class="span-title">Corporate</span>
             <div class="customer-summary">
                 <div class="table-tr">
                     <label class="label" for="corporateRegNumber">Registration Number</label>
-                    <input class="value-detail" id="corporateRegNumber" type="text" ng-disabled="true" value="{{corporate.registrationNo}}"></input>
+                    <input class="text-input" id="corporateRegNumber" type="text" ng-disabled="true" value="{{corporate.registrationNo}}"></input>
                     <label class="label" for="corporateLineBusiness">Line of Business</label>
-                    <input class="value-detail" id="corporateLineBusiness" type="text" ng-disabled="true" value="{{corporate.lineOfBusiness}}"></input>
+                    <input class="text-input" id="corporateLineBusiness" type="text" ng-disabled="true" value="{{corporate.lineOfBusiness}}"></input>
                     <label class="label" for="corporatePhone">Phone</label>
-                    <input class="value-detail" id="corporatePhone" type="text" ng-disabled="true" value="{{corporate.phone}}"></input>
+                    <input class="text-input" id="corporatePhone" type="text" ng-disabled="true" value="{{corporate.phone}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="corporateLocation">Location</label>
-                    <input class="value-detail" id="corporateLocation" type="text" ng-disabled="true" value="{{corporate.location}}"></input>
+                    <input class="text-input" id="corporateLocation" type="text" ng-disabled="true" value="{{corporate.location}}"></input>
                     <label class="label" for="corporateCountry">Country</label>
-                    <input class="value-detail" id="corporateCountry" type="text" ng-disabled="true" value="{{corporate.country}}"></input>
+                    <input class="text-input" id="corporateCountry" type="text" ng-disabled="true" value="{{corporate.country}}"></input>
                     <label class="label" for="corporateAMLSuspect">Is AML Suspect</label>
-                    <input class="value-detail" id="corporateAMLSuspect" type="text" ng-disabled="true" value="{{corporate.isAMLSuspect}}"></input>
+                    <input class="text-input" id="corporateAMLSuspect" type="text" ng-disabled="true" value="{{corporate.isAMLSuspect}}"></input>
                 </div>
             </div>
         </div>
 
         <div class="sub-block">
-            <i class="dropdown-toggle"></i>
+            <i class="fa fa-caret-down"></i>
             <span class="span-title">Legal Representative</span>
             <div class="customer-summary">
                 <div class="table-tr">
                     <label class="label" for="legalBirthdate">Date of Birth</label>
-                    <input class="value-detail" id="legalBirthdate" type="text" ng-disabled="true" value="{{legalRepresentative.dateofbith}}"></input>
+                    <input class="text-input" id="legalBirthdate" type="text" ng-disabled="true" value="{{legalRepresentative.dateofbith}}"></input>
                     <label class="label" for="legalId">ID</label>
-                    <input class="value-detail" id="legalId" type="text" ng-disabled="true" value="{{legalRepresentative.ID}}"></input>
+                    <input class="text-input" id="legalId" type="text" ng-disabled="true" value="{{legalRepresentative.ID}}"></input>
                     <label class="label" for="legalOccupation">Occupation</label>
-                    <input class="value-detail" id="legalOccupation" type="text" ng-disabled="true" value="{{legalRepresentative.occupation}}"></input>
+                    <input class="text-input" id="legalOccupation" type="text" ng-disabled="true" value="{{legalRepresentative.occupation}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="legalCity">City</label>
-                    <input class="value-detail" id="legalCity" type="text" ng-disabled="true" value="{{legalRepresentative.city}}"></input>
+                    <input class="text-input" id="legalCity" type="text" ng-disabled="true" value="{{legalRepresentative.city}}"></input>
                     <label class="label" for="legalCountry">Country</label>
-                    <input class="value-detail" id="legalCountry" type="text" ng-disabled="true" value="{{legalRepresentative.country}}"></input>
+                    <input class="text-input" id="legalCountry" type="text" ng-disabled="true" value="{{legalRepresentative.country}}"></input>
                     <label class="label" for="legalPhone">Phone</label>
-                    <input class="value-detail" id="legalPhone" type="text" ng-disabled="true" value="{{legalRepresentative.phone}}"></input>
+                    <input class="text-input" id="legalPhone" type="text" ng-disabled="true" value="{{legalRepresentative.phone}}"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="legalPEP">Is PEP</label>
-                    <input class="value-detail" id="legalPEP" type="text" ng-disabled="true" value="{{legalRepresentative.isPEP}}"></input>
+                    <input class="text-input" id="legalPEP" type="text" ng-disabled="true" value="{{legalRepresentative.isPEP}}"></input>
                     <label class="label" for="legalNonResident">Is Non Resident</label>
-                    <input class="value-detail" id="legalNonResident" type="text" ng-disabled="true" value="{{legalRepresentative.isNonResident}}"></input>
+                    <input class="text-input" id="legalNonResident" type="text" ng-disabled="true" value="{{legalRepresentative.isNonResident}}"></input>
                     <label class="label" for="legalAMLSuspect">Is AML Suspect</label>
-                    <input class="value-detail" id="legalAMLSuspect" type="text" ng-disabled="true" vlaue="{{legalRepresentative.isAMLSuspect}}"></input>
+                    <input class="text-input" id="legalAMLSuspect" type="text" ng-disabled="true" vlaue="{{legalRepresentative.isAMLSuspect}}"></input>
                 </div>
             </div>
         </div>
@@ -128,6 +131,7 @@
                 <th>Account Open Date</th>
                 <th>Account Close Date</th>
                 <th>Counterparty</th>
+                <th>Counterbank</th>
                 <th>Counterbank's Location</th>
                 <th>Representative</th>
                 <th>Representative ID Number</th>
@@ -136,25 +140,34 @@
             </thead>
             <tbody>
             <!-- ng-repeat="row in dataDisplay"-->
-            <tr ng-repeat="data in records">
-                <td>{{data.transactionDate}}</td>
-                <td>{{data.accountType}}</td>
-                <td>{{data.accountNum}}</td>
-                <td>{{data.currency|currency}}</td>
-                <td>{{data.transactionAmount}}</td>
-                <td>{{data.TransactionType}}</td>
-                <td>{{data.fundReceivePay}}</td>
-                <td>{{data.transactionPurpose}}</td>
-                <td>{{data.accountOpenDate}}</td>
-                <td>{{data.accountCloseDate}}</td>
-                <td>{{data.Counterparty}}</td>
-                <td>{{data.counterBankLocation}}</td>
-                <td>{{data.representative}}</td>
-                <td>{{data.representativeId}}</td>
-                <td>{{data.representativeType}}</td>
+            <tr ng-repeat="row in dataDisplay">
+                <td>{{row.transactionDate}}</td>
+                <td>{{row.accountType}}</td>
+                <td>{{row.accountNum}}</td>
+                <td>{{row.currency}}</td>
+                <td>{{row.transactionAmount}}</td>
+                <td>{{row.TransactionType}}</td>
+                <td>{{row.fundReceivePay}}</td>
+                <td>{{row.transactionPurpose}}</td>
+                <td>{{row.accountOpenDate}}</td>
+                <td>{{row.accountCloseDate}}</td>
+                <td>{{row.Counterparty}}</td>
+                <td>{{row.counterbank}}</td>
+                <td>{{row.counterBankLocation}}</td>
+                <td>{{row.representative}}</td>
+                <td>{{row.representativeId}}</td>
+                <td>{{row.representativeType}}</td>
             </tr>
 
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="15" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="4"></div>
+
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
     <div class="sepeartor"></div>
@@ -176,6 +189,13 @@
         <textarea id="inputComment" class="text-area text" rows="5" placeholder="comments detail"></textarea>
     </div>
     <div class="sepeartor"></div>
-
+    <div class="col-md-12 text-right">
+        <button class="btn btn-primary">Save Only</button>
+        <button class="btn btn-primary">Cancle</button>
+        <button class="btn btn-primary">Escalate</button>
+        <button class="btn btn-primary">Suppress</button>
+        <button class="btn btn-primary">Close</button>
+        <button class="btn btn-primary">Report to Authority</button>
+    </div>
 
 </div>

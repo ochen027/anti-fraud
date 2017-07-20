@@ -1,37 +1,68 @@
-<div class="container" app-controller="SuppressedAlertCtrl">
-    <h3>Suppressed Alerts:</h3>
+<div class="container" ng-controller="SuppressedAlertCtrl">
+    <h5>Suppressed Alerts:</h5>
     <hr/>
 
+    <div class="text-center">
+        <div class="customer-summary">
+            <form class="">
+                <div class="table-tr">
+                    <label class="label">Customer ID</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Suppress Date</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Customer Name</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">Alert ID</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Counterparty Name</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Scenario No</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">Total Amount(more than)</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Scenario Description</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 text-right">
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+            <button class="btn btn-default" ng-click="search()">Search</button>
+        </div>
+        <div class="sepeartor"></div>
+    </div>
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
            st-table="dataDisplay" st-safe-src="data">
         <thead>
         <tr>
-            <th>Select</th>
-            <th>Alert ID</th>
-            <th>Acct Number</th>
-            <th>Cust Name</th>
-            <th>Creat Date</th>
-            <th>Scenario</th>
-            <th>Description</th>
-            <th>Triggering Values (USD)</th>
-            <th>Status</th>
-            <th>Age</th>
+            <th><input class="form-check-input custom-size" type="checkbox" ng-model="checkAll" ng-click="all()"></input></th>
+            <th st-sort="alertId">Alert ID</th>
+            <th st-sort="accNumber">Acct Number</th>
+            <th st-sort="custName">Cust Name</th>
+            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="scenario">Scenario ID</th>
+            <th st-sort="description" class="description">Description</th>
+            <th st-sort="counterparty">Counterparty</th>
+            <th st-sort="frequency">Frequency</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
-        <tr>
-            <td>Select</td>
-            <td><a ui-sref="suppressedAlertInfo({id:'12345'})">12345</a></td>
-            <td>Acct Number</td>
-            <td>Cust Name</td>
-            <td>Creat Date</td>
-            <td>Scenario</td>
-            <td>Description</td>
-            <td>Triggering Values (USD)</td>
-            <td>Status</td>
-            <td>Age</td>
+        <tr ng-repeat="row in dataDisplay track by $index">
+            <td><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
+            <td><a ui-sref="suppressedAlertInfo({{row.alertId}})">{{row.alertId}}</a></td>
+            <td>{{row.accNumber}}</td>
+            <td>{{row.custName}}</td>
+            <td class="td-date">{{row.createDate}}</td>
+            <td>{{row.scenario}}</td>
+            <td class="description">{{row.description}}</td>
+            <td>{{row.counterparty}}</td>
+            <td>{{row.frequency}}</td>
         </tr>
         </tbody>
         <tfoot>
@@ -51,12 +82,14 @@
 
     <div class="col-md-12">
         <lable>total:</lable>
-        <span>someting</span>
+        <span>$10000.00</span>
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-default">Clear Selected</button>
-        <button class="btn btn-default">Assign to</button>
+        <button class="btn btn-primary" ng-click="export()">Export</button>
+        <button class="btn btn-primary" ng-click="clearSelect()">Clear Selected</button>
+        <button class="btn btn-primary" ng-click="remove()">Remove</button>
     </div>
+    <div class="sepeartor"></div>
 
 </div>

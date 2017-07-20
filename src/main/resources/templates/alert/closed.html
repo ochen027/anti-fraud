@@ -1,37 +1,67 @@
-<div class="container" app-controller="ClosedAlertCtrl">
-    <h3>Closed Alert:</h3>
+<div class="container" ng-controller="ClosedAlertCtrl">
+    <h5>Closed Alert:</h5>
     <hr/>
 
+    <div class="text-center">
+        <div class="customer-summary">
+            <form class="">
+                <div class="table-tr">
+                    <label class="label">Customer ID</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Alert Create Date</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Customer Name</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">Alert Close Date</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Alert ID</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Suspicious Level</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">Total Amount(more than)</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Alert Closed By</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 text-right">
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+            <button class="btn btn-default" ng-click="search()">Search</button>
+        </div>
+        <div class="sepeartor"></div>
+    </div>
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
-           st-table="dataDisplay" st-safe-src="data">
+           st-table="displayedData" st-safe-src="data">
         <thead>
         <tr>
-            <th>Select</th>
-            <th>Alert ID</th>
-            <th>Acct Number</th>
-            <th>Cust Name</th>
-            <th>Creat Date</th>
-            <th>Scenario</th>
-            <th>Description</th>
-            <th>Triggering Values (USD)</th>
-            <th>Status</th>
-            <th>Age</th>
+            <th st-sort="alertId">Alert ID1</th>
+            <th st-sort="accNumber">Acct Number</th>
+            <th st-sort="custName">Cust Name</th>
+            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="scenario">Scenario</th>
+            <th st-sort="description" class="description">Description</th>
+            <th st-sort="triggeringValues">Triggering Values (USD)</th>
+            <th st-sort="status">Status</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
-        <tr>
-            <td>Select</td>
-            <td><a ui-sref="closedAlertInfo({id:'12345'})">12345</a></td>
-            <td>Acct Number</td>
-            <td>Cust Name</td>
-            <td>Creat Date</td>
-            <td>Scenario</td>
-            <td>Description</td>
-            <td>Triggering Values (USD)</td>
-            <td>Status</td>
-            <td>Age</td>
+        <tr ng-repeat="row in displayedData track by $index ">
+            <td><a ui-sref="closedAlertInfo({{row.alertId}})">{{row.alertId}}</a></td>
+            <td>{{row.accNumber}}</td>
+            <td>{{row.custName}}</td>
+            <td class="td-date">{{row.createDate}}</td>
+            <td>{{row.scenario}}</td>
+            <td class="description">{{row.description}}</td>
+            <td>{{row.triggeringValues|currency}}</td>
+            <td>{{row.status}}</td>
+
         </tr>
         </tbody>
         <tfoot>
@@ -51,12 +81,11 @@
 
     <div class="col-md-12">
         <lable>total:</lable>
-        <span>someting</span>
+        <span>10000.00</span>
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-default">Clear Selected</button>
-        <button class="btn btn-default">Assign to</button>
+        <button class="btn btn-primary">Export</button>
     </div>
 
 </div>

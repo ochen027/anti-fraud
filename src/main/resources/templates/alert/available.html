@@ -1,5 +1,5 @@
-<div class="container" app-controller="AvailableAlertCtrl">
-    <h3>Available Alerts:</h3>
+<div class="container" ng-controller="AvailableAlertCtrl">
+    <h5>Available Alerts:</h5>
     <hr/>
 
     <!--  table part -->
@@ -7,38 +7,37 @@
            st-table="dataDisplay" st-safe-src="data">
         <thead>
         <tr>
-            <th>Select</th>
-            <th>Alert ID</th>
-            <th>Acct Number</th>
-            <th>Cust Name</th>
-            <th>Creat Date</th>
-            <th>Scenario</th>
-            <th>Description</th>
-            <th>Triggering Values (USD)</th>
-            <th>Status</th>
-            <th>Age</th>
+            <th class="text-center"><input class="form-check-input custom-size" type="checkbox" ng-model="checkAll" ng-click="all()"></input></th>
+            <th st-sort="alertId">Alert ID</th>
+            <th st-sort="accNumber">Acct Number</th>
+            <th st-sort="custName">Cust Name</th>
+            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="scenario">Scenario</th>
+            <th st-sort="description" class="description">Description</th>
+            <th st-sort="triggeringValues">Triggering Values (USD)</th>
+            <th st-sort="status">Status</th>
+            <th st-sort="days">Days</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
-        <tr>
-            <td>Select</td>
-            <td><a ui-sref="availableAlertInfo({id:'12345'})">12345</a></td>
-            <td>Acct Number</td>
-            <td>Cust Name</td>
-            <td>Creat Date</td>
-            <td>Scenario</td>
-            <td>Description</td>
-            <td>Triggering Values (USD)</td>
-            <td>Status</td>
-            <td>Age</td>
+        <tr ng-repeat="row in dataDisplay track by $index">
+            <td class="text-center"><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
+            <td><a ui-sref="availableAlertInfo({{row.alertId}})">{{row.alertId}}</a></td>
+            <td>{{row.accNumber}}</td>
+            <td>{{row.custName}}</td>
+            <td class="td-date">{{row.createDate}}</td>
+            <td>{{row.scenario}}</td>
+            <td class="description">{{row.description}}</td>
+            <td>{{row.triggeringValues|currency}}</td>
+            <td>{{row.status}}</td>
+            <td>{{row.days}}</td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
             <td colspan="10" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage"
-                     st-displayed-pages="7"></div>
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
             </td>
         </tr>
         </tfoot>
@@ -51,12 +50,12 @@
 
     <div class="col-md-12">
         <lable>total:</lable>
-        <span>someting</span>
+        <span>{{total}}</span>
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-default">Clear Selected</button>
-        <button class="btn btn-default">Assign to</button>
+        <button class="btn btn-primary" ng-click="clearSelect()">Clear Selected</button>
+        <button class="btn btn-primary" ng-click="assignTo()">Assign to</button>
     </div>
 
 </div>

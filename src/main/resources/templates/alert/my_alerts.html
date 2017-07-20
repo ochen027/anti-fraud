@@ -1,6 +1,6 @@
 <div class="container" ng-controller="MyAlertCtrl">
 
-    <h3>My Alerts:</h3>
+    <h5>My Alerts:</h5>
     <hr/>
 
     <!--  table part -->
@@ -9,21 +9,21 @@
         <thead>
         <tr>
             <th>Select</th>
-            <th>Alert ID</th>
-            <th>Acct Number</th>
-            <th>Cust Name</th>
-            <th>Creat Date</th>
-            <th>Scenario</th>
-            <th>Description</th>
-            <th>Triggering Values (USD)</th>
-            <th>Days</th>
+            <th st-sort="alertId">Alert ID</th>
+            <th st-sort="accNumber">Acct Number</th>
+            <th st-sort="custName">Cust Name</th>
+            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="scenario">Scenario</th>
+            <th st-sort="description" class="description">Description</th>
+            <th st-sort="triggeringValues">Triggering Values (USD)</th>
+            <th st-sort="status">Status</th>
+            <th st-sort="age">Age</th>
         </tr>
         </thead>
         <tbody>
-
-        <tr ng-repeat="row in myAlertData">
-            <td><input type="checkbox" /></td>
-            <td><a ui-sref="myAlertInfo({{row.alterId}})">{{row.alterId}}</a></td>
+        <tr ng-repeat="row in myAlertDataDisplay track by $index">
+            <td><input class="form-check-input custom-size" type="checkbox" /></td>
+            <td><a ui-sref="myAlertInfo({{row.alterId}})">{{row.alertId}}</a></td>
             <td>{{row.accNumber}}</td>
             <td>{{row.custName}}</td>
             <td>{{row.createDate}}</td>
@@ -31,16 +31,16 @@
             <td>{{row.description}}</td>
             <td>{{row.triggeringValues|currency}}</td>
             <td>{{row.status}}</td>
-
+            <td>{{row.age}}</td>
         </tr>
         </tbody>
         <tfoot>
-        <tr>
-            <td colspan="10" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage"
-                     st-displayed-pages="7"></div>
-            </td>
-        </tr>
+            <tr>
+                <td colspan="15" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsBypage" st-displayed-pages="4"></div>
+
+                </td>
+            </tr>
         </tfoot>
 
     </table>
@@ -51,11 +51,11 @@
 
     <div class="col-md-12">
         <lable>total:</lable>
-        <span>someting</span>
+        <span>{{data.total}}</span>
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-default">Reset</button>
-        <button class="btn btn-default">Create Case</button>
+        <button class="btn btn-primary">Reset</button>
+        <button class="btn btn-primary">Create Case</button>
     </div>
 </div>
