@@ -10,8 +10,10 @@ import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.datanucleus.store.rdbms.query.AbstractRDBMSQueryResult;
 import org.springframework.stereotype.Repository;
@@ -262,6 +264,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void scanData(HTable table) throws Exception {
         //get the scan instance
         Scan scan = new Scan();
+
         //load the scan
         ResultScanner rsscan = table.getScanner(scan);
         for (Result rs : rsscan) {
@@ -346,6 +349,30 @@ public class HbaseDaoImp implements IHbaseDao {
         }
     }
 
+    public static void getDataByColumn(HTable table, String column, String columnValue) throws Exception{
+        Scan scan = new Scan();
+        Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes(column),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(columnValue));
+        scan.setFilter(filter);
+        ResultScanner rsscan = table.getScanner(scan);
+        for (Result r : rsscan) {
+            System.out.println(Bytes.toString(r.getRow()));
+            for (Cell cell : r.rawCells()) {
+                System.out.println(
+                        Bytes.toString(CellUtil.cloneFamily(cell))
+                                + "->" +
+                                Bytes.toString(CellUtil.cloneQualifier(cell))
+                                + "->" +
+                                Bytes.toString(CellUtil.cloneValue(cell))
+                                + "->" +
+                                cell.getTimestamp()
+                );
+            }
+            System.out.println("------------------------------");
+        }
+        rsscan.close();
+    }
+
     public void importTsv() {
         RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop", "Welcome1", 22, "utf-8");
         String result = null;
@@ -380,8 +407,9 @@ public class HbaseDaoImp implements IHbaseDao {
 //        System.out.println(proStr);
 //          hdao.importTsv();
 
-        hdao.scanData(table);
+        //hdao.scanData(table);
 
+        hdao.getDataByColumn(table, "totalAmt", "19999");
 
         /**
         hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");

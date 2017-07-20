@@ -39,7 +39,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public List<Comments> listCommentsByAlert(String alertId) {
-        return null;
+    public List<Comments> listCommentsByAlert(String alertId) throws Exception{
+        return commentDAO.getCommentsListByAlert(alertId);
     }
 }

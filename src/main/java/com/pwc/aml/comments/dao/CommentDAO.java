@@ -9,6 +9,9 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,7 +37,7 @@ public class CommentDAO implements ICommentDAO{
 
     @Override
     public void updateComment(Comments c) {
-
+        //TODO
     }
 
     @Override
@@ -63,8 +66,19 @@ public class CommentDAO implements ICommentDAO{
     }
 
     @Override
-    public List<Comments> getCommentsListByAlert(String alertId) {
-        return null;
+    public List<Comments> getCommentsListByAlert(String alertId) throws Exception {
+        Scan scan = new Scan();
+        HTable hTable = hBaseDAO.getTable("aml:comments");
+        Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("alertId"),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(alertId));
+        scan.setFilter(filter);
+        List<Comments> cList = new ArrayList<Comments>();
+        ResultScanner rsscan = hTable.getScanner(scan);
+        for (Result rs : rsscan) {
+            Comments aBean = this.consistComment(rs.rawCells());
+            cList.add(aBean);
+        }
+        return cList;
     }
 
 
