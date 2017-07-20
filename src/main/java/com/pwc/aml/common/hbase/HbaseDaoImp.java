@@ -381,6 +381,8 @@ public class HbaseDaoImp implements IHbaseDao {
         }
     }
 
+
+
     //pringt cells
     public static void pirntCells(Cell[] cells) {
         //rs.cells（）获得cells数组
@@ -412,7 +414,7 @@ public class HbaseDaoImp implements IHbaseDao {
         //scan.addFamily(family);
         //scan.setStartRow(Bytes.toBytes("20161119_10002"));
         //scan.setStopRow(Bytes.toBytes("20161119_10003"));
-        Filter filter = new PrefixFilter(Bytes.toBytes("9000000000"));
+        Filter filter = new PrefixFilter(Bytes.toBytes("900000000001"));
 //        scan.set
         scan.setFilter(filter);
         //hbase conf
@@ -458,7 +460,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:alerts");
+        HTable table = hdao.getTable("aml:trans");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -471,7 +473,7 @@ public class HbaseDaoImp implements IHbaseDao {
 
         //deleteData(table);
 //        scanData(table);
-//        rangeData(table);
+        //rangeData(table);
 //        String proStr=pro.getProperty( "spring.jpa.generate-ddl");
 //
 //        System.out.println(proStr);
