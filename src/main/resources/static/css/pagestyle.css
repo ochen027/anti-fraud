@@ -1,8 +1,44 @@
-.container {
+.content-body {
     border: 1px solid #999999;
     position: relative;
     margin: 0 50px 50px ;
-    width: 90%;
+    width: auto;
+}
+.container {
+    margin: 20px 0;
+    font-size: 14px;
+    width: auto;
+}
+.container .pagination{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    /* padding-left: 0; */
+    list-style: none;
+    border-radius: 0.25rem;
+    justify-content: center;
+}
+.container .table th {
+    white-space: nowrap;
+}
+.container .table th.st-sort-ascent::before{
+    content: "\25B2";
+}
+.container .table th.st-sort-descent::before{
+    content: "\25BC";
+}
+.container .table td.description,
+.container .table th.description{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    border: none;
+    max-width: 250px;
+}
+.container .table td.td-date{
+    white-space: nowrap;
 }
 .container .span-title {
     font-family: arial;
@@ -46,7 +82,7 @@
     display: table-cell;
     width: 16%;
 }
-.container .customer-summary .table-tr .value-detail{
+.container .customer-summary .table-tr .text-input{
     display: table-cell;
     width: 160px;
 }
@@ -111,34 +147,8 @@
     cursor: pointer;
 
 }
-/*
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url('/components/bootstrap/fonts/glyphicons-halflings-regular.eot');
-    src: url('/components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+.container .form-check-input.custom-size{
+    width: 16px;
+    height: 16px;
+    margin: 0;
 }
-
-.glyphicon {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.glyphicon-triangle-right:before {
-    content: "\e250";
-}
-.glyphicon-triangle-left:before {
-    content: "\e251";
-}
-.glyphicon-triangle-bottom:before {
-    content: "\e252";
-}
-.glyphicon-triangle-top:before {
-    content: "\e253";
-}*/

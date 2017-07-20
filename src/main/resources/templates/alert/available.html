@@ -22,7 +22,7 @@
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in dataDisplay track by $index">
-            <td class="text-center"><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-value="alertId" value="{{row.alertId}}"></input></td>
+            <td class="text-center"><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
             <td><a ui-sref="availableAlertInfo({{row.alertId}})">{{row.alertId}}</a></td>
             <td>{{row.accNumber}}</td>
             <td>{{row.custName}}</td>

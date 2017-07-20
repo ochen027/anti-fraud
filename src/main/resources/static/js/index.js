@@ -1,6 +1,15 @@
 let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out',
     'ui.bootstrap','chart.js','ngFileUpload','angularUUID2','smart-table']);
 
+app.run(['$templateCache', function ($templateCache){
+    $templateCache.remove("template/smart-table/pagination.html");
+    $templateCache.put('template/smart-table/pagination.html',
+        '<nav ng-if="numPages && pages.length >= 2"><ul class="pagination">' +
+        '<li class="page-item" ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a class="page-link" href="javascript: void(0);" ng-click="selectPage(page)">{{page}}</a></li>' +
+        '</ul></nav>');
+
+}]);
+
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     let dashboard = {
