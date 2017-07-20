@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.pwc.aml.common.hbase.HbaseDaoImp;
 import com.pwc.aml.common.util.ExecuteDrools;
+import com.pwc.aml.transation.dao.ITransactionDAO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class RulesService implements IRulesService{
 	private IRulesDAO rulesDAO;
 	
 	@Autowired
-	private IHbaseDao hBaseDAO;
+	private ITransactionDAO transactionDAO;
 	
 
 	@Override
@@ -89,7 +90,7 @@ public class RulesService implements IRulesService{
 	public void executeRuleEngine(int scenarioId) throws Exception{
 		List<Transactions> tList = new ArrayList<Transactions>();
 		try {
-			tList = hBaseDAO.getAllTransData();
+			tList = transactionDAO.getAllTransData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
