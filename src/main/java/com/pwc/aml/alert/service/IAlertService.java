@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IAlertService {
 
-    public List<Alerts> getAllAlertsData() throws Exception;
+    List<Alerts> getAllAlertsData() throws Exception;
 
+    Alerts getSingleAlert(String alertId) throws Exception;
 }
