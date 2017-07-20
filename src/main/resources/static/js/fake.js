@@ -1,4 +1,4 @@
-Mock.mock("/alert/myalert", {
+Mock.mock(/\/alert\/myalert$|\/alert\/availableAlert$|\/alert\/suppressedAlert$|\/alert\/closeAlert$/, {
         "result|35": [{
             "alertId|+1": 1,
             "accNumber": /\d{5}/,
@@ -8,10 +8,14 @@ Mock.mock("/alert/myalert", {
             "description": "@sentence(3,10)",
             "triggeringValues|1-10.2-7": 1.00,
             "status|1": ["Active", "Closed", "Deleted", "Canceled"],
-            "age|1-100": 100
-        }]
-    })
-Mock.mock("/alert/myAlertInfo/12345", {
+            "age|1-100": 100,
+            "days|1-3":1,
+            "counterparty": "@last",
+            "frequency|1-10": 1
+        }],
+    "total|1-10.2" : 1.00
+    });
+Mock.mock(/\/alert\/myAlertInfo\/12345$|\/alert\/availableInfo\/12345$|\/alert\/suppressedInfo\/12345$|\/alert\/closedAlertInfo\/12345$/, {
     "summary": {
         "alertId": 1,
         "alertDate": "@date('yyyy-MM-dd')",
@@ -61,7 +65,8 @@ Mock.mock("/alert/myAlertInfo/12345", {
             "transactionPurpose": "@sentence(1)",
             "accountOpenDate": "@date('yyyy-MM-dd')",
             "accountCloseDate": "@date('yyyy-MM-dd')",
-            "Counterparty|1-10.2": 1.00,
+            "Counterparty": "@last",
+            "counterbank": "ICBC Bank",
             "counterBankLocation": "shanghai",
             "representative": "@last",
             "representativeId": "@id()",
