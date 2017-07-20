@@ -2,6 +2,8 @@ package com.pwc.aml.common.hbase;
 
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.comments.entity.Comments;
+import com.pwc.aml.documents.entity.Documents;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.common.util.FormatUtils;
 import com.pwc.aml.common.util.RunShellTool;
@@ -11,8 +13,10 @@ import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.datanucleus.store.rdbms.query.AbstractRDBMSQueryResult;
 import org.springframework.stereotype.Repository;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -256,19 +260,90 @@ public class HbaseDaoImp implements IHbaseDao {
             for (Cell c : rs.rawCells()) {
                 String key = Bytes.toString(CellUtil.cloneQualifier(c));
                 switch(key){
-
-                    case "alertName":
-                        aBean.setAlertName(Bytes.toString(CellUtil.cloneValue(c)));
+                    case "accountId":
+                        aBean.setAccountId(Bytes.toString(CellUtil.cloneValue(c)));
                         continue;
                     case "alertContents":
                         aBean.setAlertContents(Bytes.toString(CellUtil.cloneValue(c)));
                         continue;
-                    case "transId":
-                        aBean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
-                        continue;
                     case "alertCreatedDate":
-                        aBean.setAlertCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
+                        aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
                         continue;
+                    case "alertDesc":
+                        aBean.setAlertDesc(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "alertName":
+                        aBean.setAlertName(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "businessDate":
+                        aBean.setBusinessDate(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "commentId":
+                        String commentArray = Bytes.toString(CellUtil.cloneValue(c));
+                        Comments c1 = new Comments();
+                        c1.setCommentId("COMT90001");
+                        c1.setAlertId(aBean.getAlterId());
+                        c1.setCommentContents("COMT90001");
+                        Comments c2 = new Comments();
+                        c2.setCommentId("COMT90002");
+                        c2.setAlertId(aBean.getAlterId());
+                        c2.setCommentContents("COMT90002");
+                        List<Comments> cList = new ArrayList<Comments>();
+                        cList.add(c1);
+                        cList.add(c2);
+                        aBean.setCommentsList(cList);
+                        continue;
+                    case "createdBy":
+                        aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "createdDate":
+                        aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "customerId":
+                        aBean.setCustomerId(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "documentId":
+                        String docArray = Bytes.toString(CellUtil.cloneValue(c));
+                        Documents doc1 = new Documents();
+                        doc1.setAlertId(aBean.getAlterId());
+                        doc1.setDocId("DOC0001");
+                        doc1.setDocPath("/xxx/doc0001");
+                        Documents doc2 = new Documents();
+                        doc2.setAlertId(aBean.getAlterId());
+                        doc2.setDocId("DOC0001");
+                        doc2.setDocPath("/xxx/doc0001");
+                        List<Documents> dList = new ArrayList<Documents>();
+                        dList.add(doc1);
+                        dList.add(doc2);
+                        aBean.setDocList(dList);
+                        continue;
+                    case "scenarioId":
+                        aBean.setScenarioId(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "totalAmt":
+                        aBean.setTotalAmt(Bytes.toString(CellUtil.cloneValue(c)));
+                        continue;
+                    case "transId":
+                        String transArray = Bytes.toString(CellUtil.cloneValue(c));
+                        Transactions t1 = new Transactions();
+                        t1.setTransId("900000000001");
+                        t1.setTransBaseAmt(90000d);
+
+                        Transactions t2 = new Transactions();
+                        t2.setTransId("900000000002");
+                        t2.setTransBaseAmt(20000d);
+
+                        Transactions t3 = new Transactions();
+                        t3.setTransId("900000000003");
+                        t3.setTransBaseAmt(30000d);
+
+                        List<Transactions> tList = new ArrayList<Transactions>();
+                        tList.add(t1);
+                        tList.add(t2);
+                        tList.add(t3);
+                        aBean.setTransList(tList);
+                        continue;
+
                 }
 
             }
@@ -403,6 +478,56 @@ public class HbaseDaoImp implements IHbaseDao {
 //          hdao.importTsv();
 
         hdao.scanData(table);
+
+
+        /**
+        hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");
+        hdao.putData(table, "ALT900000000001", "f1", "alertContents", "ALT900000000001->Warning->More Than 10000");
+        hdao.putData(table, "ALT900000000001", "f1", "transId", "900000000001,900000000002,900000000004");
+        hdao.putData(table, "ALT900000000001", "f1", "customerId", "CUST90001");
+        hdao.putData(table, "ALT900000000001", "f1", "accountId", "acct0000001");
+        hdao.putData(table, "ALT900000000001", "f1", "scenarioId", "1");
+        hdao.putData(table, "ALT900000000001", "f1", "documentId", "DOC90001,DOC90002");
+        hdao.putData(table, "ALT900000000001", "f1", "commentId", "COMT90001,COMT90002");
+        hdao.putData(table, "ALT900000000001", "f1", "businessDate", "2017-07-01");
+        hdao.putData(table, "ALT900000000001", "f1", "totalAmt", "19999");
+        hdao.putData(table, "ALT900000000001", "f1", "createdBy", "sysadmin");
+        hdao.putData(table, "ALT900000000001", "f1", "createdDate", "2017-07-20");
+        hdao.putData(table, "ALT900000000001", "f1", "alertDesc", "Alert1Desc");
+
+
+        hdao.putData(table, "ALT900000000002", "f1", "alertName", "Error");
+        hdao.putData(table, "ALT900000000002", "f1", "alertContents", "ALT900000000002->Error->More Than 50000");
+        hdao.putData(table, "ALT900000000002", "f1", "transId", "900000000008,900000000009,900000000010");
+        hdao.putData(table, "ALT900000000002", "f1", "customerId", "CUST90002");
+        hdao.putData(table, "ALT900000000002", "f1", "accountId", "acct0000002");
+        hdao.putData(table, "ALT900000000002", "f1", "scenarioId", "1");
+        hdao.putData(table, "ALT900000000002", "f1", "documentId", "DOC90003,DOC90004");
+        hdao.putData(table, "ALT900000000002", "f1", "commentId", "COMT90003,COMT90004");
+        hdao.putData(table, "ALT900000000002", "f1", "businessDate", "2017-07-01");
+        hdao.putData(table, "ALT900000000002", "f1", "totalAmt", "29999");
+        hdao.putData(table, "ALT900000000002", "f1", "createdBy", "sysadmin");
+        hdao.putData(table, "ALT900000000002", "f1", "createdDate", "2017-07-20");
+        hdao.putData(table, "ALT900000000002", "f1", "alertDesc", "Alert2Desc");
+
+        hdao.putData(table, "ALT900000000003", "f1", "alertName", "Info");
+        hdao.putData(table, "ALT900000000003", "f1", "alertContents", "ALT900000000003->Info->less Than 10000");
+        hdao.putData(table, "ALT900000000003", "f1", "transId", "900000000019,900000000018,900000000003");
+        hdao.putData(table, "ALT900000000003", "f1", "customerId", "CUST90003");
+        hdao.putData(table, "ALT900000000003", "f1", "accountId", "acct0000004");
+        hdao.putData(table, "ALT900000000003", "f1", "scenarioId", "1");
+        hdao.putData(table, "ALT900000000003", "f1", "documentId", "DOC90005,DOC90006");
+        hdao.putData(table, "ALT900000000003", "f1", "commentId", "COMT90005,COMT90006");
+        hdao.putData(table, "ALT900000000003", "f1", "businessDate", "2017-07-01");
+        hdao.putData(table, "ALT900000000003", "f1", "totalAmt", "39999");
+        hdao.putData(table, "ALT900000000003", "f1", "createdBy", "sysadmin");
+        hdao.putData(table, "ALT900000000003", "f1", "createdDate", "2017-07-20");
+        hdao.putData(table, "ALT900000000003", "f1", "alertDesc", "Alert3Desc");
+        **/
+
+
+
+
         //hdao.deleteTable("aml:alerts");
         //hdao.createTable("aml:alerts");
     }
