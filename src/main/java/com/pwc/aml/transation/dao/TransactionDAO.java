@@ -57,11 +57,20 @@ public class TransactionDAO implements ITransactionDAO {
         return this.consistTrans(cells);
     }
 
+    @Override
+    public void TruncateTrans() throws Exception {
+        hBaseDAO.deleteTable("aml:trans");
+        hBaseDAO.createTable("aml:trans");
+    }
+
     private Transactions consistTrans(Cell[] cells) throws ParseException{
         Transactions tbean = new Transactions();
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
+                case "trans_id":
+                    tbean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
+                    continue;
                 case "acct_id":
                     tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;

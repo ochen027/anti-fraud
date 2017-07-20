@@ -18,4 +18,6 @@ public interface ITransactionService {
     
     List<Transactions> getAllTransData() throws Exception;
 
+    void truncateTrans() throws Exception;
+
 }

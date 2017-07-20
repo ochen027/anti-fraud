@@ -41,6 +41,10 @@ public class TransactionService implements ITransactionService {
 		return transactionDAO.getAllTransData();
 	}
 
+    @Override
+    public void truncateTrans() throws Exception {
+        transactionDAO.TruncateTrans();
+    }
 
 
 }

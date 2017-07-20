@@ -42,4 +42,10 @@ public class TransactionRestController {
 		return new ResponseEntity<List<Transactions>>(transactionService.getAllTransData(), HttpStatus.OK);
     }
 
+    @GetMapping("truncateTrans")
+    public ResponseEntity<Void> TruncateTrans() throws Exception {
+        transactionService.truncateTrans();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
 }

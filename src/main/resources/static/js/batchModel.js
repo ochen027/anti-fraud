@@ -9,7 +9,7 @@ app.controller('TransBatchCtrl', function ($scope, $http, $location, $state,$tim
     });
 
     function update(){
-        $http.get("/transaction/listAll").then(function(res){
+        $http.get("/transaction/listAllTrans").then(function(res){
             $scope.transactions=res.data;
             $scope.transactionsDisplay=res.data.slice();
         });
@@ -17,7 +17,7 @@ app.controller('TransBatchCtrl', function ($scope, $http, $location, $state,$tim
 
     $scope.refresh=update();
     $scope.deleteAll=function(){
-        $http.get("/transaction/truncate").then(function(res){
+        $http.get("/transaction/truncateTrans").then(function(res){
            if(res.status===200){
                alert("transactions table has been delete");
                update();
@@ -26,7 +26,7 @@ app.controller('TransBatchCtrl', function ($scope, $http, $location, $state,$tim
     };
 
     $scope.import=function(){
-        $http.get("/transaction/import").then(function(res){
+        $http.get("/transaction/importTrans").then(function(res){
             if(res.status===200){
                 alert("import success!");
                 update();

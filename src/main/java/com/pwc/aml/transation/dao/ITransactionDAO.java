@@ -11,4 +11,6 @@ public interface ITransactionDAO {
     List<Transactions> getAllTransData() throws Exception;
 
     Transactions getSingleTrans(String transId) throws Exception;
+
+    void TruncateTrans() throws Exception;
 }
