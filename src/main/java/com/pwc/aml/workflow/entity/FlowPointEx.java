@@ -14,15 +14,14 @@ public class FlowPointEx extends FlowPoint {
 
     private int roleId;
 
-    private List<FlowEvent> events;
+    private List<FlowEvent> PossibleEvents;
 
-
-    public List<FlowEvent> getEvents() {
-        return events;
+    public List<FlowEvent> getPossibleEvents() {
+        return PossibleEvents;
     }
 
-    public void setEvents(List<FlowEvent> events) {
-        this.events = events;
+    public void setPossibleEvents(List<FlowEvent> possibleEvents) {
+        PossibleEvents = possibleEvents;
     }
 
     public int getRoleId() {
