@@ -32,4 +32,15 @@ public class WorkflowEx extends Workflow {
     public void setFlowPointsEx(List<FlowPointEx> flowPointsEx) {
         this.flowPointsEx = flowPointsEx;
     }
+
+
+    public FlowPointEx getStartPoint() {
+        for (FlowPointEx flowPoint : flowPointsEx) {
+            if(flowPoint.getType().equals("WorkflowShape.WorkflowStart"))
+            return flowPoint;
+        }
+
+        return null;
+    }
+
 }

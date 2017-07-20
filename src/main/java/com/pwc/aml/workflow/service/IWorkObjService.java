@@ -12,7 +12,7 @@ public interface IWorkObjService {
 
     List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow);
 
-    void doEvent(WorkObj workObj, FlowEvent flowEvent);
+    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent);
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 

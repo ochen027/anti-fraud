@@ -3,16 +3,17 @@ package com.pwc.aml.workflow.entity;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.component.workflow.entity.FlowEvent;
+import com.pwc.component.workflow.entity.Workflow;
 
 import java.util.List;
 
 public class WorkObj {
 
     private String workObjId;
-    private Alerts alertId;
+    private Alerts alerts;
     private FlowPointEx currentPoint;
     private List<FlowEvent> HistoryEvents;
-
+    private WorkflowEx workflow;
 
     public String getWorkObjId() {
         return workObjId;
@@ -22,12 +23,12 @@ public class WorkObj {
         this.workObjId = workObjId;
     }
 
-    public Alerts getAlertId() {
-        return alertId;
+    public Alerts getAlerts() {
+        return alerts;
     }
 
-    public void setAlertId(Alerts alertId) {
-        this.alertId = alertId;
+    public void setAlerts(Alerts alerts) {
+        this.alerts = alerts;
     }
 
     public FlowPointEx getCurrentPoint() {
@@ -44,5 +45,13 @@ public class WorkObj {
 
     public void setHistoryEvents(List<FlowEvent> historyEvents) {
         HistoryEvents = historyEvents;
+    }
+
+    public WorkflowEx getWorkflow() {
+        return workflow;
+    }
+
+    public void setWorkflow(WorkflowEx workflow) {
+        this.workflow = workflow;
     }
 }
