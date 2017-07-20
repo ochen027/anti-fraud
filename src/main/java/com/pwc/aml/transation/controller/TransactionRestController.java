@@ -24,29 +24,22 @@ import com.pwc.aml.transation.service.ITransactionService;
 @RequestMapping("transaction")
 public class TransactionRestController {
     @Autowired
-    private ITransactionService transactionServiceImp;
+    private ITransactionService transactionService;
 
-    @GetMapping("getSingle/{id}")
-    public ResponseEntity<Map<String, String>> getSingle(@PathVariable("id") String id) throws Exception {
-        Map<String, String> map=transactionServiceImp.getData("aml:trans",id,"f1");
-        return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
+    @GetMapping("getSingleTrans/{id}")
+    public ResponseEntity<Transactions> getSingleTrans(@PathVariable("id") String id) throws Exception {
+        return new ResponseEntity<Transactions>(transactionService.getSingleTrans(id), HttpStatus.OK);
     }
 
-    @GetMapping("import")
-    public ResponseEntity<Void> getSingle() throws Exception {
-        transactionServiceImp.importData();
-        return new ResponseEntity<Void>( HttpStatus.OK);
+    @GetMapping("importTrans")
+    public ResponseEntity<Void> importTrans() throws Exception {
+        transactionService.importData();
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping("truncate")
-    public ResponseEntity<Void> truncate() throws Exception {
-        transactionServiceImp.truncateTable();
-        return new ResponseEntity<Void>( HttpStatus.OK);
-    }
-    
     @GetMapping("listAllTrans")
     public ResponseEntity<List<Transactions>> listAll() throws Exception{
-		return new ResponseEntity<List<Transactions>>(transactionServiceImp.getAllTransData(), HttpStatus.OK);
+		return new ResponseEntity<List<Transactions>>(transactionService.getAllTransData(), HttpStatus.OK);
     }
 
 }

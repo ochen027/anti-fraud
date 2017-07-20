@@ -22,6 +22,4 @@ public interface IHbaseDao {
 	//public  Cell getData(HTable table,String rowKey,String columnFamily,String column) throws Exception;
 	void createTable(String tableName) throws IOException;
 	void deleteTable(String tableName) throws IOException;
-	void importTsv();
-	List<Transactions> getAllTransData() throws Exception;
 }

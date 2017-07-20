@@ -195,65 +195,6 @@ public class HbaseDaoImp implements IHbaseDao {
 //        return Cell;
 //    }
 
-    
-	@Override
-	public List<Transactions> getAllTransData() throws Exception {
-		Scan scan = new Scan();
-        HTable hTable = this.getTable("aml:trans");
-    	ResultScanner rsscan = hTable.getScanner(scan);
-    	List<Transactions> list = new ArrayList<Transactions>();
-    	for (Result rs : rsscan) {
-    		Transactions tbean = new Transactions();
-    		//System.out.println(Bytes.toString(rs.getRow()));
-    		tbean.setTransId(Bytes.toString(rs.getRow()));
-    		
-    		for (Cell c : rs.rawCells()) {
-    			String key = Bytes.toString(CellUtil.cloneQualifier(c));
-    			switch(key){
-    			
-    			case "acct_id":
-    				tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "as_of_date":
-    				tbean.setAsOfDate(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
-    				continue;
-    			case "counterparty_id_1":
-    				tbean.setCounterPartyId(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "currency_cd":
-    				tbean.setCurrencyCd(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "trans_base_amt":
-    				tbean.setTransBaseAmt(Double.valueOf(Bytes.toString(CellUtil.cloneValue(c))));
-    				continue;
-    			case "trans_br":
-    				tbean.setTransBr(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "trans_by":
-    				tbean.setTransBy(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "trans_cdt_cd":
-    				tbean.setTransCdtCd(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "trans_chanel":
-    				tbean.setTransChanel(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
-    				continue;
-    			case "trans_desc":
-    				tbean.setTransDesc(Bytes.toString(CellUtil.cloneValue(c)));
-    				continue;
-    			case "trans_dt":
-    				tbean.setTransDt(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
-    				continue;
-    			case "trans_seq":
-    				tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
-    				continue;
-    			}
-    			
-    		}
-    		list.add(tbean);
-    	}
-    	return list;
-	}
 
 
     /**
@@ -373,16 +314,6 @@ public class HbaseDaoImp implements IHbaseDao {
         rsscan.close();
     }
 
-    public void importTsv() {
-        RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop", "Welcome1", 22, "utf-8");
-        String result = null;
-		try {
-			result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:trans_id,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/tsvImport/trans_date");
-		} catch (IOException | JSchException e) {
-			e.printStackTrace();
-		}
-        System.out.print(result);
-    }
 
 
     public static void main(String[] args) throws Exception {
