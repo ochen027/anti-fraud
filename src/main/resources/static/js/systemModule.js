@@ -1,23 +1,21 @@
-
-
-app.controller('ImportDataCtrl', function($scope, $http, $location, $state, $timeout,Upload){
+app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
 
 
     $scope.uploadFiles = function (files) {
         debugger;
         if (files && files.length) {
-            for (var i = 0; i < files.length; i++) {
-                Upload.upload({ data: {file: files[i]} });
-            }
-            // or send them all together for HTML5 browsers:
-            //Upload.upload({..., data: {file: files}, ...});
+            Upload.upload({
+                url: '/customer/upload',
+                data: {file: files,username:"test1"}
+            }).then(function (res) {
+                console.log('Success ' + res.config.data.file.name + 'uploaded. Response: ' + res.data);
+            });
         }
     }
 
 
-
 });
 
-app.controller('UserManagementCtrl', function($scope, $http, $location, $state, $timeout){
+app.controller('UserManagementCtrl', function ($scope, $http, $location, $state, $timeout) {
 
 });

@@ -256,3 +256,4 @@ insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63
 --insert default bussinessDay
 
 insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2017-07-18');
+insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','3');
