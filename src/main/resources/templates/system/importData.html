@@ -1,0 +1,32 @@
+<div class="container" ng-controller="ImportDataCtrl">
+
+    <h4>Import Data:</h4>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Customer</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Account</a>
+        </li>
+    </ul>
+
+    <!--start of the customer import -->
+    <div >
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default">Delete All(for testing)</button>
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-pattern="'.csv'">Drop Customer csv files here</div>
+
+        </div>
+
+    </div>
+    <!--end of customer import  -->
+
+</div>

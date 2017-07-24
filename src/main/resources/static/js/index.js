@@ -1,7 +1,7 @@
-let app = angular.module('AMLapp', ['ngAnimate','ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap','chart.js','ngFileUpload','angularUUID2','smart-table']);
+let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
+    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table']);
 
-app.run(['$templateCache', function ($templateCache){
+app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
     $templateCache.put('template/smart-table/pagination.html',
         '<nav ng-if="numPages && pages.length >= 2"><ul class="pagination">' +
@@ -12,7 +12,9 @@ app.run(['$templateCache', function ($templateCache){
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
-    let dashboard = {
+    let app = {};
+
+    app.dashboard = {
         name: 'dashboard',
         url: '/dashboard',
         views: {
@@ -28,9 +30,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'DashboardCtrl'
     }
-    $stateProvider.state(dashboard);
 
-    let batch = {
+
+    app.batch = {
         name: 'transBatch',
         url: '/batch',
         views: {
@@ -46,9 +48,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'TransBatchCtrl'
     }
-    $stateProvider.state(batch);
 
-    let authModule = [
+    app.authModule = [
         {
             name: 'login',
             url: '/login',
@@ -64,11 +65,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     ];
 
-    for (var i = 0, len = authModule.length; i < len; i++) {
-        $stateProvider.state(authModule[i]);
-    }
 
-    let alertModule = [
+
+    app.alertModule = [
         {
             name: "available",
             url: "/alert/available",
@@ -148,7 +147,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             },
             controller: 'MyAlertInfoCtrl',
-            params: { id: null }
+            params: {id: null}
         },
         {
             name: "availableAlertInfo",
@@ -217,31 +216,27 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     ];
 
 
-    for (var i = 0, len = alertModule.length; i < len; i++) {
-        $stateProvider.state(alertModule[i]);
-    }
 
 
-    let document={
-            name: "documentExample",
-            url: "/document/index",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/document/index'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
+    app.document = {
+        name: "documentExample",
+        url: "/document/index",
+        views: {
+            header: {
+                templateUrl: '/header'
             },
-            controller: 'DocumentCtrl'
-        };
+            content: {
+                templateUrl: '/document/index'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'DocumentCtrl'
+    };
 
-    $stateProvider.state(document);
 
-    let workflow =[
+    app.workflow = [
         {
             name: "IndexWorkflow",
             url: "/workflow/index",
@@ -280,12 +275,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     ];
 
 
-    for (var i = 0, len = workflow.length; i < len; i++) {
-        $stateProvider.state(workflow[i]);
-    }
 
 
-    let users =[
+    app.users = [
         {
             name: "IndexUsers",
             url: "/users/list",
@@ -320,43 +312,89 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     ];
 
-    for (var i = 0, len = users.length; i < len; i++) {
-        $stateProvider.state(users[i]);
+    app.system = [{
+        name: "ImportData",
+        url: "/system/importData",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/importData'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'ImportDataCtrl'
+    }, {
+        name: "userManagement",
+        url: "/system/userManagement",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/userManagement'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'UserManagementCtrl'
+    }];
+
+    /***
+     * for supporting muti-level
+     * @param obj
+     */
+    function loadingRouter(obj) {
+        if (Array.isArray(obj)) {
+            for(let i=0;i<obj.length;i++){
+                loadingRouter(obj[i]);
+            }
+        } else {
+            $stateProvider.state(obj);
+        }
+    }
+
+    for(let key in app){
+        loadingRouter(app[key]);
     }
 
     $urlRouterProvider.otherwise('/login');
 });
 
 
-app.controller('HeaderCtrl', function ($scope, $http, $location,$cookies,$cookieStore, $state, $timeout,$loginService) {
+app.controller('HeaderCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService) {
 
     /**
      * initial header
      */
-    $timeout(function(){
-        let user=$cookieStore.get('user');
-        if(!user) {
+    $timeout(function () {
+        let user = $cookieStore.get('user');
+        if (!user) {
             alert("login expired! please login again!");
             $state.go('login');
             return;
         }
 
-        if(!window.$$userInfo){
-            $loginService(user,function(res){
+        if (!window.$$userInfo) {
+            $loginService(user, function (res) {
                 $scope.user = window.$$userInfo.User;
-                $scope.menu=window.$$userInfo.Menus;
+                $scope.menu = window.$$userInfo.Menus;
             });
-        }else{
+        } else {
             $scope.user = window.$$userInfo.User;
-            $scope.menu=window.$$userInfo.Menus;
+            $scope.menu = window.$$userInfo.Menus;
         }
     });
 
-    $scope.hasChildren=function(menu){
-        return (menu.childList&&menu.childList.length!==0)?true:false;
+    $scope.hasChildren = function (menu) {
+        return (menu.childList && menu.childList.length !== 0) ? true : false;
     }
 
-    $scope.logout=function(){
+    $scope.logout = function () {
         $cookieStore.remove('user');
         $state.go('login');
     }

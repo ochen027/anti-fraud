@@ -56,7 +56,7 @@ insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , 
 insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', NULL, NULL);
 insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', NULL, NULL);
 insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', NULL, NULL);
-insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Setting', NULL, NULL);
+insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', NULL, NULL);
 insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, '/#!/dashboard');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, '/#!/workflow/index');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, '/#!/batch');
@@ -69,8 +69,11 @@ insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, '/#!/case/closed');
 insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', 11, '/#!/users/list');
 
---initial role menu table
+insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Import', 11, '/#!/system/importData');
+insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Management', 11, '/#!/system/userManagement');
 
+--initial role menu table
+---sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
 insert into rolemenu values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 6);
 insert into rolemenu values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 6);
@@ -93,6 +96,9 @@ insert into rolemenu values (19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19
 insert into rolemenu values (20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 6);
 insert into rolemenu values (21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 6);
 insert into rolemenu values (22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 22, 6);
+insert into rolemenu values (23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 23, 6);
+insert into rolemenu values (24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 24, 6);
+
 
 
 ---l1 menu
