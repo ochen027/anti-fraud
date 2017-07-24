@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
 
 @Controller
 @RequestMapping("customer")
@@ -46,18 +48,25 @@ public class CustomerController extends BaseController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("username") String username ) throws IOException {
-
-        byte[] bytes;
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) throws IOException, ParseException {
 
         if (!file.isEmpty()) {
-            bytes = file.getBytes();
-            //store file in storage
+            customerService.importCsvData(file);
         }
-
-        System.out.println(String.format("receive %s from %s", file.getOriginalFilename(), username));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
+
+    @GetMapping ("findAll")
+    public ResponseEntity<List<Customers>> findAll() {
+        List<Customers> targets=  customerService.findAll();
+        return new ResponseEntity<List<Customers>>(targets,HttpStatus.OK);
+    }
+
+    @GetMapping ("removeAll")
+    public ResponseEntity<Void> removeAll() {
+        customerService.removeAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

@@ -7,10 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 
@@ -65,5 +62,24 @@ public class CustomerDAO implements ICustomerDAO {
         } else {
             return customers.get(0);
         }
+    }
+
+    @Override
+    public void removeAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<Customers> cq = cb.createCriteriaDelete(Customers.class);
+        Root<Customers> root = cq.from(Customers.class);
+        em.createQuery(cq).executeUpdate();
+    }
+
+    @Override
+    public List<Customers> findAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Customers> cq = cb.createQuery(Customers.class);
+        Root<Customers> rootEntry = cq.from(Customers.class);
+        CriteriaQuery<Customers> all = cq.select(rootEntry);
+        TypedQuery<Customers> query = em.createQuery(all);
+        List<Customers> customers = query.getResultList();
+        return customers;
     }
 }

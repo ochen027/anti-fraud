@@ -230,3 +230,24 @@ header .navbar-light .navbar-nav .nav-item:hover {
 /***
 end of header
  */
+
+
+
+
+/**
+for table or other requirement, leave it now
+ */
+.card-block {
+    overflow: auto;
+}
+
+
+.drop-box{
+    padding: 30px;
+    margin: 40px 60px;
+    min-width: 60px;
+    min-height: 80px;
+    background-color: #f1f1f1;
+    border: dashed #9acfea;
+    text-align: center;
+}

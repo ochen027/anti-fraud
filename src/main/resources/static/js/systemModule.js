@@ -2,17 +2,36 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
 
 
     $scope.uploadFiles = function (files) {
-        debugger;
+
         if (files && files.length) {
             Upload.upload({
                 url: '/customer/upload',
-                data: {file: files,username:"test1"}
+                data: {file: files[0]}
             }).then(function (res) {
-                console.log('Success ' + res.config.data.file.name + 'uploaded. Response: ' + res.data);
+                $scope.refresh();
             });
         }
     }
 
+
+    $scope.refresh=function(){
+        $http.get("/customer/findAll").then(function(res){
+            $scope.customers=res.data;
+            $scope.customersDisplay=res.data.slice();
+        });
+    };
+
+
+    $scope.deleteAll=function(){
+        $http.get("/customer/removeAll").then(function(res){
+            $scope.refresh();
+        });
+    };
+
+
+    $timeout(function(){
+        $scope.refresh();
+    });
 
 });
 

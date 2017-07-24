@@ -57,13 +57,13 @@ public class Customers extends BaseEntity {
     private String customerPhone1;
 
     @Column(name = "PEP_Flg")
-    private String IsPEP;
+    private boolean IsPEP;
 
     @Column(name = "resi_Flg")
-    private String IsNonResident;
+    private boolean IsNonResident;
 
     @Column(name = "sus_Flg")
-    private String IsAMLSuspect;
+    private boolean IsAMLSuspect;
 
 
     public String getCustomerId() {
@@ -170,27 +170,27 @@ public class Customers extends BaseEntity {
         this.customerPhone1 = customerPhone1;
     }
 
-    public String getIsPEP() {
+    public boolean isPEP() {
         return IsPEP;
     }
 
-    public void setIsPEP(String isPEP) {
-        IsPEP = isPEP;
+    public void setPEP(boolean PEP) {
+        IsPEP = PEP;
     }
 
-    public String getIsNonResident() {
+    public boolean isNonResident() {
         return IsNonResident;
     }
 
-    public void setIsNonResident(String isNonResident) {
-        IsNonResident = isNonResident;
+    public void setNonResident(boolean nonResident) {
+        IsNonResident = nonResident;
     }
 
-    public String getIsAMLSuspect() {
+    public boolean isAMLSuspect() {
         return IsAMLSuspect;
     }
 
-    public void setIsAMLSuspect(String isAMLSuspect) {
-        IsAMLSuspect = isAMLSuspect;
+    public void setAMLSuspect(boolean AMLSuspect) {
+        IsAMLSuspect = AMLSuspect;
     }
 }
