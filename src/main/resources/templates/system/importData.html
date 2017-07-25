@@ -4,10 +4,10 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Customer</a>
+            <a class="nav-link active" >Customer</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Account</a>
+            <a class="nav-link" >Account</a>
         </li>
     </ul>
 
@@ -89,9 +89,89 @@
                 </table>
             </div>
         </div>
-
-
     </div>
     <!--end of customer import  -->
+
+    <!--start of the account import -->
+    <div >
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAll()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refresh()">refresh</button>
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-pattern="'.csv'">Drop Customer csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Customer
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="customersDisplay" st-safe-src="customers">
+                    <thead>
+                    <tr>
+                        <th>customerId</th>
+                        <th>customerCertificateNumber</th>
+                        <th>customerFirstName</th>
+                        <th>customerMiddleName</th>
+                        <th>customerLastName</th>
+                        <th>customerFullName</th>
+                        <th>customerOpenBranch</th>
+                        <th>customerAge</th>
+                        <th>customerBirthDate</th>
+                        <th>customerCity</th>
+                        <th>customerCountry</th>
+                        <th>customerOccupation</th>
+                        <th>customerPhone1</th>
+                        <th>IsPEP</th>
+                        <th>IsNonResident</th>
+                        <th>IsAMLSuspect</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in customersDisplay">
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.customerCertificateNumber}}</td>
+                        <td>{{row.customerFirstName}}</td>
+                        <td>{{row.customerMiddleName}}</td>
+                        <td>{{row.customerLastName}}</td>
+                        <td>{{row.customerFullName}}</td>
+                        <td>{{row.customerOpenBranch}}</td>
+                        <td>{{row.customerAge}}</td>
+                        <td>{{row.customerBirtdDate}}</td>
+                        <td>{{row.customerCity}}</td>
+                        <td>{{row.customerCountry}}</td>
+                        <td>{{row.customerOccupation}}</td>
+                        <td>{{row.customerPhone1}}</td>
+                        <td>{{row.pep}}</td>
+                        <td>{{row.nonResident}}</td>
+                        <td>{{row.amlsuspect}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of account import  -->
+
 
 </div>
