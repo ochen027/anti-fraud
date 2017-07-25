@@ -344,6 +344,74 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'UserManagementCtrl'
     }];
 
+    app.scenario=[
+        {
+            name: "scenario",
+            url: "/scenario/scenario",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/scenario/scenario'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'ScenarioCtrl'
+        },
+        {
+            name: "scenarioManager",
+            url: "/scenario/scenarioManager",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/scenario/scenarioManager'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'ScenarioManagerCtrl'
+        },
+        {
+            name: "rules",
+            url: "/scenario/rules",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/scenario/rules'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RulesCtrl'
+        },
+        {
+            name: "rulesManager",
+            url: "/scenario/rulesManager",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/scenario/rulesManager'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RulesManagerCtrl'
+        }
+    ]
+
+
     /***
      * for supporting muti-level
      * @param obj
