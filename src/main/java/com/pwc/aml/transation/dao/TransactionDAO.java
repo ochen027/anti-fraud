@@ -11,12 +11,17 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +68,30 @@ public class TransactionDAO implements ITransactionDAO {
         hBaseDAO.createTable("aml:trans");
     }
 
+    @Override
+    public List<Transactions> getTransDataByAccount(List<String> aIdList, String ruleDays, String businessDate) throws Exception {
+        HTable table = hBaseDAO.getTable("aml:trans");
+        Scan scan = new Scan();
+        LocalDate validDate = FormatUtils.StringToLocalDate(businessDate);
+        LocalDate ToDate = validDate.minusDays(Long.getLong(ruleDays)+1L);
+        scan.setStartRow(Bytes.toBytes(validDate.toString()));
+        scan.setStopRow(Bytes.toBytes(ToDate.toString()));
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        for(String accountId : aIdList){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                    Bytes.toBytes("acct_id"),
+                    CompareFilter.CompareOp.EQUAL,Bytes.toBytes(accountId)));
+        }
+        ResultScanner rsscan = table.getScanner(scan);
+        List<Transactions> tList = new ArrayList<Transactions>();
+        for (Result r : rsscan) {
+            Transactions t = this.consistTrans(r.rawCells());
+            tList.add(t);
+        }
+        rsscan.close();
+        return tList;
+    }
+
     private Transactions consistTrans(Cell[] cells) throws ParseException{
         Transactions tbean = new Transactions();
         for (Cell c : cells) {
@@ -84,7 +113,7 @@ public class TransactionDAO implements ITransactionDAO {
                     tbean.setCurrencyCd(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "trans_base_amt":
-                    tbean.setTransBaseAmt(Double.valueOf(Bytes.toString(CellUtil.cloneValue(c))));
+                    tbean.setTransBaseAmt(new BigDecimal(Bytes.toString(CellUtil.cloneValue(c))));
                     continue;
                 case "trans_br":
                     tbean.setTransBr(Bytes.toString(CellUtil.cloneValue(c)));
@@ -111,6 +140,17 @@ public class TransactionDAO implements ITransactionDAO {
 
         }
         return tbean;
+    }
+
+
+    public static void main(String[] args){
+        System.out.println("111111");
+        String date = "2017-01-09";
+        LocalDate localDate = LocalDate.of(Integer.parseInt(date.substring(0, 4)), Integer.parseInt(date.substring(5, 7)),
+                Integer.parseInt(date.substring(8,10)));
+
+        System.out.println(localDate);
+
     }
 
 }

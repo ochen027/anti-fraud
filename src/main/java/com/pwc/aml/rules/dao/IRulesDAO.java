@@ -2,22 +2,18 @@ package com.pwc.aml.rules.dao;
 
 import java.util.List;
 
-import com.pwc.aml.rules.entity.RuleScenario;
-import com.pwc.aml.rules.entity.RuleStep;
+import com.pwc.aml.rules.entity.Scenario;
 
 public interface IRulesDAO {
 	
-	List<RuleScenario> listAllRuleScenario();
+	List<Scenario> listAllRuleScenario();
 	
-	void createRules(RuleScenario rScenario);
+	void createRules(Scenario rScenario);
 	
-	void updateRules(RuleScenario rScenario);
+	void updateRules(Scenario rScenario);
 	
 	void deleteRules(int scenarioId);
 	
-	RuleScenario findSingleScenario(int scenarioId);
-	
-	void createStep(RuleStep rStep);
-	
-	List<RuleStep> listStepByRule(int scenarioId);
+	Scenario findSingleScenario(int scenarioId);
+
 }

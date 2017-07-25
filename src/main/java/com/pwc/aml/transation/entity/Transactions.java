@@ -1,5 +1,6 @@
 package com.pwc.aml.transation.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Transactions {
@@ -9,7 +10,7 @@ public class Transactions {
 	private Date asOfDate;
 	private String counterPartyId;
 	private String currencyCd;
-	private Double transBaseAmt;
+	private BigDecimal transBaseAmt;
 	private String transBr;
 	private String transBy;
 	private String transCdtCd;
@@ -49,12 +50,15 @@ public class Transactions {
 	public void setCurrencyCd(String currencyCd) {
 		this.currencyCd = currencyCd;
 	}
-	public Double getTransBaseAmt() {
+
+	public BigDecimal getTransBaseAmt() {
 		return transBaseAmt;
 	}
-	public void setTransBaseAmt(Double transBaseAmt) {
+
+	public void setTransBaseAmt(BigDecimal transBaseAmt) {
 		this.transBaseAmt = transBaseAmt;
 	}
+
 	public String getTransBr() {
 		return transBr;
 	}
