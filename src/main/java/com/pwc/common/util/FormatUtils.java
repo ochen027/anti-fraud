@@ -15,10 +15,15 @@ public class FormatUtils {
 		return d;
 	}
 
-	public static LocalDateTime StringToLocalDateTime(String date){
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss");
-		return LocalDateTime.parse(date, dtf);
+	//Date format YYYY-MM-DD
+	public static LocalDate StringToLocalDate(String date){
+		return LocalDate.of(Integer.parseInt(date.substring(0,4)),
+				Integer.parseInt(date.substring(5,7)), Integer.parseInt(date.substring(8,10)));
 	}
 
-	
+
+	public static void main(String agrs[]){
+		String date = "2017-09-07";
+		System.out.println(StringToLocalDate(date));
+	}
 }

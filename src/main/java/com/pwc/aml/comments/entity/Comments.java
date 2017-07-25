@@ -8,7 +8,7 @@ public class Comments {
     private String alertId;
     private String commentContents;
     private String commentCreatedBy;
-    private LocalDateTime commentCreatedDate;
+    private String commentCreatedDate;
 
     public String getCommentId() {
         return commentId;
@@ -42,11 +42,11 @@ public class Comments {
         this.commentCreatedBy = commentCreatedBy;
     }
 
-    public LocalDateTime getCommentCreatedDate() {
+    public String getCommentCreatedDate() {
         return commentCreatedDate;
     }
 
-    public void setCommentCreatedDate(LocalDateTime commentCreatedDate) {
+    public void setCommentCreatedDate(String commentCreatedDate) {
         this.commentCreatedDate = commentCreatedDate;
     }
 }

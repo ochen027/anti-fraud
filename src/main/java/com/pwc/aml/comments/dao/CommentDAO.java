@@ -94,7 +94,7 @@ public class CommentDAO implements ICommentDAO{
                     cBean.setCommentContents(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "commentCreatedDate":
-                    cBean.setCommentCreatedDate(FormatUtils.StringToLocalDateTime(Bytes.toString(CellUtil.cloneValue(c))));
+                    cBean.setCommentCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "commentCreatedBy":
                     cBean.setCommentCreatedBy(Bytes.toString(CellUtil.cloneValue(c)));

@@ -10,10 +10,7 @@ import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.PrefixFilter;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.datanucleus.store.rdbms.query.AbstractRDBMSQueryResult;
 import org.springframework.stereotype.Repository;
@@ -290,6 +287,53 @@ public class HbaseDaoImp implements IHbaseDao {
         }
     }
 
+    public static void getDataByColumn() throws Exception{
+        HbaseDaoImp hdao = new HbaseDaoImp();
+        HTable table = hdao.getTable("aml:trans");
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                Bytes.toBytes("acct_id"),
+                CompareFilter.CompareOp.EQUAL,Bytes.toBytes("acct0000001")
+        ));
+
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                Bytes.toBytes("acct_id"),
+                CompareFilter.CompareOp.EQUAL,Bytes.toBytes("acct0000002")
+        ));
+        /**
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                Bytes.toBytes("as_of_date"),
+                CompareFilter.CompareOp.EQUAL,Bytes.toBytes("20100801")
+        ));
+        **/
+        scan.setFilter(filterList);
+        scan.setStartRow(Bytes.toBytes("20080101"));
+        scan.setStopRow(Bytes.toBytes("20080203"));
+        ResultScanner rsscan = table.getScanner(scan);
+        for (Result r : rsscan) {
+            System.out.println(Bytes.toString(r.getRow()));
+            for (Cell cell : r.rawCells()) {
+                System.out.println(
+                        Bytes.toString(CellUtil.cloneFamily(cell))
+                                + "->" +
+                                Bytes.toString(CellUtil.cloneQualifier(cell))
+                                + "->" +
+                                Bytes.toString(CellUtil.cloneValue(cell))
+                                + "->" +
+                                cell.getTimestamp()
+                );
+            }
+            System.out.println("------------------------------");
+        }
+        rsscan.close();
+
+
+    }
+
+
+
     public static void getDataByColumn(HTable table, String column, String columnValue) throws Exception{
         Scan scan = new Scan();
         Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes(column),
@@ -319,7 +363,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:alerts");
+        HTable table = hdao.getTable("aml:trans");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -340,7 +384,9 @@ public class HbaseDaoImp implements IHbaseDao {
 
         //hdao.scanData(table);
 
-        hdao.getDataByColumn(table, "totalAmt", "19999");
+        //hdao.getDataByColumn(table, "totalAmt", "19999");
+        hdao.getDataByColumn();
+
 
         /**
         hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");

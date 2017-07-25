@@ -6,6 +6,8 @@ import com.pwc.common.base.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -64,6 +66,12 @@ public class Customers extends BaseEntity {
 
     @Column(name = "sus_Flg")
     private boolean IsAMLSuspect;
+
+
+    @Transient
+    private BigDecimal totalTransAmt;
+    @Transient
+    private int totalTransCount;
 
 
     public String getCustomerId() {
@@ -192,5 +200,21 @@ public class Customers extends BaseEntity {
 
     public void setAMLSuspect(boolean AMLSuspect) {
         IsAMLSuspect = AMLSuspect;
+    }
+
+    public BigDecimal getTotalTransAmt() {
+        return totalTransAmt;
+    }
+
+    public void setTotalTransAmt(BigDecimal totalTransAmt) {
+        this.totalTransAmt = totalTransAmt;
+    }
+
+    public int getTotalTransCount() {
+        return totalTransCount;
+    }
+
+    public void setTotalTransCount(int totalTransCount) {
+        this.totalTransCount = totalTransCount;
     }
 }

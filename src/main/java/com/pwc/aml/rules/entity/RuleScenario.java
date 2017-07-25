@@ -1,24 +1,34 @@
 package com.pwc.aml.rules.entity;
 
+import com.pwc.common.base.entity.BaseEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.pwc.common.base.entity.BaseEntity;
-
 @Entity
-@Table(name="RULESCENARIO")
+@Table(name="RULE_SCENARIO")
 public class RuleScenario extends BaseEntity{
-	
-	private static final long serialVersionUID = 1L;
-	@Column(name="SCENARIO_NAME")
-	private String scenarioName;
-	
-	public String getScenarioName() {
-		return scenarioName;
-	}
-	public void setScenarioName(String scenarioName) {
-		this.scenarioName = scenarioName;
-	}
 
+    @Column(name ="RULE_ID")
+    private int ruleId;
+
+    @Column(name="SCENARIO_ID")
+    private int scenarioId;
+
+    public int getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(int ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public int getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(int scenarioId) {
+        this.scenarioId = scenarioId;
+    }
 }

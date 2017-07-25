@@ -1,12 +1,18 @@
 package com.pwc.aml.rules.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
+import com.pwc.aml.accounts.dao.IAccountDAO;
+import com.pwc.aml.accounts.entity.Accounts;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
 import com.pwc.aml.common.util.ExecuteDrools;
+import com.pwc.aml.customers.dao.CustomerDAO;
+import com.pwc.aml.customers.dao.ICustomerDAO;
+import com.pwc.aml.customers.entity.Customers;
 import com.pwc.aml.transation.dao.ITransactionDAO;
+import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.rules.dao.IRulesDAO;
-import com.pwc.aml.rules.entity.RuleScenario;
-import com.pwc.aml.rules.entity.RuleStep;
-import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.aml.transation.entity.Transactions;
 
 @Service
@@ -27,25 +31,34 @@ public class RulesService implements IRulesService{
 	
 	@Autowired
 	private ITransactionDAO transactionDAO;
+
+	@Autowired
+	private ICustomerDAO customerDAO;
+
+	@Autowired
+	private IAccountDAO accountDAO;
+
+	@Autowired
+	private IKeyValueDao keyValueDAO;
 	
 
 	@Override
-	public List<RuleScenario> listAllRuleScenario() {
+	public List<Scenario> listAllRuleScenario() {
 		return rulesDAO.listAllRuleScenario();
 	}
 
 	@Override
-	public RuleScenario findSingleRuleScenario(int scenarioId) {
+	public Scenario findSingleRuleScenario(int scenarioId) {
 		return rulesDAO.findSingleScenario(scenarioId);
 	}
 
 	@Override
-	public void createRuleScenario(RuleScenario rScenario) {
+	public void createRuleScenario(Scenario rScenario) {
 		rulesDAO.createRules(rScenario);
 	}
 
 	@Override
-	public void updateRuleScenario(RuleScenario rScenario) {
+	public void updateRuleScenario(Scenario rScenario) {
 		rulesDAO.updateRules(rScenario);
 	}
 
@@ -54,16 +67,7 @@ public class RulesService implements IRulesService{
 		rulesDAO.deleteRules(scenarioId);
 	}
 
-	@Override
-	public void createRuleStep(RuleStep rStep) {
-		rulesDAO.createStep(rStep);
-	}
-
-	@Override
-	public List<RuleStep> listStepByRule(int scenarioId) {
-		return rulesDAO.listStepByRule(scenarioId);
-	}
-
+	/**
 	@Override
 	public String getRuleScript(int scenarioId) {
 		List<RuleStep> rList = this.listStepByRule(scenarioId);
@@ -85,9 +89,31 @@ public class RulesService implements IRulesService{
 		//System.out.println(sb.toString());
 		return sb.toString();
 	}
+	**/
 
 	@Override
 	public void executeRuleEngine(int scenarioId) throws Exception{
+
+		List<Customers> customerList = customerDAO.findAll();
+		for(Customers c : customerList){
+			List<Accounts> accountList = accountDAO.findByCustId(c.getCustomerId());
+			List<String> accountIdList = new Vector<String>();
+			for(Accounts acct : accountList){
+				accountIdList.add(acct.getAccountId());
+			}
+
+			String businessDate = keyValueDAO.get("BUSINESS_DAY");
+			String ruleDays = keyValueDAO.get("RULES_DAY");
+
+			List<Transactions> transList = transactionDAO.getTransDataByAccount(accountIdList, ruleDays, businessDate);
+
+
+
+		}
+
+
+
+
 		List<Transactions> tList = new ArrayList<Transactions>();
 		try {
 			tList = transactionDAO.getAllTransData();
@@ -95,7 +121,7 @@ public class RulesService implements IRulesService{
 			e.printStackTrace();
 		}
 		
-		String ruleScript = this.getRuleScript(scenarioId);
+		//String ruleScript = this.getRuleScript(scenarioId);
 		
 		/**
 		String ruleScript = "package com.pwc.aml.rules.service\n"
@@ -120,7 +146,9 @@ public class RulesService implements IRulesService{
 		
 		//List<Alerts> aList = new ArrayList<Alerts>();
 		for(Transactions t : tList){
-			Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+			//Transactions tResult = ExecuteDrools.CallDrools(t, ruleScript);
+
+			Transactions tResult = null;
 
 			if(StringUtils.isNotEmpty(tResult.getAlertType())){
 				Alerts a = new Alerts();
