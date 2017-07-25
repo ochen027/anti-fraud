@@ -17,7 +17,7 @@ public class Scenario extends BaseEntity{
 	@Column(name="SCENARIO_CODE")
 	private String scenarioCode;
 
-	@Column(name="SCENARIO_CONTENT")
+	@Column(name="SCENARIO_CONTENT",length=4096)
 	private String scenarioContent;
 
 	public String getScenarioName() {

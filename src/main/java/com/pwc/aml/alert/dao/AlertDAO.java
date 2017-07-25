@@ -115,15 +115,15 @@ public class AlertDAO implements IAlertDAO {
                     String transArray = Bytes.toString(CellUtil.cloneValue(c));
                     Transactions t1 = new Transactions();
                     t1.setTransId("900000000001");
-                    t1.setTransBaseAmt(90000d);
+                    //t1.setTransBaseAmt(90000d);
 
                     Transactions t2 = new Transactions();
                     t2.setTransId("900000000002");
-                    t2.setTransBaseAmt(20000d);
+                    //t2.setTransBaseAmt(20000d);
 
                     Transactions t3 = new Transactions();
                     t3.setTransId("900000000003");
-                    t3.setTransBaseAmt(30000d);
+                    //t3.setTransBaseAmt(30000d);
 
                     List<Transactions> tList = new ArrayList<Transactions>();
                     tList.add(t1);

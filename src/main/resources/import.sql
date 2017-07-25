@@ -221,7 +221,7 @@ insert into rolemenu values (140021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 
 
 --initial rule scenario
-insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '404', 'Contents','Scenario 1');
+insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '404', 'package com.pwc.aml.rules.service;\n import com.pwc.aml.customers.entity.Customers;\n import com.pwc.aml.alert.entity.Alerts;\n import com.pwc.aml.common.hbase.HbaseDaoImp;\n import com.pwc.aml.common.hbase.IHbaseDao;\n import org.apache.hadoop.hbase.client.HTable;\n \n rule \"CaseTest\"\n     salience 1\n     when\n         $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=3);\n     then\n         IHbaseDao hBaseDAO = new HbaseDaoImp();\n         HTable table = hBaseDAO.getTable(\"aml:alerts\");\n         hBaseDAO.putData(table, \"ALT00001\", \"f1\", \"alertName\", \"1111\");\n         hBaseDAO.putData(table, \"ALT00001\", \"f1\", \"alertContent\", \"WWWWW>3000\");\n end','Scenario 1');
 
 
 
@@ -253,3 +253,17 @@ insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63
 
 insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2017-07-18');
 insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','3');
+
+
+--insert account information
+insert into accounts values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000001', sysdate, 'A', '10002');
+insert into accounts values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000002', sysdate, 'A', '10003');
+insert into accounts values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000003', sysdate, 'A', '10004');
+insert into accounts values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000004', sysdate, 'A', '10005');
+insert into accounts values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000005', sysdate, 'A', '10006');
+insert into accounts values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000006', sysdate, 'A', '10007');
+insert into accounts values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000007', sysdate, 'A', '10008');
+insert into accounts values (8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000008', sysdate, 'A', '10009');
+insert into accounts values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000009', sysdate, 'A', '10010');
+insert into accounts values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000010', sysdate, 'A', '10011');
+

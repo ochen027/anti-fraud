@@ -21,9 +21,13 @@ public class FormatUtils {
 				Integer.parseInt(date.substring(5,7)), Integer.parseInt(date.substring(8,10)));
 	}
 
+	public static String LocalDateToString(LocalDate localDate){
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+		return dtf.format(localDate);
+	}
 
 	public static void main(String agrs[]){
-		String date = "2017-09-07";
-		System.out.println(StringToLocalDate(date));
+
+		System.out.println(LocalDateToString(LocalDate.now()));
 	}
 }

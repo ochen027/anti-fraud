@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="RULE_SCENARIO")
+@Table(name="RULESCENARIO")
 public class RuleScenario extends BaseEntity{
 
     @Column(name ="RULE_ID")

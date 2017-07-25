@@ -72,7 +72,16 @@ public class Customers extends BaseEntity {
     private BigDecimal totalTransAmt;
     @Transient
     private int totalTransCount;
+    @Transient
+    private String transIdArray;
 
+    public String getTransIdArray() {
+        return transIdArray;
+    }
+
+    public void setTransIdArray(String transIdArray) {
+        this.transIdArray = transIdArray;
+    }
 
     public String getCustomerId() {
         return customerId;

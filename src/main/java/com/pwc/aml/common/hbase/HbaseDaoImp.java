@@ -363,7 +363,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:trans");
+        HTable table = hdao.getTable("aml:alerts");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -382,12 +382,12 @@ public class HbaseDaoImp implements IHbaseDao {
 //        System.out.println(proStr);
 //          hdao.importTsv();
 
-        //hdao.scanData(table);
+        hdao.scanData(table);
 
         //hdao.getDataByColumn(table, "totalAmt", "19999");
-        hdao.getDataByColumn();
+        //hdao.getDataByColumn();
 
-
+        //hdao.createTable("aml:alerts");
         /**
         hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");
         hdao.putData(table, "ALT900000000001", "f1", "alertContents", "ALT900000000001->Warning->More Than 10000");
