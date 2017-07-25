@@ -57,7 +57,7 @@ insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , 
 insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', NULL, NULL);
 insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', NULL, NULL);
 insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', NULL, NULL);
-insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, '/#!/dashboard');
+insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, '/#!/scenario/rulesManager');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, '/#!/workflow/index');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, '/#!/batch');
 insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 11, '/#!/document/index');
