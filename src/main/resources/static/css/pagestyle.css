@@ -1,13 +1,14 @@
-.content-body {
-    border: 1px solid #999999;
-    position: relative;
-    margin: 0 50px 50px ;
-    width: auto;
-}
+/*.content-body {*/
+    /*border: 1px solid #999999;*/
+    /*position: relative;*/
+    /*margin: 0 50px 50px ;*/
+    /*width: auto;*/
+/*}*/
 .container {
-    margin: 20px 0;
+    /*margin: 20px 0;*/
     font-size: 14px;
-    width: auto;
+    margin-bottom: 20px;
+    /*width: auto;*/
 }
 .container .pagination{
     display: -webkit-box;
