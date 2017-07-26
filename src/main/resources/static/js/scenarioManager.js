@@ -39,6 +39,8 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
 app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state, $timeout) {
 
 
+    $scope.scenarios=[];
+
     $scope.goToRuleManager = function () {
         $state.go("rulesManager");
     }
@@ -46,6 +48,17 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
     $scope.goToAddScenario = function () {
         $state.go("scenario");
     }
+
+    $scope.refresh=function(){
+        $http.get("/rules/listAll").then(function(res){
+            $scope.scenarios=res.data;
+            $scope.scenariosDisplay=res.data.slice(0);
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
 
 });
 
@@ -58,7 +71,7 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     }
 
     $scope.save = function () {
-        $http.post("rules/saveOrUpdate", $scope.scenario).then(function (res) {
+        $http.post("/rules/saveOrUpdate", $scope.scenario).then(function (res) {
             if (res.status !== 200) {
                 console.log(res);
                 return;
