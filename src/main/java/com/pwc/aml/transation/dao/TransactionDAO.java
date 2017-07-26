@@ -73,9 +73,9 @@ public class TransactionDAO implements ITransactionDAO {
         HTable table = hBaseDAO.getTable("aml:trans");
         Scan scan = new Scan();
         LocalDate validDate = FormatUtils.StringToLocalDate(businessDate);
-        LocalDate ToDate = validDate.minusDays(Long.parseLong(ruleDays)+1L);
-        scan.setStartRow(Bytes.toBytes(FormatUtils.LocalDateToString(validDate)));
-        scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(ToDate)));
+        LocalDate FromDate = validDate.minusDays(Long.parseLong(ruleDays)+1L);
+        scan.setStartRow(Bytes.toBytes(FormatUtils.LocalDateToString(FromDate)));
+        scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(validDate)));
 
 
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
