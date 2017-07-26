@@ -49,12 +49,12 @@ public class AccountService implements IAccountService{
 
     @Override
     public List<Accounts> findAll() {
-        return null;
+        return accountDAO.findAll();
     }
 
     @Override
     public void removeAll() {
-       // accountDAO.removeAll();
+        accountDAO.removeAll();
     }
 
 
@@ -65,18 +65,18 @@ public class AccountService implements IAccountService{
         FileUtils.writeByteArrayToFile(temp, file.getBytes());
         CSVReader reader = new CSVReader(new FileReader(temp));
         List<String[]> accountList = reader.readAll();
-        for(int i=1;i<accountList.size();i++){
+        for(int i=1;i<accountList.size()-1;i++){
             Accounts accounts=new Accounts();
             String[] item=accountList.get(i);
-            accounts.setAccountId(item[1]);
-            accounts.setCustomerId(item[2]);
-            accounts.setAccountOpenDate(item[3].equals("")?null:df.parse(item[3]));
-            accounts.setAccountOpenBr(item[4]);
-            accounts.setAccountStatus(item[5]);
-            accounts.setAccountCloseDate(item[6].equals("")?null:df.parse(item[6]));
-            accounts.setAccountAmount(item[7].equals("") ? 0.00:Double.parseDouble(item[7]));
-            accounts.setLastUpdateBr(item[8]);
-            accounts.setLastUpdateDate(item[9].equals("") ? null:df.parse(item[9]));
+            accounts.setAccountId(item[0]);
+            accounts.setCustomerId(item[1]);
+            accounts.setAccountOpenDate(item[2].equals("")?null:df.parse(item[2]));
+            accounts.setAccountOpenBr(item[3]);
+            accounts.setAccountStatus(item[4]);
+            accounts.setAccountCloseDate(item[5].equals("")?null:df.parse(item[5]));
+            accounts.setAccountAmount(item[6].equals("") ? 0.00:Double.parseDouble(item[6]));
+            accounts.setLastUpdateBr(item[7]);
+            accounts.setLastUpdateDate(item[8].equals("") ? null:df.parse(item[8]));
             accountDAO.save(accounts);
         }
         FileUtils.deleteQuietly(temp);

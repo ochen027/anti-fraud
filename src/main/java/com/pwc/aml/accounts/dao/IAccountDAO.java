@@ -14,4 +14,8 @@ public interface IAccountDAO {
     List<Accounts> findByCustId(String custId);
 
     Accounts findByAcctId(String accountId);
+
+    void removeAll();
+
+    List<Accounts> findAll();
 }

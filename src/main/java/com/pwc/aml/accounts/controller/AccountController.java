@@ -1,20 +1,19 @@
 package com.pwc.aml.accounts.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
-
+import com.pwc.aml.accounts.entity.Accounts;
+import com.pwc.aml.accounts.service.IAccountService;
+import com.pwc.aml.customers.entity.Customers;
+import com.pwc.common.base.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pwc.aml.accounts.service.IAccountService;
-import com.pwc.common.base.controller.BaseController;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
 
 @Controller
 @RequestMapping("account")
@@ -33,6 +32,16 @@ public class AccountController extends BaseController{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("findAll")
+    public ResponseEntity<List<Accounts>> findAll() {
+        List<Accounts> targets=  accountService.findAll();
+        return new ResponseEntity<List<Accounts>>(targets,HttpStatus.OK);
+    }
 
+    @GetMapping ("removeAll")
+    public ResponseEntity<Void> removeAll() {
+        accountService.removeAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
 }

@@ -1,16 +1,14 @@
 package com.pwc.aml.accounts.dao;
 
 import com.pwc.aml.accounts.entity.Accounts;
+import com.pwc.aml.customers.entity.Customers;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 
@@ -60,5 +58,23 @@ public class AccountDAO implements IAccountDAO{
         } else {
             return accounts.get(0);
         }
+    }
+    @Override
+    public void removeAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<Accounts> cq = cb.createCriteriaDelete(Accounts.class);
+        Root<Accounts> root = cq.from(Accounts.class);
+        em.createQuery(cq).executeUpdate();
+    }
+
+    @Override
+    public List<Accounts> findAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Accounts> cq = cb.createQuery(Accounts.class);
+        Root<Accounts> rootEntry = cq.from(Accounts.class);
+        CriteriaQuery<Accounts> all = cq.select(rootEntry);
+        TypedQuery<Accounts> query = em.createQuery(all);
+        List<Accounts> accounts = query.getResultList();
+        return accounts;
     }
 }
