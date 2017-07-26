@@ -359,6 +359,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
+            params: {scenario: null},
             controller: 'ScenarioCtrl'
         },
         {
@@ -375,7 +376,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
+
             controller: 'ScenarioManagerCtrl'
+
         },
         {
             name: "rules",
@@ -391,6 +394,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
+            params: {scenarioId: null},
             controller: 'RulesCtrl'
         },
         {

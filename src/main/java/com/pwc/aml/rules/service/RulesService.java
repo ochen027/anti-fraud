@@ -2,6 +2,7 @@ package com.pwc.aml.rules.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,6 +15,7 @@ import com.pwc.aml.customers.dao.CustomerDAO;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.customers.entity.Customers;
 import com.pwc.aml.transation.dao.ITransactionDAO;
+import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.HTable;
@@ -142,12 +144,16 @@ public class RulesService implements IRulesService {
     }
 
     @Override
-    public Scenario saveOrUpdate(Scenario scenario) {
+    public Scenario saveOrUpdate(Scenario scenario, Users users) {
 
 
         if (scenario.getId() == 0) {
+            scenario.setCreatedBy(users.getUserName());
+            scenario.setCreationDate(new Date());
             rulesDAO.createRules(scenario);
         } else {
+            scenario.setLastUpdatedBy(users.getUserName());
+            scenario.setLastUpdateDate(new Date());
             rulesDAO.updateRules(scenario);
         }
 

@@ -34,6 +34,19 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
     $scope.save = function () {
 
     }
+
+
+    $scope.refresh=function(){
+        $http.get("/rules/listAll").then(function(res){
+            $scope.scenarios=res.data;
+            $scope.scenariosDisplay=res.data.slice(0);
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
+
 });
 
 app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state, $timeout) {
@@ -56,13 +69,17 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
         })
     }
 
+    $scope.editScenario=function(scenario){
+        $state.go("scenario",{scenario: scenario});
+    }
+
     $timeout(function () {
         $scope.refresh();
     });
 
 });
 
-app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout) {
+app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
 
     $scope.scenario = {};
 
@@ -82,6 +99,10 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
 
         })
     }
+
+    $timeout(function(){
+        $scope.scenario=$stateParams.scenario;
+    })
 
 
 });

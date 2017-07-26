@@ -1,9 +1,11 @@
 package com.pwc.aml.rules.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,8 +75,10 @@ public class RulesController extends BaseController{
 	}
 
 	@PostMapping("saveOrUpdate")
-	public ResponseEntity<Scenario> saveOrUpdate(@RequestBody Scenario Scenario){
-		Scenario t=rulesService.saveOrUpdate(Scenario);
+	public ResponseEntity<Scenario> saveOrUpdate(@RequestBody Scenario Scenario, HttpSession session){
+		Map<String, Object> userInfo= (Map<String, Object>)session.getAttribute("UserInfo");
+		Users u=(Users) userInfo.get("User");
+		Scenario t=rulesService.saveOrUpdate(Scenario,u);
 		return new ResponseEntity<Scenario>(t,HttpStatus.OK);
 	}
 

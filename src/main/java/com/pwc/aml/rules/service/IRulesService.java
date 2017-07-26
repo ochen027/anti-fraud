@@ -3,6 +3,7 @@ package com.pwc.aml.rules.service;
 import java.util.List;
 
 import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.component.authorize.users.entity.Users;
 
 public interface IRulesService {
 	
@@ -21,6 +22,6 @@ public interface IRulesService {
 	void executeRuleEngine(int scenarioId) throws Exception;
 
 
-	Scenario saveOrUpdate(Scenario scenario);
+	Scenario saveOrUpdate(Scenario scenario, Users users);
 	
 }
