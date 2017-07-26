@@ -16,27 +16,44 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
 
         if (files && files.length) {
             Upload.upload({
-                url: flag === 'customer' ? '/customer/upload' : '/account/upload',
+                url: flag==='customer' ?'/customer/upload' : '/account/upload',
                 data: {file: files[0]}
             }).then(function (res) {
-                $scope.refresh();
+                $scope.refresh(flag);
             });
         }
     }
 
 
-    $scope.refresh=function(){
-        $http.get("/customer/findAll").then(function(res){
-            $scope.customers=res.data;
-            $scope.customersDisplay=res.data.slice();
-        });
+    $scope.refresh=function(flag){
+        if(flag === 'customer'){
+            $http.get("/customer/findAll").then(function(res){
+                $scope.customers=res.data;
+                $scope.customersDisplay=res.data.slice();
+            });
+        }
+        if(flag === 'account') {
+            $http.get("/account/findAll").then(function(res){
+                $scope.accounts=res.data;
+                $scope.accountsDisplay=res.data.slice();
+            });
+        }
+
     };
 
 
-    $scope.deleteAll=function(){
-        $http.get("/customer/removeAll").then(function(res){
-            $scope.refresh();
-        });
+    $scope.deleteAll=function(flag){
+        if(flag === 'customer') {
+            $http.get("/customer/removeAll").then(function(res){
+                $scope.refresh(flag);
+            });
+        }
+        if(flag === 'account') {
+            $http.get("/account/removeAll").then(function(res){
+                $scope.refresh(flag);
+            });
+        }
+
     };
 
 

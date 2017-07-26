@@ -14,15 +14,15 @@
     <!--start of the customer import -->
     <div ng-show="toggleCustomer">
         <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll()">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh()">refresh</button>
+            <button type="button" class="btn btn-default" ng-click="deleteAll('customer')">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refresh('customer')">refresh</button>
         </div>
 
 
         <div class="upload">
 
             <div ngf-drop="uploadFiles($files,'customer')" class="drop-box"
-                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
                  ngf-pattern="'.csv'">Drop Customer csv files here</div>
 
         </div>
@@ -95,15 +95,15 @@
     <!--start of the account import -->
     <div ng-show="toggleAccount">
         <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll()">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh()">refresh</button>
+            <button type="button" class="btn btn-default" ng-click="deleteAll('account')">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refresh('account')">refresh</button>
         </div>
 
 
         <div class="upload">
 
             <div ngf-drop="uploadFiles($files,'account')" class="drop-box"
-                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
                  ngf-pattern="'.csv'">Drop Account csv files here</div>
 
         </div>
@@ -111,12 +111,12 @@
 
         <div class="card">
             <div class="card-header">
-                Customer
+                Account
             </div>
             <div class="card-block">
                 <!--  table part -->
                 <table class="table table-striped table-bordered table-hover"
-                       st-table="customersDisplay" st-safe-src="customers">
+                       st-table="accountsDisplay" st-safe-src="accounts">
                     <thead>
                     <tr>
                         <th>Account Id</th>
@@ -132,16 +132,16 @@
                     </thead>
                     <tbody>
 
-                    <tr ng-repeat="row in customersDisplay">
+                    <tr ng-repeat="row in accountsDisplay">
                         <td>{{row.accountId}}</td>
                         <td>{{row.customerId}}</td>
-                        <td>{{row.accountOpenDate}}</td>
+                        <td>{{row.accountOpenDate | date : 'yyyy-MM-dd'}}</td>
                         <td>{{row.accountOpenBr}}</td>
                         <td>{{row.accountStatus}}</td>
-                        <td>{{row.accountCloseDate}}</td>
+                        <td>{{row.accountCloseDate  | date : 'yyyy-MM-dd'}}</td>
                         <td>{{row.accountAmount}}</td>
                         <td>{{row.lastUpdateBr}}</td>
-                        <td>{{row.lastUpdateDate}}</td>
+                        <td>{{row.lastUpdateDate | date : 'yyyy-MM-dd'}}</td>
                     </tr>
                     </tbody>
                     <tfoot>
