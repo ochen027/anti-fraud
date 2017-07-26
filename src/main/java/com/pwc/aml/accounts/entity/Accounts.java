@@ -31,6 +31,11 @@ public class Accounts extends BaseEntity{
     @Column(name = "acct_amt")
     private double AccountAmount;
 
+    @Column(name = "acct_open_br")
+    private String accountOpenBr;
+
+    @Column(name = "last_upd_br")
+    private String lastUpdateBr;
 
     public String getAccountId() {
         return accountId;
@@ -78,5 +83,21 @@ public class Accounts extends BaseEntity{
 
     public void setAccountAmount(double accountAmount) {
         AccountAmount = accountAmount;
+    }
+
+    public String getAccountOpenBr() {
+        return accountOpenBr;
+    }
+
+    public void setAccountOpenBr(String accountOpenBr) {
+        this.accountOpenBr = accountOpenBr;
+    }
+
+    public String getLastUpdateBr() {
+        return lastUpdateBr;
+    }
+
+    public void setLastUpdateBr(String accountOpenBr) {
+        this.lastUpdateBr = lastUpdateBr;
     }
 }

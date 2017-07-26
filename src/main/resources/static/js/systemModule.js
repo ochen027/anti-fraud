@@ -1,11 +1,22 @@
 app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
 
-
-    $scope.uploadFiles = function (files) {
+    $scope.toggleCustomer = true;
+    $scope.toggleAccount = false;
+    $scope.navigate = function(flag){
+        if(flag === "customer"){
+            $scope.toggleCustomer = true;
+            $scope.toggleAccount = false;
+        }
+        if(flag === "account"){
+            $scope.toggleCustomer = false;
+            $scope.toggleAccount = true;
+        }
+    }
+    $scope.uploadFiles = function (files,flag) {
 
         if (files && files.length) {
             Upload.upload({
-                url: '/customer/upload',
+                url: flag === 'customer' ? '/customer/upload' : '/account/upload',
                 data: {file: files[0]}
             }).then(function (res) {
                 $scope.refresh();

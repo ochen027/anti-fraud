@@ -77,3 +77,37 @@ Mock.mock(/\/alert\/myAlertInfo\/12345$|\/alert\/availableInfo\/12345$|\/alert\/
     "total|1-10.2" : 1.00,
     "comments": "this is comments"
 })
+Mock.mock(/\/uploaded\/size\/url/,function(options){
+    console.log(options);
+    return {
+        data: {
+            'progress': 100,
+            'result': true
+        }
+    }
+
+})
+Mock.mock("/document/upload",function(){
+    return {
+        status: 200,
+        statusText: "OK",
+        config:{
+            file:"abc.png",
+            url:"/document/upload"
+        },
+        data: {
+            'progress': 100,
+            'result': true
+        }
+    };
+})
+Mock.mock("/document/download",[{
+    "path": "file:///C:/Users/iwen005/Desktop/anti-fraud/resources/static/files/dwz-user-guide-1.pdf",
+    "name": "dwz-user-guide-1.pdf"
+},
+    {
+        "path": "file:///C:/Users/iwen005/Desktop/anti-fraud/resources/static/files/dwz-user-guid-2.pdf",
+        "name": "dwz-user-guide-2.pdf"
+    }
+
+])
