@@ -27,19 +27,48 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
 });
 
 app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout) {
+
+    $scope.rules = {};
+    $scope.scenariosSelected = [];
+    $scope.scenarios = [];
     $scope.goToRuleManager = function () {
         $state.go("rulesManager");
     }
 
     $scope.save = function () {
+        debugger;
+        var selected = [];
+        for (let i = 0; i < $scope.scenariosSelected.length; i++) {
+            selected.push($scope.scenariosSelected[i].id);
+        }
+        $scope.rules.scenarios = selected;
 
+        $http.post("/rules/saveOrUpdateRules", $scope.rules).then(function (res) {
+            debugger;
+            $scope.rules = res.data;
+        });
     }
 
+    $scope.removeScenario = function (item) {
+        var index = $scope.scenariosSelected.indexOf(item);
+        $scope.scenariosSelected.splice(index, 1);
+        $scope.scenariosSelectedDisplay = $scope.scenariosSelected.slice(0);
+        $scope.scenarios.push(item);
+        $scope.scenariosDisplay = $scope.scenarios.slice(0);
+    }
 
-    $scope.refresh=function(){
-        $http.get("/rules/listAll").then(function(res){
-            $scope.scenarios=res.data;
-            $scope.scenariosDisplay=res.data.slice(0);
+    $scope.addScenario = function (item) {
+        var index = $scope.scenarios.indexOf(item);
+        $scope.scenarios.splice(index, 1);
+        $scope.scenariosDisplay = $scope.scenarios.slice(0);
+        $scope.scenariosSelected.push(item);
+        $scope.scenariosSelectedDisplay = $scope.scenariosSelected.slice(0);
+    }
+
+    $scope.refresh = function () {
+        $http.get("/rules/listAll").then(function (res) {
+            $scope.scenarios = res.data;
+            $scope.scenariosDisplay = res.data.slice(0);
         })
     }
 
@@ -52,7 +81,7 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
 app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state, $timeout) {
 
 
-    $scope.scenarios=[];
+    $scope.scenarios = [];
 
     $scope.goToRuleManager = function () {
         $state.go("rulesManager");
@@ -62,15 +91,15 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
         $state.go("scenario");
     }
 
-    $scope.refresh=function(){
-        $http.get("/rules/listAll").then(function(res){
-            $scope.scenarios=res.data;
-            $scope.scenariosDisplay=res.data.slice(0);
+    $scope.refresh = function () {
+        $http.get("/rules/listAll").then(function (res) {
+            $scope.scenarios = res.data;
+            $scope.scenariosDisplay = res.data.slice(0);
         })
     }
 
-    $scope.editScenario=function(scenario){
-        $state.go("scenario",{scenario: scenario});
+    $scope.editScenario = function (scenario) {
+        $state.go("scenario", {scenario: scenario});
     }
 
     $timeout(function () {
@@ -79,7 +108,7 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
 
 });
 
-app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
+app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
 
     $scope.scenario = {};
 
@@ -94,14 +123,14 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
                 return;
             }
 
-            $scope.scenario=res.data;
+            $scope.scenario = res.data;
             alert("scenario saved! ");
 
         })
     }
 
-    $timeout(function(){
-        $scope.scenario=$stateParams.scenario;
+    $timeout(function () {
+        $scope.scenario = $stateParams.scenario;
     })
 
 

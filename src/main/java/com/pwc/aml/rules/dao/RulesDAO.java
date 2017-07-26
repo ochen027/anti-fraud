@@ -6,7 +6,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.Root;
 
+import com.pwc.aml.customers.entity.Customers;
+import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.Rules;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +32,12 @@ public class RulesDAO implements IRulesDAO {
 	}
 
 	@Override
-	public void createRules(Scenario rScenario) {
+	public void createScenario(Scenario rScenario) {
 		entityManager.persist(rScenario);
 	}
 
 	@Override
-	public void updateRules(Scenario rScenario) {
+	public void updateScenario(Scenario rScenario) {
 		Scenario rs = this.findSingleScenario(rScenario.getId());
 		rs.setScenarioName(rScenario.getScenarioName());
 		rs.setScenarioContent(rScenario.getScenarioContent());
@@ -51,7 +57,34 @@ public class RulesDAO implements IRulesDAO {
 		return entityManager.find(Scenario.class, scenarioId);
 	}
 
+	@Override
+	public void createRules(Rules rules) {
+		entityManager.persist(rules);
+	}
 
+	@Override
+	public void updateRules(Rules rules) {
+		entityManager.merge(rules);
+	}
+
+	@Override
+	public void createRuleScenario(RuleScenario ruleScenario) {
+		entityManager.persist(ruleScenario);
+	}
+
+	@Override
+	public void updateRuleScenario(RuleScenario ruleScenario) {
+		entityManager.merge(ruleScenario);
+	}
+
+	@Override
+	public void deleteRuleScenarioByRuleId(int id) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaDelete<RuleScenario> cq = cb.createCriteriaDelete(RuleScenario.class);
+		Root<RuleScenario> root = cq.from(RuleScenario.class);
+		cq.where(cb.equal(root.get("ruleId"), id));
+		entityManager.createQuery(cq).executeUpdate();
+	}
 
 
 }

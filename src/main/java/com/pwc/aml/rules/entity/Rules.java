@@ -5,6 +5,8 @@ import com.pwc.common.base.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Entity
 @Table(name="RULES")
@@ -15,6 +17,9 @@ public class Rules extends BaseEntity {
 
     @Column(name="DESCRIPTION")
     private String description;
+
+    @Transient
+    private List<Integer> scenarios;
 
     public String getRuleName() {
         return ruleName;
@@ -30,5 +35,13 @@ public class Rules extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Integer> getScenarios() {
+        return scenarios;
+    }
+
+    public void setScenarios(List<Integer> scenarios) {
+        this.scenarios = scenarios;
     }
 }

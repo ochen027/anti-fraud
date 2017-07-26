@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.aml.rules.entity.Rules;
 import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,14 @@ public class RulesController extends BaseController{
 		Users u=(Users) userInfo.get("User");
 		Scenario t=rulesService.saveOrUpdate(Scenario,u);
 		return new ResponseEntity<Scenario>(t,HttpStatus.OK);
+	}
+
+	@GetMapping("saveOrUpdateRules")
+	public ResponseEntity<Rules> saveOrUpdateRules(@RequestBody Rules rules, HttpSession session){
+		Map<String, Object> userInfo= (Map<String, Object>)session.getAttribute("UserInfo");
+		Users u=(Users) userInfo.get("User");
+		Rules t=rulesService.saveOrUpdateRules(rules,u);
+		return new ResponseEntity<Rules>(t,HttpStatus.OK);
 	}
 
 	

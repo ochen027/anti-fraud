@@ -1,28 +1,23 @@
 package com.pwc.aml.rules.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import com.pwc.aml.accounts.dao.IAccountDAO;
 import com.pwc.aml.accounts.entity.Accounts;
-import com.pwc.aml.common.hbase.HbaseDaoImp;
-import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.ExecuteDrools;
-import com.pwc.aml.customers.dao.CustomerDAO;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.customers.entity.Customers;
+import com.pwc.aml.rules.entity.RuleScenario;
+import com.pwc.aml.rules.entity.Rules;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
-import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.rules.dao.IRulesDAO;
 import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.aml.transation.entity.Transactions;
@@ -58,12 +53,12 @@ public class RulesService implements IRulesService {
 
     @Override
     public void createRuleScenario(Scenario rScenario) {
-        rulesDAO.createRules(rScenario);
+        rulesDAO.createScenario(rScenario);
     }
 
     @Override
     public void updateRuleScenario(Scenario rScenario) {
-        rulesDAO.updateRules(rScenario);
+        rulesDAO.updateScenario(rScenario);
     }
 
     @Override
@@ -150,14 +145,49 @@ public class RulesService implements IRulesService {
         if (scenario.getId() == 0) {
             scenario.setCreatedBy(users.getUserName());
             scenario.setCreationDate(new Date());
-            rulesDAO.createRules(scenario);
+            rulesDAO.createScenario(scenario);
         } else {
             scenario.setLastUpdatedBy(users.getUserName());
             scenario.setLastUpdateDate(new Date());
-            rulesDAO.updateRules(scenario);
+            rulesDAO.updateScenario(scenario);
         }
 
         return scenario;
+    }
+
+    @Override
+    public Rules saveOrUpdateRules(Rules rules, Users users) {
+
+        if (rules.getId() == 0) {
+            rules.setCreatedBy(users.getUserName());
+            rules.setCreationDate(new Date());
+            rulesDAO.createRules(rules);
+
+            //insert relations
+            this.saveOrUpdateRuleScenario(rules, users);
+
+        } else {
+            rules.setLastUpdatedBy(users.getUserName());
+            rules.setLastUpdateDate(new Date());
+            rulesDAO.updateRules(rules);
+
+            //insert relations
+            rulesDAO.deleteRuleScenarioByRuleId(rules.getId());
+            this.saveOrUpdateRuleScenario(rules, users);
+        }
+
+        return rules;
+    }
+
+    public void saveOrUpdateRuleScenario(Rules rules, Users users) {
+        for (int id : rules.getScenarios()) {
+            RuleScenario ruleScenario = new RuleScenario();
+            ruleScenario.setCreatedBy(users.getUserName());
+            ruleScenario.setCreationDate(new Date());
+            ruleScenario.setRuleId(rules.getId());
+            ruleScenario.setScenarioId(id);
+            rulesDAO.createRuleScenario(ruleScenario);
+        }
     }
 
 
