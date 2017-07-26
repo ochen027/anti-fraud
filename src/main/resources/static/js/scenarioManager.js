@@ -15,8 +15,8 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
                 return;
             }
 
-            $scope.rules=res.data;
-            $scope.rulesDisplay=res.data.slice(0);
+            $scope.rules = res.data;
+            $scope.rulesDisplay = res.data.slice(0);
         });
     }
 
@@ -51,12 +51,24 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
 
 app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout) {
 
+    $scope.scenario = {};
+
     $scope.goToScenarioManager = function () {
         $state.go("scenarioManager");
     }
 
     $scope.save = function () {
+        $http.post("rules/saveOrUpdate", $scope.scenario).then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
 
+            $scope.scenario=res.data;
+            alert("scenario saved! ");
+
+        })
     }
+
 
 });

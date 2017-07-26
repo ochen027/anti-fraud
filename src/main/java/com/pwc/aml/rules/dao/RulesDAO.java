@@ -50,6 +50,8 @@ public class RulesDAO implements IRulesDAO {
 	public Scenario findSingleScenario(int scenarioId) {
 		return entityManager.find(Scenario.class, scenarioId);
 	}
-	
+
+
+
 
 }

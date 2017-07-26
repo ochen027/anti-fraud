@@ -1,6 +1,6 @@
 <div class="container" ng-controller="ScenarioCtrl">
 
-    <h4>scenario </h4>
+    <h4>Scenario</h4>
 
     <div class="col-md-12 text-right">
         <button class="btn btn-default" type="button" ng-click="save()">Save</button>
@@ -11,13 +11,18 @@
 
 
         <div class="form-group">
-            <label for="ruleName">Rule Name</label>
-            <input type="text" class="form-control" id="ruleName" placeholder="rule name"/>
+            <label for="scenarioName">Scenario Name</label>
+            <input type="text" class="form-control" id="scenarioName" ng-model="scenario.scenarioName" placeholder="scenario name"/>
         </div>
 
         <div class="form-group">
-            <label for="ruleDescription">Description</label>
-            <textarea class="form-control" id="ruleDescription" rows="3"></textarea>
+            <label for="scenarioCode">Code</label>
+            <input type="text" class="form-control" id="scenarioCode" ng-model="scenario.scenarioCode" placeholder="scenario code"/>
+        </div>
+
+        <div class="form-group">
+            <label for="scenarioContent">Scenario Content</label>
+            <textarea class="form-control" id="scenarioContent"  ng-model="scenario.scenarioContent" rows="10"></textarea>
         </div>
     </div>
 </div>

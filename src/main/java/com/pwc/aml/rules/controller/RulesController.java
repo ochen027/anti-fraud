@@ -71,5 +71,12 @@ public class RulesController extends BaseController{
 		rulesService.executeRuleEngine(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+
+	@PostMapping("saveOrUpdate")
+	public ResponseEntity<Scenario> saveOrUpdate(@RequestBody Scenario Scenario){
+		Scenario t=rulesService.saveOrUpdate(Scenario);
+		return new ResponseEntity<Scenario>(t,HttpStatus.OK);
+	}
+
 	
 }
