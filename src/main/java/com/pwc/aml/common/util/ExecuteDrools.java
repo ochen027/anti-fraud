@@ -1,6 +1,7 @@
 package com.pwc.aml.common.util;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 
 import com.pwc.aml.customers.entity.Customers;
 import org.drools.KnowledgeBase;
@@ -13,7 +14,12 @@ import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
-import com.pwc.aml.transation.entity.Transactions;
+/**
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+**/
+
 
 public class ExecuteDrools {
 
@@ -38,5 +44,17 @@ public class ExecuteDrools {
                 kSession.dispose();
         }
 	}
+
+
+    /**
+	public static void CallDrools(Customers c){
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession = kContainer.newKieSession("session-case1");
+        kSession.insert(c);
+        kSession.fireAllRules();
+        kSession.dispose();
+    }
+    **/
 
 }

@@ -375,19 +375,20 @@ public class HbaseDaoImp implements IHbaseDao {
 
 
         //deleteData(table);
-//        scanData(table);
+        //scanData(table);
         //rangeData(table);
 //        String proStr=pro.getProperty( "spring.jpa.generate-ddl");
 //
 //        System.out.println(proStr);
 //          hdao.importTsv();
 
-        hdao.scanData(table);
+
 
         //hdao.getDataByColumn(table, "totalAmt", "19999");
         //hdao.getDataByColumn();
 
         //hdao.createTable("aml:alerts");
+
         /**
         hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");
         hdao.putData(table, "ALT900000000001", "f1", "alertContents", "ALT900000000001->Warning->More Than 10000");
@@ -431,13 +432,23 @@ public class HbaseDaoImp implements IHbaseDao {
         hdao.putData(table, "ALT900000000003", "f1", "createdBy", "sysadmin");
         hdao.putData(table, "ALT900000000003", "f1", "createdDate", "2017-07-20");
         hdao.putData(table, "ALT900000000003", "f1", "alertDesc", "Alert3Desc");
-        **/
 
 
+        hdao.putData(table, "0000001", "f1", "alertName", "Scenario 1 Conflict");
+        hdao.putData(table, "0000001", "f1", "alertContents", "Conflict with Transactions Amount > 30000 and in the last 3 days");
+        hdao.putData(table, "0000001", "f1", "scenarioId", "1");
+        hdao.putData(table, "0000001", "f1", "alertDesc", "Alert Desc");
+         **/
 
+
+        hdao.scanData(table);
 
         //hdao.deleteTable("aml:alerts");
         //hdao.createTable("aml:alerts");
+
+        table.close();
+
+
     }
 
 

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.UUID;
 
 public class FormatUtils {
 	
@@ -27,9 +28,12 @@ public class FormatUtils {
 		return dtf.format(localDate);
 	}
 
-	public static void main(String agrs[]){
+	public static synchronized String GenerateId(){
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		return dtf.format(LocalDateTime.now())+System.nanoTime();
+	}
 
-		System.out.println(LocalDateToString(LocalDate.now()));
+	public static void main(String agrs[]){
 
 	}
 }

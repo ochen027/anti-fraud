@@ -15,4 +15,5 @@ public interface ITransactionDAO {
     void TruncateTrans() throws Exception;
 
     List<Transactions> getTransDataByAccount(List<String> accountId, String ruleDays, String businessDate) throws Exception;
+
 }

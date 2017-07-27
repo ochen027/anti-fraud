@@ -74,6 +74,28 @@ public class Customers extends BaseEntity {
     private int totalTransCount;
     @Transient
     private String transIdArray;
+    @Transient
+    private String accountIdArray;
+    @Transient
+    private String businessDate;
+    @Transient
+    private String alertCreationDate;
+
+    public String getAlertCreationDate() {
+        return alertCreationDate;
+    }
+
+    public void setAlertCreationDate(String alertCreationDate) {
+        this.alertCreationDate = alertCreationDate;
+    }
+
+    public String getBusinessDate() {
+        return businessDate;
+    }
+
+    public void setBusinessDate(String businessDate) {
+        this.businessDate = businessDate;
+    }
 
     public String getTransIdArray() {
         return transIdArray;
@@ -225,5 +247,13 @@ public class Customers extends BaseEntity {
 
     public void setTotalTransCount(int totalTransCount) {
         this.totalTransCount = totalTransCount;
+    }
+
+    public String getAccountIdArray() {
+        return accountIdArray;
+    }
+
+    public void setAccountIdArray(String accountIdArray) {
+        this.accountIdArray = accountIdArray;
     }
 }

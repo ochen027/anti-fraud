@@ -221,7 +221,9 @@ insert into rolemenu values (140021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 
 
 -- initial rule scenario
-insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '404', 'package com.pwc.aml.rules.service;\r\nimport com.pwc.aml.customers.entity.Customers; \r\n import com.pwc.aml.alert.entity.Alerts;\r\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\r\n import com.pwc.aml.common.hbase.IHbaseDao;\r\n import org.apache.hadoop.hbase.client.HTable;\r\n \r\n rule \"CaseTest\" \r\n salience 1\r\n when  $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=3);\r\n then\r\n IHbaseDao hBaseDAO = new HbaseDaoImp();\r\n HTable table = hBaseDAO.getTable("aml:alerts");\r\n hBaseDAO.putData(table, "ALT00001", "f1", "alertName", "1111");\r\n hBaseDAO.putData(table, "ALT00001", "f1", "alertContent", "WWWWW>3000"); \r\n end','Scenario 1');
+insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C1', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.Customers;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case1\"\n    salience 1\n    when\n        $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=3);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 1 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 30000 and in the last 3 days\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"1\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\nend','Scenario 1');
+
+insert into scenario values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C2', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.Customers;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case2\"\n    salience 1\n    when\n        $customer : Customers(totalTransAmt >= 90000);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 2 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 90000 in the recent days and with no any transactions in last long period.\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"2\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\nend','Scenario 2');
 
 
 
@@ -251,20 +253,10 @@ insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63
 
 -- insert default bussinessDay
 
-insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2010-01-01');
-insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','800');
+insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2017-07-27');
+insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','3');
+insert into KEYVALUECONFIG values(3,'sysadmin',sysdate,sysdate,'sysadmin',1,'LONG_TERMS_DAY','365');
+insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'SHORT_TERMS_DAY','10');
 
 
--- insert account information
-/**
-insert into accounts values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000001', sysdate, 'A', '10002');
-insert into accounts values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000002', sysdate, 'A', '10003');
-insert into accounts values (3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000003', sysdate, 'A', '10004');
-insert into accounts values (4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000004', sysdate, 'A', '10005');
-insert into accounts values (5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000005', sysdate, 'A', '10006');
-insert into accounts values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000006', sysdate, 'A', '10007');
-insert into accounts values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000007', sysdate, 'A', '10008');
-insert into accounts values (8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000008', sysdate, 'A', '10009');
-insert into accounts values (9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000009', sysdate, 'A', '10010');
-insert into accounts values (10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 260000.76, sysdate, 'acct0000010', sysdate, 'A', '10011');
-**/
+
