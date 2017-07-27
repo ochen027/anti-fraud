@@ -2,6 +2,7 @@ package com.pwc.aml.rules.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -112,7 +113,30 @@ public class RulesService implements IRulesService {
                 sbAccountArray.append(acct.getAccountId()+",");
             }
 
-            List<Transactions> transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), keyValueDAO.get("BUSINESS_DAY"));
+            List<Transactions> transList = new ArrayList<Transactions>();
+
+
+
+
+            if(1==scenarioId){
+                transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), keyValueDAO.get("BUSINESS_DAY"));
+            }else if(2==scenarioId){
+                String businessDay = keyValueDAO.get("BUSINESS_DAY");
+                String shortTermDays = keyValueDAO.get("SHORT_TERMS_DAY");
+                String longTermDays = keyValueDAO.get("LONG_TERMS_DAY");
+                LocalDate date = FormatUtils.StringToLocalDate(businessDay).minusDays(Long.parseLong(shortTermDays));
+                String days = String.valueOf(Integer.parseInt(longTermDays)-Integer.parseInt(shortTermDays));
+                transList = transactionDAO.getTransDataByAccount(accountIdList, days, FormatUtils.LocalDateToString(date));
+                if(null == transList || 0 == transList.size()){
+                    transList = transactionDAO.getTransDataByAccount(accountIdList, shortTermDays, businessDay);
+                }else{
+                    continue;
+                }
+            }else{
+                //TODO
+                System.out.println();
+            }
+
 
             if (null == transList || 0 == transList.size()) {
                 continue;
