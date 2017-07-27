@@ -83,7 +83,7 @@ public class RulesController extends BaseController{
 		return new ResponseEntity<Scenario>(t,HttpStatus.OK);
 	}
 
-	@GetMapping("saveOrUpdateRules")
+	@PostMapping("saveOrUpdateRules")
 	public ResponseEntity<Rules> saveOrUpdateRules(@RequestBody Rules rules, HttpSession session){
 		Map<String, Object> userInfo= (Map<String, Object>)session.getAttribute("UserInfo");
 		Users u=(Users) userInfo.get("User");
