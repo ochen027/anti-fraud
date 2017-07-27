@@ -394,7 +394,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
-            params: {scenarioId: null},
+            params: {rule: null},
             controller: 'RulesCtrl'
         },
         {

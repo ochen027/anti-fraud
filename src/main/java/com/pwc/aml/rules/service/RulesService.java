@@ -236,6 +236,12 @@ public class RulesService implements IRulesService {
         return rulesDAO.listAllRules();
     }
 
+    @Override
+    public List<RuleScenario> findRuleScenarioByRuleId(Rules rules) {
+
+        return rulesDAO.findRuleScenarioByRuleId(rules.getId());
+    }
+
     public void saveOrUpdateRuleScenario(Rules rules, Users users) {
         for (int id : rules.getScenarios()) {
             RuleScenario ruleScenario = new RuleScenario();

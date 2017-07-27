@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.Rules;
 import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +99,10 @@ public class RulesController extends BaseController{
         return new ResponseEntity<List<Rules>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("findRuleScenarioByRuleId")
+    public ResponseEntity<List<RuleScenario>> findRuleScenarioByRuleId(@RequestBody Rules rules){
+        List<RuleScenario> list = rulesService.findRuleScenarioByRuleId(rules);
+        return new ResponseEntity<List<RuleScenario>>(list, HttpStatus.OK);
+    }
 	
 }

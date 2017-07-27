@@ -2,6 +2,7 @@ package com.pwc.aml.rules.service;
 
 import java.util.List;
 
+import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.Rules;
 import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.component.authorize.users.entity.Users;
@@ -28,4 +29,6 @@ public interface IRulesService {
     Rules saveOrUpdateRules(Rules rules, Users users);
 
     List<Rules> listAllRules();
+
+    List<RuleScenario> findRuleScenarioByRuleId(Rules rules);
 }

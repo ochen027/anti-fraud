@@ -29,7 +29,7 @@
                 <td>{{row.description}}</td>
                 <td>{{row.createdBy}}</td>
                 <td><button class="btn btn-default" >Default</button></td>
-                <td><button class="btn btn-default">delete</button> <button class="btn btn-default">delete</button></td>
+                <td><button class="btn btn-default" ng-click="edit(row)">Edit</button></td>
             </tr>
             </tbody>
             <tfoot>
@@ -42,5 +42,7 @@
             </tfoot>
         </table>
     </div>
-
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default">Run</button>
+    </div>
 </div>

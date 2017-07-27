@@ -97,5 +97,17 @@ public class RulesDAO implements IRulesDAO {
         return rules;
     }
 
+    @Override
+    public List<RuleScenario> findRuleScenarioByRuleId(int id) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<RuleScenario> cq = cb.createQuery(RuleScenario.class);
+        Root<RuleScenario> rootEntry = cq.from(RuleScenario.class);
+        Predicate predicate = cb.equal(rootEntry.get("ruleId"), id);
+        CriteriaQuery<RuleScenario> all = cq.select(rootEntry).where(predicate);
+        TypedQuery<RuleScenario> query = entityManager.createQuery(all);
+        List<RuleScenario> ruleScenarios = query.getResultList();
+        return ruleScenarios;
+    }
+
 
 }

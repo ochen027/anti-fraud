@@ -8,6 +8,10 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
         $state.go("rules");
     }
 
+    $scope.edit=function(rule){
+        $state.go("rules",{rule:rule});
+    }
+
     $scope.refresh = function () {
         $http.get("/rules/listAllRules").then(function (res) {
             if (res.status != 200) {
@@ -26,7 +30,7 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
 
 });
 
-app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout) {
+app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
 
     $scope.rules = {};
     $scope.scenariosSelected = [];
@@ -36,7 +40,7 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
     }
 
     $scope.save = function () {
-        debugger;
+
         var selected = [];
         for (let i = 0; i < $scope.scenariosSelected.length; i++) {
             selected.push($scope.scenariosSelected[i].id);
@@ -44,8 +48,9 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
         $scope.rules.scenarios = selected;
 
         $http.post("/rules/saveOrUpdateRules", $scope.rules).then(function (res) {
-            debugger;
+
             $scope.rules = res.data;
+            alert("saved!");
         });
     }
 
@@ -69,10 +74,15 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
         $http.get("/rules/listAll").then(function (res) {
             $scope.scenarios = res.data;
             $scope.scenariosDisplay = res.data.slice(0);
-        })
+            if($scope.rules.id){
+                console.log("loading se...s");
+            }
+        });
+
     }
 
     $timeout(function () {
+        $scope.rules=$stateParams.rule;
         $scope.refresh();
     });
 
