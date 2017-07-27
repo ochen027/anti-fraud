@@ -12,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.pwc.common.base.controller.BaseController;
 import com.pwc.aml.rules.entity.Scenario;
@@ -94,14 +90,17 @@ public class RulesController extends BaseController{
 
 
     @GetMapping("listAllRules")
-    public ResponseEntity<List<Rules>> listAllRules(){
-        List<Rules> list = rulesService.listAllRules();
-        return new ResponseEntity<List<Rules>>(list, HttpStatus.OK);
-    }
+	public ResponseEntity<List<Rules>> listAllRules(){
+		List<Rules> list = rulesService.listAllRules();
+		return new ResponseEntity<List<Rules>>(list, HttpStatus.OK);
+	}
 
-    @GetMapping("findRuleScenarioByRuleId")
-    public ResponseEntity<List<RuleScenario>> findRuleScenarioByRuleId(@RequestBody Rules rules){
-        List<RuleScenario> list = rulesService.findRuleScenarioByRuleId(rules);
+
+
+
+    @PostMapping("listRuleScenarioByRuleId")
+    public ResponseEntity<List<RuleScenario>> listRuleScenarioByRuleId(@RequestBody Rules rules){
+        List<RuleScenario> list = rulesService.findRuleScenarioByRuleId(rules.getId());
         return new ResponseEntity<List<RuleScenario>>(list, HttpStatus.OK);
     }
 	

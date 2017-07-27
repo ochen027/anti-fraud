@@ -70,15 +70,31 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
         $scope.scenariosSelectedDisplay = $scope.scenariosSelected.slice(0);
     }
 
+    var findRuleScenarioByRuleId=function(rules){
+
+        $http.post("/rules/listRuleScenarioByRuleId",rules).then(function(res){
+
+            let scenarios=res.data;
+
+            for(let k in scenarios){
+                for(let key in $scope.scenarios){
+                   //todo
+
+                }
+            }
+
+
+        });
+    }
+
     $scope.refresh = function () {
         $http.get("/rules/listAll").then(function (res) {
             $scope.scenarios = res.data;
             $scope.scenariosDisplay = res.data.slice(0);
-            if($scope.rules.id){
-                console.log("loading se...s");
+            if($scope.rules){
+                findRuleScenarioByRuleId($scope.rules);
             }
         });
-
     }
 
     $timeout(function () {

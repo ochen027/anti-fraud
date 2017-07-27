@@ -30,5 +30,5 @@ public interface IRulesService {
 
     List<Rules> listAllRules();
 
-    List<RuleScenario> findRuleScenarioByRuleId(Rules rules);
+    List<RuleScenario> findRuleScenarioByRuleId(int ruleId);
 }
