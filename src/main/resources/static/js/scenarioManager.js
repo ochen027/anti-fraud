@@ -78,11 +78,12 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
 
             for(let k in scenarios){
                 for(let key in $scope.scenarios){
-                   //todo
-
+                   if(scenarios[k].scenarioId===$scope.scenarios[key].id){
+                       $scope.addScenario($scope.scenarios[key]);
+                       break;
+                   }
                 }
             }
-
 
         });
     }
