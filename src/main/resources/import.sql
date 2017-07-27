@@ -240,7 +240,6 @@ insert into FLOW_POINT values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, ''
 insert into FLOW_POINT values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, '', '954dc267-c3e2-43d1-abdb-a83ca2881875', '30102a75-9f3e-e60c-ea6f-597b730af7d5','MLRO Review','MLRO Review(MLROReview)','WorkflowShape.WorkflowProcess');
 
 -- initial work event
-
 insert into FLOW_EVENT values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'','84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','afda1b0d-9763-1824-f3d6-3b0e00836146','954dc267-c3e2-43d1-abdb-a83ca2881875','30102a75-9f3e-e60c-ea6f-597b730af7d5','return','return(MLROReturn)','WorkflowShape.Connection');
 insert into FLOW_EVENT values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','15e6ce2d-3c60-2dc8-7917-ed1aa171b4c8','954dc267-c3e2-43d1-abdb-a83ca2881875','30102a75-9f3e-e60c-ea6f-597b730af7d5','Close','Close(MLROClose)','WorkflowShape.Connection');
 insert into FLOW_EVENT values(3,'sysadmin',sysdate,sysdate,'sysadmin',1,'','30102a75-9f3e-e60c-ea6f-597b730af7d5','cbf8ab91-cfe7-302f-dc01-456fad794e3e','954dc267-c3e2-43d1-abdb-a83ca2881875','84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','escalate','escalate(QCEscalate)','WorkflowShape.Connection');
@@ -250,13 +249,8 @@ insert into FLOW_EVENT values(6,'sysadmin',sysdate,sysdate,'sysadmin',1,'','84cf
 insert into FLOW_EVENT values(7,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','27cbee12-3cbd-d169-7200-7ccb69372ca7','954dc267-c3e2-43d1-abdb-a83ca2881875','84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','Close','Close(QCClosed)','WorkflowShape.Connection');
 insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','b8427923-d5cd-aae2-e4d3-009559be6ddb','954dc267-c3e2-43d1-abdb-a83ca2881875','d54e5ad1-50b2-5b47-4f95-09023b4e2a90','end','end(end)','WorkflowShape.Connection');
 
-
 -- insert default bussinessDay
-
 insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2017-07-27');
 insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','3');
 insert into KEYVALUECONFIG values(3,'sysadmin',sysdate,sysdate,'sysadmin',1,'LONG_TERMS_DAY','365');
 insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'SHORT_TERMS_DAY','10');
-
-
-

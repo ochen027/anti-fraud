@@ -18,9 +18,7 @@ import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.common.util.FormatUtils;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +28,7 @@ import com.pwc.aml.transation.entity.Transactions;
 
 @Service
 public class RulesService implements IRulesService {
+
 
     @Autowired
     private IRulesDAO rulesDAO;
@@ -98,6 +97,8 @@ public class RulesService implements IRulesService {
     @Override
     public void executeRuleEngine(int scenarioId) throws Exception {
 
+        String businessDay = keyValueDAO.get("BUSINESS_DAY");
+
         List<Customers> customerList = customerDAO.findAll();
         for (Customers c : customerList) {
             List<Accounts> accountList = accountDAO.findByCustId(c.getCustomerId());
@@ -115,13 +116,9 @@ public class RulesService implements IRulesService {
 
             List<Transactions> transList = new ArrayList<Transactions>();
 
-
-
-
             if(1==scenarioId){
-                transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), keyValueDAO.get("BUSINESS_DAY"));
+                transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), businessDay);
             }else if(2==scenarioId){
-                String businessDay = keyValueDAO.get("BUSINESS_DAY");
                 String shortTermDays = keyValueDAO.get("SHORT_TERMS_DAY");
                 String longTermDays = keyValueDAO.get("LONG_TERMS_DAY");
                 LocalDate date = FormatUtils.StringToLocalDate(businessDay).minusDays(Long.parseLong(shortTermDays));
@@ -152,7 +149,7 @@ public class RulesService implements IRulesService {
             c.setTotalTransAmt(tAmt);
             c.setTotalTransCount(transList.size());
             c.setTransIdArray(sbTransId.substring(0, sbTransId.length() - 1));
-            c.setBusinessDate(keyValueDAO.get("BUSINESS_DAY"));
+            c.setBusinessDate(keyValueDAO.get("BUSINESS_DAY").replace("-", ""));
             c.setAccountIdArray(sbAccountArray.substring(0, sbAccountArray.length()-1));
             c.setAlertCreationDate(FormatUtils.LocalDateToString(LocalDate.now()));
 

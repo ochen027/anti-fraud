@@ -10,11 +10,10 @@ import java.util.List;
 
 public class Alerts {
 	
-	private String alterId;
+	private String alertId;
 	private String alertName;
 	private String alertContents;
 	private String customerId;
-	private String accountId;
 	private List<Transactions> transList;
 	private String scenarioId;
 	private List<Documents> docList;
@@ -24,12 +23,12 @@ public class Alerts {
 	private String createdDate;
 	private String alertDesc;
 
-	public String getAlterId() {
-		return alterId;
+	public String getAlertId() {
+		return alertId;
 	}
 
-	public void setAlterId(String alterId) {
-		this.alterId = alterId;
+	public void setAlertId(String alterId) {
+		this.alertId = alterId;
 	}
 
 	public String getAlertName() {
@@ -54,14 +53,6 @@ public class Alerts {
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
-	}
-
-	public String getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
 	}
 
 	public List<Transactions> getTransList() {

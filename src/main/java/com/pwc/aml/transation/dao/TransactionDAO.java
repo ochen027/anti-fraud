@@ -12,6 +12,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -58,9 +59,25 @@ public class TransactionDAO implements ITransactionDAO {
 
     @Override
     public Transactions getSingleTrans(String transId) throws Exception {
-        Cell[] cells= hBaseDAO.getData(hBaseDAO.getTable("aml:trans"),transId, "f1");
-        return this.consistTrans(cells);
+        HTable table = hBaseDAO.getTable("aml:trans");
+        Scan scan = new Scan();
+        Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("trans_id"),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(transId));
+        scan.setFilter(filter);
+        ResultScanner rsscan = table.getScanner(scan);
+        List<Transactions> tList = new ArrayList<Transactions>();
+        for (Result r : rsscan) {
+            Transactions t = this.consistTrans(r.rawCells());
+            tList.add(t);
+        }
+        rsscan.close();
+        return tList.get(0);
     }
+
+
+
+
+
 
     @Override
     public void TruncateTrans() throws Exception {
@@ -142,17 +159,6 @@ public class TransactionDAO implements ITransactionDAO {
 
         }
         return tbean;
-    }
-
-
-    public static void main(String[] args){
-        System.out.println("111111");
-        String date = "2017-01-09";
-        LocalDate localDate = LocalDate.of(Integer.parseInt(date.substring(0, 4)), Integer.parseInt(date.substring(5, 7)),
-                Integer.parseInt(date.substring(8,10)));
-
-        System.out.println(localDate);
-
     }
 
 }
