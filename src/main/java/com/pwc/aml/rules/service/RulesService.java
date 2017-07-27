@@ -1,6 +1,7 @@
 package com.pwc.aml.rules.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -13,8 +14,12 @@ import com.pwc.aml.customers.entity.Customers;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.Rules;
 import com.pwc.aml.transation.dao.ITransactionDAO;
+import com.pwc.common.util.FormatUtils;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.hadoop.hbase.client.HTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,9 +106,10 @@ public class RulesService implements IRulesService {
             }
 
             List<String> accountIdList = new Vector<String>();
-
+            StringBuilder sbAccountArray = new StringBuilder();
             for (Accounts acct : accountList) {
                 accountIdList.add(acct.getAccountId());
+                sbAccountArray.append(acct.getAccountId()+",");
             }
 
             List<Transactions> transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), keyValueDAO.get("BUSINESS_DAY"));
@@ -122,18 +128,40 @@ public class RulesService implements IRulesService {
             c.setTotalTransAmt(tAmt);
             c.setTotalTransCount(transList.size());
             c.setTransIdArray(sbTransId.substring(0, sbTransId.length() - 1));
+            c.setBusinessDate(keyValueDAO.get("BUSINESS_DAY"));
+            c.setAccountIdArray(sbAccountArray.substring(0, sbAccountArray.length()-1));
+            c.setAlertCreationDate(FormatUtils.LocalDateToString(LocalDate.now()));
 
             String ruleEngineScript = rulesDAO.findSingleScenario(scenarioId).getScenarioContent();
 
-            String[] scriptArray = ruleEngineScript.split("\r\n");
-            StringBuilder sbScript = new StringBuilder();
-            for (String s : scriptArray) {
-                sbScript.append(s).append("\r\n");
-            }
-            System.out.println(ruleEngineScript);
+            String case1 = "package com.pwc.aml.rules.service;\n" +
+                    "import com.pwc.aml.customers.entity.Customers;\n" +
+                    "import com.pwc.aml.common.hbase.HbaseDaoImp;\n" +
+                    "import com.pwc.aml.common.hbase.IHbaseDao;\n" +
+                    "import org.apache.hadoop.hbase.client.HTable;\n" +
+                    "import com.pwc.common.util.FormatUtils;\n"+
+                    "\n" +
+                    "rule \"CaseTest\"\n" +
+                    "    salience 1\n" +
+                    "    when\n" +
+                    "        $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=3);\n" +
+                    "    then\n" +
+                    "        IHbaseDao hBaseDAO = new HbaseDaoImp();\n" +
+                    "        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n" +
+                    "        String alertId = FormatUtils.GenerateId();\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 1 Conflict\");\n" +
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 30000 and in the last 3 days\");\n" +
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"1\");\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n" +
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n"+
+                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n"+
+                    "end";
 
-            ExecuteDrools.CallDrools(c, ruleEngineScript);
-
+            ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript));
 
         }
     }
