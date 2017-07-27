@@ -91,5 +91,12 @@ public class RulesController extends BaseController{
 		return new ResponseEntity<Rules>(t,HttpStatus.OK);
 	}
 
+
+    @GetMapping("listAllRules")
+    public ResponseEntity<List<Rules>> listAllRules(){
+        List<Rules> list = rulesService.listAllRules();
+        return new ResponseEntity<List<Rules>>(list, HttpStatus.OK);
+    }
+
 	
 }

@@ -28,4 +28,6 @@ public interface IRulesDAO {
 	void updateRuleScenario(RuleScenario ruleScenario);
 
 	void deleteRuleScenarioByRuleId(int id);
+
+    List<Rules> listAllRules();
 }

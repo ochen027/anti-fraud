@@ -9,7 +9,7 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
     }
 
     $scope.refresh = function () {
-        $http.get("/rules/listAll").then(function (res) {
+        $http.get("/rules/listAllRules").then(function (res) {
             if (res.status != 200) {
                 console.log(res);
                 return;
@@ -21,7 +21,7 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
     }
 
     $timeout(function () {
-
+        $scope.refresh();
     });
 
 });

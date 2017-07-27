@@ -26,4 +26,6 @@ public interface IRulesService {
 	Scenario saveOrUpdate(Scenario scenario, Users users);
 
     Rules saveOrUpdateRules(Rules rules, Users users);
+
+    List<Rules> listAllRules();
 }
