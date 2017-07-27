@@ -235,9 +235,10 @@ public class RulesService implements IRulesService {
 
     @Override
     public List<RuleScenario> findRuleScenarioByRuleId(int ruleId) {
-
         return rulesDAO.findRuleScenarioByRuleId(ruleId);
     }
+
+
 
     public void saveOrUpdateRuleScenario(Rules rules, Users users) {
         for (int id : rules.getScenarios()) {
@@ -247,6 +248,18 @@ public class RulesService implements IRulesService {
             ruleScenario.setRuleId(rules.getId());
             ruleScenario.setScenarioId(id);
             rulesDAO.createRuleScenario(ruleScenario);
+        }
+    }
+
+    @Override
+    public void runRule(int ruleId){
+        List<RuleScenario> list = rulesDAO.findRuleScenarioByRuleId(ruleId);
+        for(RuleScenario rs : list){
+            try {
+                this.executeRuleEngine(rs.getScenarioId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

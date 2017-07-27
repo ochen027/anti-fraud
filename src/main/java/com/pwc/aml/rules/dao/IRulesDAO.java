@@ -18,7 +18,6 @@ public interface IRulesDAO {
 	
 	Scenario findSingleScenario(int scenarioId);
 
-
 	void createRules(Rules rules);
 
 	void updateRules(Rules rules);
@@ -32,4 +31,5 @@ public interface IRulesDAO {
     List<Rules> listAllRules();
 
 	List<RuleScenario> findRuleScenarioByRuleId(int id);
+
 }

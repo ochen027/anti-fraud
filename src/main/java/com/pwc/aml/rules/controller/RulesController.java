@@ -95,13 +95,16 @@ public class RulesController extends BaseController{
 		return new ResponseEntity<List<Rules>>(list, HttpStatus.OK);
 	}
 
-
-
-
     @PostMapping("listRuleScenarioByRuleId")
     public ResponseEntity<List<RuleScenario>> listRuleScenarioByRuleId(@RequestBody Rules rules){
         List<RuleScenario> list = rulesService.findRuleScenarioByRuleId(rules.getId());
         return new ResponseEntity<List<RuleScenario>>(list, HttpStatus.OK);
     }
+
+    @GetMapping("runRule/{id}")
+	public ResponseEntity<Void> RunRule(@PathVariable("id") int ruleId){
+		rulesService.runRule(ruleId);
+    	return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 	
 }

@@ -23,7 +23,6 @@ public interface IRulesService {
 	
 	void executeRuleEngine(int scenarioId) throws Exception;
 
-
 	Scenario saveOrUpdate(Scenario scenario, Users users);
 
     Rules saveOrUpdateRules(Rules rules, Users users);
@@ -31,4 +30,6 @@ public interface IRulesService {
     List<Rules> listAllRules();
 
     List<RuleScenario> findRuleScenarioByRuleId(int ruleId);
+
+    void runRule(int ruleId);
 }
