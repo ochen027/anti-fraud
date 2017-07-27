@@ -31,5 +31,9 @@ public interface IRulesService {
 
     List<RuleScenario> findRuleScenarioByRuleId(int ruleId);
 
+    String getDefaultRuleId();
+
+    void setDefaultRuleId(String ruleId);
+
     void runRule(int ruleId);
 }

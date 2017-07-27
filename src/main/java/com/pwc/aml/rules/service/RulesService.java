@@ -45,6 +45,8 @@ public class RulesService implements IRulesService {
     @Autowired
     private IKeyValueDao keyValueDAO;
 
+    private static String DEFAULT_RULE="DEFAULT_RULE";
+
 
     @Override
     public List<Scenario> listAllRuleScenario() {
@@ -235,10 +237,21 @@ public class RulesService implements IRulesService {
 
     @Override
     public List<RuleScenario> findRuleScenarioByRuleId(int ruleId) {
+
         return rulesDAO.findRuleScenarioByRuleId(ruleId);
     }
 
+    @Override
+    public String getDefaultRuleId() {
 
+
+        return keyValueDAO.get(DEFAULT_RULE);
+    }
+
+    @Override
+    public void setDefaultRuleId(String ruleId) {
+        keyValueDAO.put(DEFAULT_RULE,ruleId);
+    }
 
     public void saveOrUpdateRuleScenario(Rules rules, Users users) {
         for (int id : rules.getScenarios()) {

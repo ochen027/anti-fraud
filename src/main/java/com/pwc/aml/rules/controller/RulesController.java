@@ -101,10 +101,21 @@ public class RulesController extends BaseController{
         return new ResponseEntity<List<RuleScenario>>(list, HttpStatus.OK);
     }
 
+	@GetMapping("getDefaultRuleId")
+	public ResponseEntity<String> getDefaultRuleId(){
+		return new ResponseEntity<String>(rulesService.getDefaultRuleId(), HttpStatus.OK);
+	}
+
+	@PostMapping("setDefaultRuleId")
+	public ResponseEntity<Void> setDefaultRuleId(@RequestBody Rules rules){
+		rulesService.setDefaultRuleId(("" +rules.getId()));
+		return new ResponseEntity<Void>( HttpStatus.OK);
+	}
+
     @GetMapping("runRule/{id}")
 	public ResponseEntity<Void> RunRule(@PathVariable("id") int ruleId){
 		rulesService.runRule(ruleId);
     	return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
 }

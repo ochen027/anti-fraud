@@ -15,20 +15,20 @@
                st-table="rulesDisplay" st-safe-src="rules">
             <thead>
             <tr>
+                <th></th>
                 <th>Rule Name</th>
                 <th>Description</th>
                 <th>Created by</th>
-                <th>Default Process</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
 
             <tr ng-repeat="row in rulesDisplay">
+                <td><input type="radio"  ng-model="defaultRule" ng-value="{{row.id}}" ng-click="select(row)"/></td>
                 <td>{{row.ruleName}}</td>
                 <td>{{row.description}}</td>
                 <td>{{row.createdBy}}</td>
-                <td><button class="btn btn-default" >Default</button></td>
                 <td><button class="btn btn-default" ng-click="edit(row)">Edit</button></td>
             </tr>
             </tbody>
@@ -43,6 +43,6 @@
         </table>
     </div>
     <div class="col-md-12 text-right">
-        <button class="btn btn-default">Run</button>
+        <button class="btn btn-default" ng-click="run()">Run</button>
     </div>
 </div>

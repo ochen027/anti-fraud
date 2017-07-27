@@ -12,6 +12,15 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
         $state.go("rules",{rule:rule});
     }
 
+    $scope.defaultRule=0;
+
+    $scope.select=function(row){
+        $scope.defaultRule=row.id;
+        $http.post("/rules/setDefaultRuleId",row).then(function(res){
+            //$scope.defaultRule=res.data;
+        });
+    }
+
     $scope.refresh = function () {
         $http.get("/rules/listAllRules").then(function (res) {
             if (res.status != 200) {
@@ -24,8 +33,21 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
         });
     }
 
+    $scope.run=function(){
+        $http.get("/rules/runRule/"+ $scope.defaultRule).then(function(res){
+            alert("running rules");
+        });
+
+    }
+
     $timeout(function () {
         $scope.refresh();
+
+        //get default rule
+
+        $http.get("/rules/getDefaultRuleId").then(function(res){
+            $scope.defaultRule=res.data;
+        });
     });
 
 });
