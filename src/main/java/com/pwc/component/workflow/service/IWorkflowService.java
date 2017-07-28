@@ -17,8 +17,10 @@ public interface IWorkflowService {
 
     void delete(Workflow workflow);
 
-
-
     Workflow getWorkflowByFlowId(String FlowId);
+
+    void setDefaultWorkflowId(String id, String userName);
+
+    String getDefaultWorkflowId();
 
 }

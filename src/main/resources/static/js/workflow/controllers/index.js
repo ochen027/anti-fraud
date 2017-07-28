@@ -34,10 +34,22 @@ app.controller('IndexWorkflowCtrl', function ($scope, $http, $location, $cookieS
         });
     }
 
+    $scope.defaultWorkflow=0;
+
+    $scope.select=function(row){
+        $scope.defaultWorkflow=row.id;
+        $http.post("/workflow/setDefaultWorkflowId",row).then(function(res){
+            //$scope.defaultWorkflow=res.data;
+        });
+    }
+
     $timeout(function () {
 
         refreshPageData();
 
+        $http.get("/workflow/getDefaultWorkflowId").then(function(res){
+            $scope.defaultWorkflow=res.data;
+        });
     });
 
 });

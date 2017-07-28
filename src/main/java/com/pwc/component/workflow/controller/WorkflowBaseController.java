@@ -1,6 +1,7 @@
 package com.pwc.component.workflow.controller;
 
 
+import com.pwc.common.base.controller.BaseController;
 import com.pwc.component.workflow.entity.Workflow;
 import com.pwc.component.workflow.service.IWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("workflow")
-public class WorkflowBaseController {
+public class WorkflowBaseController extends BaseController{
 
     @Autowired
     private IWorkflowService workflowService;
@@ -48,6 +49,12 @@ public class WorkflowBaseController {
         Workflow result = workflowService.getWorkflowByFlowId(workflow.getFlowId());
 
         return new ResponseEntity<Workflow>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("setDefaultWorkflowId")
+    public ResponseEntity<Void> setDefaultWorkflowId(@RequestBody Workflow workflow){
+        workflowService.setDefaultWorkflowId(String.valueOf(workflow.getId()), userName);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
 

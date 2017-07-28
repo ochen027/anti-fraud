@@ -16,7 +16,7 @@
                        st-table="workflowsDisplay" st-safe-src="workflows">
                     <thead>
                     <tr>
-
+                        <th/>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Create Date</th>
@@ -27,6 +27,7 @@
                     <tbody>
 
                     <tr ng-repeat="row in workflowsDisplay">
+                        <td><input name="defaultWorkflow" type="radio"  ng-model="defaultWorkflow" ng-value="{{row.id}}" ng-click="select(row)"/></td>
                         <td>{{row.name}}</td>
                         <td>{{row.description}}</td>
                         <td>{{row.creationDate}}</td>

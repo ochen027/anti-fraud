@@ -1,6 +1,7 @@
 package com.pwc.component.workflow.service;
 
 
+import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import com.pwc.component.workflow.dao.IFlowEventDAO;
 import com.pwc.component.workflow.dao.IFlowPointDAO;
 import com.pwc.component.workflow.dao.IWorkflowDAO;
@@ -25,6 +26,10 @@ public class WorkflowService implements IWorkflowService {
     @Autowired
     private IFlowEventDAO flowEventDAO;
 
+    @Autowired
+    private IKeyValueDao keyValueDAO;
+
+    private static String DEFAULT_WORKFLOW = "DEFAULT_WORKFLOW";
 
     @Override
     public List<Workflow> getAllWorkflow() {
@@ -93,13 +98,19 @@ public class WorkflowService implements IWorkflowService {
 
     @Override
     public Workflow getWorkflowByFlowId(String FlowId) {
-
         Workflow workflow = workflowDAO.findByFlowId(FlowId);
-
         workflow.setFlowPoints(flowPointDAO.findByFlowId(FlowId));
-
         workflow.setFlowEvents(flowEventDAO.findByFlowId(FlowId));
-
         return workflow;
+    }
+
+    @Override
+    public void setDefaultWorkflowId(String id, String userName) {
+        keyValueDAO.put(DEFAULT_WORKFLOW, id, userName);
+    }
+
+    @Override
+    public String getDefaultWorkflowId() {
+        return keyValueDAO.get(DEFAULT_WORKFLOW);
     }
 }
