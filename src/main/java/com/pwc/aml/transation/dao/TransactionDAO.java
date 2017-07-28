@@ -74,9 +74,25 @@ public class TransactionDAO implements ITransactionDAO {
         return tList.get(0);
     }
 
-
-
-
+    @Override
+    public List<Transactions> getTransListById(String[] transIds) throws Exception {
+        HTable table = hBaseDAO.getTable("aml:trans");
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        for(String id : transIds){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                    Bytes.toBytes("trans_id"),
+                    CompareFilter.CompareOp.EQUAL,Bytes.toBytes(id)));
+        }
+        ResultScanner rsscan = table.getScanner(scan);
+        List<Transactions> tList = new ArrayList<Transactions>();
+        for (Result r : rsscan) {
+            Transactions t = this.consistTrans(r.rawCells());
+            tList.add(t);
+        }
+        rsscan.close();
+        return tList;
+    }
 
 
     @Override
@@ -123,7 +139,7 @@ public class TransactionDAO implements ITransactionDAO {
                     tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "as_of_date":
-                    tbean.setAsOfDate(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+                    tbean.setAsOfDate(FormatUtils.StringToLocalDateNoDash(Bytes.toString(CellUtil.cloneValue(c))).toString());
                     continue;
                 case "counterparty_id_1":
                     tbean.setCounterPartyId(Bytes.toString(CellUtil.cloneValue(c)));
@@ -150,7 +166,7 @@ public class TransactionDAO implements ITransactionDAO {
                     tbean.setTransDesc(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "trans_dt":
-                    tbean.setTransDt(FormatUtils.StringToDate(Bytes.toString(CellUtil.cloneValue(c))));
+                    tbean.setTransDt(FormatUtils.StringToLocalDateNoDash(Bytes.toString(CellUtil.cloneValue(c))).toString());
                     continue;
                 case "trans_seq":
                     tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));

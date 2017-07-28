@@ -23,6 +23,11 @@ public class FormatUtils {
 				Integer.parseInt(date.substring(5,7)), Integer.parseInt(date.substring(8,10)));
 	}
 
+	public static LocalDate StringToLocalDateNoDash(String date){
+		return LocalDate.of(Integer.parseInt(date.substring(0,4)),
+				Integer.parseInt(date.substring(4,6)), Integer.parseInt(date.substring(6,8)));
+	}
+
 	public static String LocalDateToString(LocalDate localDate){
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 		return dtf.format(localDate);

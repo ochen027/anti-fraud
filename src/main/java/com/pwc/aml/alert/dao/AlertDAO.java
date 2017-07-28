@@ -93,11 +93,7 @@ public class AlertDAO implements IAlertDAO {
                     continue;
                 case "transIdArray":
                     String[] transArray = Bytes.toString(CellUtil.cloneValue(c)).split(",");
-                    List<Transactions> tList = new ArrayList<Transactions>();
-                    for(String tId : transArray){
-                        Transactions trans = transactionDAO.getSingleTrans(tId);
-                        tList.add(trans);
-                    }
+                    List<Transactions> tList = transactionDAO.getTransListById(transArray);
                     aBean.setTransList(tList);
                     continue;
             }
