@@ -327,7 +327,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'ImportDataCtrl'
-    }, {
+    },
+     {
         name: "userManagement",
         url: "/system/userManagement",
         views: {
@@ -342,7 +343,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'UserManagementCtrl'
-    },{
+    },
+    {
               name: "riskCountry",
               url: "/system/riskCountry",
               views: {
@@ -357,7 +359,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                   }
               },
               controller: 'riskCountryCtrl'
-    },{
+    },
+    {
                    name: "watchList",
                    url: "/system/watchList",
                    views: {
@@ -373,8 +376,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                    },
                    controller: 'watchListCtrl'
          }
-      ];
-    },{
+    ,{
         name: "userManagementInfo",
         url: "/system/userManagementInfo",
         views: {
@@ -390,7 +392,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'UserManagementInfoCtrl',
         params: {id: null}
-    },{
+    },
+    {
         name: "userGroup",
         url: "/system/userGroup",
         views: {
@@ -405,7 +408,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'UserGroupCtrl'
-    },{
+    },
+    {
         name: "userGroupInfo",
         url: "/system/userGroupInfo",
         views: {
@@ -421,7 +425,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'UserGroupInfoCtrl',
         params: {id: null}
-    },{
+    },
+    {
         name: "roleList",
         url: "/system/roleList",
         views: {
@@ -436,7 +441,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'RoleListCtrl'
-    },{
+    },
+    {
         name: "roleInfo",
         url: "/system/roleInfo",
         views: {
