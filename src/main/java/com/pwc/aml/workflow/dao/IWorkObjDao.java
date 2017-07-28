@@ -5,4 +5,8 @@ import com.pwc.aml.workflow.entity.WorkObj;
 
 public interface IWorkObjDao {
     void save(WorkObj workObj) throws Exception;
+
+    WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception;
+
+
 }

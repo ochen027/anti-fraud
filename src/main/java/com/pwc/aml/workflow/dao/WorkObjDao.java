@@ -3,6 +3,7 @@ package com.pwc.aml.workflow.dao;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.HTable;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,20 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.roleId,""+workObj.getCurrentPoint().getRoleId());
     }
 
-    public void initial(String rowKey) throws Exception {
+    @Override
+    public WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception {
+        initial();
+        Cell[] cells= hbaseDao.getData(table,workObjId, "f1");
+
+        return null;
+    }
+
+    public void initial() throws Exception {
         table = hbaseDao.getTable(tableKey);
+    }
+
+    public void initial(String rowKey) throws Exception {
+        initial();
         this.rowKey=rowKey;
     }
 
