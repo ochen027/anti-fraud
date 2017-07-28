@@ -25,7 +25,7 @@
             <tbody>
 
             <tr ng-repeat="row in rulesDisplay">
-                <td><input type="radio"  ng-model="defaultRule" ng-value="{{row.id}}" ng-click="select(row)"/></td>
+                <td><input name="defaultRule" type="radio"  ng-model="defaultRule" ng-value="{{row.id}}" ng-click="select(row)"/></td>
                 <td>{{row.ruleName}}</td>
                 <td>{{row.description}}</td>
                 <td>{{row.createdBy}}</td>
