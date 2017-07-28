@@ -1,6 +1,7 @@
 package com.pwc.aml.businessTime.controller;
 
 import com.pwc.aml.businessTime.service.IBusinessTimeService;
+import com.pwc.common.base.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("businessTime")
-public class BusinessTimeController {
+public class BusinessTimeController extends BaseController{
 
     @Autowired
     private IBusinessTimeService businessTimeService;
@@ -30,7 +31,7 @@ public class BusinessTimeController {
     @GetMapping("toNextDay")
     public ResponseEntity<Map<String,String>> toNextDay(){
         Map<String,String> map=new HashMap<>();
-        businessTimeService.toNextDay();
+        businessTimeService.toNextDay(userName);
         map.put("businessTime",businessTimeService.get());
         return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
     }

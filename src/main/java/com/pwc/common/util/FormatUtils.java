@@ -11,10 +11,19 @@ import java.util.UUID;
 
 public class FormatUtils {
 	
+	public static Date StringToDateNoDash(String date) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.parse(date);
+	}
+
+	public static String DateToString(Date date) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+
 	public static Date StringToDate(String date) throws ParseException{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMDD");
-	    Date d = sdf.parse(date);  
-		return d;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.parse(date);
 	}
 
 	//Date format YYYY-MM-DD

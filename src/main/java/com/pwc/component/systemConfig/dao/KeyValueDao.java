@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 
 
@@ -50,12 +51,15 @@ public class KeyValueDao implements IKeyValueDao {
     }
 
     @Override
-    public void put(String key, String value) {
+    public void put(String key, String value, String userName) {
         KeyValueConfig target= findbyKey(key);
         KeyValueConfig kv = new KeyValueConfig(key, value);
         if (null == target) {
+            kv.setCreatedBy(userName);
+            kv.setCreationDate(new Date());
             em.persist(kv);
         } else {
+            kv.setLastUpdatedBy(userName);
             target.setValue(value);
             em.merge(target);
         }

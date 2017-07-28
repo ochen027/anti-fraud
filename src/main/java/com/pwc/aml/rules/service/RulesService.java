@@ -243,14 +243,12 @@ public class RulesService implements IRulesService {
 
     @Override
     public String getDefaultRuleId() {
-
-
         return keyValueDAO.get(DEFAULT_RULE);
     }
 
     @Override
-    public void setDefaultRuleId(String ruleId) {
-        keyValueDAO.put(DEFAULT_RULE,ruleId);
+    public void setDefaultRuleId(String ruleId, String userName) {
+        keyValueDAO.put(DEFAULT_RULE,ruleId, userName);
     }
 
     public void saveOrUpdateRuleScenario(Rules rules, Users users) {

@@ -1,5 +1,6 @@
 package com.pwc.aml.businessTime.service;
 
+import com.pwc.common.util.FormatUtils;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ public class BusinessTimeService implements IBusinessTimeService {
     @Autowired
     private IKeyValueDao keyValueDao;
     private final static String BUSINESS_DAY = "BUSINESS_DAY";
-    private final static DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public String get() {
@@ -31,7 +31,7 @@ public class BusinessTimeService implements IBusinessTimeService {
         } else {
             Date date = null;
             try {
-                date = (Date) formatter.parse(target);
+                date = FormatUtils.StringToDate(target);
             } catch (ParseException e) {
                 e.printStackTrace();
             } finally {
@@ -43,24 +43,28 @@ public class BusinessTimeService implements IBusinessTimeService {
     }
 
     @Override
-    public void set(String businessDate) {
-        keyValueDao.put(BUSINESS_DAY, businessDate);
+    public void set(String businessDate, String userName) {
+        keyValueDao.put(BUSINESS_DAY, businessDate, userName);
     }
 
     @Override
-    public void set(Date businessDate) {
-        keyValueDao.put(BUSINESS_DAY, formatter.format(businessDate));
+    public void set(Date businessDate, String userName) {
+        try {
+            keyValueDao.put(BUSINESS_DAY, FormatUtils.DateToString(businessDate), userName);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void toNextDay() {
+    public void toNextDay(String userName) {
         Date date = getDate();
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             cal.add(Calendar.DATE, 1);
             Date newDate=cal.getTime();
-            set(newDate);
+            set(newDate, userName);
         }
     }
 }

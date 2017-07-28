@@ -33,7 +33,7 @@ public interface IRulesService {
 
     String getDefaultRuleId();
 
-    void setDefaultRuleId(String ruleId);
+    void setDefaultRuleId(String ruleId, String userName);
 
     void runRule(int ruleId);
 }
