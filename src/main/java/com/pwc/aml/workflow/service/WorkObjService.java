@@ -23,7 +23,7 @@ public class WorkObjService implements IWorkObjService {
     private IFlowEventDAO flowEventDAO;
 
     @Override
-    public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) {
+    public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) throws Exception {
         WorkObj obj = new WorkObj();
         obj.setAlerts(alerts);
         obj.setWorkObjId(UUID.randomUUID().toString());//uuid
