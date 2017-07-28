@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IWorkObjService {
 
-    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow);
+    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) throws Exception;
 
     List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent);
 

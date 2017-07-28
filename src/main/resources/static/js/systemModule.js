@@ -45,9 +45,9 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     $scope.deleteAll=function(flag){
         if(flag === 'customer') {
             $http.get("/customer/removeAll").then(function(res){
-                $scope.refresh(flag);
-            });
-        }
+                         $scope.refresh(flag);
+                     });
+                 }
         if(flag === 'account') {
             $http.get("/account/removeAll").then(function(res){
                 $scope.refresh(flag);
@@ -104,6 +104,13 @@ app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $time
         role.action=true;
         $state.go("roleInfo",{role:role});
     }
+    $scope.delete = function(roleId){
+        console.log("delete role");
+        $http.post("/roles/deleteRole/"+roleId).then(function(res){
+            console.log(res)
+            $scope.refresh();
+        })
+    }
     $scope.addRole = function(){
         $state.go("roleInfo",{role:{"action":true}});
     }
@@ -144,4 +151,9 @@ app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $time
 
 });
 
+
+
+app.controller('riskCountryCtrl', function ($scope, $http, $location, $state, $timeout) {
+
+});
 

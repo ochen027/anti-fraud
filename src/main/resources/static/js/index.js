@@ -343,6 +343,38 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'UserManagementCtrl'
     },{
+              name: "riskCountry",
+              url: "/system/riskCountry",
+              views: {
+                  header: {
+                      templateUrl: '/header'
+                  },
+                  content: {
+                      templateUrl: '/system/riskCountry'
+                  },
+                  footer: {
+                      templateUrl: '/footer',
+                  }
+              },
+              controller: 'riskCountryCtrl'
+    },{
+                   name: "watchList",
+                   url: "/system/watchList",
+                   views: {
+                       header: {
+                           templateUrl: '/header'
+                       },
+                       content: {
+                           templateUrl: '/system/watchList'
+                       },
+                       footer: {
+                           templateUrl: '/footer',
+                       }
+                   },
+                   controller: 'watchListCtrl'
+         }
+      ];
+    },{
         name: "userManagementInfo",
         url: "/system/userManagementInfo",
         views: {

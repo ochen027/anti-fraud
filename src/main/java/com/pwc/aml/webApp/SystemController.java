@@ -19,6 +19,15 @@ public class SystemController {
         return "system/userManagement";
     }
 
+    @RequestMapping("/riskCountry")
+    public String riskCountry(Model model) {
+        return "system/riskCountry";
+    }
+    @RequestMapping("/watchList")
+    public String watchList(Model model) {
+        return "system/watchList";
+    }
+
     @RequestMapping("/userManagementInfo")
     public String userManagementInfo(Model model) {
         return "system/userManagement_edit";
