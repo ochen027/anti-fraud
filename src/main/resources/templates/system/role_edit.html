@@ -2,26 +2,23 @@
     <h5>User List:</h5>
     <hr/>
 
-    <div class="text-center">
-        <div class="customer-summary">
-            <form class="">
-                <div class="table-tr">
-                    <label class="label">Role Id</label>
-                    <input type="text" class="text-input" placeholder="" disabled="true"></input>
-                </div>
-                <div>
-                    <label class="label">Description</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                </div>
-<!--access module-->
-                <!--<div></div>-->
-            </form>
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" type="button" ng-click="save()">Save</button>
+        <button class="btn btn-default" type="button" ng-click="gotoRoleList()">Back</button>
+    </div>
+
+    <div class="col-md-12">
+
+
+        <div class="form-group">
+            <label for="roleId">Role Id</label>
+            <input type="text" class="form-control" id="roleId" ng-model="role.id" placeholder="role id" ng-disabled="role.action"/>
         </div>
-        <div class="col-md-12 text-right">
-            <button class="btn btn-default" ng-click="reset()">Reset</button>
-            <button class="btn btn-default" ng-click="save()">Save</button>
-            <button class="btn btn-default" ng-click="delete()">Delete</button>
+
+        <div class="form-group">
+            <label for="roleName">Role Name</label>
+            <input type="text" class="form-control" id="roleName" ng-model="role.roleName" placeholder="role name"/>
         </div>
-        <div class="sepeartor"></div>
+
     </div>
 </div>
