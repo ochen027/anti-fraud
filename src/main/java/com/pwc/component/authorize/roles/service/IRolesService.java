@@ -8,9 +8,9 @@ import com.pwc.component.authorize.roles.entity.Roles;
 public interface IRolesService {
 	
     List<Roles> listAllRoles();
-    boolean createRoles(Roles roles);
-    boolean updateRoles(int roleId);
-    boolean deleteRoles(int rolesId);
+    Roles createRoles(Roles roles);
+    void updateRoles(Roles roles);
+    void deleteRoles(Roles roleId);
     Roles getSingleRoles(int roleId);
     
 }

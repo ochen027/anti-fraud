@@ -28,6 +28,29 @@ public class SystemController {
         return "system/watchList";
     }
 
+    @RequestMapping("/userManagementInfo")
+    public String userManagementInfo(Model model) {
+        return "system/userManagement_edit";
+    }
+
+    @RequestMapping("/userGroup")
+    public String userGroup(Model model) {
+        return "system/user_group";
+    }
+    @RequestMapping("/userGroupInfo")
+    public String userGroupInfo(Model model) {
+        return "system/user_group_edit";
+    }
+    @RequestMapping("/roleList")
+    public String roleList(Model model) {
+        return "system/role_list";
+    }
+    @RequestMapping("/roleInfo")
+    public String roleInfo(Model model) {
+        return "system/role_edit";
+    }
+
+
 
 
 }

@@ -374,6 +374,85 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                    controller: 'watchListCtrl'
          }
       ];
+    },{
+        name: "userManagementInfo",
+        url: "/system/userManagementInfo",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/userManagementInfo'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'UserManagementInfoCtrl',
+        params: {id: null}
+    },{
+        name: "userGroup",
+        url: "/system/userGroup",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/userGroup'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'UserGroupCtrl'
+    },{
+        name: "userGroupInfo",
+        url: "/system/userGroupInfo",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/userGroupInfo'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'UserGroupInfoCtrl',
+        params: {id: null}
+    },{
+        name: "roleList",
+        url: "/system/roleList",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/roleList'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'RoleListCtrl'
+    },{
+        name: "roleInfo",
+        url: "/system/roleInfo",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/roleInfo'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'RoleInfoCtrl',
+        params: {role: null}
+    }];
 
     app.scenario=[
         {

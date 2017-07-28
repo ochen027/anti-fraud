@@ -10,8 +10,8 @@ public interface IBusinessTimeService {
 
     String get();
     Date getDate() throws ParseException;
-    void set(String businessDate);
-    void set(Date businessDate);
-    void toNextDay();
+    void set(String businessDate, String userName);
+    void set(Date businessDate, String userName);
+    void toNextDay(String userName);
 
 }

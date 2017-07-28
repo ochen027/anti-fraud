@@ -1,0 +1,24 @@
+<div class="container" ng-controller="RoleInfoCtrl">
+    <h5>User List:</h5>
+    <hr/>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" type="button" ng-click="save()">Save</button>
+        <button class="btn btn-default" type="button" ng-click="gotoRoleList()">Back</button>
+    </div>
+
+    <div class="col-md-12">
+
+
+        <div class="form-group">
+            <label for="roleId">Role Id</label>
+            <input type="text" class="form-control" id="roleId" ng-model="role.id" placeholder="role id" ng-disabled="role.action"/>
+        </div>
+
+        <div class="form-group">
+            <label for="roleName">Role Name</label>
+            <input type="text" class="form-control" id="roleName" ng-model="role.roleName" placeholder="role name"/>
+        </div>
+
+    </div>
+</div>

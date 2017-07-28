@@ -71,8 +71,14 @@ insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 
 insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Import', 11, '/#!/system/importData');
 insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Management', 11, '/#!/system/userManagement');
+
+
 insert into menus values(25, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Risk Country', 11, '/#!/system/riskCountry');
 insert into menus values(26, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Watch List', 11, '/#!/system/watchList');
+
+insert into menus values(27, 'sysadmin', sysdate, sysdate, 'sysadmin', 2, NULL , NULL , 'User Group', 11, '/#!/system/userGroup');
+insert into menus values(28, 'sysadmin', sysdate, sysdate, 'sysadmin', 2, NULL , NULL , 'User Role', 11, '/#!/system/roleList');
+
 -- initial role menu table
 -- sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
@@ -101,6 +107,10 @@ insert into rolemenu values (23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 23
 insert into rolemenu values (24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 24, 6);
 insert into rolemenu values (25, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 25, 6);
 insert into rolemenu values (26, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 26, 6);
+insert into rolemenu values (27, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 27, 6);
+insert into rolemenu values (28, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 28, 6);
+insert into rolemenu values (29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 29, 6);
+
 
 
 -- l1 menu

@@ -108,7 +108,7 @@ public class RulesController extends BaseController{
 
 	@PostMapping("setDefaultRuleId")
 	public ResponseEntity<Void> setDefaultRuleId(@RequestBody Rules rules){
-		rulesService.setDefaultRuleId(("" +rules.getId()));
+		rulesService.setDefaultRuleId(("" +rules.getId()), userName);
 		return new ResponseEntity<Void>( HttpStatus.OK);
 	}
 
