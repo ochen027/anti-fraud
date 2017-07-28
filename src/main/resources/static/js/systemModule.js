@@ -104,6 +104,13 @@ app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $time
         role.action=true;
         $state.go("roleInfo",{role:role});
     }
+    $scope.delete = function(roleId){
+        console.log("delete role");
+        $http.post("/roles/deleteRole/"+roleId).then(function(res){
+            console.log(res)
+            $scope.refresh();
+        })
+    }
     $scope.addRole = function(){
         $state.go("roleInfo",{role:{"action":true}});
     }

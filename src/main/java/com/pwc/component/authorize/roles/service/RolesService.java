@@ -13,32 +13,36 @@ import com.pwc.component.authorize.roles.entity.Roles;
 @Repository
 public class RolesService implements IRolesService {
 
-	@Autowired
-	private IRolesDAO rolesDAO;
-	
-	
+    @Autowired
+    private IRolesDAO rolesDAO;
+
+
+
     @Override
     public List<Roles> listAllRoles() {
         return rolesDAO.listAll();
     }
 
     @Override
-    public boolean createRoles(Roles roles) {
-        return false;
+    public Roles createRoles(Roles r) {
+        rolesDAO.createRoles(r);
+        return r;
     }
 
     @Override
-    public boolean updateRoles(int roleId) {
-        return false;
+    public void updateRoles(Roles r) {
+        rolesDAO.updateRoles(r);
     }
 
     @Override
-    public boolean deleteRoles(int rolesId) {
-        return false;
+    public void deleteRoles(Roles role) {
+
+        rolesDAO.deleteRoles(role);
+
     }
 
     @Override
     public Roles getSingleRoles(int roleId) {
-        return null;
+        return rolesDAO.getRoles(roleId);
     }
 }
