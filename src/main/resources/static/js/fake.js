@@ -111,3 +111,30 @@ Mock.mock("/document/download",[{
     }
 
 ])
+Mock.mock("/userManagement/userList",{"data|10":[
+    {
+        "userId|+1": 1,
+        "userName":  "@first @last",
+        "desc": "@sentence(1)",
+        "groupId|+1": 1,
+        "group|1": ["admin","member"]
+    }
+]})
+Mock.mock("/userManagement/userGroup",{"data|2":[
+    {
+        "groupId|+1": 1,
+        "groupName|1":   ["admin","member"],
+        "desc": "@sentence(1)",
+        "roleId|+1": 1,
+        "role|1": ["admin","member"]
+    }
+]})
+Mock.mock("/userManagement/roleList",{"data|2":[
+    {
+        "roleId|+1": 1,
+        "roleName|1": ["admin","member"],
+        "desc": "@sentence(1)",
+        "menus|1": ["alert","case","query","report"]
+    }
+]})
+
