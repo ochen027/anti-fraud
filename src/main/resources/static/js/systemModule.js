@@ -93,16 +93,54 @@ app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, 
 });
 app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("usermanagement/roleList");
-    $http.get("/userManagement/roleList").then(function(res){
+    $http.get("/roles/listAll").then(function(res){
         console.log(res);
-        $scope.rolesList = res.data.data;
+        $scope.rolesList = res.data;
     },function(error){
         consle.log(error.statusCode() + "-->" + error.statusText);
     })
 
-});
-app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $timeout) {
+    $scope.edit = function(role) {
+        role.action=true;
+        $state.go("roleInfo",{role:role});
+    }
+    $scope.addRole = function(){
+        $state.go("roleInfo",{role:{"action":true}});
+    }
 
+    $scope.refresh = function () {
+        $http.get("/roles/listAll").then(function (res) {
+            $scope.rolesList = res.data;
+
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
+
+});
+app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+    $scope.role = {};
+
+    $scope.save = function(){
+        $http.post("roles/createRole",$scope.role).then(function(res){
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+
+            $scope.role = res.data;
+            alert("role saved! ");
+        })
+    }
+    $scope.gotoRoleList = function(){
+        $state.go("roleList");
+    }
+
+    $timeout(function () {
+        $scope.role = $stateParams.role;
+    })
 
 });
 

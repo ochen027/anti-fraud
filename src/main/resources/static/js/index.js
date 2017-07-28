@@ -419,7 +419,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'RoleInfoCtrl',
-        params: {id: null}
+        params: {role: null}
     }];
 
     app.scenario=[

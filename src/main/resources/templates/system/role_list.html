@@ -4,7 +4,7 @@
     <hr/>
 
     <div class="col-md-12 text-left">
-        <button class="btn btn-default" ng-click="addUser()">Add Role</button>
+        <button class="btn btn-default" ng-click="addRole()">Add Role</button>
     </div>
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
@@ -13,21 +13,18 @@
         <tr>
             <th st-sort="roleId">Role Id</th>
             <th st-sort="roleName">Role Name</th>
-            <th st-sort="desc">Desc</th>
-            <th st-sort="menus">Menu</th>
-            <th></th>
-
+            <th st-sort="status">Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td><a ui-sref="roleInfo({{row.roleId}})">{{row.roleId}}</a></td>
+            <td>{{row.id}}</td>
             <td>{{row.roleName}}</td>
-            <td>{{row.desc}}</td>
-            <td>{{row.menus}}</td>
+            <td>{{row.status}}</td>
             <td>
-                <button class="btn btn-default" ng-click="edit(row.userId)">Edit</button>
+                <button class="btn btn-default" ng-click="edit(row)">Edit</button>
                 <button class="btn btn-default" ng-click="delete(row.userId)">Delete</button>
             </td>
         </tr>
