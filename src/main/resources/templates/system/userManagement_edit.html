@@ -1,0 +1,29 @@
+<div class="container" ng-controller="UserManagementInfoCtrl">
+    <h5>User List:</h5>
+    <hr/>
+
+    <div class="text-center">
+        <div class="customer-summary">
+            <form class="">
+                <div class="table-tr">
+                    <label class="label">User Id</label>
+                    <input type="text" class="text-input" placeholder="" disabled="true"></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">User Name</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                </div>
+                <div class="table-tr">
+                    <label class="label">Group</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="invisible" value=""></input>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 text-right">
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+            <button class="btn btn-default" ng-click="save()">Save</button>
+        </div>
+        <div class="sepeartor"></div>
+    </div>
+</div>

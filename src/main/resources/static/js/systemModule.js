@@ -64,5 +64,46 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
 });
 
 app.controller('UserManagementCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("usermanagement/userlist");
+    $http.get("/userManagement/userList").then(function(res){
+        console.log(res);
+        $scope.users = res.data.data;
+    },function(error){
+        consle.log(error.statusCode() + "-->" + error.statusText);
+    })
 
 });
+app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $state, $timeout) {
+
+
+});
+app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("usermanagement/userGroup");
+    $http.get("/userManagement/userGroup").then(function(res){
+        console.log(res);
+        $scope.userGroup = res.data.data;
+    },function(error){
+        consle.log(error.statusCode() + "-->" + error.statusText);
+    })
+
+});
+app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
+
+
+});
+app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("usermanagement/roleList");
+    $http.get("/userManagement/roleList").then(function(res){
+        console.log(res);
+        $scope.rolesList = res.data.data;
+    },function(error){
+        consle.log(error.statusCode() + "-->" + error.statusText);
+    })
+
+});
+app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $timeout) {
+
+
+});
+
+
