@@ -279,5 +279,5 @@ insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUS
 insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','5');
 insert into KEYVALUECONFIG values(3,'sysadmin',sysdate,sysdate,'sysadmin',1,'LONG_TERMS_DAY','365');
 insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'SHORT_TERMS_DAY','10');
-insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'DEFAULT_WORKFLOW','954dc267-c3e2-43d1-abdb-a83ca2881875');
-insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'DEFAULT_RULE','1');
+insert into KEYVALUECONFIG values(5,'sysadmin',sysdate,sysdate,'sysadmin',1,'DEFAULT_WORKFLOW','954dc267-c3e2-43d1-abdb-a83ca2881875');
+insert into KEYVALUECONFIG values(6,'sysadmin',sysdate,sysdate,'sysadmin',1,'DEFAULT_RULE','1');

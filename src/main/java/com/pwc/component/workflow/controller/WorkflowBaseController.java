@@ -51,11 +51,5 @@ public class WorkflowBaseController extends BaseController{
         return new ResponseEntity<Workflow>(result, HttpStatus.OK);
     }
 
-    @PostMapping("setDefaultWorkflowId")
-    public ResponseEntity<Void> setDefaultWorkflowId(@RequestBody Workflow workflow){
-        workflowService.setDefaultWorkflowId(String.valueOf(workflow.getId()), userName);
-        return new ResponseEntity<Void>( HttpStatus.OK);
-    }
-
 
 }

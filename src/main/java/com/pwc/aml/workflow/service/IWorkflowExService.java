@@ -11,4 +11,8 @@ public interface IWorkflowExService {
     void saveOrUpdate(WorkflowEx workflow);
 
     WorkflowEx getWorkflowByFlowId(String flowId);
+
+    void setDefaultWorkflowId(String id, String userName);
+
+    String getDefaultWorkflowId();
 }

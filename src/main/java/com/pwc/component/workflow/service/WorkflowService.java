@@ -26,11 +26,6 @@ public class WorkflowService implements IWorkflowService {
     @Autowired
     private IFlowEventDAO flowEventDAO;
 
-    @Autowired
-    private IKeyValueDao keyValueDAO;
-
-    private static String DEFAULT_WORKFLOW = "DEFAULT_WORKFLOW";
-
     @Override
     public List<Workflow> getAllWorkflow() {
 
@@ -104,13 +99,5 @@ public class WorkflowService implements IWorkflowService {
         return workflow;
     }
 
-    @Override
-    public void setDefaultWorkflowId(String id, String userName) {
-        keyValueDAO.put(DEFAULT_WORKFLOW, id, userName);
-    }
 
-    @Override
-    public String getDefaultWorkflowId() {
-        return keyValueDAO.get(DEFAULT_WORKFLOW);
-    }
 }

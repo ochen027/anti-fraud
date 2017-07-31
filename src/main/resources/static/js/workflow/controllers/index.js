@@ -48,7 +48,7 @@ app.controller('IndexWorkflowCtrl', function ($scope, $http, $location, $cookieS
         refreshPageData();
 
         $http.get("/workflow/getDefaultWorkflowId").then(function(res){
-            $scope.defaultWorkflow=res.data;
+            $scope.defaultWorkflow=res.data.defaultWorkflow;
         });
     });
 

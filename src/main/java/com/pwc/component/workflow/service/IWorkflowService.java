@@ -19,8 +19,6 @@ public interface IWorkflowService {
 
     Workflow getWorkflowByFlowId(String FlowId);
 
-    void setDefaultWorkflowId(String id, String userName);
 
-    String getDefaultWorkflowId();
 
 }

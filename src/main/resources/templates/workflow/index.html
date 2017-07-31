@@ -27,7 +27,7 @@
                     <tbody>
 
                     <tr ng-repeat="row in workflowsDisplay">
-                        <td><input name="defaultWorkflow" type="radio"  ng-model="defaultWorkflow" ng-value="{{row.id}}" ng-click="select(row)"/></td>
+                        <td><input name="defaultWorkflow" type="radio"  ng-model="defaultWorkflow" ng-value="{{row.flowId}}"/></td>
                         <td>{{row.name}}</td>
                         <td>{{row.description}}</td>
                         <td>{{row.creationDate}}</td>
@@ -39,7 +39,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="4" class="text-center">
+                        <td colspan="5" class="text-center">
                             <div st-pagination="" st-items-by-page="10"
                                  st-displayed-pages="7"></div>
                         </td>
