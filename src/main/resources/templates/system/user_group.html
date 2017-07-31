@@ -3,28 +3,8 @@
     <h5>Group List:</h5>
     <hr/>
 
-    <!--<div class="text-center">-->
-        <!--<div class="customer-summary">-->
-            <!--<form class="">-->
-                <!--<div class="table-tr">-->
-                    <!--<label class="label">User Id</label>-->
-                    <!--<input type="text" class="text-input" placeholder=""></input>-->
-                    <!--<label class="label">User Name</label>-->
-                    <!--<input type="text" class="text-input" placeholder=""></input>-->
-                    <!--<label class="label">Group Id</label>-->
-                    <!--<input type="text" class="text-input" placeholder=""></input>-->
-                <!--</div>-->
-
-            <!--</form>-->
-        <!--</div>-->
-        <!--<div class="col-md-12 text-right">-->
-            <!--<button class="btn btn-default" ng-click="reset()">Reset</button>-->
-            <!--<button class="btn btn-default" ng-click="search()">Search</button>-->
-        <!--</div>-->
-        <!--<div class="sepeartor"></div>-->
-    <!--</div>-->
     <div class="col-md-12 text-left">
-        <button class="btn btn-default" ng-click="addUser()">Add Group</button>
+        <button class="btn btn-default" ng-click="addGroup()">Add Group</button>
     </div>
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
@@ -33,24 +13,23 @@
         <tr>
             <th st-sort="groupId">Group Id</th>
             <th st-sort="groupName">Group Name</th>
-            <th st-sort="desc">Desc</th>
-            <th st-sort="role">Role</th>
+            <th st-sort="lastUpdateDate">Last Update Date</th>
+            <th st-sort="lastUpdateBy">Last Update By</th>
             <th></th>
-            <th class="invisible"></th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td><a ui-sref="userGroupInfo({{row.groupId}})">{{row.groupId}}</a></td>
+            <td>{{row.id}}</td>
             <td>{{row.groupName}}</td>
-            <td>{{row.desc}}</td>
-            <td>{{row.role}}</td>
+            <td>{{row.lastUpdateDate| date : 'yyyy-MM-dd'}}</td>
+            <td>{{row.lastUpdatedBy}}</td>
             <td>
-                <button class="btn btn-default" ng-click="edit(row.userId)">Edit</button>
-                <button class="btn btn-default" ng-click="delete(row.userId)">Delete</button>
+                <button class="btn btn-default" ng-click="edit(row)">Edit</button>
+                <button class="btn btn-default" ng-click="delete(row.id)">Delete</button>
             </td>
-            <td class="invisible">{{row.roleId}}</td>
+
         </tr>
         </tbody>
         <tfoot>

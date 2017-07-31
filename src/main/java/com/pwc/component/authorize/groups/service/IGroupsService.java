@@ -2,6 +2,7 @@ package com.pwc.component.authorize.groups.service;
 
 import java.util.List;
 
+import com.pwc.component.authorize.groups.entity.GroupRole;
 import com.pwc.component.authorize.groups.entity.Groups;
 
 public interface IGroupsService {
@@ -15,4 +16,7 @@ public interface IGroupsService {
     void deleteGroups(int groupId, String userName);
 
     Groups getSingleGroups(int groupId);
+
+    Groups saveOrUpdate(Groups g,String userName);
+
 }
