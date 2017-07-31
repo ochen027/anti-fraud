@@ -3,6 +3,8 @@ package com.pwc.aml.workflow.entity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.component.workflow.entity.FlowEvent;
 
+import javax.persistence.Column;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,5 +23,7 @@ public class WorkObjSchema {
     public static final String alertId="alertId";
 
     public static final String roleId="roleId";
+
+
 
 }

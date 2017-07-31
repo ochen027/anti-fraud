@@ -1,7 +1,5 @@
-package com.pwc.aml.workflow.service;
+package com.pwc.aml.workflow.dao;
 
-import com.pwc.aml.workflow.dao.IRolePointDao;
-import com.pwc.aml.workflow.dao.IWorkflowExDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.RolePoint;
 import com.pwc.aml.workflow.entity.WorkflowEx;
@@ -12,14 +10,15 @@ import com.pwc.component.workflow.entity.FlowPoint;
 import com.pwc.component.workflow.entity.Workflow;
 import com.pwc.component.workflow.service.IWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Service
-public class WorkflowExService implements IWorkflowExService {
+@Transactional
+@Repository
+public class WorkflowExDao implements IWorkflowExDao {
 
     @Autowired
     private IWorkflowService workflowService;
@@ -35,26 +34,24 @@ public class WorkflowExService implements IWorkflowExService {
     private IFlowEventDAO flowEventDAO;
 
     @Autowired
-    private IWorkflowExDao workflowExDao;
+    private IFlowPointExDao flowPointExDao;
 
-    @Override
-    public void saveOrUpdate(WorkflowEx workflow) {
-        //save workflow basic information
-        workflowService.saveOrUpdate(workflow.getWorkflow());
-
-        //save role points
-        List<FlowPointEx> flowpointsEx = workflow.getFlowPointsEx();
-        for (FlowPointEx item : flowpointsEx) {
-            RolePoint rolePoint = new RolePoint(item.getRoleId(), item.getFlowPointId());
-            rolePointDao.save(rolePoint);
-        }
-
-    }
 
     @Override
     public WorkflowEx getWorkflowByFlowId(String flowId) {
-       return workflowExDao.getWorkflowByFlowId(flowId);
+        Workflow workflow = workflowService.getWorkflowByFlowId(flowId);
+
+        WorkflowEx ex = new WorkflowEx(workflow);
+        List<FlowPointEx> flowPointExList = new ArrayList<>();
+
+        List<FlowPoint> flowPoints = flowPointDAO.findByFlowId(flowId);
+
+        for (FlowPoint flowPoint : flowPoints) {
+            FlowPointEx flowPointEx=flowPointExDao.getFlowPointExByPointId(flowPoint);
+
+            flowPointExList.add(flowPointEx);
+        }
+        ex.setFlowPointsEx(flowPointExList);
+        return ex;
     }
-
-
 }

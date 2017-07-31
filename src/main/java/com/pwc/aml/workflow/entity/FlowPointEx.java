@@ -38,7 +38,7 @@ public class FlowPointEx extends FlowPoint {
     }
 
     public void setFlowPoint(FlowPoint flowPoint) {
-        this.setFlowId(flowPoint.getFlowId());
+        this.setFlowPointId(flowPoint.getFlowPointId());
         this.setType(flowPoint.getType());
         this.setName(flowPoint.getName());
         this.setPrint(flowPoint.getPrint());

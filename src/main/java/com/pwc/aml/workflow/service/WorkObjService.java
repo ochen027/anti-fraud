@@ -9,6 +9,7 @@ import com.pwc.component.workflow.entity.FlowEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class WorkObjService implements IWorkObjService {
     @Autowired
     private IWorkObjDao workObjDao;
 
+    @Autowired
     private IFlowEventDAO flowEventDAO;
 
     @Override
@@ -54,6 +56,11 @@ public class WorkObjService implements IWorkObjService {
 
         return workObjDao.findWorkObjsByPointId(flowPointId);
 
+    }
+
+    @Override
+    public void truncateTable() throws IOException {
+        workObjDao.truncateTable();
     }
 
 

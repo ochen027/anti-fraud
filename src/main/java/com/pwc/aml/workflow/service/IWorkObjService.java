@@ -6,6 +6,7 @@ import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.entity.FlowEvent;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IWorkObjService {
@@ -17,4 +18,6 @@ public interface IWorkObjService {
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 
     List<WorkObj> getWorkObjsByPointId(String flowPointId) throws Exception;
+
+     void truncateTable() throws IOException;
 }

@@ -58,4 +58,12 @@ public class WorkflowExController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @GetMapping("delete")
+    public ResponseEntity<Void> delete() throws Exception {
+
+        workObjService.truncateTable();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
 }

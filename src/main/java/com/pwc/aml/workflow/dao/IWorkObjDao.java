@@ -1,8 +1,10 @@
 package com.pwc.aml.workflow.dao;
 
 
+import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IWorkObjDao {
@@ -12,4 +14,6 @@ public interface IWorkObjDao {
 
 
     List<WorkObj> findWorkObjsByPointId(String flowPointId) throws Exception;
+
+    void truncateTable() throws IOException;
 }
