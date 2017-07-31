@@ -79,20 +79,129 @@ app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $st
 });
 app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("usermanagement/userGroup");
-    $http.get("/userManagement/userGroup").then(function(res){
+    $http.get("/group/listAllGroups").then(function(res){
         console.log(res);
-        $scope.userGroup = res.data.data;
+        $scope.userGroup = res.data;
     },function(error){
-        consle.log(error.statusCode() + "-->" + error.statusText);
+        console.log(error.statusCode() + "-->" + error.statusText);
     })
+
+    $scope.edit = function(group) {
+        group.action="edit";
+        $state.go("userGroupInfo",{group:group});
+    }
+
+    $scope.delete = function(groupId){
+        $http.put("/group/deleteGroup/"+groupId).then(function(res){
+            console.log(res)
+            $scope.refresh();
+        })
+    }
+
+    $scope.addGroup = function(){
+        $state.go("userGroupInfo",{group:{"action":"add"}});
+    }
+
+    $scope.refresh = function () {
+        $http.get("/group/listAllGroups").then(function (res) {
+            $scope.userGroup = res.data;
+
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
 
 });
 app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
+    $scope.group = {};
+    $scope.group.groupRole = {};
 
+    //checkbox selected
+    $scope.updateSelected = function(action, roleId,groupId){
+          let idx = -1;
+        if($scope.group.groupRole && $scope.group.groupRole.length != 0){
+
+            for(let i =0; i< $scope.group.groupRole.length; i++){
+                if(roleId === $scope.group.groupRole[i].roleId){
+                    idx = i;
+                    break;
+                }
+            }
+        }
+
+        if(action.target.checked && idx == -1){
+            $scope.group.groupRole.push({"roleId":roleId,"groupId":groupId});
+        }
+        if(!action.target.checked && idx !=-1) {
+            $scope.group.groupRole.splice(idx,1);
+        }
+    }
+
+    //save
+    $scope.save = function(){
+        $scope.group.groupRolesList = $scope.group.groupRole;
+        $http.post("/group/saveOrUpdateGroup", $scope.group).then(function(res){
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+
+            $scope.role = res.data;
+            alert("role saved! ");
+        })
+    }
+    //go back
+    $scope.gotoGroupList = function(){
+        $state.go("userGroup");
+    }
+    //refresh
+    $scope.refresh = function () {
+        $http.get("/roles/listAll").then(function(res){
+            $scope.group.roles = res.data;
+            if($scope.group.id){
+                $http.get("/group/listGroupRoles/"+$stateParams.group.id).then(function (resp) {
+                    $scope.group.groupRole = resp.data;
+                    $scope.setRoles($scope.group.roles,$scope.group.groupRole);
+                })
+            }else{
+                $scope.group.groupRole=[];
+            }
+
+        })
+    }
+    $scope.setRoles = function(roles,groupRoles){
+        if(groupRoles != "undefined" && groupRoles != null &&
+            roles != "undefined" && roles != null){
+            for(let role in roles){
+                for(let groupRole in groupRoles){
+                    if(groupRoles[groupRole].roleId === roles[role].id){
+                        roles[role].isChecked = true;
+                    }else{
+                        roles[role].isChecked ?  roles[role].isChecked = true : roles[role].isChecked = false;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
+    $timeout(function () {
+        $scope.group = $stateParams.group;
+
+        $scope.refresh();
+
+
+        //
+
+    })
 
 });
 app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
-    console.log("usermanagement/roleList");
+    console.log("roles/roleList");
     $http.get("/roles/listAll").then(function(res){
         console.log(res);
         $scope.rolesList = res.data;

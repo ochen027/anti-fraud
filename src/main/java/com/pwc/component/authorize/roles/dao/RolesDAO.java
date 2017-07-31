@@ -44,7 +44,7 @@ public class RolesDAO implements IRolesDAO{
 
 	@Override
 	public void updateRoles(Roles ur) {
-		Roles r = this.getRoles(ur.getId());
+		//Roles r = this.getRoles(ur.getId());
 		entityManager.merge(ur);
 		entityManager.flush();
 	}

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.pwc.component.authorize.groups.entity.GroupRole;
+import com.pwc.component.authorize.groups.service.IGroupRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ public class GroupsController{
 	
 	@Autowired
 	private IGroupsService groupsService;
+
+	@Autowired
+	private IGroupRoleService groupRoleService;
 	
 	@GetMapping("listAllGroups")
 	public ResponseEntity<List<Groups>> ListAllGroups(){
@@ -36,7 +41,7 @@ public class GroupsController{
 		return new ResponseEntity<Groups>(groupsService.getSingleGroups(id), HttpStatus.OK);
 	}
 	
-	@GetMapping("deleteGroup/{id}")
+	@PutMapping("deleteGroup/{id}")
 	public ResponseEntity<Void> DeleteGroup(@PathVariable int id, HttpSession session){
 		groupsService.deleteGroups(id, (String)session.getAttribute("userName"));
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -54,5 +59,21 @@ public class GroupsController{
 		groupsService.updateGroups(g, (String)session.getAttribute("userName"));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
+	@PostMapping("saveOrUpdateGroup")
+	public ResponseEntity<Void> saveOrUpdate(@RequestBody Groups g, HttpSession session){
+		//groupsService.createGroups(g, (String)session.getAttribute("userName"));
+		groupsService.saveOrUpdate(g, (String)session.getAttribute("userName"));
+		List<GroupRole> groupRoles = g.getGroupRolesList();
+		groupRoleService.createGroupRole(g,groupRoles,(String)session.getAttribute("userName"));
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	@GetMapping("listGroupRoles/{groupId}")
+	public ResponseEntity<List<GroupRole>> ListAllGroupRoles(@PathVariable int groupId){
+
+		return new ResponseEntity<List<GroupRole>>(groupRoleService.getAllRolesByGroup(groupId), HttpStatus.OK);
+	}
+
+
 }

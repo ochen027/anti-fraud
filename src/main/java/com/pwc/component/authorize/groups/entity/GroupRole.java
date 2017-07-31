@@ -1,10 +1,8 @@
 package com.pwc.component.authorize.groups.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.pwc.common.base.entity.BaseEntity;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="GROUPROLE")
@@ -16,16 +14,20 @@ public class GroupRole extends BaseEntity{
 	private int groupId;
 	@Column(name="ROLE_ID")
 	private int roleId;
-	
+
+
 	public int getGroupId() {
 		return groupId;
 	}
+
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
+
 	public int getRoleId() {
 		return roleId;
 	}
+
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}

@@ -8,9 +8,9 @@ public interface IGroupsDAO {
 	
     List<Groups> listAllGroups();
     
-    void createGroups(Groups ug);
-    
-    void updateGroups(Groups ug);
+    Groups createGroups(Groups ug);
+
+    Groups updateGroups(Groups ug);
     
     Groups getGroups(int groupId);
 }
