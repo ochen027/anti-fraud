@@ -2,7 +2,6 @@ package com.pwc.aml.workflow.service;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.workflow.dao.IWorkObjDao;
-import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.dao.IFlowEventDAO;
@@ -49,4 +48,13 @@ public class WorkObjService implements IWorkObjService {
             return possibleEvents;
         }
     }
+
+    @Override
+    public List<WorkObj> getWorkObjsByPointId(String flowPointId) throws Exception {
+
+        return workObjDao.findWorkObjsByPointId(flowPointId);
+
+    }
+
+
 }

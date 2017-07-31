@@ -9,4 +9,6 @@ import com.pwc.component.workflow.entity.Workflow;
 public interface IWorkflowExService {
 
     void saveOrUpdate(WorkflowEx workflow);
+
+    WorkflowEx getWorkflowByFlowId(String flowId);
 }

@@ -31,4 +31,20 @@ public class FlowPointEx extends FlowPoint {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+    public FlowPoint getFlowPoint() {
+
+        return new FlowPoint(this.getFlowPointId(), this.getType(), this.getName(), this.getPrint(), this.getFlowId(), this.getDescription());
+    }
+
+    public void setFlowPoint(FlowPoint flowPoint) {
+        this.setFlowId(flowPoint.getFlowId());
+        this.setType(flowPoint.getType());
+        this.setName(flowPoint.getName());
+        this.setPrint(flowPoint.getPrint());
+        this.setFlowId(flowPoint.getFlowId());
+        this.setDescription(flowPoint.getDescription());
+    }
+
+
 }

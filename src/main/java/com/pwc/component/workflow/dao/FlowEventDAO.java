@@ -54,7 +54,7 @@ public class FlowEventDAO implements IFlowEventDAO {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<FlowEvent> cq = cb.createQuery(FlowEvent.class);
         Root<FlowEvent> rootEntry = cq.from(FlowEvent.class);
-        Predicate predicate = cb.equal(rootEntry.get("pointId"), pointId);
+        Predicate predicate = cb.equal(rootEntry.get("flowPointId"), pointId);
         CriteriaQuery<FlowEvent> single = cq.select(rootEntry).where(predicate);
         TypedQuery<FlowEvent> query = em.createQuery(single);
         List<FlowEvent> fes = query.getResultList();

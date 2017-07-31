@@ -10,6 +10,21 @@ public class FlowPoint extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+
+	public FlowPoint(){
+        super();
+    }
+
+    public FlowPoint(String flowPointId, String type, String name, String print, String flowId, String description) {
+        super();
+        this.flowPointId = flowPointId;
+        this.type = type;
+        this.name = name;
+        this.print = print;
+        this.flowId = flowId;
+        this.description = description;
+    }
+
     @Column(name="FLOWPOINTID")
 	private String flowPointId;
 

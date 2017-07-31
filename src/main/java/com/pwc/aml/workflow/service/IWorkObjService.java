@@ -16,5 +16,5 @@ public interface IWorkObjService {
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 
-
+    List<WorkObj> getWorkObjsByPointId(String flowPointId) throws Exception;
 }

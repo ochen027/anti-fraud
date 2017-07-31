@@ -9,6 +9,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class WorkObjDao implements IWorkObjDao {
 
@@ -35,7 +37,15 @@ public class WorkObjDao implements IWorkObjDao {
     @Override
     public WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception {
         initial();
-        Cell[] cells= hbaseDao.getData(table,workObjId, "f1");
+        Cell[] cells= hbaseDao.getData(table,workObjId, "f1");// find by workObjId();
+
+        return null;
+    }
+
+    @Override
+    public List<WorkObj> findWorkObjsByPointId(String flowPointId)throws Exception {
+        initial();
+        Cell[] cells= hbaseDao.getData(table,flowPointId, "f1");//find by flowPointId , current pointId
 
         return null;
     }

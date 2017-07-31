@@ -22,6 +22,17 @@ public class WorkflowEx extends Workflow {
                 this.getDescription(), this.getFlowPoints(), this.getFlowEvents());
     }
 
+    public WorkflowEx(Workflow workflow) {
+        super();
+        this.setFlowId(workflow.getFlowId());
+        this.setChartJson(workflow.getChartJson());
+        this.setName(workflow.getName());
+        this.setType(workflow.getType());
+        this.setDescription(workflow.getDescription());
+        this.setFlowPoints(workflow.getFlowPoints());
+        this.setFlowEvents(workflow.getFlowEvents());
+    }
+
     @Transient
     private List<FlowPointEx> flowPointsEx;
 
