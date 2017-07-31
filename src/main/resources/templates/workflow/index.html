@@ -27,7 +27,7 @@
                     <tbody>
 
                     <tr ng-repeat="row in workflowsDisplay">
-                        <td><input name="defaultWorkflow" type="radio"  ng-model="defaultWorkflow" ng-value="{{row.flowId}}"/></td>
+                        <td><input name="defaultWorkflow" type="radio"  ng-model="defaultWorkflow" value="{{row.flowId}}"/></td>
                         <td>{{row.name}}</td>
                         <td>{{row.description}}</td>
                         <td>{{row.creationDate}}</td>
