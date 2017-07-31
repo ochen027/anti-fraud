@@ -275,7 +275,7 @@ insert into ROLEPOINT values(6,'sysadmin',sysdate,sysdate,'sysadmin',1,'30102a75
 
 
 -- insert default bussinessDay
-insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2010-09-01');
-insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','1000');
+insert into KEYVALUECONFIG values(1,'sysadmin',sysdate,sysdate,'sysadmin',1,'BUSINESS_DAY','2017-07-27');
+insert into KEYVALUECONFIG values(2,'sysadmin',sysdate,sysdate,'sysadmin',1,'RULES_DAY','5');
 insert into KEYVALUECONFIG values(3,'sysadmin',sysdate,sysdate,'sysadmin',1,'LONG_TERMS_DAY','365');
 insert into KEYVALUECONFIG values(4,'sysadmin',sysdate,sysdate,'sysadmin',1,'SHORT_TERMS_DAY','10');

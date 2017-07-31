@@ -73,10 +73,10 @@ public class AccountService implements IAccountService{
             accounts.setAccountOpenDate(item[2].equals("")?null:df.parse(item[2]));
             accounts.setAccountOpenBr(item[3]);
             accounts.setAccountStatus(item[4]);
-            accounts.setAccountCloseDate(item[5].equals("")?null:df.parse(item[5]));
+            accounts.setAccountCloseDate((item[5].equals("")||item[5].equals("N/A")) ? null : df.parse(item[5]));
             accounts.setAccountAmount(item[6].equals("") ? 0.00:Double.parseDouble(item[6]));
             accounts.setLastUpdateBr(item[7]);
-            accounts.setLastUpdateDate(item[8].equals("") ? null:df.parse(item[8]));
+            accounts.setAccountType(item[8]);
             accountDAO.save(accounts);
         }
         FileUtils.deleteQuietly(temp);

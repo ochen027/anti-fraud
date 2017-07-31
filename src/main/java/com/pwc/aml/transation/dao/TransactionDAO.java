@@ -38,8 +38,8 @@ public class TransactionDAO implements ITransactionDAO {
         RunShellTool tool = new RunShellTool("172.27.69.76", "hadoop", "Welcome1", 22, "utf-8");
         String result = null;
         try {
-            //result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:trans_id,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_type,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by,f1:counterparty_nm,f1:counterbank,f1:counterbank_location aml:trans /user/hadoop/tmp/sampleData/tsvImport/trans_20170727");
-            result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:trans_id,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/tsvImport/trans_date");
+            result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:trans_id,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_type,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by,f1:counterparty_nm,f1:counterbank,f1:counterbank_location aml:trans /user/hadoop/tmp/sampleData/tsvImport/trans_20170727");
+            //result = tool.execSSH("../../../data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/bin/yarn jar ../../data/Hadoop/cdh/hbase-0.98.6-hadoop2/lib/hbase-server-0.98.6-hadoop2.jar importtsv -Dimporttsv.columns=HBASE_ROW_KEY,f1:trans_id,f1:as_of_date,f1:acct_id,f1:trans_seq,f1:trans_chanel,f1:trans_cdt_cd,f1:currency_cd,f1:trans_base_amt,f1:trans_desc,f1:trans_dt,f1:counterparty_id_1,f1:trans_br,f1:trans_by aml:trans /user/hadoop/tmp/sampleData/tsvImport/trans_date");
         } catch (IOException | JSchException e) {
             e.printStackTrace();
         }
@@ -149,7 +149,7 @@ public class TransactionDAO implements ITransactionDAO {
                     tbean.setCurrencyCd(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "trans_base_amt":
-                    tbean.setTransBaseAmt(new BigDecimal(Bytes.toString(CellUtil.cloneValue(c))));
+                    tbean.setTransBaseAmt(new BigDecimal(Bytes.toString(CellUtil.cloneValue(c)).replace(",", "")));
                     continue;
                 case "trans_br":
                     tbean.setTransBr(Bytes.toString(CellUtil.cloneValue(c)));
@@ -160,8 +160,8 @@ public class TransactionDAO implements ITransactionDAO {
                 case "trans_cdt_cd":
                     tbean.setTransCdtCd(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "trans_chanel":
-                    tbean.setTransChanel(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+                case "trans_type":
+                    tbean.setTransType(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "trans_desc":
                     tbean.setTransDesc(Bytes.toString(CellUtil.cloneValue(c)));
@@ -171,6 +171,15 @@ public class TransactionDAO implements ITransactionDAO {
                     continue;
                 case "trans_seq":
                     tbean.setTransSeq(Integer.parseInt(Bytes.toString(CellUtil.cloneValue(c))));
+                    continue;
+                case "counterbank":
+                    tbean.setCounterBank(Bytes.toString(CellUtil.cloneValue(c)));
+                    continue;
+                case "counterbank_location":
+                    tbean.setCounterBankLocation(Bytes.toString(CellUtil.cloneValue(c)));
+                    continue;
+                case "counterparty_nm":
+                    tbean.setCounterName(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
             }
 

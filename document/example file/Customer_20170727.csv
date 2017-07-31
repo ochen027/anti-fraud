@@ -1,0 +1,11 @@
+cust_id,cust_ct_no,cust_first_nm,cust_middle_nm,cust_last_nm,full_nm,cust_open_br,cust_age,cust_birth_dt,cust_city,cust_country,cust_occupation,cust_phone_1,last_upd_by,last_upd_dt,PEP_Flg,resi_Flg,sus_Flg,cust_type,Representative,Representative ID Number,Representative ID Type
+10001,323455199207010500,San,,Zhang,Zhang San,100034,25,7/1/1992,Shanghai,CN,Student,+86-16547650986,20001,7/1/2017,N,N,N,individual,N/A,N/A,N/A
+10002,310115400251999,"Alibaba International Trading Co.,Ltd",,,"Alibaba International Trading Co.,Ltd",100034,20,7/1/1997,Shanghai,CN,International Trading,+86-021-61111111,20001,7/5/2015,N,N,N,company,Tommy Xu,99999999999999999,Resident Identity Card
+10003,310000000036379,"Bright Dairy & Food Co.,Ltd",,,"Bright Dairy & Food Co.,Ltd",100034,50,7/1/1967,Shanghai,CN,Food Production,+86-021-62222222,20001,7/8/2017,N,N,N,company,Li Si,111111111111111111,Resident Identity Card
+10004,110000450007248,"Jingdong International Trading Co.,Ltd",,,"Jingdong International Trading Co.,Ltd",100034,10,7/1/2007,Shanghai,CN,International Trading,+86-021-63333333,20001,7/11/2017,N,N,N,company,Obama Clinton,C1111111,Passport
+10005,3234511989070102435,Wu,,Wang,Wang Wu,100034,30,7/1/1987,Shanghai,CN,Student,+86-13937543643,20001,7/15/2017,N,N,N,individual,N/A,N/A,N/A
+10006,110000450002642,ABC Company,,,ABC Company,100034,80,7/1/1937,New York,US,International Trading,+1-212-925-2355,20001,7/17/2017,N,N,N,company,AAA,E34567890,passport
+10007,310000198207011234,Lin-kai,,Zhou,Zhou Lin-kai,100034,35,7/1/1982,Shanghai,CN,Merchant,+86-13937343656,20001,7/19/2017,N,N,N,individual,N/A,N/A,N/A
+10008,530000450002642,Pepsi Company,,,Pepsi Company,100034,100,7/1/1917,New York,US,Food Production,+1-212-216-1835,20001,7/21/2017,N,N,N,company,JOHAN WILLEM MAARTEN JANSEN,997766554,passport
+10009,310000197707011234,Xin Qiang,,Wang,Wang Xin Qiang,100034,40,7/1/1977,Shanghai,CN,Student,+86-13937343755,20001,7/23/2017,N,N,N,individual,N/A,N/A,N/A
+10010,310000197207012345,Liang,,Wu,Wu Liang,100034,45,7/1/1972,Shanghai,CN,Lawyer,+86-15863453755,20001,7/25/2017,Y,N,N,individual,N/A,N/A,N/A

@@ -37,6 +37,9 @@ public class Accounts extends BaseEntity{
     @Column(name = "last_upd_br")
     private String lastUpdateBr;
 
+    @Column(name="acct_type")
+    private String accountType;
+
     public String getAccountId() {
         return accountId;
     }
@@ -99,5 +102,13 @@ public class Accounts extends BaseEntity{
 
     public void setLastUpdateBr(String accountOpenBr) {
         this.lastUpdateBr = lastUpdateBr;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

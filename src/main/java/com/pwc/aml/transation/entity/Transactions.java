@@ -15,11 +15,14 @@ public class Transactions {
 	private String transBr;
 	private String transBy;
 	private String transCdtCd;
-	private Integer transChanel;
 	private String transDesc;
 	private String transDt;
 	private Integer transSeq;
 	private String alertType;
+	private String counterBank;
+	private String counterBankLocation;
+	private String counterName;
+	private String transType;
 
 
 	public String getTransId() {
@@ -94,14 +97,6 @@ public class Transactions {
 		this.transCdtCd = transCdtCd;
 	}
 
-	public Integer getTransChanel() {
-		return transChanel;
-	}
-
-	public void setTransChanel(Integer transChanel) {
-		this.transChanel = transChanel;
-	}
-
 	public String getTransDesc() {
 		return transDesc;
 	}
@@ -132,5 +127,37 @@ public class Transactions {
 
 	public void setAlertType(String alertType) {
 		this.alertType = alertType;
+	}
+
+	public String getCounterBank() {
+		return counterBank;
+	}
+
+	public void setCounterBank(String counterBank) {
+		this.counterBank = counterBank;
+	}
+
+	public String getCounterBankLocation() {
+		return counterBankLocation;
+	}
+
+	public void setCounterBankLocation(String counterBankLocation) {
+		this.counterBankLocation = counterBankLocation;
+	}
+
+	public String getCounterName() {
+		return counterName;
+	}
+
+	public void setCounterName(String counterName) {
+		this.counterName = counterName;
+	}
+
+	public String getTransType() {
+		return transType;
+	}
+
+	public void setTransType(String transType) {
+		this.transType = transType;
 	}
 }

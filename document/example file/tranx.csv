@@ -1,0 +1,18 @@
+trans_id,as_of_date,acct_id,trans_seq,trans_cdt_cd,currency_cd,trans_base_amt,Transaction Type,trans_desc,trans_dt,counterparty_id_1,trans_br,trans_by,counterparty_nm,Counterbank,Counterbank's Location,delete
+900000000001,7/27/2017,1234567890,1,c,CNY,"60,000.00",Wire Transfer,living expenses,7/25/2017,123456790,100034,20001,Cherry Wang,China Merchants Bank Shanghai Branch,Shanghai,transaction channel
+900000000002,7/27/2017,1234567890,2,c,CNY,"70,000.00",Wire Transfer,living expenses,7/26/2017,123456790,100034,20001,Cherry Wang,China Merchants Bank Shanghai Branch,Shanghai,
+900000000003,7/27/2017,1234567891,1,c,USD,"10,000.00",Wire Transfer,living expenses,7/27/2017,123456799,100034,20001,Cherry Wang,China Merchants Bank Shanghai Branch,Shanghai,add
+900000000005,7/27/2017,2234567890,1,d,USD,"400,000.00",Wire Transfer,payment for goods,7/27/2017,223456790,100034,20001,The Coca-Cola Company,Citybank New York Branch,New York,counterparty_nm
+900000000006,7/27/2017,3234567890,1,d,CNY,"100,000.00",Wire Transfer,salary payment,7/27/2017,323456790,100034,20001,Cherry Wang,China Merchants Bank Shanghai Branch,Shanghai,Counterbank
+900000000007,7/27/2017,4234567890,1,d,CNY,"1,000.00",Wire Transfer,payment for goods,7/27/2017,423456790,100034,20001,"Coca-Cola Beverages (Shanghai) Co., Ltd",China Merchants Bank Shanghai Branch,Shanghai,Counterbank's Location
+900000000008,7/27/2017,5234567890,1,c,CNY,"1,000,000.00",Wire Transfer,prepaid payment,7/27/2017,523456790,100034,20001,"Wal-Mart (China) Investment Co., Ltd.",China Merchants Bank Shanghai Branch,Shanghai,
+900000000009,7/27/2017,6234567890,1,d,USD,"200,000.00",Wire Transfer,payment for goods,7/23/2017,623456790,100034,20001,"Wal-Mart Stores,Inc.",Arvest Bank Bentonville Branch,Bentonville,
+900000000010,7/27/2017,7234567890,1,d,CNY,"500,000.00",Wire Transfer,freight,6/21/2017,723456790,100034,20001,China COSCO Shipping Corporation Limited,China Merchants Bank Shanghai Branch,Shanghai,
+900000000011,7/27/2017,8234567890,1,c,CNY,"200,000.00",Wire Transfer,living expense,7/27/2017,823456790,100034,20001,Mohammad Hasan,Arvest Bank Bentonville Branch,Bentonville,
+900000000012,7/27/2017,9234567890,2,c,USD,"200,000.00",Wire Transfer,payment for goods,7/27/2017,7788900223,100034,20001,CDD Company,"HSBC, Jakarta Branch","Jakarta, Indonesia",
+900000000013,7/27/2017,7654332211,1,d,CNY,"300,000.00",Wire Transfer,living expense,7/27/2017,1122344556,100034,20001,"Ye, Meiyu",Bank of China Lujiazui Branch,Shanghai,
+900000000014,7/27/2017,7654332211,2,d,CNY,"200,000.00",Wire Transfer,living expense,7/27/2017,1122344556,100034,20001,"Ye, Meiyu",Bank of China Lujiazui Branch,Shanghai,
+900000000015,7/27/2017,9966533441,1,d,CNY,"5,000,000.00",Wire Transfer,Royalty payment,7/26/2017,9933677228,100034,20001,"Coca-Cola Beverages (Shanghai) Co., Ltd",China Merchants Bank Shanghai Branch,Shanghai,
+900000000016,7/27/2017,9966533441,2,d,CNY,"5,000,000.00",Wire Transfer,Royalty payment,7/27/2017,9933677228,100034,20001,"Coca-Cola Beverages (Shanghai) Co., Ltd",China Merchants Bank Shanghai Branch,Shanghai,
+900000000017,7/27/2017,7733445566,1,c,CNY,"450,000.00",Wire Transfer,travel expense,7/27/2017,3344556678,100034,20001,"Wang, Zhi",China Merchants Bank Zhangjiang Branch,Shanghai,
+900000000018,7/27/2017,0011223344,1,d,CNY,"460,000.00",Wire Transfer,living expense,7/27/2017,8766554433,100034,20001,"Wu,Liang",Bank of China Shanghai Branch,Shanghai,
