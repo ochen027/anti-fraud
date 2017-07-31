@@ -80,6 +80,8 @@ public class Customers extends BaseEntity {
     private String businessDate;
     @Transient
     private String alertCreationDate;
+    @Transient
+    private String alertId;
 
     public String getAlertCreationDate() {
         return alertCreationDate;
@@ -255,5 +257,13 @@ public class Customers extends BaseEntity {
 
     public void setAccountIdArray(String accountIdArray) {
         this.accountIdArray = accountIdArray;
+    }
+
+    public String getAlertId() {
+        return alertId;
+    }
+
+    public void setAlertId(String alertId) {
+        this.alertId = alertId;
     }
 }

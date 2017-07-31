@@ -23,7 +23,7 @@ import org.kie.api.runtime.KieSession;
 
 public class ExecuteDrools {
 
-	public static void CallDrools(Customers c, String rules){
+	public static Customers CallDrools(Customers c, String rules){
 		StatefulKnowledgeSession kSession = null;
         try {
             KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
@@ -43,18 +43,8 @@ public class ExecuteDrools {
             if (kSession != null)
                 kSession.dispose();
         }
+        return c;
+
 	}
-
-
-    /**
-	public static void CallDrools(Customers c){
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kContainer = ks.getKieClasspathContainer();
-        KieSession kSession = kContainer.newKieSession("session-case1");
-        kSession.insert(c);
-        kSession.fireAllRules();
-        kSession.dispose();
-    }
-    **/
 
 }

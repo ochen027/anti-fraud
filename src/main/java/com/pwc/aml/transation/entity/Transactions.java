@@ -160,4 +160,5 @@ public class Transactions {
 	public void setTransType(String transType) {
 		this.transType = transType;
 	}
+
 }
