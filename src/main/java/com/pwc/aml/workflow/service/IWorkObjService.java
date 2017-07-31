@@ -20,4 +20,8 @@ public interface IWorkObjService {
     List<WorkObj> getWorkObjsByPointId(String flowPointId) throws Exception;
 
      void truncateTable() throws IOException;
+
+    WorkObj getWorkObjsByWorkObjId(String workObjId);
+
+    FlowEvent getFlowEventByEventId(String eventId);
 }

@@ -28,8 +28,9 @@ public class WorkObjService implements IWorkObjService {
         WorkObj obj = new WorkObj();
         obj.setAlerts(alerts);
         obj.setWorkObjId(UUID.randomUUID().toString());//uuid
-        obj.setWorkflow(workflow);
+        obj.setWorkflowEx(workflow);
         obj.setCurrentPoint(workflow.getStartPoint());
+        obj.setFlowId(workflow.getFlowId());
         workObjDao.save(obj);
         return getPossibleEvents(obj);
     }
@@ -61,6 +62,16 @@ public class WorkObjService implements IWorkObjService {
     @Override
     public void truncateTable() throws IOException {
         workObjDao.truncateTable();
+    }
+
+    @Override
+    public WorkObj getWorkObjsByWorkObjId(String workObjId) {
+        return null;
+    }
+
+    @Override
+    public FlowEvent getFlowEventByEventId(String eventId) {
+        return flowEventDAO.findByFlowEventId(eventId);
     }
 
 

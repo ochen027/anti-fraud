@@ -54,7 +54,7 @@ public class WorkObjDao implements IWorkObjDao {
         ObjectMapper mapper = new ObjectMapper();
         initial(workObj.getWorkObjId());
         saveColumn(WorkObjSchema.workObjectId, workObj.getWorkObjId());
-        saveColumn(WorkObjSchema.flowId, workObj.getWorkflow().getFlowId());
+        saveColumn(WorkObjSchema.flowId, workObj.getFlowId());
         saveColumn(WorkObjSchema.currentPointId, workObj.getCurrentPoint().getFlowPointId());
         saveColumn(WorkObjSchema.historyEvents, mapper.writeValueAsString(workObj.getHistoryEvents()));
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
@@ -102,7 +102,7 @@ public class WorkObjDao implements IWorkObjDao {
                     break;
                 case WorkObjSchema.flowId:
                     String flowId = Bytes.toString(CellUtil.cloneValue(c));
-                    o.setWorkflow(workflowExDao.getWorkflowByFlowId(flowId));
+                    o.setFlowId(flowId);
                     break;
                 case WorkObjSchema.currentPointId:
                     String currentPointId = Bytes.toString(CellUtil.cloneValue(c));

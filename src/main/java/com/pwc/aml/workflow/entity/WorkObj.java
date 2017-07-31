@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.component.workflow.entity.FlowEvent;
 import com.pwc.component.workflow.entity.Workflow;
@@ -13,7 +14,8 @@ public class WorkObj {
     private Alerts alerts;
     private FlowPointEx currentPoint;
     private List<FlowEvent> HistoryEvents;
-    private WorkflowEx workflow;
+    private String flowId;
+    private WorkflowEx workflowEx;
 
     public String getWorkObjId() {
         return workObjId;
@@ -47,11 +49,20 @@ public class WorkObj {
         HistoryEvents = historyEvents;
     }
 
-    public WorkflowEx getWorkflow() {
-        return workflow;
+    public String getFlowId() {
+        return flowId;
     }
 
-    public void setWorkflow(WorkflowEx workflow) {
-        this.workflow = workflow;
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
+    }
+
+    @JsonIgnore
+    public WorkflowEx getWorkflowEx() {
+        return workflowEx;
+    }
+
+    public void setWorkflowEx(WorkflowEx workflowEx) {
+        this.workflowEx = workflowEx;
     }
 }
