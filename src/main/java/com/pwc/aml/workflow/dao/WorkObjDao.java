@@ -47,7 +47,7 @@ public class WorkObjDao implements IWorkObjDao {
 
     private String rowKey;
 
-    private String tableKey = "aml:trans";
+    private String tableKey = "aml:workObj";
 
     @Override
     public void save(WorkObj workObj) throws Exception {

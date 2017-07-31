@@ -33,6 +33,7 @@ public class WorkObj {
         this.alerts = alerts;
     }
 
+    @JsonIgnore
     public FlowPointEx getCurrentPoint() {
         return currentPoint;
     }
