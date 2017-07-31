@@ -388,7 +388,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'UserGroupInfoCtrl',
-        params: {id: null}
+        params: {group: null}
     },{
         name: "roleList",
         url: "/system/roleList",
