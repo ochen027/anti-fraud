@@ -25,5 +25,4 @@ public class WorkObjSchema {
     public static final String roleId="roleId";
 
 
-
 }

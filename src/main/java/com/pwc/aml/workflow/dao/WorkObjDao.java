@@ -1,5 +1,7 @@
 package com.pwc.aml.workflow.dao;
 
+import com.pwc.aml.alert.dao.IAlertDAO;
+import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
@@ -35,6 +37,8 @@ public class WorkObjDao implements IWorkObjDao {
     @Autowired
     private IWorkflowExDao workflowExDao;
 
+    @Autowired
+    private IAlertDAO alertDAO;
 
     @Autowired
     private IFlowPointExDao flowPointExDao;
@@ -54,6 +58,7 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.currentPointId, workObj.getCurrentPoint().getFlowPointId());
         saveColumn(WorkObjSchema.historyEvents, mapper.writeValueAsString(workObj.getHistoryEvents()));
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
+        saveColumn(WorkObjSchema.alertId, workObj.getAlerts().getAlertId());
     }
 
     @Override
@@ -86,7 +91,7 @@ public class WorkObjDao implements IWorkObjDao {
     }
 
 
-    private WorkObj CellToWorkObj(Cell[] cells) throws IOException {
+    private WorkObj CellToWorkObj(Cell[] cells) throws Exception {
         WorkObj o = new WorkObj();
         ObjectMapper mapper = new ObjectMapper();
         for (Cell c : cells) {
@@ -108,6 +113,11 @@ public class WorkObjDao implements IWorkObjDao {
                     String json = Bytes.toString(CellUtil.cloneValue(c));
                     List<FlowEvent> flowEvents = (List<FlowEvent>) mapper.readValue(json, List.class);
                     o.setHistoryEvents(flowEvents);
+                    break;
+                case WorkObjSchema.alertId:
+                    String alertId = Bytes.toString(CellUtil.cloneValue(c));
+                    Alerts alerts = alertDAO.getSingleAlert(alertId);
+                    o.setAlerts(alerts);
                     break;
             }
         }
