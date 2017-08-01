@@ -12,8 +12,10 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import com.pwc.common.util.EncodeString;
+import com.pwc.component.authorize.groups.entity.GroupRole;
 import com.pwc.component.authorize.users.entity.UserGroup;
 import com.pwc.component.authorize.users.entity.Users;
+import com.pwc.component.authorize.users.service.IUserGroupService;
 import com.pwc.component.authorize.users.service.IUsersService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class UsersController extends BaseController{
     
     @Autowired
     private IMenusService menusService;
+
+    @Autowired
+    private IUserGroupService userGroupService;
 
     @PostMapping("loginUser")
     public ResponseEntity<Map<String, Object>> LoginUser(@RequestBody Users users, HttpSession session){
@@ -97,7 +102,7 @@ public class UsersController extends BaseController{
     	return new ResponseEntity<List<Users>>(uList, HttpStatus.OK);
     }
     
-    @GetMapping("deleteUser/{id}")
+    @PutMapping("deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") int id){
     	usersService.deleteUser(id, userName);
     	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -145,6 +150,21 @@ public class UsersController extends BaseController{
     public ResponseEntity<Void> deleteUserGroup(@PathVariable int id){
         usersService.deleteUserFromGroup(id, userName);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("saveOrUpdateUser")
+    public ResponseEntity<Void> saveOrUpdate(@RequestBody Users u, HttpSession session){
+        usersService.saveOrUpdate(u, (String)session.getAttribute("userName"));
+        List<UserGroup> userGroups = u.getUserGroupList();
+        userGroupService.createUserGroup(u,userGroups,(String)session.getAttribute("userName"));
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("listUserGroups/{userId}")
+
+    public ResponseEntity<List<UserGroup>> getUserGroups(@PathVariable  int userId){
+
+        return new ResponseEntity<List<UserGroup>>(userGroupService.getAllGroupsByUser(userId), HttpStatus.OK);
     }
 
 }
