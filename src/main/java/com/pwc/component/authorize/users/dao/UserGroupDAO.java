@@ -38,8 +38,8 @@ public class UserGroupDAO implements IUserGroupDAO {
 
         CriteriaQuery<UserGroup> all = cq.select(rootEntry);
         TypedQuery<UserGroup> query = entityManager.createQuery(all);
-                List<UserGroup> userGroups = query.getResultList();
-                return userGroups;
+        List<UserGroup> userGroups = query.getResultList();
+        return userGroups;
     }
 
     @Override

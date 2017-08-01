@@ -68,7 +68,8 @@ app.controller('UserManagementCtrl', function ($scope, $http, $location, $state,
     $scope.users={};
 
     $scope.search = function(){
-        $http.get("/user/getSingleUser/"+$scope.user.search.userId).then(function(res){
+        let userId = $scope.user.search.userId  ? $scope.user.search.userId : 0;
+        $http.get("/user/searchUsers?userId="+userId +"&userName="+$scope.user.search.userName).then(function(res){
             $scope.users = res.data;
         })
     }
@@ -107,7 +108,7 @@ app.controller('UserManagementCtrl', function ($scope, $http, $location, $state,
     });
 
 });
-app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams,ngDialog) {
     $scope.user = {};
     $scope.user.groups = {};
     $scope.user.userGroups = {};
@@ -128,7 +129,34 @@ app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $st
         })
     }
     $scope.changePwd = function(user){
+        $scope.user = user;
+        ngDialog.open({
+            template: 'changePwd',
+            width: '40%',
+            scope:$scope,
+            controller: function ($scope){
+                $scope.savePwd = function(){
+                    if($scope.newPwd != $scope.confirmPwd){
+                        alert("Entered passwords differ! ");
+                        return;
+                    }
+                    $scope.user.userPwd = $scope.newPwd;
+                    $http.put("/user/updateUser",$scope.user).then(function(res){
+                        if(res.status != 200){
+                            alert("Password Changed Failed!");
+                            return;
+                        }
+                        alert("Password Changed! ");
+                        $scope.closeThisDialog();
+                    })
 
+                }
+                $scope.cancel = function(){
+                    $scope.closeThisDialog();
+                }
+
+            }
+        });
     }
 
     $scope.setNewSelectedUserGroup = function(groups){

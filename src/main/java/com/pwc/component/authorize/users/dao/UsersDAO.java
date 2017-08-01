@@ -7,6 +7,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.pwc.component.authorize.users.entity.UserGroup;
 import com.pwc.component.authorize.users.entity.Users;
@@ -134,8 +140,30 @@ public class UsersDAO implements IUsersDAO{
 
     @Override
     public UserGroup getUserGroupRelationship(int id) {
+
         return entityManager.find(UserGroup.class, id);
     }
 
+    @Override
+    public List<Users> searchUsersByConditions(int userId, String userName) {
 
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Users> cq = cb.createQuery(Users.class);
+        Root<Users> rootEntry = cq.from(Users.class);
+
+        List<Predicate> predicatesList = new ArrayList<Predicate>();
+        predicatesList.add(cb.equal(rootEntry.get("status"),true));
+        if(userId != 0){
+            predicatesList.add(cb.and(cb.equal(rootEntry.get("id"),userId)));
+        }
+        if(userName != null && !userName.equalsIgnoreCase("undefined") && !userName.equals("")){
+            predicatesList.add(cb.and(cb.equal(rootEntry.get("userName"),userName)));
+        }
+        cq.where(predicatesList.toArray(new Predicate[predicatesList.size()]));
+
+        CriteriaQuery<Users> all = cq.select(rootEntry);
+        TypedQuery<Users> query = entityManager.createQuery(all);
+        List<Users> users = query.getResultList();
+        return users;
+    }
 }

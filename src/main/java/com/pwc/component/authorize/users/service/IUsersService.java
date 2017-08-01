@@ -33,5 +33,8 @@ public interface IUsersService {
 	void deleteUserFromGroup(int id, String userName);
 
 	UserGroup getUserGroupRelationship(int id);
+
 	Users saveOrUpdate(Users u,String userName);
+
+	List<Users> searchUsersByConditions(int userId, String userName);
 }

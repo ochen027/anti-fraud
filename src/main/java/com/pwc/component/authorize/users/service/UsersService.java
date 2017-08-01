@@ -109,5 +109,10 @@ public class UsersService implements IUsersService {
 		return result;
 	}
 
+	@Override
+	public List<Users> searchUsersByConditions(int userId, String userName) {
+		return usersDAO.searchUsersByConditions(userId,userName);
+	}
+
 
 }

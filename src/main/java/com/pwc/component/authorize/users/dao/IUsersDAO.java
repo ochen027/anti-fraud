@@ -22,6 +22,8 @@ public interface IUsersDAO {
      void updateUser(Users users, String userName);
 
      List<Users> listAllUsers();
+
+     List<Users> searchUsersByConditions(int userId, String userName);
     
      Users findUserByUserId(int userId);
 

@@ -1,5 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table']);
+    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table','ngDialog']);
 
 app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
