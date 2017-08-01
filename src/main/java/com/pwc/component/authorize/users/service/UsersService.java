@@ -1,5 +1,5 @@
 package com.pwc.component.authorize.users.service;
-
+import java.util.Date;
 import java.util.List;
 
 import com.pwc.component.authorize.users.entity.UserGroup;
@@ -19,62 +19,94 @@ public class UsersService implements IUsersService {
 
     @Override
     public Users checkUserName(Users users) {
+
         return usersDAO.checkUserName(users);
     }
 
     @Override
     public List<Groups> fetchUserGroup(int userId) {
+
         return usersDAO.fetchUserGroups(userId);
     }
 
     @Override
     public List<Roles> fetchGroupRole(int groupId) {
+
         return usersDAO.fetchGroupRoles(groupId);
     }
 
 	@Override
 	public List<Users> listAllUsers() {
+
 		return usersDAO.listAllUsers();
 	}
 
 	@Override
 	public void createUser(Users u, String userName) {
-		usersDAO.addNewUser(u, userName);
+
+    	usersDAO.addNewUser(u, userName);
 	}
 
 	@Override
 	public void updateUser(Users u, String userName) {
+
 		usersDAO.updateUser(u, userName);
 	}
 
 	@Override
 	public void deleteUser(int userId, String userName) {
-		usersDAO.deleteUser(userId, userName);
+
+    	usersDAO.deleteUser(userId, userName);
 	}
 
 	@Override
 	public Users findSingleUser(int userId) {
-		return usersDAO.findUserByUserId(userId);
+
+    	return usersDAO.findUserByUserId(userId);
 	}
 
 	@Override
 	public void addUserIntoGroup(UserGroup ug, String userName) {
-		usersDAO.addUserIntoGroup(ug,userName);
+
+    	usersDAO.addUserIntoGroup(ug,userName);
 	}
 
 	@Override
 	public void updateUserGroup(UserGroup ug, String userName) {
-		usersDAO.updateUserGroup(ug,userName);
+
+    	usersDAO.updateUserGroup(ug,userName);
 	}
 
 	@Override
 	public void deleteUserFromGroup(int id, String userName) {
+
 		usersDAO.deleteUserFromGroup(id,userName);
 	}
 
 	@Override
 	public UserGroup getUserGroupRelationship(int id) {
-		return usersDAO.getUserGroupRelationship(id);
+
+    	return usersDAO.getUserGroupRelationship(id);
+	}
+	@Override
+	public Users saveOrUpdate(Users u,String userName) {
+		Users result = null;
+		Users user = usersDAO.findUserByUserId(u.getId());
+		if(user == null){
+			u.setLastUpdatedBy(userName);
+			u.setLastUpdateDate(new Date());
+			u.setCreatedBy(userName);
+			u.setCreationDate(new Date());
+			u.setStatus(true);
+			usersDAO.addNewUser(u,userName);
+			result = u;
+		}else{
+			u.setLastUpdateDate(new Date());
+			u.setLastUpdatedBy(userName);
+			usersDAO.updateUser(u,userName);
+			result = u;
+		}
+		return result;
 	}
 
 

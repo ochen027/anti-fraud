@@ -66,9 +66,25 @@ public class WorkObjDao implements IWorkObjDao {
     @Override
     public WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception {
         initial();
-        Cell[] cells = hbaseDao.getData(table, workObjId, "f1");// find by workObjId();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
 
-        return null;
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                Bytes.toBytes(WorkObjSchema.workObjectId),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(workObjId)));
+        scan.setFilter(filterList);
+        ResultScanner rsscan = table.getScanner(scan);
+        List<WorkObj> tList = new ArrayList<WorkObj>();
+        for (Result r : rsscan) {
+            WorkObj t = this.CellToWorkObj(r.rawCells());
+            tList.add(t);
+        }
+        rsscan.close();
+
+        if (tList.size() == 1)
+            return tList.get(0);
+        else
+            return null;
     }
 
     @Override
@@ -81,7 +97,7 @@ public class WorkObjDao implements IWorkObjDao {
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
                 Bytes.toBytes(WorkObjSchema.currentPointId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
-
+        scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<WorkObj> tList = new ArrayList<WorkObj>();
         for (Result r : rsscan) {

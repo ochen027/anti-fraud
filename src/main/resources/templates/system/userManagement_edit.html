@@ -2,28 +2,41 @@
     <h5>User List:</h5>
     <hr/>
 
-    <div class="text-center">
-        <div class="customer-summary">
-            <form class="">
-                <div class="table-tr">
-                    <label class="label">User Id</label>
-                    <input type="text" class="text-input" placeholder="" disabled="true"></input>
-                </div>
-                <div class="table-tr">
-                    <label class="label">User Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                </div>
-                <div class="table-tr">
-                    <label class="label">Group</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <input type="text" class="invisible" value=""></input>
-                </div>
-            </form>
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" type="button" ng-click="changePwd(user)">Change Password</button>
+        <button class="btn btn-default" type="button" ng-click="save()">Save</button>
+        <button class="btn btn-default" type="button" ng-click="gotoUserList()">Back</button>
+    </div>
+
+    <div class="col-md-12">
+
+
+        <div class="form-group">
+            <label for="userId">User Id</label>
+            <input type="text" class="form-control" id="userId" ng-model="user.id" placeholder="" ng-disabled="{'edit':true,'add':true}[user.action]"/>
         </div>
-        <div class="col-md-12 text-right">
-            <button class="btn btn-default" ng-click="reset()">Reset</button>
-            <button class="btn btn-default" ng-click="save()">Save</button>
+
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" class="form-control" id="userName" ng-model="user.userName" placeholder="user name"/>
         </div>
-        <div class="sepeartor"></div>
+
+        <!--ng-repeat-->
+        <div class="form-group">
+            <label >Roles</label>
+            <div >
+                <label class="form-check-label" ng-repeat="group in user.groups">
+                    <span>
+
+                    </span>
+
+                    <input class="form-check-input" type="checkbox" ng-checked="group.isChecked"  ng-model="group.isChecked" ng-click="updateSelected($event,group.id,user.id)"></input>
+                    {{group.groupName}}
+                </label>
+
+            </div>
+
+        </div>
+
     </div>
 </div>
