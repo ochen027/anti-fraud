@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,16 +42,24 @@ public class WorkObjService implements IWorkObjService {
     }
 
     @Override
-    public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) {
+    public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) throws Exception {
 
         //could do this action
         if(workObj.getCurrentPoint().getFlowPointId()==flowEvent.getFlowPointId())
         {
             FlowPointEx flowPointEx=flowPointExDao.getFlowPointEx(flowEvent.getEndpoint());
             workObj.setCurrentPoint(flowPointEx);
+            List<FlowEvent> oldEvents= workObj.getHistoryEvents();
+            if(oldEvents==null)
+            {
+                oldEvents=new ArrayList<>();
+            }
+            oldEvents.add(flowEvent);
+
+            workObjDao.save(workObj);
         }
 
-        return null;
+        return getPossibleEvents(workObj);
     }
 
     @Override

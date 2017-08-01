@@ -13,7 +13,7 @@ public interface IWorkObjService {
 
     List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) throws Exception;
 
-    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent);
+    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) throws Exception;
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 
