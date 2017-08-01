@@ -76,8 +76,8 @@ public class WorkObjService implements IWorkObjService {
     }
 
     @Override
-    public WorkObj getWorkObjsByWorkObjId(String workObjId) {
-        return null;
+    public WorkObj getWorkObjsByWorkObjId(String workObjId) throws Exception {
+        return workObjDao.findWorkObjByWorkObjId(workObjId);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,7 +28,7 @@ private IAssignService assignService;
 
 
     @PostMapping("assignToMe")
-    public ResponseEntity<Void> assignToMe(@RequestBody String[] workObjIds,HttpSession session) throws Exception {
+    public ResponseEntity<Void> assignToMe(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
 
         Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users)userInfo.get("User");

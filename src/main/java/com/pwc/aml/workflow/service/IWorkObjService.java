@@ -21,7 +21,7 @@ public interface IWorkObjService {
 
      void truncateTable() throws IOException;
 
-    WorkObj getWorkObjsByWorkObjId(String workObjId);
+    WorkObj getWorkObjsByWorkObjId(String workObjId) throws Exception;
 
     FlowEvent getFlowEventByEventId(String eventId);
 }

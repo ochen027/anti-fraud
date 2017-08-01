@@ -18,7 +18,7 @@ public class AssignService implements IAssignService {
     private IAssignDao assignDao;
 
     @Override
-    public void AssignTo(Users users, String[] ObjectIds,Users currentUser) throws Exception {
+    public void AssignTo(Users users, List<String> ObjectIds,Users currentUser) throws Exception {
 
         for(String id : ObjectIds){
             Assign assign= new Assign();
