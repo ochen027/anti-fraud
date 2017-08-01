@@ -2,6 +2,7 @@ package com.pwc.aml.workflow.controller;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.alert.service.IAlertService;
+import com.pwc.aml.assign.entity.Assign;
 import com.pwc.aml.assign.service.IAssignService;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
@@ -38,8 +39,6 @@ public class WorkflowExController extends BaseController{
     @Autowired
     private IAssignService assignService;
 
-
-
     @PostMapping("saveOrUpdateWithRoles")
     public ResponseEntity<Void> saveWorkflow(@RequestBody WorkflowEx workflow) {
         workflowExService.saveOrUpdate(workflow);
@@ -47,16 +46,7 @@ public class WorkflowExController extends BaseController{
     }
 
 
-    @PostMapping("doEvent")
-    public ResponseEntity<List<FlowEvent>> saveWorkflow(@RequestParam String workObjId,@RequestParam String eventId) throws Exception {
 
-        WorkObj workObj=workObjService.getWorkObjsByWorkObjId(workObjId);
-
-        FlowEvent event=workObjService.getFlowEventByEventId(eventId);
-
-        List<FlowEvent> events=workObjService.doEvent(workObj,event);
-        return new ResponseEntity<List<FlowEvent>>(events,HttpStatus.OK);
-    }
 
 //    @PostMapping("getPossibleEvents")
 //    public ResponseEntity<List<FlowEvent>> getPossibleEvents(String workObjId) {
@@ -64,6 +54,14 @@ public class WorkflowExController extends BaseController{
 //        List<FlowEvent> events=workObjService.getPossibleEvents(workObjs.get(0),events.get(0));
 //        return new ResponseEntity<List<FlowEvent>>(events,HttpStatus.OK);
 //    }
+
+    @GetMapping("getDefaultWorkflow")
+    public ResponseEntity<WorkflowEx> getDefaultWorkflow() throws Exception {
+
+        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
+        return new ResponseEntity<WorkflowEx>(workflowEx,HttpStatus.OK);
+    }
+
 
 
     @GetMapping("getAvailableAlerts")
@@ -94,12 +92,20 @@ public class WorkflowExController extends BaseController{
         Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users)userInfo.get("User");
         assignService.AssignTo(user, workObjIds,user);
-
-
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @GetMapping("getMyAlerts")
+    public ResponseEntity<List<WorkObj>> getMyAlerts(HttpSession session) throws Exception {
 
+        Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users)userInfo.get("User");
+        List<Assign> assigns= assignService.getAssignByUser(user);
+
+        List<WorkObj> workObjs=workObjService.getWorkObjsByAssigns(assigns);
+
+        return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+    }
 
 
     /***

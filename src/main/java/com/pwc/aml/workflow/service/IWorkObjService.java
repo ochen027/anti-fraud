@@ -2,6 +2,7 @@ package com.pwc.aml.workflow.service;
 
 
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.assign.entity.Assign;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.entity.FlowEvent;
@@ -24,4 +25,6 @@ public interface IWorkObjService {
     WorkObj getWorkObjsByWorkObjId(String workObjId) throws Exception;
 
     FlowEvent getFlowEventByEventId(String eventId);
+
+    List<WorkObj> getWorkObjsByAssigns(List<Assign> assigns) throws Exception;
 }
