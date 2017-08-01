@@ -391,7 +391,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         },
         controller: 'UserManagementInfoCtrl',
-        params: {id: null}
+        params: {user: null}
     },
     {
         name: "userGroup",

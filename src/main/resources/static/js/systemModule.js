@@ -65,16 +65,116 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
 
 app.controller('UserManagementCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("usermanagement/userlist");
-    $http.get("/userManagement/userList").then(function(res){
-        console.log(res);
-        $scope.users = res.data.data;
-    },function(error){
-        consle.log(error.statusCode() + "-->" + error.statusText);
-    })
+    $scope.users={};
+
+    $scope.search = function(){
+        $http.get("/user/getSingleUser/"+$scope.user.search.userId).then(function(res){
+            $scope.users = res.data;
+        })
+    }
+    $scope.reset = function(){
+        $scope.user.search.userId = "";
+        $scope.user.search.groupId = "";
+        $scope.user.search.userName = "";
+    }
+
+    $scope.edit = function(user){
+        user.action="edit";
+        $state.go("userManagementInfo",{user:user});
+    }
+    $scope.delete = function(userId){
+        $http.put("/user/deleteUser/"+userId).then(function(res){
+            console.log(res)
+            $scope.refresh();
+
+        })
+    }
+    $scope.addUser = function(){
+        $state.go("userManagementInfo",{user:{"action":"add"}});
+    }
+
+    $scope.refresh = function () {
+        $http.get("/user/listAllUsers").then(function(res){
+            console.log(res);
+            $scope.users = res.data;
+        },function(error){
+            consle.log(error.statusCode() + "-->" + error.statusText);
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
 
 });
-app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $state, $timeout) {
+app.controller('UserManagementInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+    $scope.user = {};
+    $scope.user.groups = {};
+    $scope.user.userGroups = {};
 
+    $scope.gotoUserList = function(){
+        $state.go("userManagement");
+    }
+    $scope.save = function(){
+        $scope.user.userGroupList = this.setNewSelectedUserGroup($scope.user.groups);
+        $http.post("/user/saveOrUpdateUser",$scope.user).then(function (res) {
+            if(res.status != 200){
+                console.log(res);
+                alert("Save Failed!");
+                return;
+            }
+            //$scope.user = res.data;
+            alert("user saved");
+        })
+    }
+    $scope.changePwd = function(user){
+
+    }
+
+    $scope.setNewSelectedUserGroup = function(groups){
+        let ugArr = [];
+        groups.forEach(function (ele,index) {
+            if(ele.isChecked){
+                ugArr.push({"groupId":ele.id});
+            }
+        })
+        return ugArr;
+    }
+
+    $scope.refresh = function(){
+        $http.get("/group/listAllGroups").then(function (res) {
+            $scope.user.groups = res.data;
+            if($scope.user.id){
+                $http.get("/user/listUserGroups/"+$stateParams.user.id).then(function (resp) {
+                    $scope.user.userGroups = resp.data;
+                    $scope.setCheckedGroups( $scope.user.groups,$scope.user.userGroups);
+                })
+            }
+        })
+    }
+    $scope.setCheckedGroups = function(groups,userGroups){
+        if(userGroups != "undefined" && userGroups != null &&
+            groups != "undefined" && groups != null){
+
+            let ugIdArray =[];
+            for(let ug in userGroups){
+                ugIdArray.push(userGroups[ug].groupId);
+            }
+            for(let g in groups){
+                if(ugIdArray.indexOf(groups[g].id) != -1){
+                    groups[g].isChecked = true;
+                }else{
+                    groups[g].isChecked = false;
+                }
+            }
+        }
+    }
+    $timeout(function () {
+        $scope.user = $stateParams.user;
+
+        $scope.refresh();
+
+    })
 
 });
 app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $timeout) {
@@ -112,49 +212,37 @@ app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $tim
     $timeout(function () {
         $scope.refresh();
     });
-
 });
+
 app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
     $scope.group = {};
+    $scope.group.roles = {};
     $scope.group.groupRole = {};
-
-    //checkbox selected
-    $scope.updateSelected = function(action, roleId,groupId){
-          let idx = -1;
-        if($scope.group.groupRole && $scope.group.groupRole.length != 0){
-
-            for(let i =0; i< $scope.group.groupRole.length; i++){
-                if(roleId === $scope.group.groupRole[i].roleId){
-                    idx = i;
-                    break;
-                }
-            }
-        }
-
-        if(action.target.checked && idx == -1){
-            $scope.group.groupRole.push({"roleId":roleId,"groupId":groupId});
-        }
-        if(!action.target.checked && idx !=-1) {
-            $scope.group.groupRole.splice(idx,1);
-        }
-    }
 
     //save
     $scope.save = function(){
-        $scope.group.groupRolesList = $scope.group.groupRole;
+        $scope.group.groupRolesList = $scope.setNewSelectedGroupRole($scope.group.roles);
         $http.post("/group/saveOrUpdateGroup", $scope.group).then(function(res){
             if (res.status !== 200) {
                 console.log(res);
                 return;
             }
-
-            $scope.role = res.data;
-            alert("role saved! ");
+           // $scope.group = res.data;
+            alert("group saved! ");
         })
     }
     //go back
     $scope.gotoGroupList = function(){
         $state.go("userGroup");
+    }
+    $scope.setNewSelectedGroupRole = function(roles){
+        let grArr = [];
+        roles.forEach(function (ele,index) {
+            if(ele.isChecked){
+                grArr.push({"roleId":ele.id});
+            }
+        })
+        return grArr;
     }
     //refresh
     $scope.refresh = function () {
@@ -174,14 +262,15 @@ app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, 
     $scope.setRoles = function(roles,groupRoles){
         if(groupRoles != "undefined" && groupRoles != null &&
             roles != "undefined" && roles != null){
-            for(let role in roles){
-                for(let groupRole in groupRoles){
-                    if(groupRoles[groupRole].roleId === roles[role].id){
-                        roles[role].isChecked = true;
-                    }else{
-                        roles[role].isChecked ?  roles[role].isChecked = true : roles[role].isChecked = false;
-                    }
-
+            let grIdArray = [];
+            for(let gr in groupRoles){
+                grIdArray.push(groupRoles[gr].roleId)
+            }
+            for(let r in roles){
+                if(grIdArray.indexOf(roles[r].id) != -1){
+                    roles[r].isChecked = true;
+                }else{
+                    roles[r].isChecked = false;
                 }
             }
 
@@ -194,12 +283,9 @@ app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, 
 
         $scope.refresh();
 
-
-        //
-
     })
-
 });
+
 app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("roles/roleList");
     $http.get("/roles/listAll").then(function(res){

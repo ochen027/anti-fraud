@@ -32,4 +32,5 @@ public interface IUsersDAO {
      void deleteUserFromGroup(int id, String userName);
 
      UserGroup getUserGroupRelationship(int id);
+
 }

@@ -8,11 +8,11 @@
             <form class="">
                 <div class="table-tr">
                     <label class="label">User Id</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="user.search.userId"></input>
                     <label class="label">User Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="user.search.userName"></input>
                     <label class="label">Group Id</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="user.search.groupId"></input>
                 </div>
 
             </form>
@@ -34,22 +34,18 @@
             <th st-sort="userId">User Id</th>
             <th st-sort="userName">User Name</th>
             <th st-sort="desc">Desc</th>
-            <th st-sort="group">Group</th>
             <th></th>
-            <th class="invisible"></th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td><a ui-sref="userManagementInfo({{row.userId}})">{{row.userId}}</a></td>
+            <td>{{row.id}}</td>
             <td>{{row.userName}}</td>
             <td>{{row.desc}}</td>
-            <td>{{row.group}}</td>
-            <td><button class="btn btn-default" ng-click="edit(row.userId)">Edit</button>
-                <button class="btn btn-default" ng-click="delete(row.userId)">Delete</button>
+            <td><button class="btn btn-default" ng-click="edit(row)">Edit</button>
+                <button class="btn btn-default" ng-click="delete(row.id)">Delete</button>
             </td>
-            <td class="invisible">{{row.groupId}}</td>
         </tr>
         </tbody>
         <tfoot>
