@@ -42,9 +42,12 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state)
     console.log("available alert ctrl");
     $scope.checkAll=false; //default false;
 
-    $http.get("/alert/availableAlert")
+    $scope.data = [];
+    $scope.dataDisplay=[];
+
+    $http.get("/workflow/getAvailableAlerts")
         .then(function(response){
-            $scope.data = response.data.result;
+            $scope.data = response.data;
             $scope.total = response.data.total;
         });
 
@@ -73,6 +76,19 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state)
     $scope.assignTo = function(){
         console.log("assign to somebody");
     }
+
+    //Calculate Total Amount
+    $scope.getTotal = function() {
+        var totalAmt = 0.0;
+        for ( var key in $scope.data) {
+            if (parseFloat($scope.data[key].alerts.totalAmt)) {
+                totalAmt += parseFloat($scope.data[key].alerts.totalAmt);
+            }
+        }
+        return totalAmt;
+    }
+
+
 });
 
 app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state) {

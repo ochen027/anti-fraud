@@ -3,6 +3,8 @@ package com.pwc.aml.alert.controller;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.alert.service.IAlertService;
 import com.pwc.aml.transation.service.ITransactionService;
+import com.pwc.aml.workflow.entity.WorkObj;
+import com.pwc.aml.workflow.service.IWorkObjService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class AlertsController extends BaseController {
 
     @Autowired
     private IAlertService alertService;
+
+    @Autowired
+    private IWorkObjService workObjService;
 
     @GetMapping("getAllAlerts")
     public ResponseEntity<List<Alerts>> getAllAlerts() throws  Exception{

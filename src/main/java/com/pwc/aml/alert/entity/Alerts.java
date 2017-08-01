@@ -22,6 +22,8 @@ public class Alerts {
 	private String totalAmt;
 	private String createdDate;
 	private String alertDesc;
+	private String customerName;
+	private String days;
 
 	public String getAlertId() {
 		return alertId;
@@ -117,5 +119,21 @@ public class Alerts {
 
 	public void setAlertDesc(String alertDesc) {
 		this.alertDesc = alertDesc;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getDays() {
+		return days;
+	}
+
+	public void setDays(String days) {
+		this.days = days;
 	}
 }

@@ -85,6 +85,7 @@ public class TransactionDAO implements ITransactionDAO {
                     Bytes.toBytes("trans_id"),
                     CompareFilter.CompareOp.EQUAL,Bytes.toBytes(id)));
         }
+        scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();
         for (Result r : rsscan) {
@@ -94,7 +95,6 @@ public class TransactionDAO implements ITransactionDAO {
         rsscan.close();
         return tList;
     }
-
 
     @Override
     public void TruncateTrans() throws Exception {
@@ -118,6 +118,7 @@ public class TransactionDAO implements ITransactionDAO {
                     Bytes.toBytes("acct_id"),
                     CompareFilter.CompareOp.EQUAL,Bytes.toBytes(accountId)));
         }
+        scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();
         for (Result r : rsscan) {

@@ -6,6 +6,7 @@ import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
+import com.pwc.common.util.FormatUtils;
 import com.pwc.component.workflow.entity.FlowEvent;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -22,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +119,8 @@ public class WorkObjDao implements IWorkObjDao {
                 case WorkObjSchema.alertId:
                     String alertId = Bytes.toString(CellUtil.cloneValue(c));
                     Alerts alerts = alertDAO.getSingleAlert(alertId);
+                    Long days = ChronoUnit.DAYS.between(LocalDate.now(), FormatUtils.StringToLocalDateNoDash(alerts.getCreatedDate()));
+                    alerts.setDays(String.valueOf(days));
                     o.setAlerts(alerts);
                     break;
             }
