@@ -60,6 +60,17 @@ public class WorkflowExController extends BaseController{
 //    }
 
 
+    @GetMapping("getAvailableAlerts")
+    public ResponseEntity<List<WorkObj>> getAvailableAlerts() throws Exception {
+
+        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
+
+        List<WorkObj> workObjs= workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
+
+        return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+    }
+
+
     /***
      * "f7f837a6-bc31-c39d-6cdb-bcb6ceaa7d19"
      * @param flowPointId

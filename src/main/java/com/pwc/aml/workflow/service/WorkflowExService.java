@@ -51,8 +51,9 @@ public class WorkflowExService implements IWorkflowExService {
 
     @Override
     public WorkflowEx getWorkflowByFlowId(String flowId) {
-       return workflowExDao.getWorkflowByFlowId(flowId);
+        return workflowExDao.getWorkflowByFlowId(flowId);
     }
+
     @Override
     public void setDefaultWorkflowId(String id, String userName) {
         keyValueDAO.put(DEFAULT_WORKFLOW, id, userName);
@@ -62,5 +63,13 @@ public class WorkflowExService implements IWorkflowExService {
     public String getDefaultWorkflowId() {
         return keyValueDAO.get(DEFAULT_WORKFLOW);
     }
+
+    @Override
+    public WorkflowEx getWorkflowByDefault() {
+        String defaultId = getDefaultWorkflowId();
+        return  getWorkflowByFlowId(defaultId);
+    }
+
+
 
 }

@@ -15,4 +15,6 @@ public interface IWorkflowExService {
     void setDefaultWorkflowId(String id, String userName);
 
     String getDefaultWorkflowId();
+
+    WorkflowEx getWorkflowByDefault();
 }

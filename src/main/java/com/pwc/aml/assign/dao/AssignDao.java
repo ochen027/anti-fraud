@@ -1,15 +1,10 @@
 package com.pwc.aml.assign.dao;
 
 
-import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.assign.entity.Assign;
 import com.pwc.aml.assign.entity.AssignSchema;
 import com.pwc.aml.common.hbase.IHbaseDao;
-import com.pwc.aml.workflow.entity.FlowPointEx;
-import com.pwc.aml.workflow.entity.WorkObj;
-import com.pwc.aml.workflow.entity.WorkObjSchema;
 import com.pwc.common.util.FormatUtils;
-import com.pwc.component.workflow.entity.FlowEvent;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
