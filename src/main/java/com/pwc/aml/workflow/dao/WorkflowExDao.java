@@ -1,11 +1,9 @@
 package com.pwc.aml.workflow.dao;
 
 import com.pwc.aml.workflow.entity.FlowPointEx;
-import com.pwc.aml.workflow.entity.RolePoint;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.dao.IFlowEventDAO;
 import com.pwc.component.workflow.dao.IFlowPointDAO;
-import com.pwc.component.workflow.entity.FlowEvent;
 import com.pwc.component.workflow.entity.FlowPoint;
 import com.pwc.component.workflow.entity.Workflow;
 import com.pwc.component.workflow.service.IWorkflowService;
@@ -47,7 +45,7 @@ public class WorkflowExDao implements IWorkflowExDao {
         List<FlowPoint> flowPoints = flowPointDAO.findByFlowId(flowId);
 
         for (FlowPoint flowPoint : flowPoints) {
-            FlowPointEx flowPointEx=flowPointExDao.getFlowPointExByPointId(flowPoint);
+            FlowPointEx flowPointEx=flowPointExDao.getFlowPointEx(flowPoint);
 
             flowPointExList.add(flowPointEx);
         }

@@ -5,6 +5,6 @@ import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.component.workflow.entity.FlowPoint;
 
 public interface IFlowPointExDao {
-    FlowPointEx getFlowPointExByPointId(String flowPointId);
-    FlowPointEx getFlowPointExByPointId(FlowPoint flowPoint);
+    FlowPointEx getFlowPointEx(String flowPointId);
+    FlowPointEx getFlowPointEx(FlowPoint flowPoint);
 }

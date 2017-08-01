@@ -28,7 +28,7 @@ public class FlowPointExDao implements IFlowPointExDao {
     private IFlowEventDAO flowEventDAO;
 
     @Override
-    public FlowPointEx getFlowPointExByPointId(FlowPoint flowPoint) {
+    public FlowPointEx getFlowPointEx(FlowPoint flowPoint) {
 
         FlowPointEx flowPointEx = new FlowPointEx();
         flowPointEx.setFlowPoint(flowPoint);
@@ -40,9 +40,9 @@ public class FlowPointExDao implements IFlowPointExDao {
     }
 
     @Override
-    public FlowPointEx getFlowPointExByPointId(String flowPointId) {
+    public FlowPointEx getFlowPointEx(String flowPointId) {
         FlowPoint flowPoint=flowPointDAO.find(flowPointId);
-        return getFlowPointExByPointId(flowPoint);
+        return getFlowPointEx(flowPoint);
     }
 
 }

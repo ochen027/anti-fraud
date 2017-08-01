@@ -6,8 +6,6 @@ import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
-import com.pwc.component.workflow.dao.IFlowPointDAO;
-import com.pwc.component.workflow.dao.IWorkflowDAO;
 import com.pwc.component.workflow.entity.FlowEvent;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -106,7 +104,7 @@ public class WorkObjDao implements IWorkObjDao {
                     break;
                 case WorkObjSchema.currentPointId:
                     String currentPointId = Bytes.toString(CellUtil.cloneValue(c));
-                    FlowPointEx flowPointEx = flowPointExDao.getFlowPointExByPointId(currentPointId);
+                    FlowPointEx flowPointEx = flowPointExDao.getFlowPointEx(currentPointId);
                     o.setCurrentPoint(flowPointEx);
                     break;
                 case WorkObjSchema.historyEvents:

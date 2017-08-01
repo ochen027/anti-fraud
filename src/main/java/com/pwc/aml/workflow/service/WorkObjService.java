@@ -1,7 +1,9 @@
 package com.pwc.aml.workflow.service;
 
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.workflow.dao.IFlowPointExDao;
 import com.pwc.aml.workflow.dao.IWorkObjDao;
+import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.dao.IFlowEventDAO;
@@ -23,6 +25,9 @@ public class WorkObjService implements IWorkObjService {
     @Autowired
     private IFlowEventDAO flowEventDAO;
 
+    @Autowired
+    private IFlowPointExDao flowPointExDao;
+
     @Override
     public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) throws Exception {
         WorkObj obj = new WorkObj();
@@ -37,7 +42,13 @@ public class WorkObjService implements IWorkObjService {
 
     @Override
     public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) {
-        //refresh workObj,flowEvent
+
+        //could do this action
+        if(workObj.getCurrentPoint().getFlowPointId()==flowEvent.getFlowPointId())
+        {
+            FlowPointEx flowPointEx=flowPointExDao.getFlowPointEx(flowEvent.getEndpoint());
+            workObj.setCurrentPoint(flowPointEx);
+        }
 
         return null;
     }
