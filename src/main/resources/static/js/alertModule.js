@@ -24,14 +24,51 @@
 
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     console.log("/alert/myalert");
-    $http.get("/alert/myalert")
+
+    $scope.myAlertData = [];
+    $scope.myAlertDataDisplay = [];
+    $scope.conf=[];
+    $scope.select=[];
+
+    $http.get("/workflow/getMyAlerts")
         .then(function(response){
             console.log(response);
-            $scope.myAlertData = response.data.result;
-
-
+            $scope.myAlertData = response.data;
+            $scope.myAlertDataDisplay = response.data.splice();
         });
 
+    //clear select
+    $scope.clearSelect = function(){
+        console.log("my alert clear select");
+        $scope.checkAll=false;
+        if($scope.conf.length !=0 ){
+            angular.forEach($scope.conf,function(ele,index){
+                $scope.conf[index]=false;
+            })
+        }
+    }
+
+    //combox select
+    $scope.checkList = [];
+    $scope.conf=[];
+    $scope.select = function(action,record,index){
+        console.log("my alert checkbox select");
+        console.log($scope.conf[index]);
+        if(action.target.checked){
+            $scope.checkList.push({"record":record,"index":index});
+        }
+    }
+
+    //Calculate Total Amount
+    $scope.getMyAlertTotal = function() {
+        var totalAmt = 0.0;
+        for ( var key in $scope.myAlertData) {
+            if (parseFloat($scope.myAlertData[key].alerts.totalAmt)) {
+                totalAmt += parseFloat($scope.myAlertData[key].alerts.totalAmt);
+            }
+        }
+        return totalAmt;
+    }
 
     $scope.itemsByPage = 10;
 
@@ -43,8 +80,6 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state)
     $scope.checkAll=false; //default false;
 
     $scope.data = [];
-    $scope.dataDisplay=[];
-
 
     $http.get("/workflow/getAvailableAlerts")
         .then(function(response){
