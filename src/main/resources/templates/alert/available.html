@@ -20,7 +20,10 @@
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in dataDisplay track by $index">
-            <td class="text-center"><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
+            <td class="text-center">
+                <input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]"
+                       ng-click="select($event,row,$index)"/>
+            </td>
             <td><a ui-sref="availableAlertInfo(row.workObjId)">{{row.alerts.alertId}}</a></td>
             <td>{{row.alerts.customerName}}</td>
             <td class="td-date">{{row.alerts.createdDate}}</td>
@@ -51,7 +54,7 @@
 
     <div class="col-md-12 text-right">
         <button class="btn btn-primary" ng-click="clearSelect()">Clear Selected</button>
-        <button class="btn btn-primary" ng-click="assignTo()">Assign to Me</button>
+        <button class="btn btn-primary" ng-click="assignToMe()">Assign to Me</button>
     </div>
 
 </div>

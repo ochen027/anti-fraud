@@ -45,6 +45,7 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state)
     $scope.data = [];
     $scope.dataDisplay=[];
 
+
     $http.get("/workflow/getAvailableAlerts")
         .then(function(response){
             $scope.data = response.data;
@@ -72,9 +73,39 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state)
             })
         }
     }
-    //asign to
-    $scope.assignTo = function(){
-        console.log("assign to somebody");
+
+    //combox select
+    $scope.checkList = [];
+    $scope.conf=[];
+    $scope.select = function(action,record,index){
+        console.log("checkbox select");
+        console.log($scope.conf[index]);
+        if(action.target.checked){
+            $scope.checkList.push({"record":record,"index":index});
+        }
+    }
+
+
+    //asign to me
+    $scope.assignToMe = function(){
+        console.log("assign to me");
+        if($scope.checkList.length != 0){
+            $scope.checkids=[];
+            console.log($scope.checkids);
+            angular.forEach($scope.checkList, function(data){
+                $scope.checkids.push(data.record.workObjId)
+                $http.post("/workflow/assignToMe", $scope.checkids).then(function(res){
+                    if (res.status !== 200) {
+                        console.log(res);
+                        return;
+                    }
+                    alert("Alerts have been assigned to you! ");
+                })
+            });
+        }else{
+            alert("Please select alerts!");
+        }
+
     }
 
     //Calculate Total Amount

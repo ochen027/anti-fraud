@@ -443,8 +443,8 @@ public class HbaseDaoImp implements IHbaseDao {
 
         //hdao.scanData(table);
 
-        hdao.deleteTable("aml:alerts");
-        hdao.createTable("aml:alerts");
+        //hdao.deleteTable("aml:assign");
+        hdao.createTable("aml:assign");
 
 
         table.close();

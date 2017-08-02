@@ -66,25 +66,18 @@ public class WorkflowExController extends BaseController{
 
     @GetMapping("getAvailableAlerts")
     public ResponseEntity<List<WorkObj>> getAvailableAlerts() throws Exception {
-
         WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
-
         List<WorkObj> workObjs= workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
-
         return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
     }
 
     @PostMapping("assignToMe")
     public ResponseEntity<Void> assignToMe(@RequestBody List<String> workObjIds,HttpSession session) throws Exception {
-
         WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
         String eventId= workflowEx.getStartPoint().getPossibleEvents().get(0).getFlowEventId();
-
         for(String id : workObjIds){
             WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
-
             FlowEvent event=workObjService.getFlowEventByEventId(eventId);
-
             List<FlowEvent> events=workObjService.doEvent(workObj,event);
         }
 

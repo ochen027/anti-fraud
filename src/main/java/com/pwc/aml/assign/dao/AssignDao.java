@@ -35,7 +35,7 @@ public class AssignDao implements IAssignDao {
 
     private String rowKey;
 
-    private String tableKey = "aml:Assign";
+    private String tableKey = "aml:assign";
 
 
     @Override
