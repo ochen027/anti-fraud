@@ -22,6 +22,7 @@ import com.pwc.common.util.FormatUtils;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import com.pwc.component.workflow.entity.FlowEvent;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -285,10 +286,10 @@ public class RulesService implements IRulesService {
                     "end";
 
             String alertId = ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript)).getAlertId();
-
-            workObjService.attach(alertDAO.getSingleAlert(alertId),
-                    workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)));
-
+            if(StringUtils.isNotBlank(alertId)){
+                workObjService.attach(alertDAO.getSingleAlert(alertId),
+                        workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)));
+            }
         }
     }
 

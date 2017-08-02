@@ -116,7 +116,7 @@ public class HbaseDaoImp implements IHbaseDao {
         put.add(
                 Bytes.toBytes(columnFamily),
                 Bytes.toBytes(column),
-                Bytes.toBytes(value)
+                Bytes.toBytes(null == value ? "" : value)
         );
         //load the put
         table.put(put);
@@ -444,7 +444,14 @@ public class HbaseDaoImp implements IHbaseDao {
         //hdao.scanData(table);
 
         //hdao.deleteTable("aml:assign");
+        hdao.createTable("aml:trans");
+        hdao.createTable("aml:alerts");
+        hdao.createTable("aml:workObj");
         hdao.createTable("aml:assign");
+
+
+
+        //hdao.createTable("aml:assign");
 
 
         table.close();
