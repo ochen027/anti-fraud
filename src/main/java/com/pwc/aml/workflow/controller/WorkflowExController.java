@@ -1,6 +1,6 @@
 package com.pwc.aml.workflow.controller;
 
-import com.pwc.aml.alert.entity.Alerts;
+
 import com.pwc.aml.alert.service.IAlertService;
 import com.pwc.aml.assign.entity.Assign;
 import com.pwc.aml.assign.service.IAssignService;
@@ -73,10 +73,10 @@ public class WorkflowExController extends BaseController{
 
     @PostMapping("assignToMe")
     public ResponseEntity<Void> assignToMe(@RequestBody List<String> workObjIds,HttpSession session) throws Exception {
-        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
-        String eventId= workflowEx.getStartPoint().getPossibleEvents().get(0).getFlowEventId();
+
         for(String id : workObjIds){
             WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
+            String eventId=workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
             FlowEvent event=workObjService.getFlowEventByEventId(eventId);
             List<FlowEvent> events=workObjService.doEvent(workObj,event);
         }
@@ -114,6 +114,9 @@ public class WorkflowExController extends BaseController{
 
         return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
     }
+
+
+
 
 
     @GetMapping("test")
