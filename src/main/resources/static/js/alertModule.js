@@ -171,15 +171,26 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
     console.log("myalertinfoctrl");
-    $(document).ready(function() {
-        $(".fa").bind("click", function(event){
-            // $(event.currentTarget).parent().toggleClass("dropup");
-            $(event.currentTarget).parent().find(".customer-summary").length ?  $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
-            $(event.currentTarget).toggleClass("fa-caret-right");
 
-        })
+    $scope.summaryAction = false;
+    $scope.customerAction = false;
+    $scope.individualAction = false;
+    $scope.corporateAction = false;
+    $scope.legalRepsAction = false;
+    $scope.toggleBlock = function(flag){
+        if(flag==="customerSummary"){
+            $scope.summaryAction = !$scope.summaryAction;
+        }else if(flag === 'customerInfo'){
+            $scope.customerAction = !$scope.customerAction;
+        }else if(flag === 'individual'){
+            $scope.individualAction = !$scope.individualAction;
+        }else if(flag === 'corporate'){
+            $scope.corporateAction = !$scope.corporateAction;
+        }else if(flag === 'legalReps'){
+            $scope.legalRepsAction = !$scope.legalRepsAction;
+        }
+    }
 
-    })
     $http.get("/alert/myAlertInfo/12345")
         .then(function (result) {
             console.log(result);
@@ -195,14 +206,25 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
 
 app.controller('AvailableAlertInfoCtrl', function ($scope, $http, $location, $state) {
     console.log("avaliable alert info ctrl");
-    $(document).ready(function() {
-        $(".fa").bind("click", function(event){
-            // $(event.currentTarget).parent().toggleClass("dropup");
-            $(event.currentTarget).parent().find(".customer-summary").length ?  $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
-            $(event.currentTarget).toggleClass("fa-caret-right");
-        })
 
-    })
+    $scope.summaryAction = false;
+    $scope.customerAction = false;
+    $scope.individualAction = false;
+    $scope.corporateAction = false;
+    $scope.legalRepsAction = false;
+    $scope.toggleBlock = function(flag){
+        if(flag==="customerSummary"){
+            $scope.summaryAction = !$scope.summaryAction;
+        }else if(flag === 'customerInfo'){
+            $scope.customerAction = !$scope.customerAction;
+        }else if(flag === 'individual'){
+            $scope.individualAction = !$scope.individualAction;
+        }else if(flag === 'corporate'){
+            $scope.corporateAction = !$scope.corporateAction;
+        }else if(flag === 'legalReps'){
+            $scope.legalRepsAction = !$scope.legalRepsAction;
+        }
+    }
     $http.get("/alert/availableInfo/12345")
         .then(function(result){
             console.log(result);
@@ -222,14 +244,25 @@ app.controller('AvailableAlertInfoCtrl', function ($scope, $http, $location, $st
 
 app.controller('SuppressedAlertInfoCtrl', function ($scope, $http, $location, $state) {
     console.log("avaliable alert info ctrl");
-    $(document).ready(function() {
-        $(".fa").bind("click", function(event){
-            $(event.currentTarget).parent().find(".customer-summary").length ?  $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
-            $(event.currentTarget).toggleClass("fa-caret-right");
 
-        })
-
-    })
+    $scope.summaryAction = false;
+    $scope.customerAction = false;
+    $scope.individualAction = false;
+    $scope.corporateAction = false;
+    $scope.legalRepsAction = false;
+    $scope.toggleBlock = function(flag){
+        if(flag==="customerSummary"){
+            $scope.summaryAction = !$scope.summaryAction;
+        }else if(flag === 'customerInfo'){
+            $scope.customerAction = !$scope.customerAction;
+        }else if(flag === 'individual'){
+            $scope.individualAction = !$scope.individualAction;
+        }else if(flag === 'corporate'){
+            $scope.corporateAction = !$scope.corporateAction;
+        }else if(flag === 'legalReps'){
+            $scope.legalRepsAction = !$scope.legalRepsAction;
+        }
+    }
     $http.get("/alert/suppressedInfo/12345")
         .then(function sucess(result){
             console.log(result);
@@ -249,13 +282,25 @@ app.controller('SuppressedAlertInfoCtrl', function ($scope, $http, $location, $s
 
 app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state) {
     console.log("avaliable alert info ctrl");
-    $(document).ready(function() {
-        $(".fa").bind("click", function(event){
-            $(event.currentTarget).parent().find(".customer-summary").length ?  $(event.currentTarget).parent().find(".customer-summary").toggle() : $(event.currentTarget).parent().siblings(".sub-block").toggle();
-            $(event.currentTarget).toggleClass("fa-caret-right");
-        })
 
-    })
+    $scope.summaryAction = false;
+    $scope.customerAction = false;
+    $scope.individualAction = false;
+    $scope.corporateAction = false;
+    $scope.legalRepsAction = false;
+    $scope.toggleBlock = function(flag){
+        if(flag==="customerSummary"){
+            $scope.summaryAction = !$scope.summaryAction;
+        }else if(flag === 'customerInfo'){
+            $scope.customerAction = !$scope.customerAction;
+        }else if(flag === 'individual'){
+            $scope.individualAction = !$scope.individualAction;
+        }else if(flag === 'corporate'){
+            $scope.corporateAction = !$scope.corporateAction;
+        }else if(flag === 'legalReps'){
+            $scope.legalRepsAction = !$scope.legalRepsAction;
+        }
+    }
     $http.get("/alert/closedAlertInfo/12345")
         .then(function sucess(result){
             console.log(result);
