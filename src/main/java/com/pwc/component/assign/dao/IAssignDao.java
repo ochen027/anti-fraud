@@ -1,7 +1,7 @@
-package com.pwc.aml.assign.dao;
+package com.pwc.component.assign.dao;
 
 
-import com.pwc.aml.assign.entity.Assign;
+import com.pwc.component.assign.entity.Assign;
 
 import java.util.List;
 
@@ -9,4 +9,6 @@ public interface IAssignDao {
 
     void save(Assign assign) throws Exception;
     List<Assign> findByUserId(String userId) throws Exception;
+
+    Assign findByObjId(String objId) throws Exception;
 }

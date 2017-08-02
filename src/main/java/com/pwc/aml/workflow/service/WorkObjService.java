@@ -1,7 +1,7 @@
 package com.pwc.aml.workflow.service;
 
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.assign.entity.Assign;
+import com.pwc.component.assign.entity.Assign;
 import com.pwc.aml.workflow.dao.IFlowPointExDao;
 import com.pwc.aml.workflow.dao.IWorkObjDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
@@ -99,7 +99,7 @@ public class WorkObjService implements IWorkObjService {
     public List<WorkObj> getWorkObjsByAssigns(List<Assign> assigns) throws Exception {
         List<WorkObj> workObjs=new ArrayList<>();
         for(Assign as:assigns){
-            WorkObj o=getWorkObjsByWorkObjId(as.getObjectId());
+            WorkObj o=getWorkObjsByWorkObjId(as.getObjId());
             workObjs.add(o);
         }
         return workObjs;
