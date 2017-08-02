@@ -2,8 +2,8 @@ package com.pwc.aml.workflow.controller;
 
 
 import com.pwc.aml.alert.service.IAlertService;
-import com.pwc.aml.assign.entity.Assign;
-import com.pwc.aml.assign.service.IAssignService;
+import com.pwc.component.assign.entity.Assign;
+import com.pwc.component.assign.service.IAssignService;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.aml.workflow.service.IWorkObjService;
@@ -76,15 +76,20 @@ public class WorkflowExController extends BaseController{
 
         for(String id : workObjIds){
             WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
-            String eventId=workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
-            FlowEvent event=workObjService.getFlowEventByEventId(eventId);
-            List<FlowEvent> events=workObjService.doEvent(workObj,event);
+            List<FlowEvent> flowEvents= workObj.getCurrentPoint().getPossibleEvents();
+            for(FlowEvent targetEvent: flowEvents){
+                if("assign".equalsIgnoreCase(targetEvent.getName())){
+                    String eventId=workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
+                    FlowEvent event=workObjService.getFlowEventByEventId(eventId);
+                    List<FlowEvent> events=workObjService.doEvent(workObj,event);
+                    break;
+                }
+            }
         }
-
         //assign to me
         Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users)userInfo.get("User");
-        assignService.AssignTo(user, workObjIds,user);
+        assignService.assignTo(user, user,workObjIds,user);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -98,6 +103,30 @@ public class WorkflowExController extends BaseController{
         List<WorkObj> workObjs=workObjService.getWorkObjsByAssigns(assigns);
 
         return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+    }
+
+
+    @PostMapping("escalate")
+    public ResponseEntity<Void> escalate(@RequestBody List<String> workObjIds,HttpSession session) throws Exception {
+
+        for(String id : workObjIds){
+            WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
+            List<FlowEvent> flowEvents= workObj.getCurrentPoint().getPossibleEvents();
+            for(FlowEvent targetEvent: flowEvents){
+                if("escalate".equalsIgnoreCase(targetEvent.getName())){
+                    String eventId=workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
+                    FlowEvent event=workObjService.getFlowEventByEventId(eventId);
+                    List<FlowEvent> events=workObjService.doEvent(workObj,event);
+                    break;
+                }
+            }
+        }
+
+        //un assign
+        Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users)userInfo.get("User");
+        assignService.unAssign(user, workObjIds,user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 

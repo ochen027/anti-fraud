@@ -1,8 +1,9 @@
-package com.pwc.aml.assign.dao;
+package com.pwc.component.assign.dao;
 
 
-import com.pwc.aml.assign.entity.Assign;
-import com.pwc.aml.assign.entity.AssignSchema;
+import com.pwc.component.assign.entity.Assign;
+import com.pwc.component.assign.entity.AssignHistory;
+import com.pwc.component.assign.entity.AssignSchema;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.common.util.FormatUtils;
 import org.apache.hadoop.hbase.Cell;
@@ -40,11 +41,13 @@ public class AssignDao implements IAssignDao {
 
     @Override
     public void save(Assign assign) throws Exception {
-
-        initial(assign.getAssignId());
+        ObjectMapper mapper = new ObjectMapper();
+        initial(assign.getObjId());
         saveColumn(AssignSchema.assignId, assign.getAssignId());
-        saveColumn(AssignSchema.userId, assign.getUserId());
-        saveColumn(AssignSchema.objectId, assign.getObjectId());
+        saveColumn(AssignSchema.uObjId, assign.getuObjId());
+        saveColumn(AssignSchema.objId, assign.getObjId());
+        saveColumn(AssignSchema.byId, assign.getById());
+        saveColumn(AssignSchema.history, mapper.writeValueAsString(assign.getHistory()));
         saveColumn(AssignSchema.createdBy, assign.getCreatedBy());
         saveColumn(AssignSchema.createdDate, FormatUtils.DateToString(assign.getCreationDate()));
         saveColumn(AssignSchema.updateBy, assign.getLastUpdatedBy());
@@ -60,7 +63,7 @@ public class AssignDao implements IAssignDao {
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
 
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
-                Bytes.toBytes(AssignSchema.userId),
+                Bytes.toBytes(AssignSchema.uObjId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(userId)));
 
         ResultScanner rsscan = table.getScanner(scan);
@@ -74,7 +77,29 @@ public class AssignDao implements IAssignDao {
 
     }
 
-    private Assign CellToAssign(Cell[] cells) throws ParseException {
+    @Override
+    public Assign findByObjId(String objId) throws Exception {
+        initial();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+                Bytes.toBytes(AssignSchema.objId),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(objId)));
+        ResultScanner rsscan = table.getScanner(scan);
+        List<Assign> tList = new ArrayList<Assign>();
+        for (Result r : rsscan) {
+            Assign t = this.CellToAssign(r.rawCells());
+            tList.add(t);
+        }
+        rsscan.close();
+        if (tList.size() == 1) {
+            return tList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    private Assign CellToAssign(Cell[] cells) throws ParseException, IOException {
 
         Assign o = new Assign();
         ObjectMapper mapper = new ObjectMapper();
@@ -84,13 +109,21 @@ public class AssignDao implements IAssignDao {
                 case AssignSchema.assignId:
                     o.setAssignId(Bytes.toString(CellUtil.cloneValue(c)));
                     break;
-                case AssignSchema.userId:
+                case AssignSchema.uObjId:
                     String userId = Bytes.toString(CellUtil.cloneValue(c));
-                    o.setUserId(userId);
+                    o.setuObjId(userId);
                     break;
-                case AssignSchema.objectId:
+                case AssignSchema.objId:
                     String objectId = Bytes.toString(CellUtil.cloneValue(c));
-                    o.setObjectId(objectId);
+                    o.setObjId(objectId);
+                    break;
+                case AssignSchema.byId:
+                    String byId = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setById(byId);
+                    break;
+                case AssignSchema.history:
+                    String history = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setHistory((List<AssignHistory>) mapper.readValue(history, List.class));
                     break;
                 case AssignSchema.createdBy:
                     String createdBy = Bytes.toString(CellUtil.cloneValue(c));
