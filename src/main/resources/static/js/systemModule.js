@@ -376,7 +376,45 @@ app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $time
 
 
 
-app.controller('riskCountryCtrl', function ($scope, $http, $location, $state, $timeout) {
+app.controller('RiskCountryCtrl', function ($scope, $http, $location, $state, $timeout,Upload) {
+    $scope.toggleRiskCountry = true;
+    $scope.uploadFiles = function (files) {
+
+        if (files && files.length) {
+            Upload.upload({
+                url:'/riskCountry/upload',
+                data: {file: files[0]}
+            }).then(function (res) {
+                              $scope.refresh();
+                          });
+        }
+    }
+
+
+    $scope.refresh=function(){
+            $http.get("/riskCountry/getAll").then(function(res){
+                $scope.riskCountry=res.data;
+                $scope.riskCountryDisplay=res.data.slice();
+            });
+
+    };
+
+
+    $scope.deleteAll=function(){
+            $http.get("/riskCountry/removeAll").then(function(res){
+                         $scope.refresh();
+                     });
+
+
+
+    };
+
+$timeout(function(){
+    $http.get("/riskCountry/getAll").then(function(res){
+        debugger;
+        res.data;
+    });
+});
 
 });
 
