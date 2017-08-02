@@ -1,33 +1,40 @@
 
-<div class="container" app-controller="CreateAlertCtrl">
-    <div class="text-center">
-        <div class="customer-summary">
-            <fieldset>
-                <legend>Search Transaction</legend>
-                <div class="table-tr">
-                    <label class="label">Customer ID</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Customer Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Transaction Date</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                </div>
-                <div class="table-tr">
-                    <label class="label">Transaction No.</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Account No.</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Transaction Type</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                </div>
-            </fieldset>
+<div class="container" ng-controller="CreateAlertCtrl">
+    <fieldset>
+        <legend>Search</legend>
+        <div class="row">
+            <div class="form-inline">
+                <label class="col-sm-2 form-control-label" for="custId">Customer ID</label>
+                <input type="text" class="form-control col-sm-2" id="custId" placeholder="" />
+
+                <label class="col-sm-2 form-control-label" for="custName">Customer Name</label>
+                <input type="text" class="form-control col-sm-2" id="custName" placeholder=""/>
+
+                <label class="col-sm-2 form-control-label" for="custName">Transaction Date</label>
+                <input type="text" class="form-control col-sm-2" id="transDate" placeholder="yyyy-MM-dd"/>
+
+            </div>
         </div>
+
+        <div class="row">
+            <div class="form-inline">
+                <label class="col-sm-2 form-control-label" for="transNo">Transaction No.</label>
+                <input type="text" class="form-control col-sm-2" id="transNo" placeholder="" />
+
+                <label class="col-sm-2 form-control-label" for="accountNo">Account No.</label>
+                <input type="text" class="form-control col-sm-2" id="accountNo" placeholder=""/>
+
+                <label class="col-sm-2 form-control-label" for="transType">Transaction Type</label>
+                <input type="text" class="form-control col-sm-2" id="transType" placeholder=""/>
+            </div>
+        </div>
+
         <div class="col-md-12 text-right">
             <button class="btn btn-default" ng-click="reset()">Reset</button>
             <button class="btn btn-default" ng-click="search()">Search</button>
         </div>
-        <div class="sepeartor"></div>
-    </div>
+    </fieldset>
+
     <!--table part-->
     <fieldset>
         <legend>Result</legend>
@@ -66,10 +73,10 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="10" class="text-center">
+                <td colspan="2" class="text-left">
                     <span>total:10000.00</span>
                 </td>
-                <td>
+                <td colspan="8" class="text-right">
                     <button class="btn btn-default">Reset</button>
                     <button class="btn btn-default">Add</button>
                 </td>
@@ -116,10 +123,10 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="10" class="text-center">
+                <td colspan="2" class="text-left">
                     <span>total:10000.00</span>
                 </td>
-                <td>
+                <td colspan="8" class="text-right">
                     <button class="btn btn-default">Remove</button>
                 </td>
             </tr>
@@ -134,7 +141,7 @@
 
         </div>
         <div>
-            <textarea name="scenario" id="scenarioId" cols="30" rows="15"></textarea>
+            <textarea name="scenario" id="scenarioId" rows="10" class="form-control"></textarea>
         </div>
     </fieldset>
     <!--end of scenario-->
