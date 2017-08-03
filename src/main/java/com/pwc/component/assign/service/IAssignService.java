@@ -4,6 +4,7 @@ package com.pwc.component.assign.service;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.component.authorize.users.entity.Users;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IAssignService {
@@ -13,4 +14,6 @@ public interface IAssignService {
     List<Assign> getAssignByUser(Users users) throws Exception;
 
     void unAssign(Users by, List<String> ObjectIds, Users currentUser) throws Exception;
+
+    void truncateTable() throws IOException;
 }

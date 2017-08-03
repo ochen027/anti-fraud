@@ -56,7 +56,7 @@ public class WorkObjService implements IWorkObjService {
                 oldEvents=new ArrayList<>();
             }
             oldEvents.add(flowEvent);
-
+            workObj.setHistoryEvents(oldEvents);
             workObjDao.save(workObj);
         }
 

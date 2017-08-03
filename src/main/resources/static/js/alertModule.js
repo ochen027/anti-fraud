@@ -1,23 +1,4 @@
-// app.controller('MyAlertCtrl', function ($scope, $http, $location, $state, $timeout) {
-//
-//     $scope.myAlertData = [];
-//     $scope.myAlertDataDisplay = [];
-//     $timeout(function () {
-//
-//         $http.get("/alerts/getAllAlerts").then(function (res) {
-//             if (res.code !== 200) {
-//                 console.log(res);
-//                 return;
-//             }
-//
-//             $scope.myAlertData = res.data;
-//             $scope.myAlertDataDisplay = res.data.splice();
-//
-//
-//         });
-//     })
-//
-// })
+
 
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     console.log("/alert/myalert");
@@ -260,7 +241,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams) {
     console.log("myalertinfoctrl");
 
     $scope.summaryAction = false;
@@ -268,6 +249,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
     $scope.individualAction = false;
     $scope.corporateAction = false;
     $scope.legalRepsAction = false;
+
     $scope.toggleBlock = function (flag) {
         if (flag === "customerSummary") {
             $scope.summaryAction = !$scope.summaryAction;
@@ -292,6 +274,16 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state) {
             $scope.data = result.data.tableRecords;
         })
     $scope.itemsByPage = 4;
+
+
+
+    $scope.escalate=function(){
+       let escalateWorkObjIds=[$stateParams.id];
+       $http.post("/workflow/escalate",escalateWorkObjIds).then(function(res){
+            debugger;
+            alert("this Alert has been escalated!");
+       });
+    };
 
 });
 

@@ -7,6 +7,7 @@ import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class AssignService implements IAssignService {
     private IAssignDao assignDao;
 
     @Override
-    public void assignTo(Users by,Users to, List<String> ObjectIds, Users currentUser) throws Exception {
+    public void assignTo(Users by, Users to, List<String> ObjectIds, Users currentUser) throws Exception {
 
         for (String id : ObjectIds) {
             Assign assign = assignDao.findByObjId(id);
@@ -30,18 +31,24 @@ public class AssignService implements IAssignService {
                 assign.setCreatedBy(currentUser.getUserName());
                 assign.setStatus(true);
             } else {
-                List<AssignHistory> history=assign.getHistory();
-                if(history==null){
-                    history=new ArrayList<>();
+                List<AssignHistory> history = assign.getHistory();
+                if (history == null) {
+                    history = new ArrayList<>();
                 }
-                AssignHistory assignHistory=new AssignHistory();
+                AssignHistory assignHistory = new AssignHistory();
                 assignHistory.setAssignDate(assign.getLastUpdateDate());
                 assignHistory.setById(assign.getById());
                 assignHistory.setuObjId(assign.getuObjId());
                 history.add(assignHistory);
+                assign.setHistory(history);
             }
+
             assign.setAssignId(UUID.randomUUID().toString());
-            assign.setuObjId("" + to.getId());
+            if (to != null) {
+                assign.setuObjId("" + to.getId());
+            } else {
+                assign.setuObjId(null);
+            }
             assign.setObjId(id);
             assign.setById("" + by.getId());
             assign.setLastUpdatedBy(currentUser.getUserName());
@@ -57,7 +64,12 @@ public class AssignService implements IAssignService {
     }
 
     @Override
-    public void unAssign(Users by,List<String> ObjectIds, Users currentUser) throws Exception {
-        assignTo( by,null, ObjectIds, currentUser);
+    public void unAssign(Users by, List<String> ObjectIds, Users currentUser) throws Exception {
+        assignTo(by, null, ObjectIds, currentUser);
+    }
+
+    @Override
+    public void truncateTable() throws IOException {
+        assignDao.truncateTable();
     }
 }

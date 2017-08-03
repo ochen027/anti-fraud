@@ -57,7 +57,7 @@ insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , 
 insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', NULL, NULL);
 insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', NULL, NULL);
 insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', NULL, NULL);
-insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, 'scenario()');
+insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, 'rulesManager()');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, 'IndexWorkflow()');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, 'transBatch()');
 insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 11, 'documentExample()');
@@ -275,7 +275,6 @@ insert into FLOW_EVENT values(8,'sysadmin',sysdate,sysdate,'sysadmin',1,'','84cf
 insert into FLOW_EVENT values(9,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','27cbee12-3cbd-d169-7200-7ccb69372ca7','954dc267-c3e2-43d1-abdb-a83ca2881875','84cf1663-5784-ccdf-aae2-86dc5ffbbcf2','Close','Close(QCClosed)','WorkflowShape.Connection');
 insert into FLOW_EVENT values(10,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','15e6ce2d-3c60-2dc8-7917-ed1aa171b4c8','954dc267-c3e2-43d1-abdb-a83ca2881875','30102a75-9f3e-e60c-ea6f-597b730af7d5','Close','Close(MLROClose)','WorkflowShape.Connection');
 insert into FLOW_EVENT values(11,'sysadmin',sysdate,sysdate,'sysadmin',1,'','ea63ad61-9911-dd41-9129-f3b027aefe50','b8427923-d5cd-aae2-e4d3-009559be6ddb','954dc267-c3e2-43d1-abdb-a83ca2881875','d54e5ad1-50b2-5b47-4f95-09023b4e2a90','end','end(end)','WorkflowShape.Connection');
-
 
 
 -- initial RolePoint

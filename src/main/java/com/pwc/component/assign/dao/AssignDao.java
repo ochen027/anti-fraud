@@ -65,7 +65,7 @@ public class AssignDao implements IAssignDao {
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
                 Bytes.toBytes(AssignSchema.uObjId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(userId)));
-
+        scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Assign> tList = new ArrayList<Assign>();
         for (Result r : rsscan) {

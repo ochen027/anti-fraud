@@ -149,7 +149,10 @@ public class WorkflowExController extends BaseController {
     @GetMapping("delete")
     public ResponseEntity<Void> delete() throws Exception {
 
+        alertService.truncateTable();
         workObjService.truncateTable();
+        assignService.truncateTable();
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
