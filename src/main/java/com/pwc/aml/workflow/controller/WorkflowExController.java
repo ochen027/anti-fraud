@@ -117,7 +117,7 @@ public class WorkflowExController extends BaseController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PostMapping("return")
+    @PostMapping("returnToQc")
     public ResponseEntity<Void> returnToQc(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
 
         for (String id : workObjIds) {

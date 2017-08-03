@@ -280,9 +280,25 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
     $scope.escalate=function(){
        let escalateWorkObjIds=[$stateParams.id];
        $http.post("/workflow/escalate",escalateWorkObjIds).then(function(res){
-            debugger;
+            
             alert("this Alert has been escalated!");
        });
+    };
+
+    $scope.close=function(){
+        let escalateWorkObjIds=[$stateParams.id];
+        $http.post("/workflow/close",escalateWorkObjIds).then(function(res){
+            
+            alert("this Alert has been closed!");
+        });
+    };
+
+    $scope.returnToQc=function(){
+        let escalateWorkObjIds=[$stateParams.id];
+        $http.post("/workflow/returnToQc",escalateWorkObjIds).then(function(res){
+            
+            alert("this Alert has been return to QC!");
+        });
     };
 
 });
