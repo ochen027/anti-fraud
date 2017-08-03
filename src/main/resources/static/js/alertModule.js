@@ -1,7 +1,7 @@
 
 
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
-    console.log("/alert/myalert");
+    console.log("/alert/myAlert");
 
     $scope.myAlertData = [];
     $scope.myAlertDataDisplay = [];

@@ -461,6 +461,108 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         params: {role: null}
     }];
 
+
+    app.case=[{
+        name:"myCase",
+        url:"/case/myCase",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/case/myCase'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {case: null},
+        controller: 'MyCaseCtrl'
+
+    },{
+        name:"closedCase",
+        url:"/case/closedCase",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/case/closedCase'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {case: null},
+        controller: 'ClosedCaseCtrl'
+    }];
+    app.query=[{
+        name:"alertQuery",
+        url:"/query/alertQuery",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/query/alertQuery'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {query: null},
+        controller: 'AlertQueryCtrl'
+    },{
+        name:"caseQuery",
+        url:"/query/caseQuery",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/query/caseQuery'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {query: null},
+        controller: 'CaseQueryCtrl'
+    }];
+    app.reports=[{
+        name:"reportSummary",
+        url:"/reports/reportSummary",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/reports/reportSummary'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {reports: null},
+        controller: 'ReportSummaryCtrl'
+    },{
+        name:"reportDetail",
+        url:"/reports/reportDetail",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/reports/reportDetail'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {reports: null},
+        controller: 'ReportDetailCtrl'
+    }];
+
     app.scenario=[
         {
             name: "scenario",

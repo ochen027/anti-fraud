@@ -61,12 +61,12 @@ insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, 'IndexWorkflow()');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, 'transBatch()');
 insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 11, 'documentExample()');
-insert into menus values(16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Summary', 10, 'dashboard()');
-insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'dashboard()');
-insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alert Query', 9, 'dashboard()');
-insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, 'dashboard()');
-insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, 'dashboard()');
-insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, 'dashboard()');
+insert into menus values(16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Summary', 10, 'reportSummary()');
+insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'reportDetail()');
+insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alert Query', 9, 'alertQuery()');
+insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, 'caseQuery()');
+insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, 'myCase()');
+insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, 'closedCase()');
 --insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', 11, '/#!/users/list');
 
 insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Import', 11, 'ImportData()');
