@@ -134,70 +134,70 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'ClosedAlertCtrl'
         },
         {
-            name: "myAlertInfo",
-            url: "/alert/myAlertInfo",
+            name: "alertInfo",
+            url: "/alert/alertInfo",
             views: {
                 header: {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/alert/myAlertInfo'
+                    templateUrl: '/alert/alertInfo'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'MyAlertInfoCtrl',
+            controller: 'AlertInfoCtrl',
             params: {id: null}
         },
-        {
-            name: "availableAlertInfo",
-            url: "/alert/availableAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/availableAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'AvailableAlertInfoCtrl'
-        },
-        {
-            name: "suppressedAlertInfo",
-            url: "/alert/suppressedAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/suppressedAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'SuppressedAlertInfoCtrl'
-        },
-        {
-            name: "closedAlertInfo",
-            url: "/alert/closedAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/closedAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'ClosedAlertInfoCtrl'
-        },
+        // {
+        //     name: "availableAlertInfo",
+        //     url: "/alert/availableAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/availableAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'AvailableAlertInfoCtrl'
+        // },
+        // {
+        //     name: "suppressedAlertInfo",
+        //     url: "/alert/suppressedAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/suppressedAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'SuppressedAlertInfoCtrl'
+        // },
+        // {
+        //     name: "closedAlertInfo",
+        //     url: "/alert/closedAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/closedAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'ClosedAlertInfoCtrl'
+        // },
         {
             name: "CreateAlert",
             url: "/alert/create",

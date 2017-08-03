@@ -117,6 +117,20 @@ public class WorkflowExController extends BaseController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @PostMapping("return")
+    public ResponseEntity<Void> returnToQc(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
+
+        for (String id : workObjIds) {
+            doEvent("return", id);
+        }
+        //un assign
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        assignService.unAssign(user, workObjIds, user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
 
     /***
      * "f7f837a6-bc31-c39d-6cdb-bcb6ceaa7d19"
