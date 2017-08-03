@@ -15,14 +15,14 @@
 
                 <li ng-repeat="(key, value) in menu" class="nav-item">
                     <a ng-if="hasChildren(value)" class="nav-link dropdown-toggle" id="navbar_{{key}}_link"
-                       ng-href="{{value.menuURL}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{value.menuName}}
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{value.menuName}}
 
                     </a>
                     <div ng-if="hasChildren(value)" class="dropdown-menu" aria-labelledby="navbar_{{key}}_link">
-                        <a class="dropdown-item" ng-repeat="(k,v) in value.childList" ng-href="{{v.menuURL}}">{{v.menuName}}</a>
+                        <a class="dropdown-item" ng-repeat="(k,v) in value.childList" ui-sref="{{v.menuURL}}">{{v.menuName}}</a>
                     </div>
 
-                    <a ng-if="!hasChildren(value)" class="nav-link" id="navbar_{{key}}_link" ng-href="{{value.menuURL}}">{{value.menuName}}
+                    <a ng-if="!hasChildren(value)" class="nav-link" id="navbar_{{key}}_link" ui-sref="{{value.menuURL}}">{{value.menuName}}
 
                     </a>
                 </li>
