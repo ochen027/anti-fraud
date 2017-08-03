@@ -82,7 +82,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'AvailableAlertCtrl'
+            controller: 'AvailableAlertCtrl',
+            params: {id: null}
         },
         {
             name: "myAlert",

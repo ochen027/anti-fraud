@@ -49,7 +49,7 @@ insert into grouprole values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6,
 insert into menus values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Dashboard', NULL, 'dashboard()');
 insert into menus values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alerts', NULL, NULL);
 insert into menus values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Alerts', 2, 'myAlert()');
-insert into menus values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts', 2, 'available()');
+insert into menus values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(L1)', 2, 'available({id:"start"})');
 insert into menus values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Suppressed Alerts', 2, 'suppressedAlert');
 insert into menus values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Alerts', 2, 'closedAlert()');
 insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create Alert', 2, 'CreateAlert()');
@@ -76,8 +76,12 @@ insert into menus values(24, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(25, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Risk Country', 11, 'riskCountry()');
 insert into menus values(26, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Watch List', 11, 'watchList()');
 
-insert into menus values(27, 'sysadmin', sysdate, sysdate, 'sysadmin', 2, NULL , NULL , 'User Group', 11, 'userGroup()');
-insert into menus values(28, 'sysadmin', sysdate, sysdate, 'sysadmin', 2, NULL , NULL , 'User Role', 11, 'roleList()');
+insert into menus values(27, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Group', 11, 'userGroup()');
+insert into menus values(28, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Role', 11, 'roleList()');
+
+insert into menus values(29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(L2)', 2, 'available({id:"L2Pool"})')
+insert into menus values(30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(QC)', 2, 'available({id:"QcPool"})');
+insert into menus values(31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(MLRO)', 2, 'available({id:"MLROPool"})');
 
 -- initial role menu table
 -- sysadmin menu
@@ -110,8 +114,8 @@ insert into rolemenu values (26, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 26
 insert into rolemenu values (27, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 27, 6);
 insert into rolemenu values (28, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 28, 6);
 insert into rolemenu values (29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 29, 6);
-
-
+insert into rolemenu values (30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 30, 6);
+insert into rolemenu values (31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
 
 -- l1 menu
 insert into rolemenu values (100001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
