@@ -101,7 +101,7 @@ public class HdfsAPI {
 //        Path readPath=new Path("C:\\Andrew");
 //        boolean b=lfs.exists(readPath);
 //        System.out.println(b);
-        write("C:\\Andrew\\abc.py","/user/hadoop/tmp/sampleData/abc.py");
+        write("C:\\orchen\\abc.py","/user/hadoop/tmp/sampleData/abc.py");
 
 
     }
