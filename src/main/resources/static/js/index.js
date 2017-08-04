@@ -82,7 +82,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'AvailableAlertCtrl'
+            controller: 'AvailableAlertCtrl',
+            params: {id: null}
         },
         {
             name: "myAlert",
@@ -133,70 +134,70 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'ClosedAlertCtrl'
         },
         {
-            name: "myAlertInfo",
-            url: "/alert/myAlertInfo",
+            name: "alertInfo",
+            url: "/alert/alertInfo",
             views: {
                 header: {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/alert/myAlertInfo'
+                    templateUrl: '/alert/alertInfo'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'MyAlertInfoCtrl',
+            controller: 'AlertInfoCtrl',
             params: {id: null}
         },
-        {
-            name: "availableAlertInfo",
-            url: "/alert/availableAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/availableAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'AvailableAlertInfoCtrl'
-        },
-        {
-            name: "suppressedAlertInfo",
-            url: "/alert/suppressedAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/suppressedAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'SuppressedAlertInfoCtrl'
-        },
-        {
-            name: "closedAlertInfo",
-            url: "/alert/closedAlertInfo",
-            views: {
-                header: {
-                    templateUrl: '/header'
-                },
-                content: {
-                    templateUrl: '/alert/closedAlertInfo'
-                },
-                footer: {
-                    templateUrl: '/footer',
-                }
-            },
-            controller: 'ClosedAlertInfoCtrl'
-        },
+        // {
+        //     name: "availableAlertInfo",
+        //     url: "/alert/availableAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/availableAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'AvailableAlertInfoCtrl'
+        // },
+        // {
+        //     name: "suppressedAlertInfo",
+        //     url: "/alert/suppressedAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/suppressedAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'SuppressedAlertInfoCtrl'
+        // },
+        // {
+        //     name: "closedAlertInfo",
+        //     url: "/alert/closedAlertInfo",
+        //     views: {
+        //         header: {
+        //             templateUrl: '/header'
+        //         },
+        //         content: {
+        //             templateUrl: '/alert/closedAlertInfo'
+        //         },
+        //         footer: {
+        //             templateUrl: '/footer',
+        //         }
+        //     },
+        //     controller: 'ClosedAlertInfoCtrl'
+        // },
         {
             name: "CreateAlert",
             url: "/alert/create",
@@ -475,6 +476,108 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'RoleInfoCtrl',
         params: {role: null}
+    }];
+
+
+    app.case=[{
+        name:"myCase",
+        url:"/case/myCase",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/case/myCase'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {case: null},
+        controller: 'MyCaseCtrl'
+
+    },{
+        name:"closedCase",
+        url:"/case/closedCase",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/case/closedCase'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {case: null},
+        controller: 'ClosedCaseCtrl'
+    }];
+    app.query=[{
+        name:"alertQuery",
+        url:"/query/alertQuery",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/query/alertQuery'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {query: null},
+        controller: 'AlertQueryCtrl'
+    },{
+        name:"caseQuery",
+        url:"/query/caseQuery",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/query/caseQuery'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {query: null},
+        controller: 'CaseQueryCtrl'
+    }];
+    app.reports=[{
+        name:"reportSummary",
+        url:"/reports/reportSummary",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/reports/reportSummary'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {reports: null},
+        controller: 'ReportSummaryCtrl'
+    },{
+        name:"reportDetail",
+        url:"/reports/reportDetail",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/reports/reportDetail'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {reports: null},
+        controller: 'ReportDetailCtrl'
     }];
 
     app.scenario=[

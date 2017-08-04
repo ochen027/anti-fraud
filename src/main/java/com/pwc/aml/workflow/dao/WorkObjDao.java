@@ -135,7 +135,7 @@ public class WorkObjDao implements IWorkObjDao {
                 case WorkObjSchema.alertId:
                     String alertId = Bytes.toString(CellUtil.cloneValue(c));
                     Alerts alerts = alertDAO.getSingleAlert(alertId);
-                    Long days = ChronoUnit.DAYS.between(LocalDate.now(), FormatUtils.StringToLocalDateNoDash(alerts.getCreatedDate()));
+                    Long days = ChronoUnit.DAYS.between(FormatUtils.StringToLocalDateNoDash(alerts.getCreatedDate()), LocalDate.now());
                     alerts.setDays(String.valueOf(days));
                     o.setAlerts(alerts);
                     break;

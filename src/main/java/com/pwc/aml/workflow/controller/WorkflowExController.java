@@ -1,9 +1,9 @@
 package com.pwc.aml.workflow.controller;
 
-import com.pwc.aml.alert.entity.Alerts;
+
 import com.pwc.aml.alert.service.IAlertService;
-import com.pwc.aml.assign.entity.Assign;
-import com.pwc.aml.assign.service.IAssignService;
+import com.pwc.component.assign.entity.Assign;
+import com.pwc.component.assign.service.IAssignService;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.aml.workflow.service.IWorkObjService;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("workflow")
-public class WorkflowExController extends BaseController{
+public class WorkflowExController extends BaseController {
 
     @Autowired
     private IWorkflowExService workflowExService;
@@ -46,66 +46,90 @@ public class WorkflowExController extends BaseController{
     }
 
 
-
-
-//    @PostMapping("getPossibleEvents")
-//    public ResponseEntity<List<FlowEvent>> getPossibleEvents(String workObjId) {
 //
-//        List<FlowEvent> events=workObjService.getPossibleEvents(workObjs.get(0),events.get(0));
-//        return new ResponseEntity<List<FlowEvent>>(events,HttpStatus.OK);
-//    }
 
     @GetMapping("getDefaultWorkflow")
     public ResponseEntity<WorkflowEx> getDefaultWorkflow() throws Exception {
 
-        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
-        return new ResponseEntity<WorkflowEx>(workflowEx,HttpStatus.OK);
+        WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
+        return new ResponseEntity<WorkflowEx>(workflowEx, HttpStatus.OK);
     }
-
 
 
     @GetMapping("getAvailableAlerts")
     public ResponseEntity<List<WorkObj>> getAvailableAlerts() throws Exception {
-
-        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
-
-        List<WorkObj> workObjs= workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
-
-        return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+        WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
+        return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
     @PostMapping("assignToMe")
-    public ResponseEntity<Void> assignToMe(@RequestBody List<String> workObjIds,HttpSession session) throws Exception {
+    public ResponseEntity<Void> assignToMe(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
 
-        WorkflowEx workflowEx=workflowExService.getWorkflowByDefault();
-        String eventId= workflowEx.getStartPoint().getPossibleEvents().get(0).getFlowEventId();
-
-        for(String id : workObjIds){
-            WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
-
-            FlowEvent event=workObjService.getFlowEventByEventId(eventId);
-
-            List<FlowEvent> events=workObjService.doEvent(workObj,event);
+        for (String id : workObjIds) {
+            doEvent("assign", id);
         }
-
         //assign to me
-        Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
-        Users user = (Users)userInfo.get("User");
-        assignService.AssignTo(user, workObjIds,user);
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        assignService.assignTo(user, user, workObjIds, user);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+
 
     @GetMapping("getMyAlerts")
     public ResponseEntity<List<WorkObj>> getMyAlerts(HttpSession session) throws Exception {
 
-        Map<String, Object> userInfo =( Map<String, Object>) session.getAttribute("UserInfo");
-        Users user = (Users)userInfo.get("User");
-        List<Assign> assigns= assignService.getAssignByUser(user);
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        List<Assign> assigns = assignService.getAssignByUser(user);
 
-        List<WorkObj> workObjs=workObjService.getWorkObjsByAssigns(assigns);
+        List<WorkObj> workObjs = workObjService.getWorkObjsByAssigns(assigns);
 
-        return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+        return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
+
+
+    @PostMapping("escalate")
+    public ResponseEntity<Void> escalate(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
+
+        for (String id : workObjIds) {
+            doEvent("escalate", id);
+        }
+        //un assign
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        assignService.unAssign(user, workObjIds, user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("close")
+    public ResponseEntity<Void> close(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
+
+        for (String id : workObjIds) {
+            doEvent("close", id);
+        }
+        //un assign
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        assignService.unAssign(user, workObjIds, user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("returnToQc")
+    public ResponseEntity<Void> returnToQc(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
+
+        for (String id : workObjIds) {
+            doEvent("return", id);
+        }
+        //un assign
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        assignService.unAssign(user, workObjIds, user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
 
 
     /***
@@ -117,51 +141,47 @@ public class WorkflowExController extends BaseController{
     @GetMapping("getWorkObjsByPointId")
     public ResponseEntity<List<WorkObj>> getWorkObjsByPointId(@RequestParam String flowPointId) throws Exception {
 
-        List<WorkObj> workObjs= workObjService.getWorkObjsByPointId(flowPointId);
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(flowPointId);
 
-        return new ResponseEntity<List<WorkObj>>(workObjs,HttpStatus.OK);
+        return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
 
-    @GetMapping("test")
-    public ResponseEntity<Void> test() throws Exception {
-
-//        Alerts alert=alertService.getSingleAlert("20170728163112212373351046537238");
-//
-//        WorkflowEx workflowEx=  workflowExService.getWorkflowByFlowId("954dc267-c3e2-43d1-abdb-a83ca2881875");
-//
-//        List<FlowEvent> events= workObjService.attach(alert,workflowEx);
-
-        List<WorkObj> workObjs= workObjService.getWorkObjsByPointId("f7f837a6-bc31-c39d-6cdb-bcb6ceaa7d19");
-
-      //  workObjService.doEvent(workObjs.get(0),events.get(0));
-
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
+    private void doEvent(String eventName, String workObjId) throws Exception {
+        WorkObj workObj = workObjService.getWorkObjsByWorkObjId(workObjId);
+        List<FlowEvent> flowEvents = workObj.getCurrentPoint().getPossibleEvents();
+        for (FlowEvent targetEvent : flowEvents) {
+            if (eventName.equalsIgnoreCase(targetEvent.getName())) {
+                String eventId = workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
+                FlowEvent event = workObjService.getFlowEventByEventId(eventId);
+                List<FlowEvent> events = workObjService.doEvent(workObj, event);
+                break;
+            }
+        }
     }
-
-
-
 
     @GetMapping("delete")
     public ResponseEntity<Void> delete() throws Exception {
 
+        alertService.truncateTable();
         workObjService.truncateTable();
+        assignService.truncateTable();
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("setDefaultWorkflowId")
-    public ResponseEntity<Void> setDefaultWorkflowId(@RequestBody Workflow workflow){
+    public ResponseEntity<Void> setDefaultWorkflowId(@RequestBody Workflow workflow) {
         workflowExService.setDefaultWorkflowId(String.valueOf(workflow.getId()), userName);
-        return new ResponseEntity<Void>( HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("getDefaultWorkflowId")
-    public ResponseEntity<Map<String,String>> getDefaultWorkflowId(){
-        Map<String,String> result=new HashMap<>();
-        String id= workflowExService.getDefaultWorkflowId();
-        result.put("defaultWorkflow",id);
-        return new ResponseEntity<Map<String,String>>(result, HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> getDefaultWorkflowId() {
+        Map<String, String> result = new HashMap<>();
+        String id = workflowExService.getDefaultWorkflowId();
+        result.put("defaultWorkflow", id);
+        return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
     }
 
 }

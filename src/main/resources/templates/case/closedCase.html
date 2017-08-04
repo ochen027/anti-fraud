@@ -1,0 +1,107 @@
+<div class="container" ng-controller="ClosedCaseCtrl">
+    <h5>Closed Case:</h5>
+    <hr/>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="label">Customer ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-6">
+                <label class="label">Customer Name</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="label">Case ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-6">
+                <label class="label">Suspicious Level</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="label">Case Create Date</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-6">
+                <label class="label">Case Close Date</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="label">Case Close By</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-default" ng-click="reset()">Reset</button>
+                <button class="btn btn-default" ng-click="search()">Search</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--  table part -->
+    <table class="table table-striped table-bordered table-hover"
+           st-table="displayedData" st-safe-src="data">
+        <thead>
+        <tr>
+            <th st-sort="caseId">Case ID</th>
+            <th st-sort="custId">Customer ID</th>
+            <th st-sort="custName">Customer Name</th>
+            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="status">Status</th>
+            <th st-sort="days">Days</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ng-repeat="row in dataDisplay"-->
+        <tr ng-repeat="row in displayedData track by $index ">
+            <td><a ui-sref="closedCaseInfo({{row.caseId}})">{{row.caseId}}</a></td>
+            <td>{{row.custId}}</td>
+            <td>{{row.custName}}</td>
+            <td class="td-date">{{row.createDate}}</td>
+            <td>{{row.status}}</td>
+            <td>{{row.days}}</td>
+
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage"
+                     st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+
+    </table>
+
+    <!--end of title -->
+
+    <!-- total-->
+
+    <div class="col-md-12">
+        <lable>total:</lable>
+        <span>^^</span>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-primary">Export</button>
+    </div>
+
+</div>
+
+
+
+
+
+

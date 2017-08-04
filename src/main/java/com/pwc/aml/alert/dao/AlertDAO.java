@@ -1,11 +1,8 @@
 package com.pwc.aml.alert.dao;
 
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.comments.entity.Comments;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
-import com.pwc.aml.customers.dao.CustomerDAO;
 import com.pwc.aml.customers.dao.ICustomerDAO;
-import com.pwc.aml.documents.entity.Documents;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.transation.entity.Transactions;
 import org.apache.hadoop.hbase.Cell;
@@ -18,6 +15,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ import java.util.List;
 public class AlertDAO implements IAlertDAO {
 
     @Autowired
-    private HbaseDaoImp hBaseDAO;
+    private HbaseDaoImp hbaseDao;
 
     @Autowired
     private ITransactionDAO transactionDAO;
@@ -33,16 +31,18 @@ public class AlertDAO implements IAlertDAO {
     @Autowired
     private ICustomerDAO customerDAO;
 
+    private String tableKey = "aml:alerts";
+
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
-        Cell[] cells= hBaseDAO.getData(hBaseDAO.getTable("aml:alerts"),alertId, "f1");
+        Cell[] cells= hbaseDao.getData(hbaseDao.getTable("aml:alerts"),alertId, "f1");
         return this.consistAlerts(cells, alertId);
     }
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
         Scan scan = new Scan();
-        HTable hTable = hBaseDAO.getTable("aml:alerts");
+        HTable hTable = hbaseDao.getTable("aml:alerts");
         ResultScanner rsscan = hTable.getScanner(scan);
         List<Alerts> list = new ArrayList<Alerts>();
         for (Result rs : rsscan) {
@@ -50,6 +50,12 @@ public class AlertDAO implements IAlertDAO {
             list.add(aBean);
         }
         return list;
+    }
+
+    @Override
+    public void truncateTable() throws IOException {
+        hbaseDao.deleteTable(tableKey);
+        hbaseDao.createTable(tableKey);
     }
 
     private Alerts consistAlerts(Cell[] cells, String id) throws Exception{

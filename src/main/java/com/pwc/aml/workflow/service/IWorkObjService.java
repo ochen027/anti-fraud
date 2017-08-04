@@ -2,7 +2,7 @@ package com.pwc.aml.workflow.service;
 
 
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.assign.entity.Assign;
+import com.pwc.component.assign.entity.Assign;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.component.workflow.entity.FlowEvent;

@@ -116,7 +116,7 @@ public class HbaseDaoImp implements IHbaseDao {
         put.add(
                 Bytes.toBytes(columnFamily),
                 Bytes.toBytes(column),
-                Bytes.toBytes(value)
+                Bytes.toBytes(null == value ? "" : value)
         );
         //load the put
         table.put(put);
@@ -363,7 +363,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:workObj");
+        HTable table = hdao.getTable("aml:assign");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -441,10 +441,17 @@ public class HbaseDaoImp implements IHbaseDao {
          **/
 
 
-        //hdao.scanData(table);
+        hdao.scanData(table);
 
-        hdao.deleteTable("aml:alerts");
-        hdao.createTable("aml:alerts");
+        //hdao.deleteTable("aml:assign");
+//        hdao.createTable("aml:trans");
+//        hdao.createTable("aml:alerts");
+//        hdao.createTable("aml:workObj");
+//        hdao.createTable("aml:assign");
+
+
+
+        //hdao.createTable("aml:assign");
 
 
         table.close();

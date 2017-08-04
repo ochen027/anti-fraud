@@ -29,25 +29,30 @@ public class AlertController {
         return "alert/closed";
     }
 
-    @RequestMapping("/myAlertInfo")
-    public String myAlertInfo(Model model) {
-        return "alert/my_alert_info";
+    @RequestMapping("/alertInfo")
+    public String alertInfo(Model model) {
+        return "alert/alertInfo";
     }
 
-    @RequestMapping("/availableAlertInfo")
-    public String availableAlertInfo(Model model) {
-        return "alert/available_alert_info";
-    }
+//    @RequestMapping("/myAlertInfo")
+//    public String myAlertInfo(Model model) {
+//        return "alert/my_alert_info";
+//    }
 
-    @RequestMapping("/suppressedAlertInfo")
-    public String suppressedAlertInfo(Model model) {
-        return "alert/suppressed_alert_info";
-    }
-
-    @RequestMapping("/closedAlertInfo")
-    public String closedAlertInfo(Model model) {
-        return "alert/closed_alert_info";
-    }
+//    @RequestMapping("/availableAlertInfo")
+//    public String availableAlertInfo(Model model) {
+//        return "alert/available_alert_info";
+//    }
+//
+//    @RequestMapping("/suppressedAlertInfo")
+//    public String suppressedAlertInfo(Model model) {
+//        return "alert/suppressed_alert_info";
+//    }
+//
+//    @RequestMapping("/closedAlertInfo")
+//    public String closedAlertInfo(Model model) {
+//        return "alert/closed_alert_info";
+//    }
 
 
     @RequestMapping("/create")

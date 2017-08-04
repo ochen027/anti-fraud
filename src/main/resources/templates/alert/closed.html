@@ -53,7 +53,7 @@
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td><a ui-sref="closedAlertInfo({{row.alertId}})">{{row.alertId}}</a></td>
+            <td><a ui-sref="alertInfo({{row.alertId}})">{{row.alertId}}</a></td>
             <td>{{row.accNumber}}</td>
             <td>{{row.custName}}</td>
             <td class="td-date">{{row.createDate}}</td>

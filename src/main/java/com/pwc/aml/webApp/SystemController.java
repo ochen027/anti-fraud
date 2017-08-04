@@ -30,6 +30,7 @@ public class SystemController {
         return "system/watchList";
     }
 
+
     @RequestMapping("/userManagementInfo")
     public String userManagementInfo(Model model) {
         return "system/userManagement_edit";

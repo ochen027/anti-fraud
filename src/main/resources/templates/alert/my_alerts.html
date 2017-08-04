@@ -10,28 +10,27 @@
         <tr>
             <th>Select</th>
             <th st-sort="alertId">Alert ID</th>
-            <th st-sort="accNumber">Acct Number</th>
             <th st-sort="custName">Cust Name</th>
             <th st-sort="createDate">Creat Date</th>
             <th st-sort="scenario">Scenario</th>
             <th st-sort="description" class="description">Description</th>
             <th st-sort="triggeringValues">Triggering Values (USD)</th>
-            <th st-sort="status">Status</th>
-            <th st-sort="age">Age</th>
+            <th st-sort="days">Days</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="row in myAlertDataDisplay track by $index">
-            <td><input class="form-check-input custom-size" type="checkbox" /></td>
-            <td><a ui-sref="myAlertInfo({{row.alterId}})">{{row.alertId}}</a></td>
-            <td>{{row.accNumber}}</td>
-            <td>{{row.custName}}</td>
-            <td>{{row.createDate}}</td>
-            <td>{{row.scenario}}</td>
-            <td>{{row.description}}</td>
-            <td>{{row.triggeringValues|currency}}</td>
-            <td>{{row.status}}</td>
-            <td>{{row.age}}</td>
+            <td class="text-center">
+                <input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]"
+                       ng-click="select($event,row,$index)"/>
+            </td>
+            <td><a ui-sref="alertInfo({id:'{{row.workObjId}}'})">{{row.alerts.alertId}}</a></td>
+            <td>{{row.alerts.customerName}}</td>
+            <td class="td-date">{{row.alerts.createdDate}}</td>
+            <td>{{row.alerts.scenarioId}}</td>
+            <td class="description">{{row.alerts.alertDesc}}</td>
+            <td>{{row.alerts.totalAmt|currency}}</td>
+            <td>{{row.alerts.days}}</td>
         </tr>
         </tbody>
         <tfoot>
@@ -50,12 +49,12 @@
     <!-- total-->
 
     <div class="col-md-12">
-        <lable>total:</lable>
-        <span>{{data.total}}</span>
+        <lable>Total Amount:</lable>
+        <span>{{getMyAlertTotal() | currency}}</span>
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-primary">Reset</button>
+        <button class="btn btn-primary" ng-click="clearSelect()">Reset</button>
         <button class="btn btn-primary">Create Case</button>
     </div>
 </div>

@@ -6,6 +6,7 @@ import com.pwc.aml.common.hbase.IHbaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -22,5 +23,10 @@ public class AlertService implements IAlertService{
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
         return alertDAO.getSingleAlert(alertId);
+    }
+
+    @Override
+    public void truncateTable() throws IOException {
+        alertDAO.truncateTable();
     }
 }
