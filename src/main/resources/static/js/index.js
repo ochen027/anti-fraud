@@ -361,6 +361,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
               },
               controller: 'riskCountryCtrl'
     },
+        {
+            name: "riskCountryInfo",
+            url: "/system/riskCountryInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/riskCountryInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'riskCountryInfoCtrl',
+            params: {riskCountry: null}
+        },
     {
                    name: "watchList",
                    url: "/system/watchList",
