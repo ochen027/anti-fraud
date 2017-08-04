@@ -447,7 +447,7 @@ public class HbaseDaoImp implements IHbaseDao {
 //        hdao.createTable("aml:trans");
 //        hdao.createTable("aml:alerts");
 //        hdao.createTable("aml:workObj");
-//        hdao.createTable("aml:assign");
+        hdao.createTable("aml:comments");
 
 
 
