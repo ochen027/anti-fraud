@@ -1,6 +1,7 @@
 package com.pwc.aml.riskCountry.dao;
 
 import com.pwc.aml.riskCountry.entity.RiskCountry;
+import com.pwc.aml.rules.entity.Scenario;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,9 @@ public class RiskCountryDao implements IRiskCountryDao {
     private EntityManager em;
 
     @Override
-    public void save(RiskCountry riskCountry) {
-        em.persist(riskCountry);
+    public RiskCountry save(RiskCountry riskCountry) {
+         em.persist(riskCountry);
+         return riskCountry;
     }
 
     @Override
@@ -29,8 +31,16 @@ public class RiskCountryDao implements IRiskCountryDao {
     }
 
     @Override
-    public void delete(RiskCountry riskCountry) {
-        em.remove(riskCountry);
+    public void deleteById(int id) {
+        RiskCountry rc=em.find(RiskCountry.class, id);
+        rc.setStatus(false);
+        em.merge(rc);
+        em.flush();
+    }
+    @Override
+    public void delete(RiskCountry rc){
+        RiskCountry target=em.find(RiskCountry.class, rc.getId());
+       em.remove(target);
     }
 
     @Override

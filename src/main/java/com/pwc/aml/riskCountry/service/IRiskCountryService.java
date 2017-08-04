@@ -10,8 +10,10 @@ import java.util.List;
 public interface IRiskCountryService {
     List<RiskCountry> getAllRiskCountry();
     RiskCountry findSingleCountry(int ID);
-    void deleteCountry(RiskCountry riskCountry);
-    void importCsvData(MultipartFile file) throws IOException, ParseException;
+    void deleteCountry(int id);
+    void delete(RiskCountry rc);
+    void importCsvData(MultipartFile file,String userName) throws IOException, ParseException;
     void removeAll();
+    public RiskCountry saveOrUpdate(RiskCountry rc);
 }
 

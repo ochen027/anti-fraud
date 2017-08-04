@@ -11,6 +11,7 @@ import com.pwc.aml.workflow.service.IWorkflowExService;
 import com.pwc.common.base.controller.BaseController;
 import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.workflow.entity.FlowEvent;
+import com.pwc.component.workflow.entity.FlowPoint;
 import com.pwc.component.workflow.entity.Workflow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,13 @@ public class WorkflowExController extends BaseController {
     public ResponseEntity<List<WorkObj>> getAvailableAlerts() throws Exception {
         WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
         List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
+        return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
+    }
+
+    @GetMapping("getClosedAlerts")
+    public ResponseEntity<List<WorkObj>> getClosedAlerts() throws Exception {
+        WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getEndPoint().getFlowPointId());
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
@@ -152,7 +160,7 @@ public class WorkflowExController extends BaseController {
         List<FlowEvent> flowEvents = workObj.getCurrentPoint().getPossibleEvents();
         for (FlowEvent targetEvent : flowEvents) {
             if (eventName.equalsIgnoreCase(targetEvent.getName())) {
-                String eventId = workObj.getCurrentPoint().getPossibleEvents().get(0).getFlowEventId();
+                String eventId = targetEvent.getFlowEventId();
                 FlowEvent event = workObjService.getFlowEventByEventId(eventId);
                 List<FlowEvent> events = workObjService.doEvent(workObj, event);
                 break;

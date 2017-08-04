@@ -23,6 +23,8 @@ public class SystemController {
     public String riskCountry(Model model) {
         return "system/riskCountry";
     }
+    @RequestMapping("/riskCountryInfo")
+    public String riskCountryInfo(Model model){return "system/riskCountry_edit";}
     @RequestMapping("/watchList")
     public String watchList(Model model) {
         return "system/watchList";
@@ -50,6 +52,7 @@ public class SystemController {
     public String roleInfo(Model model) {
         return "system/role_edit";
     }
+
 
 
 

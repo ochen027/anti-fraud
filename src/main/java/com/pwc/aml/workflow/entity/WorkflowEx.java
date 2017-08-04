@@ -46,11 +46,18 @@ public class WorkflowEx extends Workflow {
 
 
     public FlowPointEx getStartPoint() {
-        for (FlowPointEx flowPoint : flowPointsEx) {
-            if(flowPoint.getType().equals("WorkflowShape.WorkflowStart"))
-            return flowPoint;
-        }
+        return getPointByType("WorkflowShape.WorkflowStart");
+    }
 
+    public FlowPointEx getEndPoint() {
+        return getPointByType("WorkflowShape.WorkflowEnd");
+    }
+
+    public FlowPointEx getPointByType(String type){
+        for (FlowPointEx flowPoint : flowPointsEx) {
+            if(flowPoint.getType().equals(type))
+                return flowPoint;
+        }
         return null;
     }
 
