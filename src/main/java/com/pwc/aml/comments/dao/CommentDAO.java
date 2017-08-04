@@ -2,6 +2,7 @@ package com.pwc.aml.comments.dao;
 
 import com.pwc.aml.comments.entity.Comments;
 import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.common.util.Constants;
 import com.pwc.common.util.FormatUtils;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -28,11 +29,12 @@ public class CommentDAO implements ICommentDAO{
 
     @Override
     public void createComment(Comments c) throws Exception{
-        HTable table = hBaseDAO.getTable("aml:comments");
-        hBaseDAO.putData(table, c.getCommentId(), "f1", "commentContents", c.getCommentContents());
-        hBaseDAO.putData(table, c.getCommentId(), "f1", "commentCreatedBy", c.getCommentCreatedBy());
-        hBaseDAO.putData(table, c.getCommentId(), "f1", "commentCreatedDate", c.getCommentCreatedDate().toString());
-        hBaseDAO.putData(table, c.getCommentId(), "f1", "alertId", c.getAlertId());
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
+        c.setCommentId(FormatUtils.GenerateId());
+        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CONTENTS, c.getCommentContents());
+        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CREATED_BY, c.getCommentCreatedBy());
+        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CREATED_DATE, c.getCommentCreatedDate().toString());
+        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_ALERT_ID, c.getAlertId());
     }
 
     @Override
@@ -42,20 +44,20 @@ public class CommentDAO implements ICommentDAO{
 
     @Override
     public void removeComment(String commentId) throws Exception{
-        HTable table = hBaseDAO.getTable("aml:comments");
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
         hBaseDAO.deleteData(table, commentId);
     }
 
     @Override
     public Comments getSingleComment(String commentId) throws Exception{
-        HTable table = hBaseDAO.getTable("aml:comments");
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
         return this.consistComment(hBaseDAO.getData(table, commentId, "f1"));
     }
 
     @Override
     public List<Comments> getAllComments() throws Exception{
         Scan scan = new Scan();
-        HTable hTable = hBaseDAO.getTable("aml:comments");
+        HTable hTable = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
         ResultScanner rsscan = hTable.getScanner(scan);
         List<Comments> list = new ArrayList<Comments>();
         for (Result rs : rsscan) {
@@ -68,7 +70,7 @@ public class CommentDAO implements ICommentDAO{
     @Override
     public List<Comments> getCommentsListByAlert(String alertId) throws Exception {
         Scan scan = new Scan();
-        HTable hTable = hBaseDAO.getTable("aml:comments");
+        HTable hTable = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
         Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("alertId"),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(alertId));
         scan.setFilter(filter);
@@ -87,16 +89,16 @@ public class CommentDAO implements ICommentDAO{
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
-                case "alertId":
+                case Constants.COLUMN_ALERT_ID:
                     cBean.setAlertId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "commentContents":
+                case Constants.COLUMN_COMMENTS_CONTENTS:
                     cBean.setCommentContents(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "commentCreatedDate":
+                case Constants.COLUMN_COMMENTS_CREATED_DATE:
                     cBean.setCommentCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "commentCreatedBy":
+                case Constants.COLUMN_COMMENTS_CREATED_BY:
                     cBean.setCommentCreatedBy(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
             }
