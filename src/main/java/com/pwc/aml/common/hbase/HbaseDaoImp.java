@@ -363,7 +363,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:assign");
+        HTable table = hdao.getTable("aml:workObj");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
