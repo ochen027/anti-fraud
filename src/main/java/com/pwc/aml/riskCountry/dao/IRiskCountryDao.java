@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface IRiskCountryDao {
 
-    public void save(RiskCountry riskCountry);
+    public RiskCountry save(RiskCountry riskCountry);
 
     RiskCountry update(RiskCountry riskCountry);
 
-    void delete(RiskCountry riskCountry);
-
+    void deleteById(int id);
+    void delete(RiskCountry rc);
     List<RiskCountry> findAll();
 
     RiskCountry findById(int id);
