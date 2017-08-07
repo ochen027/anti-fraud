@@ -1,0 +1,24 @@
+<div class="container" ng-controller="MenuInfoCtrl">
+    <h5>Menu List:</h5>
+    <hr/>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" type="button" ng-click="save()">Save</button>
+        <button class="btn btn-default" type="button" ng-click="gotoMenuList()">Back</button>
+    </div>
+
+    <div class="col-md-12">
+
+
+        <div class="form-menu">
+            <label for="menuId">Menu Id</label>
+            <input type="text" class="form-control" id="menuId" ng-model="menu.id" placeholder="menu id" ng-disabled="menu.action"/>
+        </div>
+
+        <div class="form-menu">
+            <label for="menuName">Menu Name</label>
+            <input type="text" class="form-control" id="menuName" ng-model="menu.menuName" placeholder="menu name"/>
+        </div>
+
+    </div>
+</div>

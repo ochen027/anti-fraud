@@ -1,7 +1,59 @@
 <div class="container" ng-controller="MyCaseCtrl">
-    My Case
 
+        <h5>My Case:</h5>
+        <hr/>
 
+        <!--  table part -->
+        <table class="table table-striped table-bordered table-hover"
+               st-table="myCaseDataDisplay" st-safe-src="myCaseData">
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th st-sort="caseId">Case ID</th>
+                <th st-sort="custId">Customer ID</th>
+                <th st-sort="custName">Customer Name</th>
+                <th st-sort="createDate">Create Date</th>
+                <th st-sort="scenarioDescription">Scenario Description</th>
+                <th st-sort="days">Days</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in myCaseDataDisplay track by $index">
+                <td class="text-center">
+                    <input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]"
+                           ng-click="select($event,row,$index)"/>
+                </td>
+                <td><a ui-sref="caseInfo({id:'{{row.workObjId}}'})">{{row.case.caseId}}</a></td>
+                <td>{{row.case.customerName}}</td>
+                <td class="td-date">{{row.case.createdDate}}</td>
+                <td>{{row.case.scenarioDescription}}</td>
+                <td class="caseDescription">{{row.case.caseDesc}}</td>
+                <td>{{row.case.days}}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="15" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsBypage" st-displayed-pages="4"></div>
+
+                </td>
+            </tr>
+            </tfoot>
+
+        </table>
+
+        <!--end of title -->
+
+        <!-- total-->
+
+        <div class="col-md-12">
+            <lable>Total Amount:</lable>
+            <span>{{getMyCaseTotal() | currency}}</span>
+        </div>
+
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary">Export</button>
+        </div>
 
 
 
