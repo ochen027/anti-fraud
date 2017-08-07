@@ -94,6 +94,14 @@ public class CustomerService implements ICustomerService {
             customers.setNonResident(isResident);
             boolean isAMLSupport=item[17].equals("Y")?true:false;
             customers.setAMLSuspect(isAMLSupport);
+            customers.setCustomerType(item[18]);
+            customers.setRepresentative(item[19]);
+            customers.setRepresentativeId(item[20]);
+            customers.setRepresentativeIdType(item[21]);
+            customers.setCustomerCertificateNumberCorporate(item[22]);
+            customers.setCustlineOfBusiness(item[23]);
+            boolean isAMLSupportCorporate=item[24].equals("Y")?true:false;
+            customers.setAMLSuspectCorporate(isAMLSupportCorporate);
             customerDAO.save(customers);
         }
         FileUtils.deleteQuietly(temp);

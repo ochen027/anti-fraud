@@ -12,6 +12,9 @@ body {
     border-color: #ccc;
 }
 
+label{
+    white-space:nowrap;
+}
 /****
 end of main
  */

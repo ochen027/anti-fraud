@@ -19,7 +19,7 @@ public class Customers extends BaseEntity {
     @Column(name = "cust_id")
     private String customerId;
 
-    @Column(name = "cust_ct_no")
+    @Column(name = "cust_ct_no_indiv")
     private String customerCertificateNumber;
 
     @Column(name = "cust_first_nm")
@@ -64,8 +64,34 @@ public class Customers extends BaseEntity {
     @Column(name = "resi_Flg")
     private boolean IsNonResident;
 
-    @Column(name = "sus_Flg")
+    @Column(name = "sus_Flg_indiv")
     private boolean IsAMLSuspect;
+
+    @Column(name="cust_type")
+    private String customerType;
+
+
+    @Column(name="representative")
+    private String representative;
+
+    @Column(name="representative_id")
+    private String representativeId;
+
+
+    @Column(name="representative_id_type")
+    private String representativeIdType;
+
+
+    @Column(name="cust_ct_no_corp")
+    private String customerCertificateNumberCorporate;
+
+
+    @Column(name="cust_LOB")
+    private String custlineOfBusiness;
+
+    @Column(name="sus_Flg_corp")
+    private boolean IsAMLSuspectCorporate;
+
 
 
     @Transient
@@ -265,5 +291,63 @@ public class Customers extends BaseEntity {
 
     public void setAlertId(String alertId) {
         this.alertId = alertId;
+    }
+
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getRepresentative() {
+        return representative;
+    }
+
+    public void setRepresentative(String representative) {
+        this.representative = representative;
+    }
+
+    public String getRepresentativeId() {
+        return representativeId;
+    }
+
+    public void setRepresentativeId(String representativeId) {
+        this.representativeId = representativeId;
+    }
+
+    public String getRepresentativeIdType() {
+        return representativeIdType;
+    }
+
+    public void setRepresentativeIdType(String representativeIdType) {
+        this.representativeIdType = representativeIdType;
+    }
+
+
+    public String getCustomerCertificateNumberCorporate() {
+        return customerCertificateNumberCorporate;
+    }
+
+    public void setCustomerCertificateNumberCorporate(String customerCertificateNumberCorporate) {
+        this.customerCertificateNumberCorporate = customerCertificateNumberCorporate;
+    }
+
+    public String getCustlineOfBusiness() {
+        return custlineOfBusiness;
+    }
+
+    public void setCustlineOfBusiness(String custlineOfBusiness) {
+        this.custlineOfBusiness = custlineOfBusiness;
+    }
+
+    public boolean isAMLSuspectCorporate() {
+        return IsAMLSuspectCorporate;
+    }
+
+    public void setAMLSuspectCorporate(boolean AMLSuspectCorporate) {
+        IsAMLSuspectCorporate = AMLSuspectCorporate;
     }
 }

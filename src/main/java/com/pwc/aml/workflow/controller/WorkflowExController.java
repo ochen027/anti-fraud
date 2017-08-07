@@ -64,6 +64,13 @@ public class WorkflowExController extends BaseController {
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
+    @PostMapping("getWorkObjById")
+    public ResponseEntity<WorkObj> getWorkObjById(@RequestBody String id) throws Exception {
+        WorkObj workObj=workObjService.getWorkObjsByWorkObjId(id);
+        return new ResponseEntity<WorkObj>(workObj, HttpStatus.OK);
+    }
+
+
     @GetMapping("getClosedAlerts")
     public ResponseEntity<List<WorkObj>> getClosedAlerts() throws Exception {
         WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
