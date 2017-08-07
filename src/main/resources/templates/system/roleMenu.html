@@ -13,17 +13,16 @@
         <tr>
             <th st-sort="menuId">Menu Id</th>
             <th st-sort="menuName">Menu Name</th>
-            <th st-sort="menuParentId">Parent Id</th>
-            <th st-sort="menuURL">URL</th>
+            <th st-sort="status">Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td>{{row.menuId}}</td>
+            <td>{{row.id}}</td>
             <td>{{row.menuName}}</td>
-            <td>{{row.menuParentId}}</td>
-            <td>{{row.menuURL}}</td>
+            <td>{{row.status}}</td>
             <td>
                 <button class="btn btn-default" ng-click="edit(row)">Edit</button>
                 <button class="btn btn-default" ng-click="delete(row.id)">Delete</button>

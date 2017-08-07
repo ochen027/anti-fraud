@@ -46,17 +46,17 @@ insert into grouprole values (6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5,
 insert into grouprole values (7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 6);
 
 -- initial menu table
-insert into menus values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Dashboard', NULL, 'dashboard()');
-insert into menus values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alerts', NULL, NULL);
+insert into menus values(1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Dashboard', 0, 'dashboard()');
+insert into menus values(2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alerts', 0, NULL);
 insert into menus values(3, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Alerts', 2, 'myAlert()');
 insert into menus values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(L1)', 2, 'available({id:"L1Pool"})');
 insert into menus values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Suppressed Alerts', 2, 'suppressedAlert');
 insert into menus values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Alerts', 2, 'closedAlert()');
 insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create Alert', 2, 'CreateAlert()');
-insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', NULL, NULL);
-insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', NULL, NULL);
-insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', NULL, NULL);
-insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', NULL, NULL);
+insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', 0, NULL);
+insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', 0, NULL);
+insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', 0, NULL);
+insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', 0, NULL);
 insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, 'rulesManager()');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, 'IndexWorkflow()');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, 'transBatch()');
@@ -79,10 +79,14 @@ insert into menus values(26, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(27, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Group', 11, 'userGroup()');
 insert into menus values(28, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'User Role', 11, 'roleList()');
 
+
+
 insert into menus values(29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(L2)', 2, 'available({id:"L2Pool"})')
 insert into menus values(30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(QC)', 2, 'available({id:"QcPool"})');
 insert into menus values(31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Available Alerts(MLRO)', 2, 'available({id:"MLROPool"})');
 
+insert into menus values(32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu', 11, 'menuList()');
+insert into menus values(33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Role Menu', 11, 'roleMenu()');
 -- initial role menu table
 -- sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
@@ -116,6 +120,8 @@ insert into rolemenu values (28, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 28
 insert into rolemenu values (29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 29, 6);
 insert into rolemenu values (30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 30, 6);
 insert into rolemenu values (31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
+insert into rolemenu values (32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 32, 6);
+insert into rolemenu values (33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
 
 -- l1 menu
 insert into rolemenu values (100001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);

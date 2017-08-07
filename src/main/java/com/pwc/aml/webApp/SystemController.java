@@ -52,7 +52,18 @@ public class SystemController {
     public String roleInfo(Model model) {
         return "system/role_edit";
     }
-
+    @RequestMapping("/menuList")
+    public String menuList(Model model) {
+        return "system/menu_list";
+    }
+    @RequestMapping("/roleMenu")
+    public String roleMenu(Model model) {
+        return "system/roleMenu";
+    }
+    @RequestMapping("/menuInfo")
+    public String menuInfo(Model model) {
+        return "system/menu_edit";
+    }
 
 
 

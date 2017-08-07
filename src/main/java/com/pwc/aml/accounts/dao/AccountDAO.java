@@ -55,6 +55,7 @@ public class AccountDAO implements IAccountDAO{
         List<Accounts> accounts = query.getResultList();
         if (accounts.isEmpty()) {
             return null;
+
         } else {
             return accounts.get(0);
         }
