@@ -11,9 +11,9 @@ import java.util.List;
 public interface IAccountService {
     void saveOrUpdateAccount(Accounts account);
     
-    Accounts findByAcctId(Accounts accounr);
+    Accounts findByAcctId(Accounts accounts);
 
-    List<Accounts> findByCustId(Accounts accounr);
+    List<Accounts> findByCustId(Accounts accounts);
    
     List<Accounts> findAll();
 

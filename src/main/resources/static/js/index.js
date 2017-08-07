@@ -476,7 +476,58 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'RoleInfoCtrl',
         params: {role: null}
-    }];
+    },
+    {
+         name:"menuList",
+         url: "/system/menuList",
+         views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/system/menuList'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'MenuListCtrl'
+     },
+        {
+            name:"roleMenu",
+            url: "/system/roleMenu",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/roleMenu'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RoleMenuCtrl'
+        },
+    {
+            name: "menuInfo",
+            url: "/system/menuInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/menuInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'MenuInfoCtrl',
+            params: {menu: null}
+     }
+
+    ];
 
 
     app.case=[{
@@ -650,7 +701,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'RulesManagerCtrl'
         }
     ]
-
 
     /***
      * for supporting muti-level
