@@ -451,6 +451,7 @@ app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeo
     $http.get("/menus/findAll").then(function(res){
         console.log(res);
         $scope.menusList=res.data;
+        $scope.menusListDisplay=res.data.slice(0);
     },function(error){
         consle.log(error.statusCode()+"-->"+error.statusText);
     })
@@ -458,9 +459,9 @@ app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeo
         menu.action=true;
         $state.go("menuInfo",{menu:menu});
     }
-    $scope.delete=function(menuId){
+    $scope.delete=function(id){
         console.log("delete menu");
-        $http.post("/menus/deleteMenu/"+menuId).then(function(res){
+        $http.post("/menus/deleteMenus/"+id).then(function(res){
             console.log(res)
             $scope.refresh();
         })
@@ -469,30 +470,25 @@ app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeo
         $state.go("menuInfo",{menu:{"action":true}});
     }
 
-    $scope.refresh=function(){
-        $http.get("/menus/findAll").then(function(res){
-            $scope.menusList=res.data;
-
-        })
+    $scope.refresh = function () {
+        $http.get("/menus/findAll").then(function (res) {
+            $scope.menusList = res.data;
+            $scope.menusListDisplay = res.data.slice();
+        });
     }
-
-    $timeout(function(){
-        $scope.refresh();
     });
 
-
-});
 app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$stateParams){
     $scope.menu={};
 
     $scope.save=function(){
-        $http.post("menus/createMenu",$scope.menu).then(function(res){
+        $http.post("menus/createMenus",$scope.menu).then(function(res){
             if(res.status!==200){
                 console.log(res);
                 return;
             }
 
-            $scope.menu=res.data;
+        //    $scope.menu=res.data;
             alert("menu saved!");
         })
     }

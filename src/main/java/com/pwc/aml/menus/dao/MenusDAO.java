@@ -84,10 +84,10 @@ public class MenusDAO implements IMenusDAO {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Menus> cq = cb.createQuery(Menus.class);
 		Root<Menus> rootEntry = cq.from(Menus.class);
-		CriteriaQuery<Menus> all = cq.select(rootEntry);
+		Predicate predicate = cb.equal(rootEntry.get("status"), true);
+		CriteriaQuery<Menus> all = cq.select(rootEntry).where(predicate);
 		TypedQuery<Menus> allQuery = entityManager.createQuery(all);
 		return allQuery.getResultList();
-
 	}
 
 	private List<Menus> convertMenuData(List<Object[]> list){
@@ -124,7 +124,7 @@ public class MenusDAO implements IMenusDAO {
 	}
 	@Override
 	public Menus createMenus(Menus m) {
-		entityManager.persist(m);
+		entityManager.merge(m);
 		return m;
 	}
 
