@@ -4,7 +4,7 @@ public class Documents {
 
     private String docId;
     private String docPath;
-    private String alertId;
+    private String workObjId;
     private String docCreatedBy;
     private String docCreatedDate;
 
@@ -24,12 +24,12 @@ public class Documents {
         this.docPath = docPath;
     }
 
-    public String getAlertId() {
-        return alertId;
+    public String getWorkObjId() {
+        return workObjId;
     }
 
-    public void setAlertId(String alertId) {
-        this.alertId = alertId;
+    public void setWorkObjId(String workObjId) {
+        this.workObjId = workObjId;
     }
 
     public String getDocCreatedBy() {

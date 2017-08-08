@@ -241,7 +241,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams) {
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams,$timeout) {
     console.log("myalertinfoctrl");
 
     $scope.summaryAction = false;
@@ -249,6 +249,10 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
     $scope.individualAction = false;
     $scope.corporateAction = false;
     $scope.legalRepsAction = false;
+
+    $scope.alerts={};
+    $scope.customer={};
+
 
     $scope.toggleBlock = function (flag) {
         if (flag === "customerSummary") {
@@ -263,6 +267,36 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
             $scope.legalRepsAction = !$scope.legalRepsAction;
         }
     }
+
+
+    var getAlert=function () {
+        $http.post("/workflow/getWorkObjById",$stateParams.id).then(function(res){
+
+            if(res.status!=200){
+                console.log(res);
+                return;
+            }
+            $scope.alerts=res.data.alerts;
+            getCustomer(res.data.alerts.customerId);
+        });
+    }
+
+    var getCustomer=function(customerId){
+       $http.post( "/customer/findByCustId",{"customerId":customerId}).then(function(res){
+           if(res.status!=200){
+               console.log(res);
+               return;
+           }
+           $scope.customer=res.data;
+       });
+    }
+
+    $timeout(function(){
+        getAlert();
+
+
+
+    });
 
     $http.get("/alert/myAlertInfo/12345")
         .then(function (result) {

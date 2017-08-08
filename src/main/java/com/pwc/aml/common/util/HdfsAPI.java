@@ -89,19 +89,25 @@ public class HdfsAPI {
     }
 
     public static void main(String[] args) throws Exception {
-        // TODO Auto-generated method stub
-//        FileSystem fs= getHDFileSystem();
-        Path writePath=new Path("/user/hadoop/tmp/sampleData/TRANS");
+        //FileSystem fs= getHDFileSystem();
+        //Path writePath=new Path("/user/hadoop/tmp/sampleData/xx.txt");
+
+        read("/user/hadoop/tmp/sampleData/xx.txt");
+
         //创建目录
 //		boolean b =fs.mkdirs(Path);
 
 //        System.out.println(b);
-        FileSystem lfs=getLocalFileSystem();
+        //FileSystem lfs=getLocalFileSystem();
 //        System.out.println(lfs);
 //        Path readPath=new Path("C:\\Andrew");
 //        boolean b=lfs.exists(readPath);
 //        System.out.println(b);
-        write("C:\\orchen\\abc.py","/user/hadoop/tmp/sampleData/abc.py");
+
+
+
+
+        //write("C:\\ochen\\xx.txt","/user/hadoop/tmp/sampleData/xx.txt");
 
 
     }

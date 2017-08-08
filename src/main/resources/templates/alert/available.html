@@ -24,7 +24,7 @@
                 <input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]"
                        ng-click="select($event,row,$index)"/>
             </td>
-            <td><a ui-sref="alertInfo(row.workObjId)">{{row.alerts.alertId}}</a></td>
+            <td><a ui-sref="alertInfo({id:'{{row.workObjId}}'})">{{row.alerts.alertId}}</a></td>
             <td>{{row.alerts.customerName}}</td>
             <td class="td-date">{{row.alerts.createdDate}}</td>
             <td>{{row.alerts.scenarioId}}</td>

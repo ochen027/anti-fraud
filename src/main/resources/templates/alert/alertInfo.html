@@ -3,6 +3,184 @@
     <h5>Available Alerts Info:</h5>
     <hr/>
 
+
+    <div class="card">
+        <div class="card-block customer-summary">
+            <h4 class="card-title">Customer Summary</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label  class="col-4 col-form-label">Alert ID</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" ng-model="alerts.alertId" ></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label  class="col-4 col-form-label">Alert Date</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" ng-model="alerts.createdDate"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label  class="col-4 col-form-label">Customer ID</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" ng-model="customer.customerId" ></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label  class="col-4 col-form-label">Customer Name</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" ng-model="customer.customerFullName"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label  class="col-4 col-form-label">Customer Type</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" ng-model="customer.customerType"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-block customer-information">
+            <h4 class="card-title">Customer Information</h4>
+            <div class="customer-information-individual">
+                <h6 class="card-subtitle mb-2 text-muted">Individual</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Date of Birth</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerBirthDate" ></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">ID</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCertificateNumber"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Occupation</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerOccupation"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">City</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCity" ></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Country</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCountry"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Phone</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerPhone1"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Is PEP</label>
+                            <div class="col-8">
+                                <label><input type="radio" name="IsPEP" ng-model="customer.IsPEP" value="true"></input>Yes</label>
+                                <label><input type="radio" name="IsPEP" ng-model="customer.IsPEP" value="false"></input> No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Is Non Resident</label>
+                            <div class="col-8">
+                                <label><input type="radio" name="IsNonResident" ng-model="customer.IsNonResident" ng-value="true"></input>Yes</label>
+                               <label><input type="radio" name="IsNonResident" ng-model="customer.IsNonResident" ng-value="false"></input>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Is AML Suspect</label>
+                            <div class="col-8">
+                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.IsAMLSuspect" ng-value="true"></input> Yes</label>
+                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.IsAMLSuspect" ng-value="false"></input> No</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customer-information-corporate">
+                <h6 class="card-subtitle mb-2 text-muted">Corporate</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Registration Number</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerBirthDate" ></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Line of Business</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCertificateNumber"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Phone</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerOccupation"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
     <fieldset class="block">
         <div>
             <i class="fa fa-caret-down" ng-click="toggleBlock('customerSummary')"></i>
@@ -10,9 +188,9 @@
             <div class="customer-summary" ng-hide="summaryAction">
                 <div class="table-tr">
                     <label class="label" for="alertid">Alert ID</label>
-                    <input class="text-input" id="alertid" type="text" ng-disabled="true" value="{{summary.alertId}}"></input>
+                    <input class="text-input" id="alertid" type="text" ng-disabled="true" ng-model="alerts.alertId"></input>
                     <label class="label" for="alertdate">Alert Date</label>
-                    <input class="text-input" id="alertdate" type="text" colspan="2" ng-disabled="true" value="{{summary.alertDate}}"></input>
+                    <input class="text-input" id="alertdate" type="text" colspan="2" ng-disabled="true" ng-model="alerts.createdDate"></input>
                 </div>
                 <div class="table-tr">
                     <label class="label" for="customerid">Customer ID</label>
