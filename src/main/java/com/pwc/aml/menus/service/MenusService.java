@@ -2,6 +2,7 @@ package com.pwc.aml.menus.service;
 
 import java.util.List;
 
+import com.pwc.aml.menus.dao.MenusDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,6 @@ public class MenusService implements IMenusService {
 
     @Autowired
     private IMenusDAO menuDAO;
-
     @Override
     public List<Menus> listUserMenus(int userId) {
         List<Menus> rootMenus = menuDAO.listUserRootMenus(userId);
@@ -41,6 +41,32 @@ public class MenusService implements IMenusService {
         }
         return list;
     }
-    
-    
+    @Override
+    public Menus createMenus(Menus m) {
+        menuDAO.createMenus(m);
+        return m;
+    }
+
+    @Override
+    public void updateMenus(Menus m) {
+        menuDAO.updateMenus(m);
+    }
+
+    @Override
+    public void deleteMenus(Menus menus) {
+
+        menuDAO.deleteMenus(menus);
+
+    }
+
+    @Override
+    public Menus getSingleMenus(int menuId) {
+        return menuDAO.getMenus(menuId);
+    }
+
+    @Override
+    public List<Menus> findAll() {
+        return menuDAO.findAll();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.pwc.aml.common.util;
 
-import java.io.IOException;
+import java.io.*;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -46,6 +47,17 @@ public class HdfsAPI {
         }
 
     }
+
+    public static InputStream readFile(String fileName) throws Exception
+    {
+        FileSystem fs=getHDFileSystem();
+        Path readPath=new Path(fileName);
+        FSDataInputStream inStream =fs.open(readPath);
+        return inStream;
+    }
+
+
+
     //写文件
     //第一参数是本地路径,或者服务器路径,第二个参数是要存到的hdfs的路径
     public static void write(String inputLocalFile,String outputHDFSFile) throws Exception
@@ -89,19 +101,25 @@ public class HdfsAPI {
     }
 
     public static void main(String[] args) throws Exception {
-        // TODO Auto-generated method stub
-//        FileSystem fs= getHDFileSystem();
-        Path writePath=new Path("/user/hadoop/tmp/sampleData/TRANS");
+        //FileSystem fs= getHDFileSystem();
+        //Path writePath=new Path("/user/hadoop/tmp/sampleData/xx.txt");
+
+        read("/user/hadoop/tmp/sampleData/20170807171207000287785084582417");
+
         //创建目录
 //		boolean b =fs.mkdirs(Path);
 
 //        System.out.println(b);
-        FileSystem lfs=getLocalFileSystem();
+        //FileSystem lfs=getLocalFileSystem();
 //        System.out.println(lfs);
 //        Path readPath=new Path("C:\\Andrew");
 //        boolean b=lfs.exists(readPath);
 //        System.out.println(b);
-        write("C:\\orchen\\abc.py","/user/hadoop/tmp/sampleData/abc.py");
+
+
+
+
+        //write("C:\\ochen\\xx.txt","/user/hadoop/tmp/sampleData/xx.txt");
 
 
     }

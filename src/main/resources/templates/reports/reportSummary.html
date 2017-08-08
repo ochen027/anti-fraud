@@ -1,5 +1,58 @@
 <div class="container" ng-controller="ReportSummaryCtrl">
-    Report Summary
+    <h5>Report Summary:</h5>
+    <hr/>
+
+    <div class="text-left">
+            <form class="">
+                <div class="table-tr">
+                    <label class="label">Report Type</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Date</label>
+                    <input type="text" class="text-input" placeholder=""></input>
+                    <button class="btn btn-default" ng-click="search()">Search</button>
+                </div>
+            </form>
+    </div>
+    <!--  table part -->
+    <table class="table table-striped table-bordered table-hover"
+           st-table="displayedData" st-safe-src="data">
+        <thead>
+        <tr>
+            <th st-sort="date">Date</th>
+            <th st-sort="totalNumberOfTransaction">Total Number of Transaction</th>
+            <th st-sort="totalNumberOfAlerts">Total Number of Alerts</th>
+            <th st-sort="totalNumberOfClosedAlert">Total Number of  Closed Alerts</th>
+            <th st-sort="totalNumberOfSuppressedAlert">Total Number of suppressed Alerts</th>
+            <th st-sort="totalNumberOfAlertsReportedToSAR">Total Number of Alerts Reported to SAR</th>
+            <th st-sort="totalNumberOfActiveAlerts">Total Number of Active Alerts</th>
+
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage"
+                     st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+
+    </table>
+
+    <!--end of title -->
+
+    <!-- total-->
+
+    <div class="col-md-12">
+        <lable>total:</lable>
+        <span>^^</span>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-primary">Export</button>
+    </div>
+
 
 
 

@@ -3,7 +3,7 @@
  */
 
 
-app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload) {
+app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload, $timeout) {
     // upload later on form submit or something similar
     $scope.submit = function() {
         if ($scope.form.file.$valid && $scope.file) {
@@ -65,6 +65,54 @@ app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload) {
          //
          // });
 
+    }
+
+
+
+    //Added by Orvin Upload file into HDFS
+    $scope.uploadFiles = function (files) {
+        if (files && files.length) {
+            Upload.upload({
+                url: '/documents/upload',
+                data: {file: files[0]}
+            }).then(function (res) {
+                $scope.refresh();
+            });
+        }
+        files = [];
+    }
+
+    $scope.refresh = function () {
+        $scope.dataFiles = [];
+        console.log("Begin get document list");
+        $http.get("/documents/getByAlertId/201708071058455875519638759332").then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+            $scope.dataFiles=res.data;
+
+        });
+    }
+
+
+    //Added By Orvin Get Document by Alert Work Object Id 201708071058455875519638759332
+    $timeout(function () {
+        $scope.dataFiles = [];
+        console.log("Begin get document list");
+        $http.get("/documents/getByAlertId/201708071058455875519638759332").then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+            $scope.dataFiles=res.data;
+
+        });
+    })
+
+    //Added By Orvin Download file
+    $scope.filedownload = function(fileName, filePath){
+        window.location.href="/documents/download/"+fileName+"/"+filePath;
     }
 
 });

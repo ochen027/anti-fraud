@@ -516,3 +516,58 @@ app.controller('watchListInfoCtrl', function ($scope, $http, $location, $state, 
 
 });
 
+app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeout){
+    console.log("menus/menuList");
+    $http.get("/menus/findAll").then(function(res){
+        console.log(res);
+        $scope.menusList=res.data;
+        $scope.menusListDisplay=res.data.slice(0);
+    },function(error){
+        consle.log(error.statusCode()+"-->"+error.statusText);
+    })
+    $scope.edit=function(menu){
+        menu.action=true;
+        $state.go("menuInfo",{menu:menu});
+    }
+    $scope.delete=function(id){
+        console.log("delete menu");
+        $http.post("/menus/deleteMenus/"+id).then(function(res){
+            console.log(res)
+            $scope.refresh();
+        })
+    }
+    $scope.addMenu=function(){
+        $state.go("menuInfo",{menu:{"action":true}});
+    }
+
+    $scope.refresh = function () {
+        $http.get("/menus/findAll").then(function (res) {
+            $scope.menusList = res.data;
+            $scope.menusListDisplay = res.data.slice();
+        });
+    }
+    });
+
+app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$stateParams){
+    $scope.menu={};
+
+    $scope.save=function(){
+        $http.post("menus/createMenus",$scope.menu).then(function(res){
+            if(res.status!==200){
+                console.log(res);
+                return;
+            }
+
+        //    $scope.menu=res.data;
+            alert("menu saved!");
+        })
+    }
+    $scope.gotoMenuList=function(){
+        $state.go("menuList");
+    }
+
+    $timeout(function(){
+        $scope.menu=$stateParams.menu;
+    })
+
+});

@@ -1,7 +1,129 @@
 <div class="container" ng-controller="CaseQueryCtrl">
-    Case Query
+    <h5>Case Query:</h5>
+    <hr/>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="label">Customer ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Customer Name</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Account ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Transaction ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="label">Case ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Scenario ID</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Status</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <label class="label">Case Closed By</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="label">Case Closed Date</label>
+                <input type="text" class="form-control" placeholder=""></input>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-default" ng-click="reset()">Reset</button>
+                <button class="btn btn-default" ng-click="search()">Search</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--  table part -->
+    <table class="table table-striped table-bordered table-hover"
+           st-table="displayedData" st-safe-src="data">
+        <thead>
+        <tr>
+            <th st-sort="caseId">Case ID</th>
+            <th st-sort="scenarioDescription">Scenario Description</th>
+            <th st-sort="transactionId">Transaction ID</th>
+            <th st-sort="transactionDate">Transaction Date</th>
+            <th st-sort="accountId">Account ID</th>
+            <th st-sort="transactionChannel">Transaction Channel</th>
+            <th st-sort="financialInstitutionName">Financial Institution Name</th>
+            <th st-sort="financialInstitutionCountry">Financial Institution Country</th>
+        </tr>
+        <tr>
+            <th st-sort="p2pAccountNumber">P2P Account Number</th>
+            <th st-sort="transactionCurrency">Transaction Currency</th>
+            <th st-sort="transactionBaseAmount">Transaction Base Amount</th>
+            <th st-sort="transactionDescription">Transaction Description</th>
+            <th st-sort="counterPartyName">Counter Party Name</th>
+            <th st-sort="counterPartyAccountNumber">Counter Party Account Number</th>
+            <th st-sort="receivingBankName">Receiving Bank's Name</th>
+            <th st-sort="ReceivingBankPlace">Receiving Bank's Place</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ng-repeat="row in dataDisplay"-->
+        <tr ng-repeat="row in displayedData track by $index ">
+            <td><a ui-sref="AlertQueryInfo({{row.caseId}})">{{row.caseId}}</a></td>
+            <td>{{row.custId}}</td>
+            <td>{{row.custName}}</td>
+            <td class="td-date">{{row.createDate}}</td>
+            <td>{{row.status}}</td>
+            <td>{{row.days}}</td>
+
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage"
+                     st-displayed-pages="7"></div>
+            </td>
+        </tr>
+        </tfoot>
+
+    </table>
+
+    <!--end of title -->
+
+    <!-- total-->
+
+    <div class="col-md-12">
+        <lable>total:</lable>
+        <span>^^</span>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-primary">Export</button>
+    </div>
+
+
+
+
+
+
+
 
 
 
 
 </div>
+

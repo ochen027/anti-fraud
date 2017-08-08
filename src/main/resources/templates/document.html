@@ -1,7 +1,7 @@
 <div class="container" ng-controller="DocumentCtrl">
     <h3>Document:</h3>
     <hr/>
-
+    <!--
     <form name="form">
         <fieldset class="block">
             <legend></legend>
@@ -22,7 +22,8 @@
             <span ng-show="file.result" class="ng-hide">Upload Successful</span>
         </fieldset>
         <hr/>
-        <!--multiple files upload-->
+        -->
+        <!--multiple files upload
         <fieldset class="block ng-hide">
             <legend></legend>
             <div class="span-title">Multiple Files Upload</div>
@@ -45,11 +46,31 @@
             <span ng-show="file.result" class="ng-hide">Upload Successful</span>
         </fieldset>
     </form>
-    <!--download-->
+    -->
+    <!--download
     <button  ng-click="confirm()" >Download ?</button>
     <div ng-repeat="file in dataFiles">
-        <!--<div><a href="javascript:download(file.path)" ng-click="download(file.path)" target="_blank">{{file.name}}</a></div>-->
+        <div><a href="javascript:download(file.path)" ng-click="download(file.path)" target="_blank">{{file.name}}</a></div>
         <div type="button" ng-click="download(file.name)"><i class="fa fa-download">{{file.name}}</i></div>
     </div>
+-->
+    <h5>201708071058455875519638759332</h5>
+
+    <div class="upload">
+
+        <div ngf-drop="uploadFiles($files)" class="drop-box"
+             ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+             ngf-pattern="'.*'">Upload File Here</div>
+
+    </div>
+
+
+    <div ng-repeat="file in dataFiles">
+
+        <div><a href="javascript:download(file.docId, file.docPath)" ng-click="filedownload(file.docId, file.docPath)" target="_blank">{{file.docPath}}</a></div>
+        <!--{{file.docId}}:  {{file.docPath}}-->
+    </div>
+
+
 
 </div>
