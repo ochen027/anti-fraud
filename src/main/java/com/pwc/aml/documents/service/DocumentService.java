@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +43,11 @@ public class DocumentService implements IDocumentService {
     @Override
     public List<Documents> ListDocumentByAlert(String workObjId) throws Exception {
         return documentDAO.getDocByAlertId(workObjId);
+    }
+
+    @Override
+    public InputStream DownloadFile(String fileName) throws Exception{
+        return HdfsAPI.readFile(fileName);
     }
 
 
