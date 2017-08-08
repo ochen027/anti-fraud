@@ -66,7 +66,9 @@
 
 
     <div ng-repeat="file in dataFiles">
-        {{file.docId}}:  {{file.docPath}}
+
+        <div><a href="javascript:download(file.docId, file.docPath)" ng-click="filedownload(file.docId, file.docPath)" target="_blank">{{file.docPath}}</a></div>
+        <!--{{file.docId}}:  {{file.docPath}}-->
     </div>
 
 

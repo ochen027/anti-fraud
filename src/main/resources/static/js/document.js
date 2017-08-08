@@ -77,9 +77,9 @@ app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload, $timeou
                 data: {file: files[0]}
             }).then(function (res) {
                 $scope.refresh();
-                files = [];
             });
         }
+        files = [];
     }
 
     $scope.refresh = function () {
@@ -109,5 +109,10 @@ app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload, $timeou
 
         });
     })
+
+    //Added By Orvin Download file
+    $scope.filedownload = function(fileName, filePath){
+        window.location.href="/documents/download/"+fileName+"/"+filePath;
+    }
 
 });
