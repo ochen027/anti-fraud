@@ -60,16 +60,7 @@
     /*background-color: #666666;*/
     /*position: relative;*/
 /*}*/
-.container .customer-summary{
-    display: table;
-    width: 90%;
-    height: auto;
-    font-family: arial;
-    font-size: 14px;
-    position: relative;
-    margin-left: 50px;
 
-}
 .container .block .sub-block{
     padding-left: 20px;
 }
