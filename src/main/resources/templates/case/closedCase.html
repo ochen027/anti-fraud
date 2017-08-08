@@ -25,21 +25,24 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="label">Case Create Date</label>
-                <input type="text" class="form-control" placeholder=""></input>
+                <input type="text" class="form-control" id="caseCreateDate" placeholder="yyyy-MM-dd"/>
             </div>
             <div class="col-md-6">
                 <label class="label">Case Close Date</label>
-                <input type="text" class="form-control" placeholder=""></input>
+                <input type="text" class="form-control" id="caseCloseDate" placeholder="yyyy-MM-dd"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <label class="label">Case Close By</label>
+                <label class="label">Case Closed By</label>
                 <input type="text" class="form-control" placeholder=""></input>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-default" ng-click="reset()">Reset</button>
-                <button class="btn btn-default" ng-click="search()">Search</button>
+                <div class="text-right">
+                    <br/>
+                    <button class="btn btn-default" ng-click="reset()">Reset</button>
+                    <button class="btn btn-default" ng-click="search()">Search</button>
+                </div>
             </div>
         </div>
     </div>
@@ -90,7 +93,7 @@
     <!-- total-->
 
     <div class="col-md-12">
-        <lable>total:</lable>
+        <lable>Total Amount:</lable>
         <span>^^</span>
     </div>
 
