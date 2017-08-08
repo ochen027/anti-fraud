@@ -18,7 +18,7 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
             Upload.upload({
                 url: flag === 'customer' ? '/customer/upload' : '/account/upload',
                 data: {file: files[0]}
-            }).then(function (res) {
+            }).then(function () {
                 $scope.refresh(flag);
             });
         }
@@ -442,6 +442,76 @@ app.controller('riskCountryInfoCtrl', function ($scope, $http, $location, $state
 
     $timeout(function () {
         $scope.riskCountry = $stateParams.riskCountry;
+    })
+
+});
+app.controller('watchListCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
+    $scope.toggleWatchList = true;
+    $scope.uploadFiles = function (files) {
+
+        if (files && files.length) {
+            Upload.upload({
+                url: '/watchList/upload',
+                data: {file: files[0]}
+            }).then(function (res) {
+                $scope.refresh();
+            });
+        }
+    }
+    $scope.edit = function (watchList) {
+        watchList.action =true;
+        $state.go("watchListInfo", {watchList: watchList});
+    }
+    $scope.delete = function (watchList) {
+        $http.post("/watchList/delete" , watchList).then(function (res) {
+            console.log(res);
+            $scope.refresh();
+        })
+    }
+
+
+    $scope.refresh = function () {
+        $http.get("/watchList/getAll").then(function (res) {
+            $scope.watchList = res.data;
+            $scope.watchListDisplay = res.data.slice();
+        });
+
+    };
+
+
+    $scope.deleteAll = function () {
+        $http.get("/watchList/removeAll").then(function () {
+            $scope.refresh();
+        });
+
+
+    };
+
+    $timeout(function () {
+        $scope.refresh();
+    });
+
+});
+app.controller('watchListInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+    $scope.watchList = {};
+
+    $scope.save = function () {
+        $http.post("watchList/saveOrUpdate", $scope.watchList).then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+            alert("WatchList Saved! ");
+            //$scope.watchList= res.data;
+
+        })
+    }
+    $scope.goback = function () {
+        $state.go("watchList");
+    }
+
+    $timeout(function () {
+        $scope.watchList = $stateParams.watchList;
     })
 
 });
