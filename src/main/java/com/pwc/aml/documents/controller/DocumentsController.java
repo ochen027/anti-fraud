@@ -28,7 +28,7 @@ public class DocumentsController extends BaseController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> uploadDocs(@RequestParam("file") MultipartFile file, String workObjId) throws Exception{
+    public ResponseEntity<?> uploadDocs(@RequestParam("file") MultipartFile file,@RequestParam("workObjId") String workObjId) throws Exception{
         if (!file.isEmpty()) {
             if(StringUtils.isEmpty(workObjId)){
                 workObjId = "201708071058455875519638759332";

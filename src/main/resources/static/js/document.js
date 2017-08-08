@@ -74,7 +74,7 @@ app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload, $timeou
         if (files && files.length) {
             Upload.upload({
                 url: '/documents/upload',
-                data: {file: files[0]}
+                data: {file: files[0],workObjId:"201708071058455875519638759332"}
             }).then(function (res) {
                 $scope.refresh();
 

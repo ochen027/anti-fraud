@@ -151,9 +151,9 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group row">
-                            <label  class="col-4 col-form-label">Registration Number</label>
+                            <label  class="col-4 col-form-label">Registration Num</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerBirthDate" ></input>
+                                <input class="form-control" type="text" ng-model="customer.customerCertificateNumberCorporate" ></input>
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         <div class="form-group row">
                             <label  class="col-4 col-form-label">Line of Business</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerCertificateNumber"></input>
+                                <input class="form-control" type="text" ng-model="customer.custlineOfBusiness"></input>
                             </div>
                         </div>
                     </div>
@@ -169,16 +169,76 @@
                         <div class="form-group row">
                             <label  class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerOccupation"></input>
+                                <input class="form-control" type="text" ng-model="customer.customerPhone1"></input>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">City</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCity" ></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Country</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.customerCountry"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label  class="col-4 col-form-label">Is AML Suspect</label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" ng-model="customer.IsAMLSuspectCorporate"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <h6 class="card-subtitle mb-2 text-muted">Legal Representative</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label  class="col-4 col-form-label">Date of Birth</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.customerBirthDate" ></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label  class="col-4 col-form-label">ID</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.representativeId"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label  class="col-4 col-form-label">Is AML Suspect</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.IsAMLSuspectCorporate"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
         </div>
+    </div>
+
+    <div class="col-md-12 file-list-area">
+
     </div>
 
     <fieldset class="block">
@@ -356,6 +416,15 @@
         <span class="text">total: $10000.00</span>
     </div>
     <div class="sepeartor"></div>
+
+    <div class="upload">
+
+        <div ngf-drop="uploadFiles($files)" class="drop-box"
+             ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+             ngf-pattern="'.*'">Upload File Here</div>
+
+    </div>
+
     <div class="comment">
         <label class="text row pull-left label-comment">Comment:</label>
         <span class="pull-right">
