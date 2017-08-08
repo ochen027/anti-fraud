@@ -29,6 +29,8 @@ public class SystemController {
     public String watchList(Model model) {
         return "system/watchList";
     }
+    @RequestMapping("/watchListInfo")
+    public String watchListInfo(Model model){return "system/watchList_edit";}
 
 
     @RequestMapping("/userManagementInfo")

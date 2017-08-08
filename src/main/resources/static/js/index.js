@@ -394,6 +394,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                    },
                    controller: 'watchListCtrl'
          }
+        ,{
+            name: "watchListInfo",
+            url: "/system/watchListInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/watchListInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'watchListInfoCtrl',
+            params: {watchList: null}
+        }
     ,{
         name: "userManagementInfo",
         url: "/system/userManagementInfo",
@@ -501,13 +518,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/system/menuList'
+                    templateUrl: '/system/roleMenu'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'MenuListCtrl'
+            controller: 'RoleMenuCtrl'
         },
     {
             name: "menuInfo",

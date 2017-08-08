@@ -241,31 +241,42 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams,$timeout) {
-    console.log("myalertinfoctrl");
-
-    $scope.summaryAction = false;
-    $scope.customerAction = false;
-    $scope.individualAction = false;
-    $scope.corporateAction = false;
-    $scope.legalRepsAction = false;
-
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams,$timeout,Upload) {
     $scope.alerts={};
     $scope.customer={};
+    $scope.dataFiles = [];
 
 
-    $scope.toggleBlock = function (flag) {
-        if (flag === "customerSummary") {
-            $scope.summaryAction = !$scope.summaryAction;
-        } else if (flag === 'customerInfo') {
-            $scope.customerAction = !$scope.customerAction;
-        } else if (flag === 'individual') {
-            $scope.individualAction = !$scope.individualAction;
-        } else if (flag === 'corporate') {
-            $scope.corporateAction = !$scope.corporateAction;
-        } else if (flag === 'legalReps') {
-            $scope.legalRepsAction = !$scope.legalRepsAction;
+    $scope.refresh=function(){
+        $scope.refreshFile();
+        getAlert();
+    }
+
+    //upload file part
+    $scope.uploadFiles = function (files) {
+        if (files && files.length) {
+            Upload.upload({
+                url: '/documents/upload',
+                data: {file: files[0],workObjId:$stateParams.id}
+            }).then(function (res) {
+                alert("file upload success!");
+                $scope.refresh();
+            });
         }
+    }
+
+    $scope.fileDownload = function(fileName, filePath){
+        window.location.href="/documents/download/"+fileName+"/"+filePath;
+    }
+
+    $scope.refreshFile = function () {
+        $http.get("/documents/getByAlertId/"+$stateParams.id).then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+            $scope.dataFiles=res.data;
+        });
     }
 
 
@@ -292,21 +303,11 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
     }
 
     $timeout(function(){
-        getAlert();
-
-
+        $scope.refresh();
 
     });
 
-    $http.get("/alert/myAlertInfo/12345")
-        .then(function (result) {
-            console.log(result);
-            $scope.summary = result.data.summary;
-            $scope.individual = result.data.individual;
-            $scope.corporate = result.data.corporate;
-            $scope.legalRepresentative = result.data.legalRepresentative;
-            $scope.data = result.data.tableRecords;
-        })
+
     $scope.itemsByPage = 4;
 
 

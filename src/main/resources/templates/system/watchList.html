@@ -1,6 +1,73 @@
 <div class="container" ng-controller="watchListCtrl">
+    <h3>WatchList</h3>
+    <!--start of the WatchListImport -->
+    <div ng-show="toggleWatchList">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAll('watchList')">Delete All</button>
+            <button type="button" class="btn btn-default" ng-click="refresh()">refresh</button>
+            <!--<button type="button" class="btn btn-default" ng-click="search()">Search</button>-->
+        </div>
 
 
-    WatchList .......
+        <div class="upload">
+
+            <div ngf-drop="uploadFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop WatchList csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                WatchList
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="watchListDisplay" st-safe-src="watchList">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>WatchList</th>
+                        <th>CreatedBy</th>
+                        <th>CreationDate</th>
+                        <th>LastUpdatedBy</th>
+                        <th>LastUpdateDate</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in watchListDisplay track by $index">
+                        <td>{{row.id}}</td>
+                        <td>{{row.watchList}}</td>
+                        <td>{{row.createdBy}}</td>
+                        <td>{{row.creationDate| date : 'yyyy-MM-dd'}}</td>
+                        <td>{{row.lastUpdatedBy}}</td>
+                        <td>{{row.lastUpdateDate| date : 'yyyy-MM-dd'}}</td>
+
+                        <td>
+                            <button class="btn btn-default" ng-click="edit(row)">Edit</button>
+                            <button class="btn btn-default" ng-click="delete(row)">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of WatchList import  -->
+
+
 
 </div>

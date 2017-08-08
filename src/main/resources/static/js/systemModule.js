@@ -18,7 +18,7 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
             Upload.upload({
                 url: flag === 'customer' ? '/customer/upload' : '/account/upload',
                 data: {file: files[0]}
-            }).then(function (res) {
+            }).then(function () {
                 $scope.refresh(flag);
             });
         }
@@ -445,6 +445,76 @@ app.controller('riskCountryInfoCtrl', function ($scope, $http, $location, $state
     })
 
 });
+app.controller('watchListCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
+    $scope.toggleWatchList = true;
+    $scope.uploadFiles = function (files) {
+
+        if (files && files.length) {
+            Upload.upload({
+                url: '/watchList/upload',
+                data: {file: files[0]}
+            }).then(function (res) {
+                $scope.refresh();
+            });
+        }
+    }
+    $scope.edit = function (watchList) {
+        watchList.action =true;
+        $state.go("watchListInfo", {watchList: watchList});
+    }
+    $scope.delete = function (watchList) {
+        $http.post("/watchList/delete" , watchList).then(function (res) {
+            console.log(res);
+            $scope.refresh();
+        })
+    }
+
+
+    $scope.refresh = function () {
+        $http.get("/watchList/getAll").then(function (res) {
+            $scope.watchList = res.data;
+            $scope.watchListDisplay = res.data.slice();
+        });
+
+    };
+
+
+    $scope.deleteAll = function () {
+        $http.get("/watchList/removeAll").then(function () {
+            $scope.refresh();
+        });
+
+
+    };
+
+    $timeout(function () {
+        $scope.refresh();
+    });
+
+});
+app.controller('watchListInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+    $scope.watchList = {};
+
+    $scope.save = function () {
+        $http.post("watchList/saveOrUpdate", $scope.watchList).then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+            alert("WatchList Saved! ");
+            //$scope.watchList= res.data;
+
+        })
+    }
+    $scope.goback = function () {
+        $state.go("watchList");
+    }
+
+    $timeout(function () {
+        $scope.watchList = $stateParams.watchList;
+    })
+
+});
 
 app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeout){
     console.log("menus/menuList");
@@ -499,5 +569,41 @@ app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$s
     $timeout(function(){
         $scope.menu=$stateParams.menu;
     })
+
+});
+app.controller('RoleMenuCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("roles/roleMenu");
+    $http.get("/roles/listAll").then(function (res) {
+        console.log(res);
+        $scope.rolesList = res.data;
+    }, function (error) {
+        console.log(error.statusCode() + "-->" + error.statusText);
+    })
+
+    $scope.edit = function (role) {
+        role.action = true;
+        $state.go("roleInfo", {role: role});
+    }
+    $scope.delete = function (roleId) {
+        console.log("delete role");
+        $http.post("/roles/deleteRole/" + roleId).then(function (res) {
+            console.log(res)
+            $scope.refresh();
+        })
+    }
+    $scope.addRole = function () {
+        $state.go("roleInfo", {role: {"action": true}});
+    }
+
+    $scope.refresh = function () {
+        $http.get("/roles/listAll").then(function (res) {
+            $scope.rolesList = res.data;
+
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
 
 });
