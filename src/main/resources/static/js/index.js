@@ -501,13 +501,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/system/roleMenu'
+                    templateUrl: '/system/menuList'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'RoleMenuCtrl'
+            controller: 'MenuListCtrl'
         },
     {
             name: "menuInfo",
