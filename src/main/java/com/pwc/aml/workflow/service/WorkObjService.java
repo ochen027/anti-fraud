@@ -46,7 +46,7 @@ public class WorkObjService implements IWorkObjService {
     public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) throws Exception {
 
         //could do this action
-        if(workObj.getCurrentPoint().getFlowPointId()==flowEvent.getFlowPointId())
+        if(workObj.getCurrentPoint().getFlowPointId().equalsIgnoreCase(flowEvent.getFlowPointId()))
         {
             FlowPointEx flowPointEx=flowPointExDao.getFlowPointEx(flowEvent.getEndpoint());
             workObj.setCurrentPoint(flowPointEx);
