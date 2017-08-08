@@ -1,5 +1,6 @@
 package com.pwc.aml.alert.controller;
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.alert.service.IAlertService;
 import com.pwc.aml.transation.service.ITransactionService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.pwc.common.base.controller.BaseController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -37,4 +39,15 @@ public class AlertsController extends BaseController {
         return new ResponseEntity<Alerts>(alertService.getSingleAlert(id), HttpStatus.OK);
     }
 
+    @GetMapping("searchClosedAlert")
+    public ResponseEntity<List<WorkObj>> searchClosedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
+        return new ResponseEntity<List<WorkObj>>(alertService.searchClosedAlerts(se), HttpStatus.OK);
+    }
+
+    @GetMapping("test")
+    public ResponseEntity<List<WorkObj>> test() throws Exception{
+        AlertSearchEntity ase = new AlertSearchEntity();
+        List<WorkObj> workObjList = alertService.searchClosedAlerts(ase);
+        return new ResponseEntity<List<WorkObj>>(workObjList, HttpStatus.OK);
+    }
 }

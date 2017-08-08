@@ -8,10 +8,6 @@ public interface ICommentService {
 
     void CreateComment(Comments c) throws Exception;
 
-    void DeleteComment(String commentId)  throws Exception;
-
-    void UpdateComment(Comments c) throws Exception;
-
     Comments getSingleComment(String commentId) throws Exception;
 
     List<Comments> listAllComments() throws Exception;

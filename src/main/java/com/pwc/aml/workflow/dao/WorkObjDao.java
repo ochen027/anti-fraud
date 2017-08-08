@@ -3,6 +3,7 @@ package com.pwc.aml.workflow.dao;
 import com.pwc.aml.alert.dao.IAlertDAO;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
@@ -94,7 +95,7 @@ public class WorkObjDao implements IWorkObjDao {
         Scan scan = new Scan();
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
 
-        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(WorkObjSchema.currentPointId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
         scan.setFilter(filterList);
