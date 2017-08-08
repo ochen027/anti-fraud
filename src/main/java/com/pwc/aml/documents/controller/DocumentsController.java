@@ -5,7 +5,6 @@ import com.pwc.aml.documents.entity.Documents;
 import com.pwc.aml.documents.service.IDocumentService;
 import com.pwc.common.base.controller.BaseController;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

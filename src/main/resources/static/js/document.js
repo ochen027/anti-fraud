@@ -77,9 +77,10 @@ app.controller('DocumentCtrl', function ($scope, $http,  $state, Upload, $timeou
                 data: {file: files[0]}
             }).then(function (res) {
                 $scope.refresh();
+
             });
         }
-        files = [];
+
     }
 
     $scope.refresh = function () {
