@@ -62,7 +62,7 @@ insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, 'transBatch()');
 insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 11, 'documentExample()');
 insert into menus values(16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Summary', 10, 'reportSummary()');
-insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'reportDetail()');
+--insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'reportDetail()');
 insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alert Query', 9, 'alertQuery()');
 insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, 'caseQuery()');
 insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, 'myCase()');
@@ -121,7 +121,7 @@ insert into rolemenu values (29, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 29
 insert into rolemenu values (30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 30, 6);
 insert into rolemenu values (31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
 insert into rolemenu values (32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 32, 6);
-insert into rolemenu values (33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
+insert into rolemenu values (33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 33, 6);
 
 -- l1 menu
 insert into rolemenu values (100001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);

@@ -518,13 +518,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/system/menuList'
+                    templateUrl: '/system/roleMenu'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'MenuListCtrl'
+            controller: 'RoleMenuCtrl'
         },
     {
             name: "menuInfo",

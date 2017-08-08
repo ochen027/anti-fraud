@@ -571,3 +571,39 @@ app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$s
     })
 
 });
+app.controller('RoleMenuCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("roles/roleMenu");
+    $http.get("/roles/listAll").then(function (res) {
+        console.log(res);
+        $scope.rolesList = res.data;
+    }, function (error) {
+        console.log(error.statusCode() + "-->" + error.statusText);
+    })
+
+    $scope.edit = function (role) {
+        role.action = true;
+        $state.go("roleInfo", {role: role});
+    }
+    $scope.delete = function (roleId) {
+        console.log("delete role");
+        $http.post("/roles/deleteRole/" + roleId).then(function (res) {
+            console.log(res)
+            $scope.refresh();
+        })
+    }
+    $scope.addRole = function () {
+        $state.go("roleInfo", {role: {"action": true}});
+    }
+
+    $scope.refresh = function () {
+        $http.get("/roles/listAll").then(function (res) {
+            $scope.rolesList = res.data;
+
+        })
+    }
+
+    $timeout(function () {
+        $scope.refresh();
+    });
+
+});
