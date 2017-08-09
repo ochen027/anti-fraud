@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.service;
 
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.aml.workflow.entity.WorkObj;
@@ -19,7 +20,7 @@ public interface IWorkObjService {
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 
-    List<WorkObj> getWorkObjsByPointId(String flowPointId) throws Exception;
+    List<WorkObj> getWorkObjsByPointId(String flowPointId, AlertSearchEntity ase) throws Exception;
 
      void truncateTable() throws IOException;
 

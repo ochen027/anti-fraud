@@ -8,6 +8,8 @@ public class Constants {
     public static final String F1= "f1";
     public static final String TEMP = "temp";
     public static final String COMMA = ",";
+    public static final String LAST_UPDATE_BY = "lastUpdatedBy";
+    public static final String LAST_UPDATE_DATE = "lastUpdatedDate";
 
     //For Document
     public static final String HBASE_TABLE_DOCUMENTS = "aml:documents";

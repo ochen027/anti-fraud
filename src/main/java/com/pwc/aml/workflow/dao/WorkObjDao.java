@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.dao;
 
 import com.pwc.aml.alert.dao.IAlertDAO;
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.Constants;
@@ -10,15 +11,14 @@ import com.pwc.aml.workflow.entity.WorkObjSchema;
 import com.pwc.common.util.FormatUtils;
 import com.pwc.component.assign.entity.AssignSchema;
 import com.pwc.component.workflow.entity.FlowEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.FilterList;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 public class WorkObjDao implements IWorkObjDao {
@@ -98,10 +100,8 @@ public class WorkObjDao implements IWorkObjDao {
     @Override
     public List<WorkObj> findWorkObjsByPointId(String flowPointId) throws Exception {
         initial();
-
         Scan scan = new Scan();
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
-
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(WorkObjSchema.currentPointId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
@@ -114,6 +114,89 @@ public class WorkObjDao implements IWorkObjDao {
         }
         rsscan.close();
         return tList;
+    }
+
+    @Override
+    public List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception{
+        initial();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                Bytes.toBytes(WorkObjSchema.currentPointId),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
+
+        if(StringUtils.isNotEmpty(ase.getAlertId())){
+            RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL,new RegexStringComparator(
+                    ase.getAlertId()+"\\w|\\w"+ase.getAlertId()+"\\w|\\w"+ase.getAlertId()));
+            filterList.addFilter(rowFilter);
+        }
+
+        if(null != ase.getTotalAmt()){
+            Filter amtFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
+                    CompareFilter.CompareOp.GREATER,Bytes.toBytes(ase.getTotalAmt()));
+            filterList.addFilter(amtFilter);
+        }
+
+        if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
+            Filter createdStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getCreatedFromDate()));
+            Filter createdEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getCreatedToDate()));
+            filterList.addFilter(createdStartDateFilter);
+            filterList.addFilter(createdEndDateFilter);
+        }
+
+        if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isEmpty(ase.getCreatedToDate())){
+            Filter createdStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getCreatedFromDate()));
+            filterList.addFilter(createdStartDateFilter);
+        }
+
+        if(StringUtils.isEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
+            Filter createdEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getCreatedToDate()));
+            filterList.addFilter(createdEndDateFilter);
+        }
+
+
+        if(StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())){
+            Filter closedStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getClosedFromDate()));
+            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
+            filterList.addFilter(closedStartDateFilter);
+            filterList.addFilter(closedEndDateFilter);
+        }
+
+        if(StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isEmpty(ase.getClosedToDate())){
+            Filter closedStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getClosedFromDate()));
+            filterList.addFilter(closedStartDateFilter);
+        }
+
+        if(StringUtils.isEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())){
+            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
+            filterList.addFilter(closedEndDateFilter);
+        }
+
+        if(StringUtils.isNotEmpty(ase.getColsedBy())){
+            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
+                    CompareFilter.CompareOp.EQUAL,new RegexStringComparator(
+                    ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()));
+            filterList.addFilter(closedEndDateFilter);
+        }
+
+
+        scan.setFilter(filterList);
+        ResultScanner rsscan = table.getScanner(scan);
+        List<WorkObj> wList = new ArrayList<WorkObj>();
+        for (Result r : rsscan) {
+            WorkObj t = this.CellToWorkObj(r.rawCells());
+            wList.add(t);
+        }
+        rsscan.close();
+        return wList;
     }
 
 
@@ -190,6 +273,19 @@ public class WorkObjDao implements IWorkObjDao {
 
     public void saveColumn(String key, String value) throws Exception {
         hbaseDao.putData(table, rowKey, "f1", key, value);
+    }
+
+
+    public static void main(String[] args) {
+        String[] str = {"0000001", "000002", "00020", "0000032"};
+        String keyWord = "2";
+        Pattern pn = Pattern.compile(keyWord+"\\w|\\w"+keyWord+"\\w|\\w"+keyWord);
+        Matcher mr = null;
+        for (String s : str) {
+            mr = pn.matcher(s);
+            if (mr.find())
+                System.out.println(s);
+        }
     }
 
 

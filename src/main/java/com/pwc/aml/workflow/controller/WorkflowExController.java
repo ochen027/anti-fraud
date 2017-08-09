@@ -60,7 +60,7 @@ public class WorkflowExController extends BaseController {
     @GetMapping("getAvailableAlerts")
     public ResponseEntity<List<WorkObj>> getAvailableAlerts() throws Exception {
         WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
-        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId());
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getStartPoint().getFlowPointId(), null);
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
@@ -74,7 +74,7 @@ public class WorkflowExController extends BaseController {
     @GetMapping("getClosedAlerts")
     public ResponseEntity<List<WorkObj>> getClosedAlerts() throws Exception {
         WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
-        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getEndPoint().getFlowPointId());
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getEndPoint().getFlowPointId(), null);
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
@@ -158,7 +158,7 @@ public class WorkflowExController extends BaseController {
     @GetMapping("getWorkObjsByPointId")
     public ResponseEntity<List<WorkObj>> getWorkObjsByPointId(@RequestParam String flowPointId) throws Exception {
 
-        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(flowPointId);
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(flowPointId, null);
 
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.dao;
 
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 
@@ -16,4 +17,6 @@ public interface IWorkObjDao {
     List<WorkObj> findWorkObjsByPointId(String flowPointId) throws Exception;
 
     void truncateTable() throws IOException;
+
+    List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception;
 }

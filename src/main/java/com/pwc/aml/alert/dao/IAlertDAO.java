@@ -1,5 +1,6 @@
 package com.pwc.aml.alert.dao;
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 
 import java.io.IOException;
@@ -12,4 +13,5 @@ public interface IAlertDAO {
     List<Alerts> getAllAlertsData() throws Exception;
 
     void truncateTable() throws IOException;
+
 }
