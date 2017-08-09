@@ -55,6 +55,15 @@ public class CustomerController extends BaseController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @RequestMapping(value = "/uploadCustomerFiles", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> uploadCustomerFiles(@RequestParam("file") MultipartFile file) throws IOException, ParseException {
+
+        if (!file.isEmpty()) {
+            customerService.importCsvData(file);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 
@@ -66,6 +75,11 @@ public class CustomerController extends BaseController {
 
     @GetMapping ("removeAll")
     public ResponseEntity<Void> removeAll() {
+        customerService.removeAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    @GetMapping ("removeAllCustomerBase")
+    public ResponseEntity<Void> removeAllCustomerBase() {
         customerService.removeAll();
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
