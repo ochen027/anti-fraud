@@ -265,6 +265,10 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
         }
     }
 
+    $scope.fileDownload = function(fileName, filePath){
+        window.location.href="/documents/download/"+fileName+"/"+filePath;
+    }
+
     $scope.refreshFile = function () {
         $http.get("/documents/getByAlertId/"+$stateParams.id).then(function (res) {
             if (res.status !== 200) {

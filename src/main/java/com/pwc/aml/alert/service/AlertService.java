@@ -1,8 +1,14 @@
 package com.pwc.aml.alert.service;
 
 import com.pwc.aml.alert.dao.IAlertDAO;
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.workflow.entity.FlowPointEx;
+import com.pwc.aml.workflow.entity.WorkObj;
+import com.pwc.aml.workflow.entity.WorkflowEx;
+import com.pwc.aml.workflow.service.IWorkObjService;
+import com.pwc.aml.workflow.service.IWorkflowExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +20,12 @@ public class AlertService implements IAlertService{
 
     @Autowired
     private IAlertDAO alertDAO;
+
+    @Autowired
+    private IWorkflowExService workflowExService;
+
+    @Autowired
+    private IWorkObjService workObjService;
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
@@ -28,5 +40,12 @@ public class AlertService implements IAlertService{
     @Override
     public void truncateTable() throws IOException {
         alertDAO.truncateTable();
+    }
+
+    @Override
+    public List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception {
+        String defaultEndId = workflowExService.getWorkflowByDefault().getEndPoint().getFlowPointId();
+        List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId);
+        return workObjList;
     }
 }

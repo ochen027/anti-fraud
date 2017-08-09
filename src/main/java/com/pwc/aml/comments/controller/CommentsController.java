@@ -24,13 +24,7 @@ public class CommentsController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping("remove")
-    public ResponseEntity<Void> RemoveComment(@PathVariable String id) throws Exception{
-        commentService.DeleteComment(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @GetMapping("getSingle")
+    @GetMapping("getSingle/{id}")
     public ResponseEntity<Comments> GetSingleComment(@PathVariable String id) throws Exception {
         return new ResponseEntity<Comments>(commentService.getSingleComment(id), HttpStatus.OK);
     }
@@ -40,7 +34,7 @@ public class CommentsController {
         return new ResponseEntity<List<Comments>>(commentService.listAllComments(), HttpStatus.OK);
     }
 
-    @GetMapping("getByAlert")
+    @GetMapping("getByAlert/{id}")
     public ResponseEntity<List<Comments>> GetByAlert(@PathVariable String id) throws Exception{
         return new ResponseEntity<List<Comments>>(commentService.listCommentsByAlert(id), HttpStatus.OK);
     }

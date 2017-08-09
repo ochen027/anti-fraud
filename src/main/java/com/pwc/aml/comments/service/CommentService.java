@@ -19,16 +19,6 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public void DeleteComment(String commentId) throws Exception{
-        commentDAO.removeComment(commentId);
-    }
-
-    @Override
-    public void UpdateComment(Comments c) throws Exception{
-        commentDAO.updateComment(c);
-    }
-
-    @Override
     public Comments getSingleComment(String commentId) throws Exception{
         return commentDAO.getSingleComment(commentId);
     }

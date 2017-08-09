@@ -37,16 +37,6 @@ public class CommentDAO implements ICommentDAO{
         hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_ALERT_ID, c.getAlertId());
     }
 
-    @Override
-    public void updateComment(Comments c) {
-        //TODO
-    }
-
-    @Override
-    public void removeComment(String commentId) throws Exception{
-        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
-        hBaseDAO.deleteData(table, commentId);
-    }
 
     @Override
     public Comments getSingleComment(String commentId) throws Exception{
@@ -74,6 +64,7 @@ public class CommentDAO implements ICommentDAO{
         Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("alertId"),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(alertId));
         scan.setFilter(filter);
+        scan.setReversed(false);
         List<Comments> cList = new ArrayList<Comments>();
         ResultScanner rsscan = hTable.getScanner(scan);
         for (Result rs : rsscan) {
