@@ -21,7 +21,7 @@ public interface IRulesService {
 	
 	//String getRuleScript(int scenarioId);
 	
-	void executeRuleEngine(int scenarioId) throws Exception;
+	void executeRuleEngine(int scenarioId,Users users) throws Exception;
 
 	Scenario saveOrUpdate(Scenario scenario, Users users);
 
@@ -35,5 +35,5 @@ public interface IRulesService {
 
     void setDefaultRuleId(String ruleId, String userName);
 
-    void runRule(int ruleId);
+    void runRule(int ruleId,Users users);
 }

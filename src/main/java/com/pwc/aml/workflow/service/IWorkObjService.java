@@ -5,6 +5,7 @@ import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
+import com.pwc.component.authorize.users.entity.Users;
 import com.pwc.component.workflow.entity.FlowEvent;
 
 import java.io.IOException;
@@ -12,9 +13,9 @@ import java.util.List;
 
 public interface IWorkObjService {
 
-    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow) throws Exception;
+    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,Users users) throws Exception;
 
-    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent) throws Exception;
+    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent,Users users) throws Exception;
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 

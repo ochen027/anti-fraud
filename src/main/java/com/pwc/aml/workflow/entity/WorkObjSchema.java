@@ -24,5 +24,9 @@ public class WorkObjSchema {
 
     public static final String roleId="roleId";
 
-
+    public static final String createdBy="createdBy";
+    public static final String createdDate="createdDate";
+    public static final String updateBy="updateBy";
+    public static final String updateDate="updateDate";
+    public static final String isActive="isActive";
 }

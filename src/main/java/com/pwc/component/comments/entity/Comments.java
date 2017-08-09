@@ -1,11 +1,9 @@
-package com.pwc.aml.comments.entity;
-
-import java.time.LocalDateTime;
+package com.pwc.component.comments.entity;
 
 public class Comments {
 
     private String commentId;
-    private String alertId;
+    private String objId;
     private String commentContents;
     private String commentCreatedBy;
     private String commentCreatedDate;
@@ -18,12 +16,12 @@ public class Comments {
         this.commentId = commentId;
     }
 
-    public String getAlertId() {
-        return alertId;
+    public String getObjId() {
+        return objId;
     }
 
-    public void setAlertId(String alertId) {
-        this.alertId = alertId;
+    public void setObjId(String objId) {
+        this.objId = objId;
     }
 
     public String getCommentContents() {

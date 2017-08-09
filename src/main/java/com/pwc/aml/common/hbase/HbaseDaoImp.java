@@ -1,24 +1,13 @@
 package com.pwc.aml.common.hbase;
 
-import com.jcraft.jsch.JSchException;
-import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.comments.entity.Comments;
-import com.pwc.aml.documents.entity.Documents;
-import com.pwc.aml.transation.entity.Transactions;
-import com.pwc.common.util.FormatUtils;
-import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.datanucleus.store.rdbms.query.AbstractRDBMSQueryResult;
 import org.springframework.stereotype.Repository;
 
-import javax.print.Doc;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 
