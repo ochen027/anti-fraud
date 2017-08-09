@@ -26,8 +26,8 @@ public class IndividualDao implements IIndividualDao {
     public Individual update(Individual individual) {
         Individual target = findByCustId(individual.getCustomerId());
         individual.setId(target.getId());
-        Individual cs = em.merge(individual);
-        return cs;
+        Individual ind = em.merge(individual);
+        return ind;
     }
 
     @Override

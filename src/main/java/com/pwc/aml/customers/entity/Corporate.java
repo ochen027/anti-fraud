@@ -11,7 +11,7 @@ import javax.persistence.Transient;
  * Created by whuang072 on 8/8/2017.
  */
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "Corporate")
 public class Corporate extends BaseEntity{
 
 

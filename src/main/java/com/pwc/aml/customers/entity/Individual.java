@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by whuang072 on 8/8/2017.
  */
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "Individual")
 public class Individual extends BaseEntity{
 
     private static final long serialVersionUID = 1L;

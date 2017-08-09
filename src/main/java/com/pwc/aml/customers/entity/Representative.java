@@ -5,12 +5,13 @@ import com.pwc.common.base.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Created by whuang072 on 8/8/2017.
  */
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "Representative")
 public class Representative extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -20,9 +21,9 @@ public class Representative extends BaseEntity {
     @Column(name="representative_name")
     private String representativeName;
     @Column(name="representative_age")
-    private String representativeAge;
+    private int representativeAge;
     @Column(name="representative_birthDate")
-    private String representativeBirthDate;
+    private Date representativeBirthDate;
     @Column(name="representative_id")
     private String representativeId;
 
@@ -62,19 +63,19 @@ public class Representative extends BaseEntity {
         this.representativeName = representativeName;
     }
 
-    public String getRepresentativeAge() {
+    public int getRepresentativeAge() {
         return representativeAge;
     }
 
-    public void setRepresentativeAge(String representativeAge) {
+    public void setRepresentativeAge(int representativeAge) {
         this.representativeAge = representativeAge;
     }
 
-    public String getRepresentativeBirthDate() {
+    public Date getRepresentativeBirthDate() {
         return representativeBirthDate;
     }
 
-    public void setRepresentativeBirthDate(String representativeBirthDate) {
+    public void setRepresentativeBirthDate(Date representativeBirthDate) {
         this.representativeBirthDate = representativeBirthDate;
     }
 

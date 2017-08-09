@@ -1,12 +1,7 @@
 package com.pwc.aml.customers.controller;
 
-import com.pwc.aml.customers.entity.CustomerBase;
-import com.pwc.aml.customers.entity.Customers;
-import com.pwc.aml.customers.entity.Individual;
-import com.pwc.aml.customers.service.ICustomerBaseService;
-import com.pwc.aml.customers.service.ICustomerService;
-import com.pwc.aml.customers.service.IIndividualService;
-import com.pwc.aml.customers.service.IndividualService;
+import com.pwc.aml.customers.entity.*;
+import com.pwc.aml.customers.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +25,10 @@ public class CustomerController extends BaseController {
     private ICustomerBaseService customerBaseService;
     @Autowired
     private IIndividualService individualService;
+    @Autowired
+    private ICorporateService corporateService;
+    @Autowired
+    private IRepresentativeService representativeService;
 
 
     @PostMapping("saveOrUpdateCustomer")
@@ -82,6 +81,24 @@ public class CustomerController extends BaseController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @RequestMapping(value = "/uploadCorporateFiles", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> uploadCorporateFiles(@RequestParam("file") MultipartFile file) throws IOException, ParseException {
+
+        if (!file.isEmpty()) {
+            corporateService.importCsvData(file);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "/uploadRepresentativeFiles", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> uploadRepresentativeFiles(@RequestParam("file") MultipartFile file) throws IOException, ParseException {
+
+        if (!file.isEmpty()) {
+            representativeService.importCsvData(file);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 
@@ -100,6 +117,16 @@ public class CustomerController extends BaseController {
         List<Individual> targets=  individualService.findAll();
         return new ResponseEntity<List<Individual>>(targets,HttpStatus.OK);
     }
+    @GetMapping ("findAllCorporate")
+    public ResponseEntity<List<Corporate>> findAllCorporate() {
+        List<Corporate> targets=  corporateService.findAll();
+        return new ResponseEntity<List<Corporate>>(targets,HttpStatus.OK);
+    }
+    @GetMapping ("findAllRepresentative")
+    public ResponseEntity<List<Representative>> findAllRepresentative() {
+        List<Representative> targets=  representativeService.findAll();
+        return new ResponseEntity<List<Representative>>(targets,HttpStatus.OK);
+    }
 
     @GetMapping ("removeAll")
     public ResponseEntity<Void> removeAll() {
@@ -114,6 +141,16 @@ public class CustomerController extends BaseController {
     @GetMapping ("removeAllIndividual")
     public ResponseEntity<Void> removeAllIndividual() {
         individualService.removeAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    @GetMapping ("removeAllCorporate")
+    public ResponseEntity<Void> removeAllCorporate() {
+        corporateService.removeAll();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    @GetMapping ("removeAllRepresentative")
+    public ResponseEntity<Void> removeAllRepresentative() {
+        representativeService.removeAll();
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

@@ -40,10 +40,7 @@ public class CustomerBaseService implements ICustomerBaseService {
         return customerBaseDAO.findByCustId(customerBase.getCustomerId());
     }
 
-    @Override
-    public CustomerBase findByCustCtNo(CustomerBase customerBase) {
-        return null;
-    }
+
 
     @Override
     public List<CustomerBase> findAll() {
