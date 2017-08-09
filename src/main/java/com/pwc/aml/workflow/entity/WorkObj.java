@@ -3,12 +3,13 @@ package com.pwc.aml.workflow.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.common.base.entity.BaseEntity;
 import com.pwc.component.workflow.entity.FlowEvent;
 import com.pwc.component.workflow.entity.Workflow;
 
 import java.util.List;
 
-public class WorkObj {
+public class WorkObj extends BaseEntity{
 
     private String workObjId;
     private Alerts alerts;

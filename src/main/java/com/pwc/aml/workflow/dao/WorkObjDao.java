@@ -8,6 +8,7 @@ import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
 import com.pwc.common.util.FormatUtils;
+import com.pwc.component.assign.entity.AssignSchema;
 import com.pwc.component.workflow.entity.FlowEvent;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -63,6 +64,11 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.historyEvents, mapper.writeValueAsString(workObj.getHistoryEvents()));
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
         saveColumn(WorkObjSchema.alertId, workObj.getAlerts().getAlertId());
+        saveColumn(WorkObjSchema.createdBy, workObj.getCreatedBy());
+        saveColumn(WorkObjSchema.createdDate, FormatUtils.DateToString(workObj.getCreationDate()));
+        saveColumn(WorkObjSchema.updateBy, workObj.getLastUpdatedBy());
+        saveColumn(WorkObjSchema.updateDate, FormatUtils.DateToString( workObj.getLastUpdateDate()));
+        saveColumn(WorkObjSchema.isActive, workObj.isStatus() ? "true" : "false");
     }
 
     @Override
@@ -140,6 +146,27 @@ public class WorkObjDao implements IWorkObjDao {
                     Long days = ChronoUnit.DAYS.between(FormatUtils.StringToLocalDateNoDash(alerts.getCreatedDate()), LocalDate.now());
                     alerts.setDays(String.valueOf(days));
                     o.setAlerts(alerts);
+                    break;
+                case WorkObjSchema.createdBy:
+                    String createdBy = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setCreatedBy(createdBy);
+                    break;
+                case WorkObjSchema.createdDate:
+                    String createdDate = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setCreationDate(FormatUtils.StringToDate(createdDate));
+                    break;
+                case WorkObjSchema.updateBy:
+                    String updateBy = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setLastUpdatedBy(updateBy);
+                    break;
+
+                case WorkObjSchema.updateDate:
+                    String updateDate = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setLastUpdateDate(FormatUtils.StringToDate(updateDate));
+                    break;
+                case WorkObjSchema.isActive:
+                    String isActive = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setStatus(isActive.equals("true"));
                     break;
             }
         }
