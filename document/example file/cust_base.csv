@@ -1,0 +1,11 @@
+cust_id,cust_type,cust_first_nm,cust_middle_nm,cust_last_nm,full_nm,cust_open_br,last_upd_by
+10001,individual,San,,Zhang,Zhang San,100034,20001
+10002,company,"Alibaba International Trading Co.,Ltd",,,"Alibaba International Trading Co.,Ltd",100034,20001
+10003,company,"Bright Dairy & Food Co.,Ltd",,,"Bright Dairy & Food Co.,Ltd",100034,20001
+10004,company,"Jingdong International Trading Co.,Ltd",,,"Jingdong International Trading Co.,Ltd",100034,20001
+10005,individual,Wu,,Wang,Wang Wu,100034,20001
+10006,company,ABC Company,,,ABC Company,100034,20001
+10007,individual,Lin-kai,,Zhou,Zhou Lin-kai,100034,20001
+10008,company,Pepsi Company,,,Pepsi Company,100034,20001
+10009,individual,Xin Qiang,,Wang,Wang Xin Qiang,100034,20001
+10010,individual,Liang,,Wu,Wu Liang,100034,20001

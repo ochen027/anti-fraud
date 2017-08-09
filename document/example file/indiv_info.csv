@@ -1,0 +1,6 @@
+cust_id,cust_age,cust_birth_dt,cust_ct_no_indiv,cust_occupation,cust_city,cust_country,cust_phone,pep_flg,resi_flg,sus_flg
+10001,25,7/1/1992,321123199207010000,Student,Shanghai,CN,+86-16547650900,N,N,N
+10005,30,7/1/1987,321123198707010000,Student,Shanghai,CN,+86-13937543557,N,N,N
+10007,35,7/1/1982,321123198207010000,Merchant,Shanghai,CN,+86-13937343570,N,N,N
+10009,40,7/1/1977,321123197707010000,Student,Shanghai,CN,+86-13937343669,N,N,N
+10010,45,7/1/1972,321123197207010000,Lawyer,Shanghai,CN,+86-15863453669,Y,N,N

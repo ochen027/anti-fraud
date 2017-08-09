@@ -1,0 +1,6 @@
+cust_id,repr_nm,repr_age,repre_birth_dt,repr_id_no,repr_id_type,repr_occupation,repr_city,repr_country,repr_phone,pep_flg,resi_flg,sus_flg
+10002,Tommy Xu,37,1/1/1980,321123198001010000,Resident Identity Card,to be confirmed,Shanghai,CN,+86-62221234,N,N,N
+10003,Li Si,36,1/1/1981,123321198101010000,Resident Identity Card,to be confirmed,Shanghai,CN,+86-62221234,N,N,N
+10004,Obama Clinton,35,1/1/1982,C1111111,Passport,to be confirmed,New York,USA, +1-212-216-1835,N,N,N
+10006,AAA,34,1/1/1983,E34567890,passport,to be confirmed,New York,USA,+1-212-883-1234,N,N,N
+10008,JOHAN WILLEM MAARTEN JANSEN,33,1/1/1984,997766554,passport,to be confirmed,New York,USA,N/A,N,N,N
