@@ -21,8 +21,8 @@ public class Representative extends BaseEntity {
     private String representativeName;
     @Column(name="representative_age")
     private String representativeAge;
-    @Column(name="representative_birthdate")
-    private String representativeBirthdate;
+    @Column(name="representative_birthDate")
+    private String representativeBirthDate;
     @Column(name="representative_id")
     private String representativeId;
 
@@ -37,6 +37,14 @@ public class Representative extends BaseEntity {
     private String representativeCountry;
     @Column(name="representative_phone")
     private String representativePhone;
+    @Column(name = "PEP_Flg")
+    private boolean IsPEP;
+
+    @Column(name = "resi_Flg")
+    private boolean IsNonResident;
+
+    @Column(name = "sus_Flg_indiv")
+    private boolean IsAMLSuspect;
 
     public String getCustomerId() {
         return customerId;
@@ -62,12 +70,12 @@ public class Representative extends BaseEntity {
         this.representativeAge = representativeAge;
     }
 
-    public String getRepresentativeBirthdate() {
-        return representativeBirthdate;
+    public String getRepresentativeBirthDate() {
+        return representativeBirthDate;
     }
 
-    public void setRepresentativeBirthdate(String representativeBirthdate) {
-        this.representativeBirthdate = representativeBirthdate;
+    public void setRepresentativeBirthDate(String representativeBirthDate) {
+        this.representativeBirthDate = representativeBirthDate;
     }
 
     public String getRepresentativeId() {
@@ -116,5 +124,33 @@ public class Representative extends BaseEntity {
 
     public void setRepresentativePhone(String representativePhone) {
         this.representativePhone = representativePhone;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public boolean isPEP() {
+        return IsPEP;
+    }
+
+    public void setPEP(boolean PEP) {
+        IsPEP = PEP;
+    }
+
+    public boolean isNonResident() {
+        return IsNonResident;
+    }
+
+    public void setNonResident(boolean nonResident) {
+        IsNonResident = nonResident;
+    }
+
+    public boolean isAMLSuspect() {
+        return IsAMLSuspect;
+    }
+
+    public void setAMLSuspect(boolean AMLSuspect) {
+        IsAMLSuspect = AMLSuspect;
     }
 }

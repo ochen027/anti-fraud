@@ -24,7 +24,7 @@ public class Corporate extends BaseEntity{
     private String customerCertificateNumberCorporate;
 
     @Column(name="cust_LOB")
-    private String custlineOfBusiness;
+    private String custLineOfBusiness;
     @Column(name="cust_phone")
     private String customerPhone;
     @Column(name = "cust_city")
@@ -53,12 +53,12 @@ public class Corporate extends BaseEntity{
         this.customerCertificateNumberCorporate = customerCertificateNumberCorporate;
     }
 
-    public String getCustlineOfBusiness() {
-        return custlineOfBusiness;
+    public String getCustLineOfBusiness() {
+        return custLineOfBusiness;
     }
 
-    public void setCustlineOfBusiness(String custlineOfBusiness) {
-        this.custlineOfBusiness = custlineOfBusiness;
+    public void setCustLineOfBusiness(String custLineOfBusiness) {
+        this.custLineOfBusiness = custLineOfBusiness;
     }
 
     public String getCustomerPhone() {

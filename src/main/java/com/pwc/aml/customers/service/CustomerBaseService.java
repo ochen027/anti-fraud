@@ -12,9 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +22,6 @@ public class CustomerBaseService implements ICustomerBaseService {
     @Autowired
     private ICustomerBaseDao customerBaseDAO;
 
-    private DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     public void saveOrUpdateCustomerBase(CustomerBase customerBase) {
@@ -69,14 +66,16 @@ public class CustomerBaseService implements ICustomerBaseService {
         for(int i=1;i<customerBaseList.size();i++){
             CustomerBase customerBase=new CustomerBase();
             String[] item=customerBaseList.get(i);
-//            customerBase.setCustomerBaseId(item[0]);
-//            customerBase.setCustomerBaseCertificateNumber(item[1]);
-//            customerBase.setCustomerBaseFirstName(item[2]);
-//            customerBase.setCustomerBaseMiddleName(item[3]);
-//            customerBase.setCustomerBaseLastName(item[4]);
-//            customerBase.setCustomerBaseFullName(item[5]);
-//            customerBase.setCustomerBaseOpenBranch(item[6]);
-            int age=item[7].equals("")?0:Integer.parseInt(item[7]);
+            customerBase.setCustomerId(item[0]);
+            customerBase.setCustomerType(item[1]);
+            customerBase.setCustomerFirstName(item[2]);
+            customerBase.setCustomerMiddleName(item[3]);
+            customerBase.setCustomerLastName(item[4]);
+            customerBase.setCustomerFullName(item[5]);
+            customerBase.setCustomerOpenBranch(item[6]);
+            customerBase.setCustomerLastUpdatedBy(item[7]);
+            customerBaseDAO.save(customerBase);
+//            int age=item[7].equals("")?0:Integer.parseInt(item[7]);
 //            customerBase.setCustomerBaseAge(age);
 //            Date birthday=item[8].equals("")?null:df.parse(item[8]);
 //            customerBase.setCustomerBaseBirthDate(birthday);// research
@@ -101,7 +100,7 @@ public class CustomerBaseService implements ICustomerBaseService {
 //            customerBase.setCustlineOfBusiness(item[22]);
 //            boolean isAMLSupportCorporate=item[23].equals("Y")?true:false;
 //            customerBase.setAMLSuspectCorporate(isAMLSupportCorporate);
-//            customerBaseDAO.save(customerBase);
+
         }
         FileUtils.deleteQuietly(temp);
     }

@@ -1,7 +1,7 @@
 app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
 
 
-    $scope.currentTab="costumerBase";
+    $scope.currentTab="customerBase";
 
     $scope.navigate = function (flag) {
         $scope.currentTab=flag;
@@ -18,12 +18,36 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
         }
     }
 
-    $scope.uploadCustomerFiles=function(files){
+    $scope.uploadCustomerBaseFiles=function(files){
         Upload.upload({
-            url: '/customer/uploadCustomerFiles',
+            url: '/customer/uploadCustomerBaseFiles',
             data: {file: files[0]}
         }).then(function () {
-            $scope.refresh();
+            $scope.refreshCustomerBase();
+        });
+    }
+    $scope.uploadIndividualFiles=function(files){
+        Upload.upload({
+            url: '/customer/uploadIndividualFiles',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshIndividual();
+        });
+    }
+    $scope.uploadCorporateFiles=function(files){
+        Upload.upload({
+            url: '/customer/uploadCorporateFiles',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshCorporate();
+        });
+    }
+    $scope.uploadRepresentativeFiles=function(files){
+        Upload.upload({
+            url: '/customer/uploadRepresentativeFiles',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshRepresentative();
         });
     }
 
@@ -50,6 +74,24 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
             $scope.customerBaseDisplay=res.data.slice();
         })
     }
+    $scope.refreshIndividual=function(){
+        $http.get("/customer/findAllIndividual").then(function(res){
+            $scope.individual=res.data;
+            $scope.individualDisplay=res.data.slice();
+        })
+    }
+    $scope.refreshCorporate=function(){
+        $http.get("/customer/findAllCorporate").then(function(res){
+            $scope.corporate=res.data;
+            $scope.corporateDisplay=res.data.slice();
+        })
+    }
+    $scope.refreshRepresentative=function(){
+        $http.get("/customer/findAllRepresentative").then(function(res){
+            $scope.representative=res.data;
+            $scope.representativeDisplay=res.data.slice();
+        })
+    }
 
 
     $scope.deleteAll = function (flag) {
@@ -65,16 +107,34 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
         }
 
     };
+
     $scope.deleteAllCustomerBase=function(){
         $http.get("/customer/removeAllCustomerBase").then(function(){
             $scope.refreshCustomerBase();
         })
     }
-
+    $scope.deleteAllIndividual=function(){
+        $http.get("/customer/removeAllIndividual").then(function(){
+            $scope.refreshIndividual();
+        })
+    }
+    $scope.deleteAllCorporate=function(){
+        $http.get("/customer/removeAllCorporate").then(function(){
+            $scope.refreshCorporate();
+        })
+    }
+    $scope.deleteAllRepresentative=function(){
+        $http.get("/customer/removeAllRepresentative").then(function(){
+            $scope.refreshRepresentative();
+        })
+    }
 
     $timeout(function () {
         $scope.refresh();
         $scope.refreshCustomerBase();
+        $scope.refreshIndividual();
+        $scope.refreshCorporate();
+        $scope.refreshRepresentative();
     });
 
 });

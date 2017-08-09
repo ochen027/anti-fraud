@@ -36,7 +36,7 @@ public class CustomerBaseDao implements ICustomerBaseDao {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<CustomerBase> cq = cb.createQuery(CustomerBase.class);
         Root<CustomerBase> rootEntry = cq.from(CustomerBase.class);
-        Predicate predicate = cb.equal(rootEntry.get("customerBaseId"), custId);
+        Predicate predicate = cb.equal(rootEntry.get("customerId"), custId);
         CriteriaQuery<CustomerBase> single = cq.select(rootEntry).where(predicate);
         TypedQuery<CustomerBase> query = em.createQuery(single);
         List<CustomerBase> customerBase = query.getResultList();

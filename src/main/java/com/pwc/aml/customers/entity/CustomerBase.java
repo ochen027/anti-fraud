@@ -155,6 +155,18 @@ public class CustomerBase extends BaseEntity{
         this.alertCreationDate = alertCreationDate;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
     public String getAlertId() {
         return alertId;
     }
