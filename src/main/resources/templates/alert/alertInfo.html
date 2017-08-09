@@ -363,6 +363,20 @@
         </div>
     </div>
     <div class="sepeartor"></div>
+
+    <div class="comments-history">
+        <div class="row">
+            <div class="col-sm-12" ng-repeat="item in commentList">
+                <div class="card">
+                    <div class="card-block">
+                        <h3 class="card-title">{{item.commentCreatedBy}} - {{item.commentCreatedDate}}</h3>
+                        <p class="card-text">{{item.commentContents}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12 text-right">
         <button class="btn btn-primary" ng-click="returnToQc()">Return</button>
         <button class="btn btn-primary" ng-click="escalate()">Escalate</button>

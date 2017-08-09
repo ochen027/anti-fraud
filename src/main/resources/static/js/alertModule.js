@@ -258,12 +258,12 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         $http.post("/comments/create",$scope.comments).then(function(res){
             alert("comments add success!");
             $scope.refreshComments();
+            $scope.comments={};
         })
     }
 
     $scope.refreshComments=function(){
         $http.get("/comments/getByObjId/"+$stateParams.id).then(function(res){
-            debugger;
             $scope.commentList=res.data;
         });
     }
@@ -326,7 +326,6 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
     $timeout(function () {
         $scope.refresh();
-
     });
 
 

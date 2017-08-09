@@ -19,7 +19,7 @@ public class CommentService implements ICommentService {
 
     @Override
     public void CreateComment(Comments c, Users users) throws Exception{
-        c.setCommentId(UUID.randomUUID().toString());
+
         c.setCommentCreatedBy(users.getUserName());
         c.setCommentCreatedDate(FormatUtils.DateToString(new Date()));
         commentDAO.createComment(c);
