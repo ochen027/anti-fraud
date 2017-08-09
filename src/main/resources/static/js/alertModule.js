@@ -1,5 +1,3 @@
-
-
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     console.log("/alert/myAlert");
 
@@ -67,7 +65,7 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
 
             $scope.workflow = res.data;
             for (let i = 0; i < $scope.workflow.flowPoints.length; i++) {
-                if ($scope.workflow.flowPoints[i].print.indexOf($stateParams.id)>=0) {
+                if ($scope.workflow.flowPoints[i].print.indexOf($stateParams.id) >= 0) {
                     $scope.flowPointId = $scope.workflow.flowPoints[i].flowPointId;
                     $http.get("/workflow/getWorkObjsByPointId?flowPointId=" + $scope.flowPointId)
                         .then(function (response) {
@@ -241,15 +239,39 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams,$timeout,Upload) {
-    $scope.alerts={};
-    $scope.customer={};
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
+    $scope.alerts = {};
+    $scope.customer = {};
     $scope.dataFiles = [];
+    $scope.itemsByPage = 7;
+    $scope.SuspiciousType = "Suspicious 1";
+    $scope.commentList=[];
+    $scope.comments={};
 
 
-    $scope.refresh=function(){
+    $scope.selectSuspiciousType = function (type) {
+        $scope.SuspiciousType = type;
+    }
+
+    $scope.addComments = function () {
+        $scope.comments.objId=$stateParams.id;
+        $http.post("/comments/create",$scope.comments).then(function(res){
+            alert("comments add success!");
+            $scope.refreshComments();
+        })
+    }
+
+    $scope.refreshComments=function(){
+        $http.get("/comments/getByObjId/"+$stateParams.id).then(function(res){
+            debugger;
+            $scope.commentList=res.data;
+        });
+    }
+
+    $scope.refresh = function () {
         $scope.refreshFile();
         getAlert();
+        $scope.refreshComments();
     }
 
     //upload file part
@@ -257,7 +279,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
         if (files && files.length) {
             Upload.upload({
                 url: '/documents/upload',
-                data: {file: files[0],workObjId:$stateParams.id}
+                data: {file: files[0], workObjId: $stateParams.id}
             }).then(function (res) {
                 alert("file upload success!");
                 $scope.refresh();
@@ -265,73 +287,69 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$st
         }
     }
 
-    $scope.fileDownload = function(fileName, filePath){
-        window.location.href="/documents/download/"+fileName+"/"+filePath;
+    $scope.fileDownload = function (fileName, filePath) {
+        window.location.href = "/documents/download/" + fileName + "/" + filePath;
     }
 
     $scope.refreshFile = function () {
-        $http.get("/documents/getByAlertId/"+$stateParams.id).then(function (res) {
+        $http.get("/documents/getByAlertId/" + $stateParams.id).then(function (res) {
             if (res.status !== 200) {
                 console.log(res);
                 return;
             }
-            $scope.dataFiles=res.data;
+            $scope.dataFiles = res.data;
         });
     }
 
 
-    var getAlert=function () {
-        $http.post("/workflow/getWorkObjById",$stateParams.id).then(function(res){
+    var getAlert = function () {
+        $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
 
-            if(res.status!=200){
+            if (res.status != 200) {
                 console.log(res);
                 return;
             }
-            $scope.alerts=res.data.alerts;
+            $scope.alerts = res.data.alerts;
             getCustomer(res.data.alerts.customerId);
         });
     }
 
-    var getCustomer=function(customerId){
-       $http.post( "/customer/findByCustId",{"customerId":customerId}).then(function(res){
-           if(res.status!=200){
-               console.log(res);
-               return;
-           }
-           $scope.customer=res.data;
-       });
+    var getCustomer = function (customerId) {
+        $http.post("/customer/findByCustId", {"customerId": customerId}).then(function (res) {
+            if (res.status != 200) {
+                console.log(res);
+                return;
+            }
+            $scope.customer = res.data;
+        });
     }
 
-    $timeout(function(){
+    $timeout(function () {
         $scope.refresh();
 
     });
 
 
-    $scope.itemsByPage = 4;
+    $scope.escalate = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/escalate", escalateWorkObjIds).then(function (res) {
 
-
-
-    $scope.escalate=function(){
-       let escalateWorkObjIds=[$stateParams.id];
-       $http.post("/workflow/escalate",escalateWorkObjIds).then(function(res){
-            
             alert("this Alert has been escalated!");
-       });
+        });
     };
 
-    $scope.close=function(){
-        let escalateWorkObjIds=[$stateParams.id];
-        $http.post("/workflow/close",escalateWorkObjIds).then(function(res){
-            
+    $scope.close = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/close", escalateWorkObjIds).then(function (res) {
+
             alert("this Alert has been closed!");
         });
     };
 
-    $scope.returnToQc=function(){
-        let escalateWorkObjIds=[$stateParams.id];
-        $http.post("/workflow/returnToQc",escalateWorkObjIds).then(function(res){
-            
+    $scope.returnToQc = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/returnToQc", escalateWorkObjIds).then(function (res) {
+
             alert("this Alert has been return to QC!");
         });
     };

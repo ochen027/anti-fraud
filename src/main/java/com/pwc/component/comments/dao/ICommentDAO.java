@@ -1,6 +1,6 @@
-package com.pwc.aml.comments.dao;
+package com.pwc.component.comments.dao;
 
-import com.pwc.aml.comments.entity.Comments;
+import com.pwc.component.comments.entity.Comments;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface ICommentDAO {
 
     List<Comments> getAllComments() throws Exception;
 
-    List<Comments> getCommentsListByAlert(String alertId) throws Exception;
+    List<Comments> getCommentsListByObjId(String ObjId) throws Exception;
 }
