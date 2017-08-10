@@ -47,7 +47,4 @@ public class FormatUtils {
 		return dtf.format(LocalDateTime.now())+System.nanoTime();
 	}
 
-	public static void main(String agrs[]){
-
-	}
 }

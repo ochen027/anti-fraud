@@ -228,15 +228,23 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
 });
 
 app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
-    console.log("close alert ctrl");
-    $http.get("/alert/closeAlert")
-        .then(function success(response) {
-            console.log(response);
-            $scope.data = response.data.result;
-        }, function error() {
-            console.log(error);
-        });
+    $scope.alertSearch = {};
+    $scope.data = [];
+    console.log("Close Alert Ctrl");
+    $scope.searchClosedAlert = function() {
+        $http.post("/workflow/getClosedAlerts", $scope.alertSearch)
+            .then(function success(response) {
+                console.log(response);
+                $scope.data = response.data;
+            }, function error() {
+                console.log(error);
+            });
+    }
 
+    $scope.reset = function(){
+        $scope.data = [];
+        $scope.alertSearch = {};
+    }
 });
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
