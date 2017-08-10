@@ -62,7 +62,6 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     });
 
 });
-
 app.controller('UserManagementCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("usermanagement/userlist");
     $scope.users = {};
@@ -241,7 +240,6 @@ app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $tim
         $scope.refresh();
     });
 });
-
 app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
     $scope.group = {};
     $scope.group.roles = {};
@@ -313,7 +311,6 @@ app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, 
 
     })
 });
-
 app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("roles/roleList");
     $http.get("/roles/listAll").then(function (res) {
@@ -373,8 +370,6 @@ app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $time
     })
 
 });
-
-
 app.controller('RiskCountryCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
     $scope.toggleRiskCountry = true;
     $scope.uploadFiles = function (files) {
@@ -445,7 +440,6 @@ app.controller('riskCountryInfoCtrl', function ($scope, $http, $location, $state
     })
 
 });
-
 app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeout){
     console.log("menus/menuList");
     $http.get("/menus/findAll").then(function(res){
@@ -477,7 +471,6 @@ app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeo
         });
     }
     });
-
 app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$stateParams){
     $scope.menu={};
 
@@ -500,4 +493,71 @@ app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$s
         $scope.menu=$stateParams.menu;
     })
 
+});
+app.controller('RoleMenuCtrl', function ($scope, $http, $location, $state, $timeout) {
+    console.log("rolemanagement/roleMenu");
+    $scope.edit = function (role) {
+        role.action = "false";
+        $state.go("roleMenuInfo", {role: role});
+    }
+    $scope.delete = function (roleId) {
+        $http.post("/roles/deleteRole/" + roleId).then(function (res) {
+            console.log(res);
+            $scope.refresh();
+        })
+    }
+    $scope.addRole = function () {
+        $state.go("roleMenuInfo", {role: {"action": "false"}});
+    }
+    $scope.refresh = function () {
+        $http.get("/roles/listAll").then(function (res) {
+            $scope.roleMenu = res.data;
+        })
+    }
+    $timeout(function () {
+        $scope.refresh();
+    });
+});
+app.controller('RoleMenuInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+    $scope.roles = {};
+    $scope.roles.menus = {};
+    $scope.roles.roleMenu = {};
+    $scope.save = function () {
+        $http.post("roles/createRole", $scope.role).then(function (res) {
+            if (res.status !== 200) {
+                console.log(res);
+                return;
+            }
+
+            $scope.role = res.data;
+            alert("role saved! ");
+        })
+    }
+    $scope.gotoRoleList = function () {
+        $state.go("roleMenu");
+    }
+    $scope.refresh = function () {
+        $http.get("/roles/getRoleMenuByRole").then(function(res){
+            console.log(res);
+            $scope.roleMenu=res.data;
+            $scope.roleMenuDisplay=res.data.slice(0);
+        },function(error){
+            consle.log(error.statusCode()+"-->"+error.statusText);
+        })}
+    $scope.delete=function(id, roleName){
+        console.log("delete menu");
+        $http.post("/roles/deleteMenuFromRole/"+id,+roleName).then(function(res){
+            console.log(res)
+            $scope.refresh();
+        })
+    }
+    $scope.refresh = function () {
+        $http.get("/roles/getRoleMenuByRole").then(function (res) {
+            $scope.roleMenu = res.data;
+            roleMenuDisplay        });
+    }
+    $timeout(function () {
+        $scope.roles = $stateParams.roles;
+        $scope.refresh();
+    })
 });

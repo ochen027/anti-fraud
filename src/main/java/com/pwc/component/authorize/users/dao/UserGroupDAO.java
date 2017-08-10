@@ -44,7 +44,7 @@ public class UserGroupDAO implements IUserGroupDAO {
 
     @Override
     public UserGroup createUserGroup(UserGroup ug) {
-        entityManager.persist(ug);
+        entityManager.merge(ug);
         return ug;
     }
 

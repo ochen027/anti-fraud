@@ -501,13 +501,30 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: '/header'
                 },
                 content: {
-                    templateUrl: '/system/menuList'
+                    templateUrl: '/system/roleMenu'
                 },
                 footer: {
                     templateUrl: '/footer',
                 }
             },
-            controller: 'MenuListCtrl'
+            controller: 'RoleMenuCtrl'
+        },
+        {
+            name: "roleMenuInfo",
+            url: "/system/roleMenuInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/roleMenuInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RoleMenuInfoCtrl',
+            params: {roles: null}
         },
     {
             name: "menuInfo",

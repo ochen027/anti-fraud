@@ -2,6 +2,7 @@ package com.pwc.component.authorize.roles.service;
 
 import java.util.List;
 
+import com.pwc.component.authorize.roles.entity.RoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,12 @@ public class RolesService implements IRolesService {
     @Autowired
     private IRolesDAO rolesDAO;
 
+
+    @Override
+    public Roles checkRoleName(Roles roles) {
+
+        return rolesDAO.checkRoleName(roles);
+    }
 
 
     @Override
@@ -45,4 +52,29 @@ public class RolesService implements IRolesService {
     public Roles getSingleRoles(int roleId) {
         return rolesDAO.getRoles(roleId);
     }
+
+    @Override
+    public void addRoleIntoMenu(RoleMenu rm, String roleName) {
+
+        rolesDAO.addRoleIntoMenu(rm,roleName);
+    }
+
+    @Override
+    public void updateRoleMenu(RoleMenu rm, String roleName) {
+
+        rolesDAO.updateRoleMenu(rm,roleName);
+    }
+
+    @Override
+    public void deleteMenuFromRole(int id, String roleName) {
+
+        rolesDAO.deleteMenuFromRole(id,roleName);
+    }
+
+    @Override
+    public RoleMenu getRoleMenuRelationship(int id) {
+
+        return rolesDAO.getRoleMenuRelationship(id);
+    }
+
 }
