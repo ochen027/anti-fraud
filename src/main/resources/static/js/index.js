@@ -1,5 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table','ngDialog']);
+    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog']);
 
 app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
@@ -64,7 +64,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'LoginCtrl'
         }
     ];
-
 
 
     app.alertModule = [
@@ -217,8 +216,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     ];
 
 
-
-
     app.document = {
         name: "documentExample",
         url: "/document/index",
@@ -276,8 +273,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     ];
 
 
-
-
     app.users = [
         {
             name: "IndexUsers",
@@ -329,38 +324,38 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'ImportDataCtrl'
     },
-     {
-        name: "userManagement",
-        url: "/system/userManagement",
-        views: {
-            header: {
-                templateUrl: '/header'
+        {
+            name: "userManagement",
+            url: "/system/userManagement",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/userManagement'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
             },
-            content: {
-                templateUrl: '/system/userManagement'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
+            controller: 'UserManagementCtrl'
         },
-        controller: 'UserManagementCtrl'
-    },
-    {
-              name: "riskCountry",
-              url: "/system/riskCountry",
-              views: {
-                  header: {
-                      templateUrl: '/header'
-                  },
-                  content: {
-                      templateUrl: '/system/riskCountry'
-                  },
-                  footer: {
-                      templateUrl: '/footer',
-                  }
-              },
-              controller: 'riskCountryCtrl'
-    },
+        {
+            name: "riskCountry",
+            url: "/system/riskCountry",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/riskCountry'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'riskCountryCtrl'
+        },
         {
             name: "riskCountryInfo",
             url: "/system/riskCountryInfo",
@@ -378,23 +373,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'riskCountryInfoCtrl',
             params: {riskCountry: null}
         },
-    {
-                   name: "watchList",
-                   url: "/system/watchList",
-                   views: {
-                       header: {
-                           templateUrl: '/header'
-                       },
-                       content: {
-                           templateUrl: '/system/watchList'
-                       },
-                       footer: {
-                           templateUrl: '/footer',
-                       }
-                   },
-                   controller: 'watchListCtrl'
-         }
-        ,{
+        {
+            name: "watchList",
+            url: "/system/watchList",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/watchList'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'watchListCtrl'
+        }
+        , {
             name: "watchListInfo",
             url: "/system/watchListInfo",
             views: {
@@ -411,107 +406,123 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'watchListInfoCtrl',
             params: {watchList: null}
         }
-    ,{
-        name: "userManagementInfo",
-        url: "/system/userManagementInfo",
-        views: {
-            header: {
-                templateUrl: '/header'
+        , {
+            name: "userManagementInfo",
+            url: "/system/userManagementInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/userManagementInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
             },
-            content: {
-                templateUrl: '/system/userManagementInfo'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
+            controller: 'UserManagementInfoCtrl',
+            params: {user: null}
         },
-        controller: 'UserManagementInfoCtrl',
-        params: {user: null}
-    },
-    {
-        name: "userGroup",
-        url: "/system/userGroup",
-        views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/system/userGroup'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        controller: 'UserGroupCtrl'
-    },
-    {
-        name: "userGroupInfo",
-        url: "/system/userGroupInfo",
-        views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/system/userGroupInfo'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        controller: 'UserGroupInfoCtrl',
-        params: {group: null}
-    },
-    {
-        name: "roleList",
-        url: "/system/roleList",
-        views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/system/roleList'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        controller: 'RoleListCtrl'
-    },
-    {
-        name: "roleInfo",
-        url: "/system/roleInfo",
-        views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/system/roleInfo'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        controller: 'RoleInfoCtrl',
-        params: {role: null}
-    },
-    {
-         name:"menuList",
-         url: "/system/menuList",
-         views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/system/menuList'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        controller: 'MenuListCtrl'
-     },
         {
-            name:"roleMenu",
+            name: "userGroup",
+            url: "/system/userGroup",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/userGroup'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'UserGroupCtrl'
+        },
+        {
+            name: "userGroupInfo",
+            url: "/system/userGroupInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/userGroupInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'UserGroupInfoCtrl',
+            params: {group: null}
+        },
+        {
+            name: "roleList",
+            url: "/system/roleList",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/roleList'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RoleListCtrl'
+        },
+        {
+            name: "roleInfo",
+            url: "/system/roleInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/roleInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RoleInfoCtrl',
+            params: {role: null}
+        },
+        {
+            name: "menuList",
+            url: "/system/menuList",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/menuList'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'MenuListCtrl'
+        }, {
+            name: "roleMenuInfo",
+            url: "/system/roleMenuInfo",
+            views: {
+                header: {
+                    templateUrl: '/header'
+                },
+                content: {
+                    templateUrl: '/system/roleMenuInfo'
+                },
+                footer: {
+                    templateUrl: '/footer',
+                }
+            },
+            controller: 'RoleMenuInfoCtrl',
+            params: {roles: null}
+        },
+        {
+            name: "roleMenu",
             url: "/system/roleMenu",
             views: {
                 header: {
@@ -526,7 +537,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'RoleMenuCtrl'
         },
-    {
+        {
             name: "menuInfo",
             url: "/system/menuInfo",
             views: {
@@ -542,14 +553,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             },
             controller: 'MenuInfoCtrl',
             params: {menu: null}
-     }
+        }
 
     ];
 
 
-    app.case=[{
-        name:"myCase",
-        url:"/case/myCase",
+    app.case = [{
+        name: "myCase",
+        url: "/case/myCase",
         views: {
             header: {
                 templateUrl: '/header'
@@ -564,9 +575,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         params: {case: null},
         controller: 'MyCaseCtrl'
 
-    },{
-        name:"closedCase",
-        url:"/case/closedCase",
+    }, {
+        name: "closedCase",
+        url: "/case/closedCase",
         views: {
             header: {
                 templateUrl: '/header'
@@ -581,9 +592,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         params: {case: null},
         controller: 'ClosedCaseCtrl'
     }];
-    app.query=[{
-        name:"alertQuery",
-        url:"/query/alertQuery",
+    app.query = [{
+        name: "alertQuery",
+        url: "/query/alertQuery",
         views: {
             header: {
                 templateUrl: '/header'
@@ -597,9 +608,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         params: {query: null},
         controller: 'AlertQueryCtrl'
-    },{
-        name:"caseQuery",
-        url:"/query/caseQuery",
+    }, {
+        name: "caseQuery",
+        url: "/query/caseQuery",
         views: {
             header: {
                 templateUrl: '/header'
@@ -614,9 +625,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         params: {query: null},
         controller: 'CaseQueryCtrl'
     }];
-    app.reports=[{
-        name:"reportSummary",
-        url:"/reports/reportSummary",
+    app.reports = [{
+        name: "reportSummary",
+        url: "/reports/reportSummary",
         views: {
             header: {
                 templateUrl: '/header'
@@ -630,9 +641,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         params: {reports: null},
         controller: 'ReportSummaryCtrl'
-    },{
-        name:"reportDetail",
-        url:"/reports/reportDetail",
+    }, {
+        name: "reportDetail",
+        url: "/reports/reportDetail",
         views: {
             header: {
                 templateUrl: '/header'
@@ -648,7 +659,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'ReportDetailCtrl'
     }];
 
-    app.scenario=[
+    app.scenario = [
         {
             name: "scenario",
             url: "/scenario/scenario",
@@ -725,7 +736,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
      */
     function loadingRouter(obj) {
         if (Array.isArray(obj)) {
-            for(let i=0;i<obj.length;i++){
+            for (let i = 0; i < obj.length; i++) {
                 loadingRouter(obj[i]);
             }
         } else {
@@ -733,7 +744,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     }
 
-    for(let key in app){
+    for (let key in app) {
         loadingRouter(app[key]);
     }
 
