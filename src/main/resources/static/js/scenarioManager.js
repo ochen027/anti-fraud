@@ -8,15 +8,15 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
         $state.go("rules");
     }
 
-    $scope.edit=function(rule){
-        $state.go("rules",{rule:rule});
+    $scope.edit = function (rule) {
+        $state.go("rules", {rule: rule});
     }
 
-    $scope.defaultRule=0;
+    $scope.defaultRule = 0;
 
-    $scope.select=function(row){
-        $scope.defaultRule=row.id;
-        $http.post("/rules/setDefaultRuleId",row).then(function(res){
+    $scope.select = function (row) {
+        $scope.defaultRule = row.id;
+        $http.post("/rules/setDefaultRuleId", row).then(function (res) {
             //$scope.defaultRule=res.data;
         });
     }
@@ -33,8 +33,8 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
         });
     }
 
-    $scope.run=function(){
-        $http.get("/rules/runRule/"+ $scope.defaultRule).then(function(res){
+    $scope.run = function () {
+        $http.get("/rules/runRule/" + $scope.defaultRule).then(function (res) {
             alert("running rules");
         });
 
@@ -45,14 +45,14 @@ app.controller('RulesManagerCtrl', function ($scope, $http, $location, $state, $
 
         //get default rule
 
-        $http.get("/rules/getDefaultRuleId").then(function(res){
-            $scope.defaultRule=res.data;
+        $http.get("/rules/getDefaultRuleId").then(function (res) {
+            $scope.defaultRule = res.data;
         });
     });
 
 });
 
-app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout,$stateParams) {
+app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
 
     $scope.rules = {};
     $scope.scenariosSelected = [];
@@ -92,18 +92,18 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
         $scope.scenariosSelectedDisplay = $scope.scenariosSelected.slice(0);
     }
 
-    var findRuleScenarioByRuleId=function(rules){
+    var findRuleScenarioByRuleId = function (rules) {
 
-        $http.post("/rules/listRuleScenarioByRuleId",rules).then(function(res){
+        $http.post("/rules/listRuleScenarioByRuleId", rules).then(function (res) {
 
-            let scenarios=res.data;
+            let scenarios = res.data;
 
-            for(let k in scenarios){
-                for(let key in $scope.scenarios){
-                   if(scenarios[k].scenarioId===$scope.scenarios[key].id){
-                       $scope.addScenario($scope.scenarios[key]);
-                       break;
-                   }
+            for (let k in scenarios) {
+                for (let key in $scope.scenarios) {
+                    if (scenarios[k].scenarioId === $scope.scenarios[key].id) {
+                        $scope.addScenario($scope.scenarios[key]);
+                        break;
+                    }
                 }
             }
 
@@ -114,14 +114,14 @@ app.controller('RulesCtrl', function ($scope, $http, $location, $state, $timeout
         $http.get("/rules/listAll").then(function (res) {
             $scope.scenarios = res.data;
             $scope.scenariosDisplay = res.data.slice(0);
-            if($scope.rules){
+            if ($scope.rules) {
                 findRuleScenarioByRuleId($scope.rules);
             }
         });
     }
 
     $timeout(function () {
-        $scope.rules=$stateParams.rule;
+        $scope.rules = $stateParams.rule;
         $scope.refresh();
     });
 
@@ -160,6 +160,30 @@ app.controller('ScenarioManagerCtrl', function ($scope, $http, $location, $state
 app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
 
     $scope.scenario = {};
+    $scope.currentTab = "table";
+    $scope.checkList = {
+        // condition: {
+        //     reg: ,
+        //     values: [],
+        //     contain: false
+        // },
+        alertDesc: {
+            reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertDesc\", \"(.)*\"\);/,
+            content:"hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"$value\");",
+            values: "",
+            contain: false
+        }, alertName: {
+            reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertName\", \"(.)*\"\);/,
+            content:"hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"$value\");",
+            value: "",
+            contain: false
+        }, alertContent: {
+            reg:/hBaseDAO.putData\(table, alertId, \"f1\", \"alertContent\", \"(.)*\"\);/,
+            content: "hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"$value\");",
+            value: "",
+            contain: false
+        }
+    };
 
     $scope.goToScenarioManager = function () {
         $state.go("scenarioManager");
@@ -179,8 +203,43 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     }
 
     $timeout(function () {
-        $scope.scenario = $stateParams.scenario;
-    })
 
+        $scope.scenario = $stateParams.scenario;
+        $scope.scenario.scenarioContent = $scope.scenario.scenarioContent.replace(/\\n/g, "\n").replace(/\\"/g, '"');
+        $scope.tableLine = [];
+        $scope.scenario.scenarioTable = $scope.scenario.scenarioContent.split("\n");
+        runCheckList($scope.scenario.scenarioTable);
+    });
+
+    $scope.writeBack=function(){
+        let list=$scope.scenario.scenarioTable;
+        for (let i = 0; i < list.length; i++) {
+            for (let key in $scope.checkList) {
+                let result=list[i].match($scope.checkList[key].reg);
+                if(result!== null){
+                    var line=$scope.checkList[key].content.replace("$value",$scope.checkList[key].value);
+                    list[i]=list[i].replace($scope.checkList[key].reg,line);
+                }
+            }
+        }
+        $scope.scenario.scenarioContent=$scope.scenario.scenarioTable.join("\n");
+    }
+
+    function runCheckList(list) {
+        for (let i = 0; i < list.length; i++) {
+            for (let key in $scope.checkList) {
+                let result=list[i].match($scope.checkList[key].reg);
+                if(result!== null){
+                    $scope.checkList[key].contain=true;
+                    let emptyString=$scope.checkList[key].content.split("$value");
+                    let tempValue=result[0];
+                    for(let j=0;j<emptyString.length;j++ ){
+                        tempValue=tempValue.replace(emptyString[j],"");
+                    }
+                    $scope.checkList[key].value= tempValue;
+                }
+            }
+        }
+    }
 
 });
