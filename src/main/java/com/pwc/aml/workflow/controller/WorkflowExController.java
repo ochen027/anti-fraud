@@ -1,6 +1,7 @@
 package com.pwc.aml.workflow.controller;
 
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.service.IAlertService;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.component.assign.service.IAssignService;
@@ -71,10 +72,10 @@ public class WorkflowExController extends BaseController {
     }
 
 
-    @GetMapping("getClosedAlerts")
-    public ResponseEntity<List<WorkObj>> getClosedAlerts() throws Exception {
+    @PostMapping("getClosedAlerts")
+    public ResponseEntity<List<WorkObj>> getClosedAlerts(@RequestBody AlertSearchEntity ase) throws Exception {
         WorkflowEx workflowEx = workflowExService.getWorkflowByDefault();
-        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getEndPoint().getFlowPointId(), null);
+        List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(workflowEx.getEndPoint().getFlowPointId(), ase);
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
@@ -157,9 +158,7 @@ public class WorkflowExController extends BaseController {
      */
     @GetMapping("getWorkObjsByPointId")
     public ResponseEntity<List<WorkObj>> getWorkObjsByPointId(@RequestParam String flowPointId) throws Exception {
-
         List<WorkObj> workObjs = workObjService.getWorkObjsByPointId(flowPointId, null);
-
         return new ResponseEntity<List<WorkObj>>(workObjs, HttpStatus.OK);
     }
 
@@ -171,7 +170,6 @@ public class WorkflowExController extends BaseController {
             if (eventName.equalsIgnoreCase(targetEvent.getName())) {
                 String eventId = targetEvent.getFlowEventId();
                 FlowEvent event = workObjService.getFlowEventByEventId(eventId);
-
                 List<FlowEvent> events = workObjService.doEvent(workObj, event,users);
                 break;
             }

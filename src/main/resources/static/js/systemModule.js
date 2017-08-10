@@ -138,7 +138,6 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     });
 
 });
-
 app.controller('UserManagementCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("usermanagement/userlist");
     $scope.users = {};
@@ -317,7 +316,6 @@ app.controller('UserGroupCtrl', function ($scope, $http, $location, $state, $tim
         $scope.refresh();
     });
 });
-
 app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
     $scope.group = {};
     $scope.group.roles = {};
@@ -389,7 +387,6 @@ app.controller('UserGroupInfoCtrl', function ($scope, $http, $location, $state, 
 
     })
 });
-
 app.controller('RoleListCtrl', function ($scope, $http, $location, $state, $timeout) {
     console.log("roles/roleList");
     $http.get("/roles/listAll").then(function (res) {
@@ -449,8 +446,6 @@ app.controller('RoleInfoCtrl', function ($scope, $http, $location, $state, $time
     })
 
 });
-
-
 app.controller('RiskCountryCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
     $scope.toggleRiskCountry = true;
     $scope.uploadFiles = function (files) {
@@ -503,7 +498,7 @@ app.controller('riskCountryInfoCtrl', function ($scope, $http, $location, $state
 
     $scope.save = function () {
         $http.post("riskCountry/saveOrUpdate", $scope.riskCountry).then(function (res) {
-                if (res.status !== 200) {
+            if (res.status !== 200) {
                 console.log(res);
                 return;
             }
@@ -521,53 +516,55 @@ app.controller('riskCountryInfoCtrl', function ($scope, $http, $location, $state
     })
 
 });
-app.controller('watchListCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
-    $scope.toggleWatchList = true;
-    $scope.uploadFiles = function (files) {
 
-        if (files && files.length) {
-            Upload.upload({
-                url: '/watchList/upload',
-                data: {file: files[0]}
-            }).then(function (res) {
+
+    app.controller('watchListCtrl', function ($scope, $http, $location, $state, $timeout, Upload) {
+        $scope.toggleWatchList = true;
+        $scope.uploadFiles = function (files) {
+
+            if (files && files.length) {
+                Upload.upload({
+                    url: '/watchList/upload',
+                    data: {file: files[0]}
+                }).then(function (res) {
+                    $scope.refresh();
+                });
+            }
+        }
+        $scope.edit = function (watchList) {
+            watchList.action =true;
+            $state.go("watchListInfo", {watchList: watchList});
+        }
+        $scope.delete = function (watchList) {
+            $http.post("/watchList/delete" , watchList).then(function (res) {
+                console.log(res);
+                $scope.refresh();
+            })
+        }
+
+
+        $scope.refresh = function () {
+            $http.get("/watchList/getAll").then(function (res) {
+                $scope.watchList = res.data;
+                $scope.watchListDisplay = res.data.slice();
+            });
+
+        };
+
+
+        $scope.deleteAll = function () {
+            $http.get("/watchList/removeAll").then(function () {
                 $scope.refresh();
             });
-        }
-    }
-    $scope.edit = function (watchList) {
-        watchList.action =true;
-        $state.go("watchListInfo", {watchList: watchList});
-    }
-    $scope.delete = function (watchList) {
-        $http.post("/watchList/delete" , watchList).then(function (res) {
-            console.log(res);
-            $scope.refresh();
-        })
-    }
 
 
-    $scope.refresh = function () {
-        $http.get("/watchList/getAll").then(function (res) {
-            $scope.watchList = res.data;
-            $scope.watchListDisplay = res.data.slice();
-        });
+        };
 
-    };
-
-
-    $scope.deleteAll = function () {
-        $http.get("/watchList/removeAll").then(function () {
+        $timeout(function () {
             $scope.refresh();
         });
 
-
-    };
-
-    $timeout(function () {
-        $scope.refresh();
     });
-
-});
 app.controller('watchListInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
     $scope.watchList = {};
 
@@ -591,6 +588,7 @@ app.controller('watchListInfoCtrl', function ($scope, $http, $location, $state, 
     })
 
 });
+
 
 app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeout){
     console.log("menus/menuList");
@@ -622,7 +620,7 @@ app.controller('MenuListCtrl', function($scope, $http, $location, $state, $timeo
             $scope.menusListDisplay = res.data.slice();
         });
     }
-    });
+});
 
 app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$stateParams){
     $scope.menu={};
@@ -634,7 +632,7 @@ app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$s
                 return;
             }
 
-        //    $scope.menu=res.data;
+            //    $scope.menu=res.data;
             alert("menu saved!");
         })
     }
@@ -647,39 +645,86 @@ app.controller('MenuInfoCtrl',function($scope,$http,$location,$state,$timeout,$s
     })
 
 });
+
+
 app.controller('RoleMenuCtrl', function ($scope, $http, $location, $state, $timeout) {
-    console.log("roles/roleMenu");
-    $http.get("/roles/listAll").then(function (res) {
-        console.log(res);
-        $scope.rolesList = res.data;
-    }, function (error) {
-        console.log(error.statusCode() + "-->" + error.statusText);
-    })
+
 
     $scope.edit = function (role) {
-        role.action = true;
-        $state.go("roleInfo", {role: role});
-    }
-    $scope.delete = function (roleId) {
-        console.log("delete role");
-        $http.post("/roles/deleteRole/" + roleId).then(function (res) {
-            console.log(res)
-            $scope.refresh();
-        })
-    }
-    $scope.addRole = function () {
-        $state.go("roleInfo", {role: {"action": true}});
+        role.action = false;
+        $state.go("roleMenuInfo", {role: role});
     }
 
     $scope.refresh = function () {
         $http.get("/roles/listAll").then(function (res) {
-            $scope.rolesList = res.data;
-
+            $scope.roleMenu = res.data;
         })
     }
+
+    $scope.addRole = function () {
+        $state.go("roleMenuInfo", {role: {"action": "false"}});
+    }
+
 
     $timeout(function () {
         $scope.refresh();
     });
 
+    $scope.delete = function (roleId) {
+        $http.post("/roles/deleteRole/" + roleId).then(function (res) {
+
+            $scope.delete = function (roleId) {
+                $http.post("/roles/deleteRole/" + roleId).then(function (res) {
+                    console.log(res)
+                    $scope.refresh();
+                })
+            }
+        });
+    }
 });
+
+app.controller('RoleMenuInfoCtrl', function ($scope, $http, $location, $state, $timeout, $stateParams) {
+            $scope.roles = {};
+            $scope.roles.menus = {};
+            $scope.roles.roleMenu = {};
+            $scope.save = function () {
+                    $http.post("roles/createRole", $scope.role).then(function (res) {
+                        if (res.status !== 200) {
+                            console.log(res);
+                            return;
+                        }
+
+                        $scope.role = res.data;
+                        alert("role saved! ");
+                    })
+                }
+            $scope.gotoRoleList = function () {
+                $state.go("roleMenu");
+            }
+            $scope.refresh = function () {
+                $http.get("/roles/getRoleMenuByRole").then(function(res){
+                    console.log(res);
+                    $scope.roleMenu=res.data;
+                    $scope.roleMenuDisplay=res.data.slice(0);
+                },function(error){
+                    consle.log(error.statusCode()+"-->"+error.statusText);
+                })}
+            $scope.delete=function(id, roleName){
+                console.log("delete menu");
+                $http.post("/roles/deleteMenuFromRole/"+id,+roleName).then(function(res){
+                    console.log(res)
+                    $scope.refresh();
+                })
+            }
+            $scope.refresh = function () {
+                $http.get("/roles/getRoleMenuByRole").then(function (res) {
+                    $scope.roleMenu = res.data;
+                    roleMenuDisplay        });
+            }
+            $timeout(function () {
+                $scope.roles = $stateParams.roles;
+                $scope.refresh();
+            })
+
+
+    });

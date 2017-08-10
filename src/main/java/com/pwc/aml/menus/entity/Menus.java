@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import com.pwc.common.base.entity.BaseEntity;
 
 @Entity
@@ -26,6 +25,7 @@ public class Menus extends BaseEntity{
     private int menuParentId;
     @Transient
     private List<Menus> childList;
+
 
     public String getMenuName() {
         return menuName;

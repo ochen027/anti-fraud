@@ -6,32 +6,45 @@
         <div class="customer-summary">
             <form class="">
                 <div class="table-tr">
+
                     <label class="label">Customer ID</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerId" />
+
                     <label class="label">Alert Create Date</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertCreateDate" />
+                </div>
+
+                <div class="table-tr">
                     <label class="label">Customer Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                </div>
-                <div class="table-tr">
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerName" />
+
                     <label class="label">Alert Close Date</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Alert ID</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Suspicious Level</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertCloseDate" />
                 </div>
+
+
                 <div class="table-tr">
-                    <label class="label">Total Amount(more than)</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Alert Closed By</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+                    <label class="label">Alert ID</label>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertId" />
+
+                    <label class="label">Suspicious Level</label>
+                    <input type="text" class="text-input" placeholder="" />
+
                 </div>
+
+                <div class="table-tr">
+                    <label class="label">Total Amount(More Than)</label>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.totalAmount" />
+
+                    <label class="label">Alert Closed By</label>
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.colsedBy" />
+                </div>
+
             </form>
         </div>
         <div class="col-md-12 text-right">
             <button class="btn btn-default" ng-click="reset()">Reset</button>
-            <button class="btn btn-default" ng-click="search()">Search</button>
+            <button class="btn btn-default" ng-click="searchClosedAlert()">Search</button>
         </div>
         <div class="sepeartor"></div>
     </div>
@@ -40,27 +53,23 @@
            st-table="displayedData" st-safe-src="data">
         <thead>
         <tr>
-            <th st-sort="alertId">Alert ID1</th>
-            <th st-sort="accNumber">Acct Number</th>
-            <th st-sort="custName">Cust Name</th>
-            <th st-sort="createDate">Creat Date</th>
+            <th st-sort="alertId">Alert ID</th>
+            <th st-sort="custName">Customer Name</th>
+            <th st-sort="createDate">Create Date</th>
             <th st-sort="scenario">Scenario</th>
             <th st-sort="description" class="description">Description</th>
             <th st-sort="triggeringValues">Triggering Values (USD)</th>
-            <th st-sort="status">Status</th>
         </tr>
         </thead>
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in displayedData track by $index ">
-            <td><a ui-sref="alertInfo({{row.alertId}})">{{row.alertId}}</a></td>
-            <td>{{row.accNumber}}</td>
-            <td>{{row.custName}}</td>
-            <td class="td-date">{{row.createDate}}</td>
-            <td>{{row.scenario}}</td>
-            <td class="description">{{row.description}}</td>
-            <td>{{row.triggeringValues|currency}}</td>
-            <td>{{row.status}}</td>
+            <td><a ui-sref="alertInfo({id:'{{row.workObjId}}'})">{{row.alerts.alertId}}</a></td>
+            <td>{{row.alerts.customerName}}</td>
+            <td class="td-date">{{row.alerts.createdDate}}</td>
+            <td>{{row.alerts.scenarioId}}</td>
+            <td class="description">{{row.alerts.alertDesc}}</td>
+            <td>{{row.alerts.totalAmt|currency}}</td>
 
         </tr>
         </tbody>
@@ -85,7 +94,7 @@
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-primary">Export</button>
+        <button class="btn btn-primary" ng-click="export()">Export</button>
     </div>
 
 </div>

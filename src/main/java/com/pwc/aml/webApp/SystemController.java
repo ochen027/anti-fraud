@@ -66,7 +66,10 @@ public class SystemController {
     public String menuInfo(Model model) {
         return "system/menu_edit";
     }
-
+    @RequestMapping("/roleMenuInfo")
+    public String roleMenuInfo(Model model) {
+        return "system/roleMenuEdit";
+    }
 
 
 

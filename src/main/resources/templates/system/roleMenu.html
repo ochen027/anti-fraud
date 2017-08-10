@@ -1,6 +1,6 @@
 <div class="container" ng-controller="RoleMenuCtrl">
 
-    <h5>Role List:</h5>
+    <h5>Role Menu:</h5>
     <hr/>
 
     <div class="col-md-12 text-left">
@@ -8,13 +8,14 @@
     </div>
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
-           st-table="displayedData" st-safe-src="rolesList">
+           st-table="displayedData" st-safe-src="roleMenu">
         <thead>
         <tr>
             <th st-sort="roleId">Role Id</th>
             <th st-sort="roleName">Role Name</th>
-            <th st-sort="status">Status</th>
-            <th>Action</th>
+            <th st-sort="lastUpdateDate">Last Update Date</th>
+            <th st-sort="lastUpdateBy">Last Update By</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -22,11 +23,13 @@
         <tr ng-repeat="row in displayedData track by $index ">
             <td>{{row.id}}</td>
             <td>{{row.roleName}}</td>
-            <td>{{row.status}}</td>
+            <td>{{row.lastUpdateDate| date : 'yyyy-MM-dd'}}</td>
+            <td>{{row.lastUpdatedBy}}</td>
             <td>
                 <button class="btn btn-default" ng-click="edit(row)">Edit</button>
                 <button class="btn btn-default" ng-click="delete(row.id)">Delete</button>
             </td>
+
         </tr>
         </tbody>
         <tfoot>

@@ -71,6 +71,7 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.updateBy, workObj.getLastUpdatedBy());
         saveColumn(WorkObjSchema.updateDate, FormatUtils.DateToString( workObj.getLastUpdateDate()));
         saveColumn(WorkObjSchema.isActive, workObj.isStatus() ? "true" : "false");
+        saveColumn(WorkObjSchema.customerId, workObj.getAlerts().getCustomerId());
     }
 
     @Override
@@ -132,9 +133,9 @@ public class WorkObjDao implements IWorkObjDao {
         }
 
         if(null != ase.getTotalAmt()){
-            Filter amtFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
                     CompareFilter.CompareOp.GREATER,Bytes.toBytes(ase.getTotalAmt()));
-            filterList.addFilter(amtFilter);
+            filterList.addFilter(filter);
         }
 
         if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
@@ -147,15 +148,15 @@ public class WorkObjDao implements IWorkObjDao {
         }
 
         if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isEmpty(ase.getCreatedToDate())){
-            Filter createdStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getCreatedFromDate()));
-            filterList.addFilter(createdStartDateFilter);
+            filterList.addFilter(filter);
         }
 
         if(StringUtils.isEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
-            Filter createdEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getCreatedToDate()));
-            filterList.addFilter(createdEndDateFilter);
+            filterList.addFilter(filter);
         }
 
 
@@ -169,24 +170,37 @@ public class WorkObjDao implements IWorkObjDao {
         }
 
         if(StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isEmpty(ase.getClosedToDate())){
-            Filter closedStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getClosedFromDate()));
-            filterList.addFilter(closedStartDateFilter);
+            filterList.addFilter(filter);
         }
 
         if(StringUtils.isEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())){
-            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
-            filterList.addFilter(closedEndDateFilter);
+            filterList.addFilter(filter);
         }
 
         if(StringUtils.isNotEmpty(ase.getColsedBy())){
-            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
+            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
                     CompareFilter.CompareOp.EQUAL,new RegexStringComparator(
                     ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()));
-            filterList.addFilter(closedEndDateFilter);
+            filterList.addFilter(filter);
         }
 
+        if(null != ase.getCustomerIdList()){
+            for(String cId : ase.getCustomerIdList()){
+                filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                        Bytes.toBytes(WorkObjSchema.customerId),
+                        CompareFilter.CompareOp.EQUAL, Bytes.toBytes(cId)));
+            }
+        }
+
+        //TODO
+        if(StringUtils.isNotEmpty(ase.getSuspiciousLevel())){
+            //Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.),CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
+            //filterList.addFilter(filter);
+        }
 
         scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
@@ -251,6 +265,9 @@ public class WorkObjDao implements IWorkObjDao {
                     String isActive = Bytes.toString(CellUtil.cloneValue(c));
                     o.setStatus(isActive.equals("true"));
                     break;
+                case WorkObjSchema.customerId:
+                    o.setCustomerId(Bytes.toString(CellUtil.cloneValue(c)));
+                    break;
             }
         }
 
@@ -278,13 +295,23 @@ public class WorkObjDao implements IWorkObjDao {
 
     public static void main(String[] args) {
         String[] str = {"0000001", "000002", "00020", "0000032"};
+        String str1 = "20170810165819309546137955962109";
         String keyWord = "2";
         Pattern pn = Pattern.compile(keyWord+"\\w|\\w"+keyWord+"\\w|\\w"+keyWord);
+        String keyWord2 = "2017";
+        //Pattern pn = Pattern.compile(keyWord2+"\\w");
+        //Pattern pn = Pattern.compile(keyWord2+"[.]*");
         Matcher mr = null;
+        /**
         for (String s : str) {
             mr = pn.matcher(s);
             if (mr.find())
                 System.out.println(s);
+        }
+         **/
+        mr = pn.matcher(str1);
+        if (mr.find()){
+            System.out.println(str1);
         }
     }
 

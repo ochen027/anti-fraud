@@ -1,5 +1,7 @@
 package com.pwc.aml.alert.entity;
 
+import java.util.List;
+
 public class AlertSearchEntity {
 
     private String customerId;
@@ -12,6 +14,7 @@ public class AlertSearchEntity {
     private String closedToDate;
     private String suspiciousLevel;
     private String colsedBy;
+    private List<String> customerIdList;
 
 
     public String getCustomerId() {
@@ -92,5 +95,13 @@ public class AlertSearchEntity {
 
     public void setColsedBy(String colsedBy) {
         this.colsedBy = colsedBy;
+    }
+
+    public List<String> getCustomerIdList() {
+        return customerIdList;
+    }
+
+    public void setCustomerIdList(List<String> customerIdList) {
+        this.customerIdList = customerIdList;
     }
 }

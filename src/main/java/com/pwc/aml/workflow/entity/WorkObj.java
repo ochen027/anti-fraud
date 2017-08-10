@@ -17,6 +17,7 @@ public class WorkObj extends BaseEntity{
     private List<FlowEvent> HistoryEvents;
     private String flowId;
     private WorkflowEx workflowEx;
+    private String customerId;
 
     public String getWorkObjId() {
         return workObjId;
@@ -66,5 +67,13 @@ public class WorkObj extends BaseEntity{
 
     public void setWorkflowEx(WorkflowEx workflowEx) {
         this.workflowEx = workflowEx;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }
