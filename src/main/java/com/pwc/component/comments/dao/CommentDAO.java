@@ -1,6 +1,6 @@
-package com.pwc.aml.comments.dao;
+package com.pwc.component.comments.dao;
 
-import com.pwc.aml.comments.entity.Comments;
+import com.pwc.component.comments.entity.Comments;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.Constants;
 import com.pwc.common.util.FormatUtils;
@@ -34,19 +34,9 @@ public class CommentDAO implements ICommentDAO{
         hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CONTENTS, c.getCommentContents());
         hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CREATED_BY, c.getCommentCreatedBy());
         hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_COMMENTS_CREATED_DATE, c.getCommentCreatedDate().toString());
-        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_ALERT_ID, c.getAlertId());
+        hBaseDAO.putData(table, c.getCommentId(), "f1", Constants.COLUMN_ALERT_ID, c.getObjId());
     }
 
-    @Override
-    public void updateComment(Comments c) {
-        //TODO
-    }
-
-    @Override
-    public void removeComment(String commentId) throws Exception{
-        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
-        hBaseDAO.deleteData(table, commentId);
-    }
 
     @Override
     public Comments getSingleComment(String commentId) throws Exception{
@@ -68,12 +58,13 @@ public class CommentDAO implements ICommentDAO{
     }
 
     @Override
-    public List<Comments> getCommentsListByAlert(String alertId) throws Exception {
+    public List<Comments> getCommentsListByObjId(String ObjId) throws Exception {
         Scan scan = new Scan();
         HTable hTable = hBaseDAO.getTable(Constants.HBASE_TABLE_COMMENTS);
         Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("alertId"),
-                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(alertId));
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(ObjId));
         scan.setFilter(filter);
+        scan.setReversed(false);
         List<Comments> cList = new ArrayList<Comments>();
         ResultScanner rsscan = hTable.getScanner(scan);
         for (Result rs : rsscan) {
@@ -90,7 +81,7 @@ public class CommentDAO implements ICommentDAO{
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
                 case Constants.COLUMN_ALERT_ID:
-                    cBean.setAlertId(Bytes.toString(CellUtil.cloneValue(c)));
+                    cBean.setObjId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case Constants.COLUMN_COMMENTS_CONTENTS:
                     cBean.setCommentContents(Bytes.toString(CellUtil.cloneValue(c)));

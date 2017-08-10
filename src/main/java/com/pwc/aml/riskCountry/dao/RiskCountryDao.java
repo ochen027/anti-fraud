@@ -1,7 +1,6 @@
 package com.pwc.aml.riskCountry.dao;
 
 import com.pwc.aml.riskCountry.entity.RiskCountry;
-import com.pwc.aml.rules.entity.Scenario;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

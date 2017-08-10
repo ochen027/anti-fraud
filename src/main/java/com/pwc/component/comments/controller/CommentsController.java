@@ -1,15 +1,18 @@
-package com.pwc.aml.comments.controller;
+package com.pwc.component.comments.controller;
 
 
-import com.pwc.aml.comments.entity.Comments;
-import com.pwc.aml.comments.service.ICommentService;
+import com.pwc.component.authorize.users.entity.Users;
+import com.pwc.component.comments.entity.Comments;
+import com.pwc.component.comments.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("comments")
@@ -19,18 +22,14 @@ public class CommentsController {
     private ICommentService commentService;
 
     @PostMapping("create")
-    public ResponseEntity<Void> CreateComment(@RequestBody Comments c) throws Exception{
-        commentService.CreateComment(c);
+    public ResponseEntity<Void> CreateComment(@RequestBody Comments c,HttpSession session) throws Exception{
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+        commentService.CreateComment(c,user);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping("remove")
-    public ResponseEntity<Void> RemoveComment(@PathVariable String id) throws Exception{
-        commentService.DeleteComment(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @GetMapping("getSingle")
+    @GetMapping("getSingle/{id}")
     public ResponseEntity<Comments> GetSingleComment(@PathVariable String id) throws Exception {
         return new ResponseEntity<Comments>(commentService.getSingleComment(id), HttpStatus.OK);
     }
@@ -40,8 +39,8 @@ public class CommentsController {
         return new ResponseEntity<List<Comments>>(commentService.listAllComments(), HttpStatus.OK);
     }
 
-    @GetMapping("getByAlert")
-    public ResponseEntity<List<Comments>> GetByAlert(@PathVariable String id) throws Exception{
-        return new ResponseEntity<List<Comments>>(commentService.listCommentsByAlert(id), HttpStatus.OK);
+    @GetMapping("getByObjId/{id}")
+    public ResponseEntity<List<Comments>> GetByObjId(@PathVariable String id) throws Exception{
+        return new ResponseEntity<List<Comments>>(commentService.listCommentsByObjId(id), HttpStatus.OK);
     }
 }

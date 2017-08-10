@@ -18,4 +18,6 @@ public interface ICustomerDAO {
     void removeAll();
 
     List<Customers> findAll();
+
+    List<String> findByIdAndName(String customerId, String customerName);
 }

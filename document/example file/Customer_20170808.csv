@@ -1,0 +1,11 @@
+cust_id,cust_ct_no_indiv,cust_first_nm,cust_middle_nm,cust_last_nm,full_nm,cust_open_br,cust_age,cust_birth_dt,cust_city,cust_country,cust_occupation,cust_phone_1,last_upd_by,PEP_Flg,resi_Flg,sus_Flg_indiv,cust_type,Representative,Representative ID Number,Representative ID Type,cust_ct_no_corp,cust_LOB,sus_Flag_corp
+10001,323455199207011234,San,,Zhang,Zhang San,100034,25,7/1/1992,Shanghai,CN,Student,+86-16547650900,20001,N,N,N,individual,N/A,N/A,N/A,N/A,N/A,N
+10002,N/A,"Alibaba International Trading Co.,Ltd",,,"Alibaba International Trading Co.,Ltd",100034,20,7/1/1997,Shanghai,CN,N/A,+86-61111046,20001,N,N,N,company,Tommy Xu,310000197608218118,Resident Identity Card,110105004567660,International Trading,N
+10003,N/A,"Bright Dairy & Food Co.,Ltd",,,"Bright Dairy & Food Co.,Ltd",100034,50,7/1/1967,Shanghai,CN,N/A,+86-62222157,20001,N,N,N,company,Li Si,310000197609011234,Resident Identity Card,913100001322382488,Food Production,N
+10004,N/A,"Jingdong International Trading Co.,Ltd",,,"Jingdong International Trading Co.,Ltd",100034,10,7/1/2007,Shanghai,CN,N/A,+86-63333268,20001,N,N,N,company,Obama Clinton,C1111111,Passport,911103026605015136,International Trading,N
+10005,323455198707101234,Wu,,Wang,Wang Wu,100034,30,7/1/1987,Shanghai,CN,Student,+86-13937543557,20001,N,N,N,individual,N/A,N/A,N/A,N/A,N/A,N
+10006,N/A,ABC Company,,,ABC Company,100034,80,7/1/1937,Shanghai,CN,N/A,+86-62223491,20001,N,N,N,company,AAA,E34567890,passport,911101085923222808,International Trading,N
+10007,333444198207011234,Lin-kai,,Zhou,Zhou Lin-kai,100034,35,7/1/1982,Shanghai,CN,Merchant,+86-13937343570,20001,N,N,N,individual,N/A,N/A,N/A,N/A,N/A,N
+10008,N/A,Pepsi Company,,,Pepsi Company,100034,100,7/1/1917,Shanghai,CN,N/A,+86-63332262,20001,N,N,N,company,JOHAN WILLEM MAARTEN JANSEN,997766554,passport,91431128395393143Q,Food Production,N
+10009,3245678197707011234,Xin Qiang,,Wang,Wang Xin Qiang,100034,40,7/1/1977,Shanghai,CN,Student,+86-13937343669,20001,N,N,N,individual,N/A,N/A,N/A,N/A,N/A,N
+10010,322333197207011234,Liang,,Wu,Wu Liang,100034,45,7/1/1972,Shanghai,CN,Lawyer,+86-15863453669,20001,Y,N,N,individual,N/A,N/A,N/A,N/A,N/A,N

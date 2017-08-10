@@ -1,5 +1,3 @@
-
-
 app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     console.log("/alert/myAlert");
 
@@ -67,7 +65,7 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
 
             $scope.workflow = res.data;
             for (let i = 0; i < $scope.workflow.flowPoints.length; i++) {
-                if ($scope.workflow.flowPoints[i].print.indexOf($stateParams.id)>=0) {
+                if ($scope.workflow.flowPoints[i].print.indexOf($stateParams.id) >= 0) {
                     $scope.flowPointId = $scope.workflow.flowPoints[i].flowPointId;
                     $http.get("/workflow/getWorkObjsByPointId?flowPointId=" + $scope.flowPointId)
                         .then(function (response) {
@@ -241,96 +239,116 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state,$stateParams,$timeout) {
-    console.log("myalertinfoctrl");
-
-    $scope.summaryAction = false;
-    $scope.customerAction = false;
-    $scope.individualAction = false;
-    $scope.corporateAction = false;
-    $scope.legalRepsAction = false;
-
-    $scope.alerts={};
-    $scope.customer={};
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
+    $scope.alerts = {};
+    $scope.customer = {};
+    $scope.dataFiles = [];
+    $scope.itemsByPage = 7;
+    $scope.SuspiciousType = "Suspicious 1";
+    $scope.commentList=[];
+    $scope.comments={};
 
 
-    $scope.toggleBlock = function (flag) {
-        if (flag === "customerSummary") {
-            $scope.summaryAction = !$scope.summaryAction;
-        } else if (flag === 'customerInfo') {
-            $scope.customerAction = !$scope.customerAction;
-        } else if (flag === 'individual') {
-            $scope.individualAction = !$scope.individualAction;
-        } else if (flag === 'corporate') {
-            $scope.corporateAction = !$scope.corporateAction;
-        } else if (flag === 'legalReps') {
-            $scope.legalRepsAction = !$scope.legalRepsAction;
+    $scope.selectSuspiciousType = function (type) {
+        $scope.SuspiciousType = type;
+    }
+
+    $scope.addComments = function () {
+        $scope.comments.objId=$stateParams.id;
+        $http.post("/comments/create",$scope.comments).then(function(res){
+            alert("comments add success!");
+            $scope.refreshComments();
+            $scope.comments={};
+        })
+    }
+
+    $scope.refreshComments=function(){
+        $http.get("/comments/getByObjId/"+$stateParams.id).then(function(res){
+            $scope.commentList=res.data;
+        });
+    }
+
+    $scope.refresh = function () {
+        $scope.refreshFile();
+        getAlert();
+        $scope.refreshComments();
+    }
+
+    //upload file part
+    $scope.uploadFiles = function (files) {
+        if (files && files.length) {
+            Upload.upload({
+                url: '/documents/upload',
+                data: {file: files[0], workObjId: $stateParams.id}
+            }).then(function (res) {
+                alert("file upload success!");
+                $scope.refresh();
+            });
         }
     }
 
+    $scope.fileDownload = function (fileName, filePath) {
+        window.location.href = "/documents/download/" + fileName + "/" + filePath;
+    }
 
-    var getAlert=function () {
-        $http.post("/workflow/getWorkObjById",$stateParams.id).then(function(res){
-
-            if(res.status!=200){
+    $scope.refreshFile = function () {
+        $http.get("/documents/getByAlertId/" + $stateParams.id).then(function (res) {
+            if (res.status !== 200) {
                 console.log(res);
                 return;
             }
-            $scope.alerts=res.data.alerts;
+            $scope.dataFiles = res.data;
+        });
+    }
+
+
+    var getAlert = function () {
+        $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
+
+            if (res.status != 200) {
+                console.log(res);
+                return;
+            }
+            $scope.alerts = res.data.alerts;
             getCustomer(res.data.alerts.customerId);
         });
     }
 
-    var getCustomer=function(customerId){
-       $http.post( "/customer/findByCustId",{"customerId":customerId}).then(function(res){
-           if(res.status!=200){
-               console.log(res);
-               return;
-           }
-           $scope.customer=res.data;
-       });
+    var getCustomer = function (customerId) {
+        $http.post("/customer/findByCustId", {"customerId": customerId}).then(function (res) {
+            if (res.status != 200) {
+                console.log(res);
+                return;
+            }
+            $scope.customer = res.data;
+        });
     }
 
-    $timeout(function(){
-        getAlert();
-
-
-
+    $timeout(function () {
+        $scope.refresh();
     });
 
-    $http.get("/alert/myAlertInfo/12345")
-        .then(function (result) {
-            console.log(result);
-            $scope.summary = result.data.summary;
-            $scope.individual = result.data.individual;
-            $scope.corporate = result.data.corporate;
-            $scope.legalRepresentative = result.data.legalRepresentative;
-            $scope.data = result.data.tableRecords;
-        })
-    $scope.itemsByPage = 4;
 
+    $scope.escalate = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/escalate", escalateWorkObjIds).then(function (res) {
 
-
-    $scope.escalate=function(){
-       let escalateWorkObjIds=[$stateParams.id];
-       $http.post("/workflow/escalate",escalateWorkObjIds).then(function(res){
-            
             alert("this Alert has been escalated!");
-       });
+        });
     };
 
-    $scope.close=function(){
-        let escalateWorkObjIds=[$stateParams.id];
-        $http.post("/workflow/close",escalateWorkObjIds).then(function(res){
-            
+    $scope.close = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/close", escalateWorkObjIds).then(function (res) {
+
             alert("this Alert has been closed!");
         });
     };
 
-    $scope.returnToQc=function(){
-        let escalateWorkObjIds=[$stateParams.id];
-        $http.post("/workflow/returnToQc",escalateWorkObjIds).then(function(res){
-            
+    $scope.returnToQc = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/returnToQc", escalateWorkObjIds).then(function (res) {
+
             alert("this Alert has been return to QC!");
         });
     };

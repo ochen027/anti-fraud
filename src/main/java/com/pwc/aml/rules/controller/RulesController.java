@@ -67,8 +67,10 @@ public class RulesController extends BaseController{
 
 
 	@GetMapping("executeRules/{id}")
-	public ResponseEntity<Void> ExecuteRules(@PathVariable("id") int id) throws Exception{
-		rulesService.executeRuleEngine(id);
+	public ResponseEntity<Void> ExecuteRules(@PathVariable("id") int id, HttpSession session) throws Exception{
+		Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+		Users user = (Users) userInfo.get("User");
+		rulesService.executeRuleEngine(id,user);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
@@ -113,8 +115,10 @@ public class RulesController extends BaseController{
 	}
 
     @GetMapping("runRule/{id}")
-	public ResponseEntity<Void> RunRule(@PathVariable("id") int ruleId){
-		rulesService.runRule(ruleId);
+	public ResponseEntity<Void> RunRule(@PathVariable("id") int ruleId, HttpSession session){
+		Map<String, Object> userInfo= (Map<String, Object>)session.getAttribute("UserInfo");
+		Users u=(Users) userInfo.get("User");
+		rulesService.runRule(ruleId,u);
     	return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

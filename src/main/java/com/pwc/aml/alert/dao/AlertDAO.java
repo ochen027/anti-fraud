@@ -2,6 +2,7 @@ package com.pwc.aml.alert.dao;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
+import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.transation.entity.Transactions;
@@ -31,18 +32,16 @@ public class AlertDAO implements IAlertDAO {
     @Autowired
     private ICustomerDAO customerDAO;
 
-    private String tableKey = "aml:alerts";
-
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
-        Cell[] cells= hbaseDao.getData(hbaseDao.getTable("aml:alerts"),alertId, "f1");
+        Cell[] cells= hbaseDao.getData(hbaseDao.getTable(Constants.HBASE_TABLE_ALERT),alertId, Constants.F1);
         return this.consistAlerts(cells, alertId);
     }
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
         Scan scan = new Scan();
-        HTable hTable = hbaseDao.getTable("aml:alerts");
+        HTable hTable = hbaseDao.getTable(Constants.HBASE_TABLE_ALERT);
         ResultScanner rsscan = hTable.getScanner(scan);
         List<Alerts> list = new ArrayList<Alerts>();
         for (Result rs : rsscan) {
@@ -54,8 +53,8 @@ public class AlertDAO implements IAlertDAO {
 
     @Override
     public void truncateTable() throws IOException {
-        hbaseDao.deleteTable(tableKey);
-        hbaseDao.createTable(tableKey);
+        hbaseDao.deleteTable(Constants.HBASE_TABLE_ALERT);
+        hbaseDao.createTable(Constants.HBASE_TABLE_ALERT);
     }
 
     private Alerts consistAlerts(Cell[] cells, String id) throws Exception{
@@ -64,47 +63,39 @@ public class AlertDAO implements IAlertDAO {
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
-                case "alertContent":
+                case Constants.COLUMN_ALERT_CONTENT:
                     aBean.setAlertContents(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "alertCreatedDate":
+                case Constants.COLUMN_ALERT_CREATED_DATE:
                     aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "alertDesc":
+                case Constants.COLUMN_ALERT_DESC:
                     aBean.setAlertDesc(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "alertName":
+                case Constants.COLUMN_ALERT_NAME:
                     aBean.setAlertName(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "businessDate":
+                case Constants.COLUMN_BUSINESS_DATE:
                     aBean.setBusinessDate(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "commentId":
-                    //TODO
-                    aBean.setCommentsList(null);
+                case Constants.CREATED_BY:
+                    aBean.setCreatedBy(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "createdBy":
+                case Constants.CREATED_DATE:
                     aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "createdDate":
-                    aBean.setCreatedDate(Bytes.toString(CellUtil.cloneValue(c)));
-                    continue;
-                case "customerId":
+                case Constants.COLUMN_CUSTOMER_ID:
                     aBean.setCustomerId(Bytes.toString(CellUtil.cloneValue(c)));
                     aBean.setCustomerName(customerDAO.findByCustId(aBean.getCustomerId()).getCustomerFullName());
                     continue;
-                case "documentId":
-                    //TODO
-                    aBean.setDocList(null);
-                    continue;
-                case "scenarioId":
+                case Constants.COLUMN_SCENARIO_ID:
                     aBean.setScenarioId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "totalAmt":
+                case Constants.COLUMN_TOTAL_AMOUNT:
                     aBean.setTotalAmt(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
-                case "transIdArray":
-                    String[] transArray = Bytes.toString(CellUtil.cloneValue(c)).split(",");
+                case Constants.COLUMN_TRANS_ID_ARRAY:
+                    String[] transArray = Bytes.toString(CellUtil.cloneValue(c)).split(Constants.COMMA);
                     List<Transactions> tList = transactionDAO.getTransListById(transArray);
                     aBean.setTransList(tList);
                     continue;
@@ -112,6 +103,8 @@ public class AlertDAO implements IAlertDAO {
         }
         return aBean;
     }
+
+
 
 
 }

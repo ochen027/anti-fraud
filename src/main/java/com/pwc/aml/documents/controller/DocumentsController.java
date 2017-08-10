@@ -5,7 +5,6 @@ import com.pwc.aml.documents.entity.Documents;
 import com.pwc.aml.documents.service.IDocumentService;
 import com.pwc.common.base.controller.BaseController;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class DocumentsController extends BaseController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> uploadDocs(@RequestParam("file") MultipartFile file, String workObjId) throws Exception{
+    public ResponseEntity<?> uploadDocs(@RequestParam("file") MultipartFile file,@RequestParam("workObjId") String workObjId) throws Exception{
         if (!file.isEmpty()) {
             if(StringUtils.isEmpty(workObjId)){
                 workObjId = "201708071058455875519638759332";

@@ -7,6 +7,9 @@ public class Constants {
     public static final String CREATED_DATE = "createdDate";
     public static final String F1= "f1";
     public static final String TEMP = "temp";
+    public static final String COMMA = ",";
+    public static final String LAST_UPDATE_BY = "lastUpdatedBy";
+    public static final String LAST_UPDATE_DATE = "lastUpdatedDate";
 
     //For Document
     public static final String HBASE_TABLE_DOCUMENTS = "aml:documents";
@@ -21,9 +24,25 @@ public class Constants {
 
     //For Alerts
     public static final String COLUMN_ALERT_ID = "alertId";
+    public static final String COLUMN_ALERT_CONTENT = "alertContent";
+    public static final String COLUMN_ALERT_CREATED_DATE = "alertCreatedDate";
+    public static final String COLUMN_ALERT_DESC = "alertDesc";
+    public static final String COLUMN_ALERT_NAME = "alertName";
+    public static final String COLUMN_BUSINESS_DATE = "businessDate";
+    public static final String COLUMN_TOTAL_AMOUNT = "totalAmt";
+    public static final String COLUMN_TRANS_ID_ARRAY = "transIdArray";
     public static final String HBASE_TABLE_ALERT= "aml:alerts";
 
     //For Work Object
     public static final String COLUMN_WORK_OBJECT_ID = "workObjId";
+
+
+    //For Customer
+    public static final String COLUMN_CUSTOMER_ID = "customerId";
+
+    //For Scenario
+    public static final String COLUMN_SCENARIO_ID = "scenarioId";
+
+
 
 }

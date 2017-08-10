@@ -3,25 +3,378 @@
     <h4>Import Data:</h4>
 
     <ul class="nav nav-tabs">
-        <li class="nav-item" ng-click="navigate('customer')" ng-model="toggleCustomer">
-            <a class="nav-link" ng-class="{true: 'active', false: ''}[toggleCustomer]">Customer</a>
+        <li class="nav-item"  ng-click="navigate('customerBase')">
+            <a class="nav-link" ng-class="{'active':currentTab=='customerBase'}">CustomerBase</a>
         </li>
-        <li class="nav-item" ng-model="toggleAccount" ng-click="navigate('account')">
-            <a class="nav-link" ng-class="{true: 'active', false: ''}[toggleAccount]">Account</a>
+        <li class="nav-item"  ng-click="navigate('individual')">
+            <a class="nav-link" ng-class="{'active':currentTab=='individual'}">Individual</a>
+        </li>
+        <li class="nav-item"  ng-click="navigate('corporate')">
+            <a class="nav-link" ng-class="{'active':currentTab=='corporate'}">Corporate</a>
+        </li>
+        <li class="nav-item"  ng-click="navigate('representative')">
+            <a class="nav-link" ng-class="{'active':currentTab=='representative'}">Representative</a>
+        </li>
+        <li class="nav-item"  ng-click="navigate('account')">
+            <a class="nav-link" ng-class="{'active':currentTab=='account'}">Account</a>
+        </li>
+        <li class="nav-item" ng-click="navigate('customer')" >
+            <a class="nav-link" ng-class="{'active':currentTab=='customer'}">Customer</a>
         </li>
     </ul>
 
-    <!--start of the customer import -->
-    <div ng-show="toggleCustomer">
+    <!--start of the customerBase import -->
+    <div ng-show="currentTab=='customerBase'">
         <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll('customer')">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh('customer')">refresh</button>
+            <button type="button" class="btn btn-default" ng-click="deleteAllCustomerBase()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshCustomerBase()">Refresh</button>
+
         </div>
 
 
         <div class="upload">
 
-            <div ngf-drop="uploadFiles($files,'customer')" class="drop-box"
+            <div ngf-drop="uploadCustomerBaseFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop CustomerBase csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                CustomerBase
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="customerBaseDisplay" st-safe-src="customerBase">
+                    <thead>
+                    <tr>
+                        <th>customerId</th>
+                        <th>customerType</th>
+                        <th>customerFirstName</th>
+                        <th>customerMiddleName</th>
+                        <th>customerLastName</th>
+                        <th>customerFullName</th>
+                        <th>customerOpenBranch</th>
+                        <th>customerLastUpdatedBy</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in customerBaseDisplay">
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.customerType}}</td>
+                        <td>{{row.customerFirstName}}</td>
+                        <td>{{row.customerMiddleName}}</td>
+                        <td>{{row.customerLastName}}</td>
+                        <td>{{row.customerFullName}}</td>
+                        <td>{{row.customerOpenBranch}}</td>
+                        <td>{{row.customerLastUpdatedBy}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of customerBase import  -->
+    <!--start of the Individual import -->
+    <div ng-show="currentTab=='individual'">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAllIndividual()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshIndividual()">Refresh</button>
+
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadIndividualFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop Individual csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Individual
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="individualDisplay" st-safe-src="individual">
+                    <thead>
+                    <tr>
+                        <th>customerId</th>
+                        <th>customerAge</th>
+                        <th>customerBirthDate</th>
+                        <th>customerCertificateNumber</th>
+                        <th>customerOccupation</th>
+                        <th>customerCity</th>
+                        <th>customerCountry</th>
+                        <th>customerPhone</th>
+                        <th>pep_flag</th>
+                        <th>resi_flag</th>
+                        <th>sus_flag</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in individualDisplay">
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.customerAge}}</td>
+                        <td>{{row.customerBirthDate}}</td>
+                        <td>{{row.customerCertificateNumber}}</td>
+                        <td>{{row.customerOccupation}}</td>
+                        <td>{{row.customerCity}}</td>
+                        <td>{{row.customerCountry}}</td>
+                        <td>{{row.customerPhone}}</td>
+                        <td>{{row.IsPEP}}</td>
+                        <td>{{row.IsNonResident}}</td>
+                        <td>{{row.IsAMLSuspect}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of Individual import  -->
+    <!--start of the Corporate import -->
+    <div ng-show="currentTab=='corporate'">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAllCorporate()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshCorporate()">Refresh</button>
+
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadCorporateFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop Corporate csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Corporate
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="corporateDisplay" st-safe-src="corporate">
+                    <thead>
+                    <tr>
+                        <th>customerId</th>
+                        <th>customerCertificateNumberCorporate</th>
+                        <th>custLineOfBusiness</th>
+                        <th>customerPhone</th>
+                        <th>customerCity</th>
+                        <th>customerCountry</th>
+                        <th>IsAMLSuspectCorporate</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in corporateDisplay">
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.customerCertificateNumberCorporate}}</td>
+                        <td>{{row.custLineOfBusiness}}</td>
+                        <td>{{row.customerPhone}}</td>
+                        <td>{{row.customerCity}}</td>
+                        <td>{{row.customerCountry}}</td>
+                        <td>{{row.IsAMLSuspectCorporate}}</td>
+
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of Corporate import  -->
+    <!--start of the Representative import -->
+    <div ng-show="currentTab=='representative'">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAllRepresentative()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshRepresentative()">Refresh</button>
+
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadRepresentativeFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop Representative csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Representative
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="representativeDisplay" st-safe-src="representative">
+                    <thead>
+                    <tr>
+                        <th>customerId</th>
+                        <th>representativeName</th>
+                        <th>representativeAge</th>
+                        <th>representativeBirthDate</th>
+                        <th>representativeId</th>
+                        <th>representativeIdType</th>
+                        <th>representativeOccupation</th>
+                        <th>representativeCity</th>
+                        <th>representativeCountry</th>
+                        <th>representativePhone</th>
+                        <th>pep_flag</th>
+                        <th>resi_flag</th>
+                        <th>sus_flag</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in representativeDisplay">
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.representativeName}}</td>
+                        <td>{{row.representativeAge}}</td>
+                        <td>{{row.representativeBirthDate}}</td>
+                        <td>{{row.representativeId}}</td>
+                        <td>{{row.representativeIdType}}</td>
+                        <td>{{row.representativeOccupation}}</td>
+                        <td>{{row.representativeCity}}</td>
+                        <td>{{row.representativeCountry}}</td>
+                        <td>{{row.representativePhone}}</td>
+                        <td>{{row.IsPEP?"Y":"N"}}</td>
+                        <td>{{row.IsNonResident}}</td>
+                        <td>{{row.IsAMLSuspect}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of Representative import  -->
+
+
+    <!--start of the account import -->
+    <div ng-show="currentTab=='account'">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAll('account')">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refresh('account')">refresh</button>
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadFiles($files,'account')" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
+                 ngf-pattern="'.csv'">Drop Account csv files here</div>
+
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Account
+            </div>
+            <div class="card-block">
+                <!--  table part -->
+                <table class="table table-striped table-bordered table-hover"
+                       st-table="accountsDisplay" st-safe-src="accounts">
+                    <thead>
+                    <tr>
+                        <th>Account Id</th>
+                        <th>Customer Id</th>
+                        <th>Account Open Date</th>
+                        <th>Account Open Br</th>
+                        <th>Account Status</th>
+                        <th>Account Close Date</th>
+                        <th>Account Amount</th>
+                        <th>Last Update Br</th>
+                        <th>Account Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="row in accountsDisplay">
+                        <td>{{row.accountId}}</td>
+                        <td>{{row.customerId}}</td>
+                        <td>{{row.accountOpenDate | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{row.accountOpenBr}}</td>
+                        <td>{{row.accountStatus}}</td>
+                        <td>{{row.accountCloseDate  | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{row.accountAmount}}</td>
+                        <td>{{row.lastUpdateBr}}</td>
+                        <td>{{row.accountType }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="16" class="text-center">
+                            <div st-pagination="" st-items-by-page="10"
+                                 st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--end of account import  -->
+    <!--start of the customer import -->
+    <div ng-show="currentTab=='customer'">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-default" ng-click="deleteAll('customer')">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refresh('customer')">refresh</button>
+
+        </div>
+
+
+        <div class="upload">
+
+            <div ngf-drop="uploadFiles($files)" class="drop-box"
                  ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
                  ngf-pattern="'.csv'">Drop Customer csv files here</div>
 
@@ -91,72 +444,5 @@
         </div>
     </div>
     <!--end of customer import  -->
-
-    <!--start of the account import -->
-    <div ng-show="toggleAccount">
-        <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll('account')">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh('account')">refresh</button>
-        </div>
-
-
-        <div class="upload">
-
-            <div ngf-drop="uploadFiles($files,'account')" class="drop-box"
-                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
-                 ngf-pattern="'.csv'">Drop Account csv files here</div>
-
-        </div>
-
-
-        <div class="card">
-            <div class="card-header">
-                Account
-            </div>
-            <div class="card-block">
-                <!--  table part -->
-                <table class="table table-striped table-bordered table-hover"
-                       st-table="accountsDisplay" st-safe-src="accounts">
-                    <thead>
-                    <tr>
-                        <th>Account Id</th>
-                        <th>Customer Id</th>
-                        <th>Account Open Date</th>
-                        <th>Account Open Br</th>
-                        <th>Account Status</th>
-                        <th>Account Close Date</th>
-                        <th>Account Amount</th>
-                        <th>Last Update Br</th>
-                        <th>Account Type</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <tr ng-repeat="row in accountsDisplay">
-                        <td>{{row.accountId}}</td>
-                        <td>{{row.customerId}}</td>
-                        <td>{{row.accountOpenDate | date : 'yyyy-MM-dd'}}</td>
-                        <td>{{row.accountOpenBr}}</td>
-                        <td>{{row.accountStatus}}</td>
-                        <td>{{row.accountCloseDate  | date : 'yyyy-MM-dd'}}</td>
-                        <td>{{row.accountAmount}}</td>
-                        <td>{{row.lastUpdateBr}}</td>
-                        <td>{{row.accountType }}</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="16" class="text-center">
-                            <div st-pagination="" st-items-by-page="10"
-                                 st-displayed-pages="7"></div>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    </div>
-    <!--end of account import  -->
-
 
 </div>

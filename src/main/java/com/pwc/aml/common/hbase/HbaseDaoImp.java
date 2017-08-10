@@ -1,24 +1,13 @@
 package com.pwc.aml.common.hbase;
 
-import com.jcraft.jsch.JSchException;
-import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.comments.entity.Comments;
-import com.pwc.aml.documents.entity.Documents;
-import com.pwc.aml.transation.entity.Transactions;
-import com.pwc.common.util.FormatUtils;
-import com.pwc.aml.common.util.RunShellTool;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.datanucleus.store.rdbms.query.AbstractRDBMSQueryResult;
 import org.springframework.stereotype.Repository;
 
-import javax.print.Doc;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 
@@ -363,7 +352,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:workObj");
+        HTable table = hdao.getTable("aml:assign");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -443,12 +432,20 @@ public class HbaseDaoImp implements IHbaseDao {
 
         hdao.scanData(table);
 
-        //hdao.deleteTable("aml:assign");
-//        hdao.createTable("aml:trans");
-//        hdao.createTable("aml:alerts");
-//        hdao.createTable("aml:workObj");
-        hdao.createTable("aml:documents");
 
+        /**
+        hdao.deleteTable("aml:assign");
+        hdao.deleteTable("aml:alerts");
+        hdao.deleteTable("aml:workObj");
+        hdao.deleteTable("aml:documents");
+        hdao.deleteTable("aml:comments");
+
+        hdao.createTable("aml:assign");
+        hdao.createTable("aml:alerts");
+        hdao.createTable("aml:workObj");
+        hdao.createTable("aml:documents");
+        hdao.createTable("aml:comments");
+        **/
 
 
         //hdao.createTable("aml:assign");
