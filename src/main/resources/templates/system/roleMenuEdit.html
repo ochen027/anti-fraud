@@ -1,0 +1,66 @@
+<div class="container" ng-controller="RoleMenuInfoCtrl">
+    <h5>Role Edit:</h5>
+    <hr/>
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" type="button" ng-click="save()">Save</button>
+        <button class="btn btn-default" type="button" ng-click="gotoRoleList()">Back</button>
+    </div>
+
+    <div class="col-md-12">
+
+
+        <div class="form-group">
+            <label for="roleId">Role Id</label>
+            <input type="text" class="form-control" id="roleId" ng-model="role.id" placeholder="role id" ng-disabled="role.action"/>
+        </div>
+
+        <div class="form-group">
+            <label for="roleName">Role Name</label>
+            <input type="text" class="form-control" id="roleName" ng-model="role.roleName" placeholder="role name"/>
+        </div>
+        <!--ng-repeat-->
+        <div class="form-group">
+            <label >Menus</label>
+            <div >
+                <table class="table table-striped table-bordered table-hover"
+                         st-table="menusListDisplay" st-safe-src="menuList">
+                <thead>
+                <tr>
+                    <th st-sort="menuId">Menu Id</th>
+                    <th st-sort="menuName">Menu Name</th>
+                    <th st-sort="menuParentId">Parent Id</th>
+                    <th st-sort="menuURL">URL</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- ng-repeat="row in dataDisplay"-->
+                <tr ng-repeat="row in menusListDisplay track by $index ">
+                    <td>{{row.id}}</td>
+                    <td>{{row.menuName}}</td>
+                    <td>{{row.menuParentId}}</td>
+                    <td>{{row.menuURL}}</td>
+                    <td>
+                        <button class="btn btn-default" ng-click="delete(row.id)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="10" class="text-center">
+                        <div st-pagination="" st-items-by-page="itemsByPage"
+                             st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+
+            </table>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
