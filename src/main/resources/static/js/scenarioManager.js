@@ -161,32 +161,49 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
 
     $scope.scenario = {};
     $scope.currentTab = "table";
+    $scope.operators = ["<=", ">=", "<", "=", ">"];
     $scope.checkList = {
         customerCondition: {
             reg: /\$customer : Customers\((.)*\);/,
-            content:"$customer : Customers\($value\);",
-            values: [],
-            value:"",
-            contain: false
+            content: "$customer : Customers\($value\);",
+            value: "",
+            contain: false,
+            isCondition: true,
+            subItem: {
+                totalAmount: {
+                    key: "totalTransAmt",
+                    value: 0.0,
+                    operator: "",
+                    contain: false,
+                },
+                totalTransactionCounter: {
+                    key: "totalTransCount",
+                    value: 0.0,
+                    operator: "",
+                    contain: false,
+                }
+            }
         },
         alertDesc: {
             reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertDesc\", \"(.)*\"\);/,
-            content:"hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"$value\");",
+            content: "hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"$value\");",
             value: "",
-            contain: false
+            contain: false,
+            isCondition: false,
         }, alertName: {
             reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertName\", \"(.)*\"\);/,
-            content:"hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"$value\");",
+            content: "hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"$value\");",
             value: "",
-            contain: false
+            contain: false,
+            isCondition: false,
         }, alertContent: {
-            reg:/hBaseDAO.putData\(table, alertId, \"f1\", \"alertContent\", \"(.)*\"\);/,
+            reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertContent\", \"(.)*\"\);/,
             content: "hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"$value\");",
             value: "",
-            contain: false
+            contain: false,
+            isCondition: false,
         }
     };
-
 
 
     $scope.goToScenarioManager = function () {
@@ -213,42 +230,92 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     });
 
 
-    $scope.writeToScript=function(){
+    $scope.writeToScript = function () {
         $scope.scenario.scenarioContent = $scope.scenario.scenarioContent.replace(/\\n/g, "\n").replace(/\\"/g, '"');
         $scope.tableLine = [];
         $scope.scenario.scenarioTable = $scope.scenario.scenarioContent.split("\n");
         runCheckList($scope.scenario.scenarioTable);
     }
 
-    $scope.writeBack=function(){
-        let list=$scope.scenario.scenarioTable;
+    $scope.writeConditionBack = function () {
+
+        for (let k in $scope.checkList) {
+            if ($scope.checkList[k].isCondition) {
+                let tempValue = null;
+                for (let key in $scope.checkList[k].subItem) {
+                    if ($scope.checkList[k].subItem[key].contain) {
+                        if (tempValue === null) {
+                            tempValue = $scope.checkList[k].subItem[key].key + $scope.checkList[k].subItem[key].operator + $scope.checkList[k].subItem[key].value;
+                        } else {
+                            tempValue += " && " + $scope.checkList[k].subItem[key].key + $scope.checkList[k].subItem[key].operator + $scope.checkList[k].subItem[key].value;
+                        }
+                    }
+                }
+                $scope.checkList[k].value=tempValue;
+            }
+        }
+
+        $scope.writeBack();
+    }
+
+    $scope.writeBack = function () {
+        let list = $scope.scenario.scenarioTable;
         for (let i = 0; i < list.length; i++) {
             for (let key in $scope.checkList) {
-                let result=list[i].match($scope.checkList[key].reg);
-                if(result!== null){
-                    var line=$scope.checkList[key].content.replace("$value",$scope.checkList[key].value);
-                    list[i]=list[i].replace($scope.checkList[key].reg,line);
+                let result = list[i].match($scope.checkList[key].reg);
+                if (result !== null) {
+                    var line = $scope.checkList[key].content.replace("$value", $scope.checkList[key].value);
+                    list[i] = list[i].replace($scope.checkList[key].reg, line);
                 }
             }
         }
-        $scope.scenario.scenarioContent=$scope.scenario.scenarioTable.join("\n");
+        $scope.scenario.scenarioContent = $scope.scenario.scenarioTable.join("\n");
     }
 
     function runCheckList(list) {
         for (let i = 0; i < list.length; i++) {
             for (let key in $scope.checkList) {
-                let result=list[i].match($scope.checkList[key].reg);
-                if(result!== null){
-                    $scope.checkList[key].contain=true;
-                    let emptyString=$scope.checkList[key].content.split("$value");
-                    let tempValue=result[0];
-                    for(let j=0;j<emptyString.length;j++ ){
-                        tempValue=tempValue.replace(emptyString[j],"");
+                let result = list[i].match($scope.checkList[key].reg);
+                if (result !== null) {
+                    render($scope.checkList[key], result[0]);
+                    if ($scope.checkList[key].isCondition) {
+                        console.log("render sub item");
+                        renderSubItem($scope.checkList[key]);
                     }
-                    $scope.checkList[key].value= tempValue;
                 }
             }
         }
     }
+
+
+    function render(checkItem, str) {
+        checkItem.contain = true;
+        let emptyString = checkItem.content.split("$value");
+        let tempValue = str;
+        for (let j = 0; j < emptyString.length; j++) {
+            tempValue = tempValue.replace(emptyString[j], "");
+        }
+        checkItem.value = tempValue;
+    }
+
+    function renderSubItem(checkItem) {
+        let subItems = checkItem.value.split("&&");
+        for (let i = 0; i < subItems.length; i++) {
+            for (let key in checkItem.subItem) {
+                if (subItems[i].indexOf(checkItem.subItem[key].key) >= 0) {
+                    for (let j = 0; j < $scope.operators.length; j++) {
+                        if (subItems[i].indexOf($scope.operators[j]) >= 0) {
+                            checkItem.subItem[key].operator = $scope.operators[j];
+                            let clearStr = subItems[i].replace($scope.operators[j], "").replace(checkItem.subItem[key].key, "");
+                            checkItem.subItem[key].value = parseFloat(clearStr);
+                            checkItem.subItem[key].contain = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 });
