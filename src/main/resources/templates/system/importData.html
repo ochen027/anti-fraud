@@ -301,14 +301,14 @@
     <!--start of the account import -->
     <div ng-show="currentTab=='account'">
         <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll('account')">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh('account')">refresh</button>
+            <button type="button" class="btn btn-default" ng-click="deleteAllAccount()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshAccount()">refresh</button>
         </div>
 
 
         <div class="upload">
 
-            <div ngf-drop="uploadFiles($files,'account')" class="drop-box"
+            <div ngf-drop="uploadAccountFiles($files)" class="drop-box"
                  ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
                  ngf-pattern="'.csv'">Drop Account csv files here</div>
 
