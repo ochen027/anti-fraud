@@ -97,7 +97,6 @@ public class WorkObjService implements IWorkObjService {
         }else{
             if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName())){
                 List<String> customerIdList = customerDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
-                List<WorkObj> wList = new ArrayList<WorkObj>();
                 if(null == customerIdList){
                     ase.setCustomerIdList(null);
                 }else{

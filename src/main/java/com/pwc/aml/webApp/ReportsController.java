@@ -6,16 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/reports")
 public class ReportsController {
 
-    @RequestMapping("/reportSummary")
-    public String reportSummary(Model model){
-        return "reports/reportSummary";
+    @RequestMapping("/reports")
+    public String reports(Model model) {
+        return "reports/reports";
     }
 
-    @RequestMapping("/reportDetail")
-    public String reportDetail(Model model){
-        return "reports/reportDetail";
-    }
+
 }
