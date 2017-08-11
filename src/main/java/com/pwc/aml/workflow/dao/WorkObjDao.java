@@ -121,96 +121,114 @@ public class WorkObjDao implements IWorkObjDao {
     public List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception{
         initial();
         Scan scan = new Scan();
+
+
+
+
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(WorkObjSchema.currentPointId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
 
-        if(StringUtils.isNotEmpty(ase.getAlertId())){
-            RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL,new RegexStringComparator(
-                    ase.getAlertId()+"\\w|\\w"+ase.getAlertId()+"\\w|\\w"+ase.getAlertId()));
+        if (StringUtils.isNotEmpty(ase.getAlertId())) {
+            RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
+                    ase.getAlertId() + "[.]*|[.]*" + ase.getAlertId() + "[.]*|[.]*" + ase.getAlertId()));
             filterList.addFilter(rowFilter);
         }
 
-        if(null != ase.getTotalAmt()){
+        if (null != ase.getTotalAmt()) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
-                    CompareFilter.CompareOp.GREATER,Bytes.toBytes(ase.getTotalAmt()));
+                    CompareFilter.CompareOp.GREATER, Bytes.toBytes(ase.getTotalAmt()));
             filterList.addFilter(filter);
         }
 
-        if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
+        if (StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())) {
             Filter createdStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getCreatedFromDate()));
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getCreatedFromDate()));
             Filter createdEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getCreatedToDate()));
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getCreatedToDate()));
             filterList.addFilter(createdStartDateFilter);
             filterList.addFilter(createdEndDateFilter);
         }
 
-        if(StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isEmpty(ase.getCreatedToDate())){
+        if (StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isEmpty(ase.getCreatedToDate())) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getCreatedFromDate()));
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getCreatedFromDate()));
             filterList.addFilter(filter);
         }
 
-        if(StringUtils.isEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())){
+        if (StringUtils.isEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getCreatedToDate()));
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getCreatedToDate()));
             filterList.addFilter(filter);
         }
 
 
-        if(StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())){
+        if (StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())) {
             Filter closedStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getClosedFromDate()));
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getClosedFromDate()));
             Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getClosedToDate()));
             filterList.addFilter(closedStartDateFilter);
             filterList.addFilter(closedEndDateFilter);
         }
 
-        if(StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isEmpty(ase.getClosedToDate())){
+        if (StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isEmpty(ase.getClosedToDate())) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL,Bytes.toBytes(ase.getClosedFromDate()));
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getClosedFromDate()));
             filterList.addFilter(filter);
         }
 
-        if(StringUtils.isEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())){
+        if (StringUtils.isEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getClosedToDate()));
             filterList.addFilter(filter);
         }
 
-        if(StringUtils.isNotEmpty(ase.getColsedBy())){
+        if (StringUtils.isNotEmpty(ase.getColsedBy())) {
             Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
-                    CompareFilter.CompareOp.EQUAL,new RegexStringComparator(
-                    ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()+"\\w|\\w"+ase.getColsedBy()));
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
+                    ase.getColsedBy() + "[.]*|[.]*" + ase.getColsedBy() + "[.]*|[.]*" + ase.getColsedBy()));
             filterList.addFilter(filter);
         }
 
-        if(null != ase.getCustomerIdList()){
-            for(String cId : ase.getCustomerIdList()){
+        if (StringUtils.isNotEmpty(ase.getSuspiciousLevel())) {
+            //TODO
+        }
+
+
+        if(null != ase.getCustomerIdList()) {
+            List<WorkObj> woList = new ArrayList<WorkObj>();
+            for (String cId : ase.getCustomerIdList()) {
+
                 filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                         Bytes.toBytes(WorkObjSchema.customerId),
                         CompareFilter.CompareOp.EQUAL, Bytes.toBytes(cId)));
+
+                scan.setFilter(filterList);
+                ResultScanner rsscan = table.getScanner(scan);
+                List<WorkObj> wList = new ArrayList<WorkObj>();
+                for (Result r : rsscan) {
+                    WorkObj t = this.CellToWorkObj(r.rawCells());
+                    wList.add(t);
+                }
+                rsscan.close();
+                woList.addAll(wList);
             }
+            return woList;
+        }else if(null == ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName()))){
+            return null;
+        }else{
+            scan.setFilter(filterList);
+            ResultScanner rsscan = table.getScanner(scan);
+            List<WorkObj> wList = new ArrayList<WorkObj>();
+            for (Result r : rsscan) {
+                WorkObj t = this.CellToWorkObj(r.rawCells());
+                wList.add(t);
+            }
+            rsscan.close();
+            return wList;
         }
-
-        //TODO
-        if(StringUtils.isNotEmpty(ase.getSuspiciousLevel())){
-            //Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.),CompareFilter.CompareOp.LESS_OR_EQUAL,Bytes.toBytes(ase.getClosedToDate()));
-            //filterList.addFilter(filter);
-        }
-
-        scan.setFilter(filterList);
-        ResultScanner rsscan = table.getScanner(scan);
-        List<WorkObj> wList = new ArrayList<WorkObj>();
-        for (Result r : rsscan) {
-            WorkObj t = this.CellToWorkObj(r.rawCells());
-            wList.add(t);
-        }
-        rsscan.close();
-        return wList;
     }
 
 
