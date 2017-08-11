@@ -1,5 +1,5 @@
 
-app.controller('ReportSummaryCtrl', function($scope, $http, $location, $state, $timeout){
+app.controller('ReportsCtrl', function($scope, $http, $location, $state, $timeout){
 
 });
 

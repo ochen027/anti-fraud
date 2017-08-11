@@ -1,6 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
     'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog']);
-
 app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
     $templateCache.put('template/smart-table/pagination.html',
@@ -9,7 +8,6 @@ app.run(['$templateCache', function ($templateCache) {
         '</ul></nav>');
 
 }]);
-
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     let app = {};
@@ -30,8 +28,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'DashboardCtrl'
     }
-
-
     app.batch = {
         name: 'transBatch',
         url: '/batch',
@@ -48,7 +44,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'TransBatchCtrl'
     }
-
     app.authModule = [
         {
             name: 'login',
@@ -64,8 +59,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'LoginCtrl'
         }
     ];
-
-
     app.alertModule = [
         {
             name: "available",
@@ -214,8 +207,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'CreateAlertCtrl'
         }
     ];
-
-
     app.document = {
         name: "documentExample",
         url: "/document/index",
@@ -232,8 +223,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         controller: 'DocumentCtrl'
     };
-
-
     app.workflow = [
         {
             name: "IndexWorkflow",
@@ -271,8 +260,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'EditWorkflowCtrl'
         }
     ];
-
-
     app.users = [
         {
             name: "IndexUsers",
@@ -307,7 +294,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'EditUsersCtrl'
         }
     ];
-
     app.system = [{
         name: "ImportData",
         url: "/system/importData",
@@ -556,8 +542,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
 
     ];
-
-
     app.case = [{
         name: "myCase",
         url: "/case/myCase",
@@ -626,39 +610,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'CaseQueryCtrl'
     }];
     app.reports = [{
-        name: "reportSummary",
-        url: "/reports/reportSummary",
+        name: "reports",
+        url: "/reports",
         views: {
             header: {
                 templateUrl: '/header'
             },
             content: {
-                templateUrl: '/reports/reportSummary'
+                templateUrl: '/reports'
             },
             footer: {
                 templateUrl: '/footer',
             }
         },
-        params: {reports: null},
-        controller: 'ReportSummaryCtrl'
-    }, {
-        name: "reportDetail",
-        url: "/reports/reportDetail",
-        views: {
-            header: {
-                templateUrl: '/header'
-            },
-            content: {
-                templateUrl: '/reports/reportDetail'
-            },
-            footer: {
-                templateUrl: '/footer',
-            }
-        },
-        params: {reports: null},
-        controller: 'ReportDetailCtrl'
+        //params: {reports: null},
+        controller: 'ReportsCtrl'
     }];
-
     app.scenario = [
         {
             name: "scenario",
@@ -729,11 +696,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'RulesManagerCtrl'
         }
     ]
-
-    /***
-     * for supporting muti-level
-     * @param obj
-     */
     function loadingRouter(obj) {
         if (Array.isArray(obj)) {
             for (let i = 0; i < obj.length; i++) {
@@ -750,8 +712,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/login');
 });
-
-
 app.controller('HeaderCtrl', function ($scope, $http, $location, $cookies, $cookieStore, $state, $timeout, $loginService) {
 
     /**

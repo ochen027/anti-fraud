@@ -55,13 +55,13 @@ insert into menus values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , 
 insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create Alert', 2, 'CreateAlert()');
 insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', 0, NULL);
 insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', 0, NULL);
-insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', 0, NULL);
+insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', 0, 'reports()' );
 insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', 0, NULL);
 insert into menus values(12, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Scenario', 11, 'rulesManager()');
 insert into menus values(13, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Workflow', 11, 'IndexWorkflow()');
 insert into menus values(14, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Batch', 11, 'transBatch()');
 insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Document', 11, 'documentExample()');
-insert into menus values(16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Summary', 10, 'reportSummary()');
+--insert into menus values(16, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Summary', 10, 'reportSummary()');
 --insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'reportDetail()');
 insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alert Query', 9, 'alertQuery()');
 insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, 'caseQuery()');
