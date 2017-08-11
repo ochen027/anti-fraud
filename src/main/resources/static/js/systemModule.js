@@ -6,16 +6,21 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     $scope.navigate = function (flag) {
         $scope.currentTab=flag;
     }
-    $scope.uploadFiles = function (files, flag) {
-
-        if (files && files.length) {
-            Upload.upload({
-                url: flag === 'customer' ? '/customer/upload' : '/account/upload',
-                data: {file: files[0]}
-            }).then(function () {
-                $scope.refresh(flag);
-            });
-        }
+    $scope.uploadAccountFiles=function(files){
+        Upload.upload({
+            url: '/account/upload',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshAccount();
+        });
+    }
+    $scope.uploadCustomerFiles=function(files){
+        Upload.upload({
+            url: '/customer/upload',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshCustomer();
+        });
     }
 
     $scope.uploadCustomerBaseFiles=function(files){
@@ -53,21 +58,18 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
 
 
 
-    $scope.refresh = function (flag) {
-        if (flag === 'customer') {
-            $http.get("/customer/findAll").then(function (res) {
-                $scope.customers = res.data;
-                $scope.customersDisplay = res.data.slice();
-            });
-        }
-        if (flag === 'account') {
-            $http.get("/account/findAll").then(function (res) {
-                $scope.accounts = res.data;
-                $scope.accountsDisplay = res.data.slice();
-            });
-        }
-
-    };
+    $scope.refreshAccount=function(){
+        $http.get("/account/findAll").then(function(res){
+            $scope.accounts = res.data;
+            $scope.accountsDisplay = res.data.slice();
+        })
+    }
+    $scope.refreshCustomer=function(){
+        $http.get("/customer/findAll").then(function(res){
+            $scope.customer=res.data;
+            $scope.customerDisplay=res.data.slice();
+        })
+    }
     $scope.refreshCustomerBase=function(){
         $http.get("/customer/findAllCustomerBase").then(function(res){
             $scope.customerBase=res.data;
@@ -94,19 +96,17 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     }
 
 
-    $scope.deleteAll = function (flag) {
-        if (flag === 'customer') {
-            $http.get("/customer/removeAll").then(function (res) {
-                $scope.refresh(flag);
-            });
-        }
-        if (flag === 'account') {
-            $http.get("/account/removeAll").then(function (res) {
-                $scope.refresh(flag);
-            });
-        }
 
-    };
+    $scope.deleteAllAccount=function(){
+        $http.get("/account/removeAll").then(function(){
+            $scope.refreshAccount();
+        })
+    }
+    $scope.deleteAllCustomer=function(){
+        $http.get("/customer/removeAll").then(function(){
+            $scope.refreshCustomer();
+        })
+    }
 
     $scope.deleteAllCustomerBase=function(){
         $http.get("/customer/removeAllCustomerBase").then(function(){
@@ -130,7 +130,8 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
     }
 
     $timeout(function () {
-        $scope.refresh();
+        $scope.refreshAccount();
+        $scope.refreshCustomer();
         $scope.refreshCustomerBase();
         $scope.refreshIndividual();
         $scope.refreshCorporate();

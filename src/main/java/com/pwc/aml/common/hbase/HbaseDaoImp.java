@@ -430,7 +430,7 @@ public class HbaseDaoImp implements IHbaseDao {
          **/
 
 
-        hdao.scanData(table);
+        //hdao.scanData(table);
 
 
         /**
@@ -445,8 +445,8 @@ public class HbaseDaoImp implements IHbaseDao {
         hdao.createTable("aml:workObj");
         hdao.createTable("aml:documents");
         hdao.createTable("aml:comments");
-        **/
 
+        **/
 
         //hdao.createTable("aml:assign");
 
