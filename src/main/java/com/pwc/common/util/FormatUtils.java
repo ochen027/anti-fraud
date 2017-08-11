@@ -47,4 +47,14 @@ public class FormatUtils {
 		return dtf.format(LocalDateTime.now())+System.nanoTime();
 	}
 
+	public static LocalDate DateToLocalDate(Date date) throws ParseException{
+		String dateString = DateToString(date);
+		return StringToLocalDate(dateString);
+	}
+
+	public static Date LocalDateToDate(LocalDate ld) throws ParseException{
+		String localDateString = LocalDateToString(ld);
+		return StringToDateNoDash(localDateString);
+	}
+
 }

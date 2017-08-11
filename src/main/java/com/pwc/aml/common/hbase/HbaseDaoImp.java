@@ -112,6 +112,27 @@ public class HbaseDaoImp implements IHbaseDao {
 
     }
 
+    public void putData(HTable table, String rowkey, String columnFamily, String column, double value) throws Exception {
+        Put put = new Put(Bytes.toBytes(rowkey));
+        put.add(
+                Bytes.toBytes(columnFamily),
+                Bytes.toBytes(column),
+                Bytes.toBytes(value)
+        );
+        table.put(put);
+    }
+
+    public void putData(HTable table, String rowkey, String columnFamily, String column, Long value) throws Exception {
+        Put put = new Put(Bytes.toBytes(rowkey));
+        put.add(
+                Bytes.toBytes(columnFamily),
+                Bytes.toBytes(column),
+                Bytes.toBytes(value)
+        );
+        table.put(put);
+    }
+
+
     /**
      * delete the data from the hbase table
      * <p>
@@ -445,8 +466,8 @@ public class HbaseDaoImp implements IHbaseDao {
         hdao.createTable("aml:workObj");
         hdao.createTable("aml:documents");
         hdao.createTable("aml:comments");
-
         **/
+
 
         //hdao.createTable("aml:assign");
 

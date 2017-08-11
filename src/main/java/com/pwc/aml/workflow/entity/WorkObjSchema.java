@@ -30,4 +30,5 @@ public class WorkObjSchema {
     public static final String updateDate="updateDate";
     public static final String isActive="isActive";
     public static final String customerId = "customerId";
+    public static final String totalAmt = "totalAmt";
 }

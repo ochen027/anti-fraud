@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -67,11 +67,12 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
         saveColumn(WorkObjSchema.alertId, workObj.getAlerts().getAlertId());
         saveColumn(WorkObjSchema.createdBy, workObj.getCreatedBy());
-        saveColumn(WorkObjSchema.createdDate, FormatUtils.DateToString(workObj.getCreationDate()));
+        saveColumn(WorkObjSchema.createdDate, workObj.getCreationDate().getTime());
         saveColumn(WorkObjSchema.updateBy, workObj.getLastUpdatedBy());
-        saveColumn(WorkObjSchema.updateDate, FormatUtils.DateToString( workObj.getLastUpdateDate()));
+        saveColumn(WorkObjSchema.updateDate, workObj.getLastUpdateDate().getTime());
         saveColumn(WorkObjSchema.isActive, workObj.isStatus() ? "true" : "false");
         saveColumn(WorkObjSchema.customerId, workObj.getAlerts().getCustomerId());
+        saveColumn(WorkObjSchema.totalAmt, Double.valueOf(workObj.getAlerts().getTotalAmt()));
     }
 
     @Override
@@ -122,74 +123,90 @@ public class WorkObjDao implements IWorkObjDao {
         initial();
         Scan scan = new Scan();
 
-
-
-
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(WorkObjSchema.currentPointId),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
 
         if (StringUtils.isNotEmpty(ase.getAlertId())) {
-            RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
-                    ase.getAlertId() + "[.]*|[.]*" + ase.getAlertId() + "[.]*|[.]*" + ase.getAlertId()));
-            filterList.addFilter(rowFilter);
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_ALERT_ID),
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator("[.]*" + ase.getAlertId() + "[.]*")));
         }
 
         if (null != ase.getTotalAmt()) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
-                    CompareFilter.CompareOp.GREATER, Bytes.toBytes(ase.getTotalAmt()));
-            filterList.addFilter(filter);
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(ase.getTotalAmt()))));
         }
 
-        if (StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())) {
-            Filter createdStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getCreatedFromDate()));
-            Filter createdEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getCreatedToDate()));
-            filterList.addFilter(createdStartDateFilter);
-            filterList.addFilter(createdEndDateFilter);
+        if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
+
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
+
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            Date toDate = FormatUtils.LocalDateToDate(lDateTo);
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(fromDate.getTime()))));
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, new BinaryComparator(Bytes.toBytes(toDate.getTime()))));
         }
 
-        if (StringUtils.isNotEmpty(ase.getCreatedFromDate()) && StringUtils.isEmpty(ase.getCreatedToDate())) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getCreatedFromDate()));
-            filterList.addFilter(filter);
+        if (null != ase.getCreatedFromDate() && null == ase.getCreatedToDate()) {
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
-        if (StringUtils.isEmpty(ase.getCreatedFromDate()) && StringUtils.isNotEmpty(ase.getCreatedToDate())) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getCreatedToDate()));
-            filterList.addFilter(filter);
+        if (null == ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
+
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            Date toDate = FormatUtils.LocalDateToDate(lDateTo);
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
+        if (null != ase.getClosedFromDate() && null != ase.getClosedToDate()) {
 
-        if (StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())) {
-            Filter closedStartDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getClosedFromDate()));
-            Filter closedEndDateFilter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getClosedToDate()));
-            filterList.addFilter(closedStartDateFilter);
-            filterList.addFilter(closedEndDateFilter);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
+            Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
+
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
+            Date toDate = FormatUtils.LocalDateToDate(lDateTo);
+
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
-        if (StringUtils.isNotEmpty(ase.getClosedFromDate()) && StringUtils.isEmpty(ase.getClosedToDate())) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(ase.getClosedFromDate()));
-            filterList.addFilter(filter);
+        if (null != ase.getClosedFromDate() && null == ase.getClosedToDate()) {
+
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
+            Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
-        if (StringUtils.isEmpty(ase.getClosedFromDate()) && StringUtils.isNotEmpty(ase.getClosedToDate())) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
-                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(ase.getClosedToDate()));
-            filterList.addFilter(filter);
+        if (null == ase.getClosedFromDate() && null != ase.getClosedToDate()) {
+
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
+            Date toDate = FormatUtils.LocalDateToDate(lDateTo);
+
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
+                    CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
         if (StringUtils.isNotEmpty(ase.getColsedBy())) {
-            Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
                     CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
-                    ase.getColsedBy() + "[.]*|[.]*" + ase.getColsedBy() + "[.]*|[.]*" + ase.getColsedBy()));
-            filterList.addFilter(filter);
+                    "[.]*" + ase.getColsedBy() + "[.]*")));
         }
 
         if (StringUtils.isNotEmpty(ase.getSuspiciousLevel())) {
@@ -267,17 +284,16 @@ public class WorkObjDao implements IWorkObjDao {
                     o.setCreatedBy(createdBy);
                     break;
                 case WorkObjSchema.createdDate:
-                    String createdDate = Bytes.toString(CellUtil.cloneValue(c));
-                    o.setCreationDate(FormatUtils.StringToDate(createdDate));
+                    Long createdDateTime = Bytes.toLong(CellUtil.cloneValue(c));
+                    o.setCreationDate(new Date(createdDateTime));
                     break;
                 case WorkObjSchema.updateBy:
                     String updateBy = Bytes.toString(CellUtil.cloneValue(c));
                     o.setLastUpdatedBy(updateBy);
                     break;
-
                 case WorkObjSchema.updateDate:
-                    String updateDate = Bytes.toString(CellUtil.cloneValue(c));
-                    o.setLastUpdateDate(FormatUtils.StringToDate(updateDate));
+                    Long updateDateTime = Bytes.toLong(CellUtil.cloneValue(c));
+                    o.setLastUpdateDate(new Date(updateDateTime));
                     break;
                 case WorkObjSchema.isActive:
                     String isActive = Bytes.toString(CellUtil.cloneValue(c));
@@ -285,6 +301,9 @@ public class WorkObjDao implements IWorkObjDao {
                     break;
                 case WorkObjSchema.customerId:
                     o.setCustomerId(Bytes.toString(CellUtil.cloneValue(c)));
+                    break;
+                case WorkObjSchema.totalAmt:
+                    o.setTotalAmt(Bytes.toDouble(CellUtil.cloneValue(c)));
                     break;
             }
         }
@@ -306,9 +325,16 @@ public class WorkObjDao implements IWorkObjDao {
         this.rowKey = rowKey;
     }
 
-    public void saveColumn(String key, String value) throws Exception {
-        hbaseDao.putData(table, rowKey, "f1", key, value);
+    public void saveColumn(String key, Object value) throws Exception {
+        if(value instanceof Double){
+            hbaseDao.putData(table, rowKey, Constants.F1, key, (Double)value);
+        }else if(value instanceof Long){
+            hbaseDao.putData(table, rowKey, Constants.F1, key, (Long)value);
+        }else{
+            hbaseDao.putData(table, rowKey, Constants.F1, key, (String)value);
+        }
     }
+
 
 
     public static void main(String[] args) {
