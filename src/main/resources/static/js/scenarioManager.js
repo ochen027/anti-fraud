@@ -162,15 +162,17 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     $scope.scenario = {};
     $scope.currentTab = "table";
     $scope.checkList = {
-        // condition: {
-        //     reg: ,
-        //     values: [],
-        //     contain: false
-        // },
+        customerCondition: {
+            reg: /\$customer : Customers\((.)*\);/,
+            content:"$customer : Customers\($value\);",
+            values: [],
+            value:"",
+            contain: false
+        },
         alertDesc: {
             reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertDesc\", \"(.)*\"\);/,
             content:"hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"$value\");",
-            values: "",
+            value: "",
             contain: false
         }, alertName: {
             reg: /hBaseDAO.putData\(table, alertId, \"f1\", \"alertName\", \"(.)*\"\);/,
@@ -184,6 +186,8 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
             contain: false
         }
     };
+
+
 
     $scope.goToScenarioManager = function () {
         $state.go("scenarioManager");
@@ -205,11 +209,16 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     $timeout(function () {
 
         $scope.scenario = $stateParams.scenario;
+        $scope.writeToScript();
+    });
+
+
+    $scope.writeToScript=function(){
         $scope.scenario.scenarioContent = $scope.scenario.scenarioContent.replace(/\\n/g, "\n").replace(/\\"/g, '"');
         $scope.tableLine = [];
         $scope.scenario.scenarioTable = $scope.scenario.scenarioContent.split("\n");
         runCheckList($scope.scenario.scenarioTable);
-    });
+    }
 
     $scope.writeBack=function(){
         let list=$scope.scenario.scenarioTable;
