@@ -140,9 +140,9 @@
                         <td>{{row.customerCity}}</td>
                         <td>{{row.customerCountry}}</td>
                         <td>{{row.customerPhone}}</td>
-                        <td>{{row.IsPEP}}</td>
-                        <td>{{row.IsNonResident}}</td>
-                        <td>{{row.IsAMLSuspect}}</td>
+                        <td>{{row.IsPEP?"Y":"N"}}</td>
+                        <td>{{row.IsNonResident?"Y":"N"}}</td>
+                        <td>{{row.IsAMLSuspect?"Y":"N"}}</td>
                     </tr>
                     </tbody>
                     <tfoot>
@@ -205,7 +205,7 @@
                         <td>{{row.customerPhone}}</td>
                         <td>{{row.customerCity}}</td>
                         <td>{{row.customerCountry}}</td>
-                        <td>{{row.IsAMLSuspectCorporate}}</td>
+                        <td>{{row.IsAMLSuspectCorporate?"Y":"N"}}</td>
 
                     </tr>
                     </tbody>
@@ -279,8 +279,8 @@
                         <td>{{row.representativeCountry}}</td>
                         <td>{{row.representativePhone}}</td>
                         <td>{{row.IsPEP?"Y":"N"}}</td>
-                        <td>{{row.IsNonResident}}</td>
-                        <td>{{row.IsAMLSuspect}}</td>
+                        <td>{{row.IsNonResident?"Y":"N"}}</td>
+                        <td>{{row.IsAMLSuspect?"Y":"N"}}</td>
                     </tr>
                     </tbody>
                     <tfoot>
@@ -366,15 +366,15 @@
     <!--start of the customer import -->
     <div ng-show="currentTab=='customer'">
         <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-default" ng-click="deleteAll('customer')">Delete All(for testing)</button>
-            <button type="button" class="btn btn-default" ng-click="refresh('customer')">refresh</button>
+            <button type="button" class="btn btn-default" ng-click="deleteAllCustomer()">Delete All(for testing)</button>
+            <button type="button" class="btn btn-default" ng-click="refreshCustomer()">refresh</button>
 
         </div>
 
 
         <div class="upload">
 
-            <div ngf-drop="uploadFiles($files)" class="drop-box"
+            <div ngf-drop="uploadCustomerFiles($files)" class="drop-box"
                  ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
                  ngf-pattern="'.csv'">Drop Customer csv files here</div>
 
@@ -388,7 +388,7 @@
             <div class="card-block">
                 <!--  table part -->
                 <table class="table table-striped table-bordered table-hover"
-                       st-table="customersDisplay" st-safe-src="customers">
+                       st-table="customerDisplay" st-safe-src="customer">
                     <thead>
                     <tr>
                         <th>customerId</th>
@@ -412,7 +412,7 @@
                     </thead>
                     <tbody>
 
-                    <tr ng-repeat="row in customersDisplay">
+                    <tr ng-repeat="row in customerDisplay">
                         <td>{{row.customerId}}</td>
                         <td>{{row.customerCertificateNumber}}</td>
                         <td>{{row.customerFirstName}}</td>

@@ -17,6 +17,14 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
             });
         }
     }
+    $scope.uploadCustomerFiles=function(files){
+        Upload.upload({
+            url: '/customer/upload',
+            data: {file: files[0]}
+        }).then(function () {
+            $scope.refreshCustomer();
+        });
+    }
 
     $scope.uploadCustomerBaseFiles=function(files){
         Upload.upload({
@@ -68,6 +76,12 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
         }
 
     };
+    $scope.refreshCustomer=function(){
+        $http.get("/customer/findAll").then(function(res){
+            $scope.customer=res.data;
+            $scope.customerDisplay=res.data.slice();
+        })
+    }
     $scope.refreshCustomerBase=function(){
         $http.get("/customer/findAllCustomerBase").then(function(res){
             $scope.customerBase=res.data;
@@ -107,6 +121,11 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
         }
 
     };
+    $scope.deleteAllCustomer=function(){
+        $http.get("/customer/removeAll").then(function(){
+            $scope.refreshCustomer();
+        })
+    }
 
     $scope.deleteAllCustomerBase=function(){
         $http.get("/customer/removeAllCustomerBase").then(function(){
@@ -129,8 +148,9 @@ app.controller('ImportDataCtrl', function ($scope, $http, $location, $state, $ti
         })
     }
 
-    $timeout(function () {
-        $scope.refresh();
+    $timeout(function (flag) {
+        $scope.refresh(flag);
+        $scope.refreshCustomer();
         $scope.refreshCustomerBase();
         $scope.refreshIndividual();
         $scope.refreshCorporate();
