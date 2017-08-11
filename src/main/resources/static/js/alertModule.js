@@ -245,6 +245,17 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
         $scope.data = [];
         $scope.alertSearch = {};
     }
+
+    //Calculate Total Amount
+    $scope.getTotal = function () {
+        var totalAmt = 0.0;
+        for (var key in $scope.data) {
+            if (parseFloat($scope.data[key].alerts.totalAmt)) {
+                totalAmt += parseFloat($scope.data[key].alerts.totalAmt);
+            }
+        }
+        return totalAmt;
+    }
 });
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {

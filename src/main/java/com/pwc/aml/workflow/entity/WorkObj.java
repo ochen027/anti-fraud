@@ -18,6 +18,7 @@ public class WorkObj extends BaseEntity{
     private String flowId;
     private WorkflowEx workflowEx;
     private String customerId;
+    private Double totalAmt;
 
     public String getWorkObjId() {
         return workObjId;
@@ -75,5 +76,13 @@ public class WorkObj extends BaseEntity{
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public Double getTotalAmt() {
+        return totalAmt;
+    }
+
+    public void setTotalAmt(Double totalAmt) {
+        this.totalAmt = totalAmt;
     }
 }

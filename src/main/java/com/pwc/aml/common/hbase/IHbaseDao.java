@@ -15,6 +15,8 @@ import com.pwc.aml.transation.entity.Transactions;
 public interface IHbaseDao {
 	HTable getTable(String name) throws Exception;
 	void putData(HTable table,String rowkey,String columnFamily,String column,String value) throws Exception;
+	void putData(HTable table,String rowkey,String columnFamily,String column,double value) throws Exception;
+	void putData(HTable table,String rowkey,String columnFamily,String column, Long value) throws Exception;
 	void deleteData(HTable table,String rowkey,String columnFamily,String column) throws Exception;
 	void deleteData(HTable table,String rowkey) throws Exception;
 	void deleteByColumnFamily(HTable table,String rowkey,String columnFamily) throws Exception ;
