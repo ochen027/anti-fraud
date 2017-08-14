@@ -4,13 +4,56 @@
 
     <div class="col-md-12">
         <div class="col-md-6">
-                    <label class="label">Report Type</label>
-                    <input type="text" class="form-control" placeholder=""></input>
+            <label class="label">Report Type</label>
+            <select ng-model="DateType" class="form-control">
+                <option ng-repeat="item in listOptions" value="{{item.value}}">{{item.label}}</option>
+
+            </select>
         </div>
         <br/>
-        <div class="col-md-6">
-                    <label class="label">Date</label>
-                    <input type="text" class="form-control" id="date" placeholder="yyyy-MM-dd"/>
+        <div class="col-md-6" ng-show="DateType=='daily'">
+            <label class="label">daily</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format.day}}" ng-model="dt" is-open="popup1.opened"
+                       datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+
+        </div>
+        <div class="col-md-6" ng-show="DateType=='weekly'">
+            <label class="label">weekly</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format.week}}" ng-model="dt" is-open="popup1.opened"
+                       datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+
+
+        </div>
+        <div class="col-md-6" ng-show="DateType=='monthly'">
+            <label class="label">monthly</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format.month}}" ng-model="dt" is-open="popupMonth.opened"
+                       datepicker-options="monthOptions" ng-required="true" close-text="Close" alt-input-formats="{{format.month}}" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openMonth()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+
+        </div>
+        <div class="col-md-6" ng-show="DateType=='annually'">
+            <label class="label">annually</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format.year}}" ng-model="dt" is-open="popupYear.opened"
+                       datepicker-options="yearOptions" ng-required="true" close-text="Close" alt-input-formats="{{format.year}}" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openYear()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
 
         </div>
         <br/>

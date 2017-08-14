@@ -87,6 +87,7 @@ insert into menus values(31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 
 insert into menus values(32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu', 11, 'menuList()');
 insert into menus values(33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Role Menu', 11, 'roleMenu()');
+insert into menus values(34, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Test', 11, 'reportTest()');
 -- initial role menu table
 -- sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
