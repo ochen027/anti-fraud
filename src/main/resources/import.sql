@@ -87,6 +87,7 @@ insert into menus values(31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 
 insert into menus values(32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu', 11, 'menuList()');
 insert into menus values(33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Role Menu', 11, 'roleMenu()');
+insert into menus values(34, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Test', 11, 'reportTest()');
 -- initial role menu table
 -- sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
@@ -131,7 +132,7 @@ insert into rolemenu values (100004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 -- insert into rolemenu values (100005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 1);
 insert into rolemenu values (100006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 1);
 insert into rolemenu values (100007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 1);
--- insert into rolemenu values (100008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
+insert into rolemenu values (100008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
 insert into rolemenu values (100009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 1);
 insert into rolemenu values (100010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 1);
 insert into rolemenu values (100011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 1);
@@ -143,7 +144,7 @@ insert into rolemenu values (100016, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (100017, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 17, 1);
 insert into rolemenu values (100018, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 18, 1);
 insert into rolemenu values (100019, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19, 1);
-insert into rolemenu values (100020, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 1);
+--insert into rolemenu values (100020, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 1);
 insert into rolemenu values (100021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 1);
 
 -- l2 menu
@@ -174,10 +175,10 @@ insert into rolemenu values (120001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (120002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 3);
 -- insert into rolemenu values (120003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 3);
 -- insert into rolemenu values (120004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 3);
--- insert into rolemenu values (120005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 3);
+insert into rolemenu values (120005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 3);
 insert into rolemenu values (120006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 3);
-insert into rolemenu values (120007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 3);
--- insert into rolemenu values (120008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 3);
+--insert into rolemenu values (120007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 3);
+--insert into rolemenu values (120008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 3);
 insert into rolemenu values (120009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 3);
 insert into rolemenu values (120010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 3);
 insert into rolemenu values (120011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 3);
@@ -198,9 +199,9 @@ insert into rolemenu values (130001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (130002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 4);
 insert into rolemenu values (130003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 4);
 -- insert into rolemenu values (130004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 4);
--- insert into rolemenu values (130005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 4);
+insert into rolemenu values (130005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 4);
 insert into rolemenu values (130006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 4);
-insert into rolemenu values (130007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 4);
+--insert into rolemenu values (130007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 4);
 insert into rolemenu values (130008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 4);
 insert into rolemenu values (130009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 4);
 insert into rolemenu values (130010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 4);
@@ -222,9 +223,9 @@ insert into rolemenu values (140001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (140002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 5);
 insert into rolemenu values (140003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 5);
 -- insert into rolemenu values (140004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 5);
--- insert into rolemenu values (140005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
+insert into rolemenu values (140005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
 insert into rolemenu values (140006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 5);
-insert into rolemenu values (140007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 5);
+--insert into rolemenu values (140007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 5);
 insert into rolemenu values (140008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 5);
 insert into rolemenu values (140009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 5);
 insert into rolemenu values (140010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 5);
@@ -243,9 +244,9 @@ insert into rolemenu values (140021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 
 
 -- initial rule scenario
-insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C1', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.Customers;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case1\"\n    salience 1\n    when\n        $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=0);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 1 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 30000 and in the last 3 days\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"1\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n        $customer.setAlertId(alertId);\nend','Scenario 1');
+insert into scenario values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C1', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.CustomerBase;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case1\"\n    salience 1\n    when\n        $customer : CustomerBase(totalTransAmt >= 30000 && totalTransCount >=0);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 1 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 30000 and in the last 3 days\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"1\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n        $customer.setAlertId(alertId);\nend','Scenario 1');
 
-insert into scenario values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C2', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.Customers;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case2\"\n    salience 1\n    when\n        $customer : Customers(totalTransAmt >= 90000);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 2 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 90000 in the recent days and with no any transactions in last long period.\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"2\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n        $customer.setAlertId(alertId);\nend','Scenario 2');
+insert into scenario values (2, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 'C2', 'package com.pwc.aml.rules.service;\nimport com.pwc.aml.customers.entity.CustomerBase;\nimport com.pwc.aml.common.hbase.HbaseDaoImp;\nimport com.pwc.aml.common.hbase.IHbaseDao;\nimport org.apache.hadoop.hbase.client.HTable;\nimport com.pwc.common.util.FormatUtils;\n\nrule \"Case2\"\n    salience 1\n    when\n        $customer : CustomerBase(totalTransAmt >= 90000);\n    then\n        IHbaseDao hBaseDAO = new HbaseDaoImp();\n        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n        String alertId = FormatUtils.GenerateId();\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 2 Conflict\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 90000 in the recent days and with no any transactions in last long period.\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"2\");\n        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n        $customer.setAlertId(alertId);\nend','Scenario 2');
 
 -- insert rule
 insert into RULES values (1, 'sysadmin', sysdate, sysdate, 'sysdate', 1, 'Rule 1 Desc', 'Rule 1');
