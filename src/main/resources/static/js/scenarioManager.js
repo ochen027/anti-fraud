@@ -164,8 +164,8 @@ app.controller('ScenarioCtrl', function ($scope, $http, $location, $state, $time
     $scope.operators = ["<=", ">=", "<", "=", ">"];
     $scope.checkList = {
         customerCondition: {
-            reg: /\$customer : Customers\((.)*\);/,
-            content: "$customer : Customers\($value\);",
+            reg: /\$customer : CustomerBase\((.)*\);/,
+            content: "$customer : CustomerBase\($value\);",
             value: "",
             contain: false,
             isCondition: true,
