@@ -11,7 +11,9 @@ import com.pwc.aml.accounts.dao.IAccountDAO;
 import com.pwc.aml.accounts.entity.Accounts;
 import com.pwc.aml.alert.dao.IAlertDAO;
 import com.pwc.aml.common.util.ExecuteDrools;
+import com.pwc.aml.customers.dao.ICustomerBaseDao;
 import com.pwc.aml.customers.dao.ICustomerDAO;
+import com.pwc.aml.customers.entity.CustomerBase;
 import com.pwc.aml.customers.entity.Customers;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.Rules;
@@ -42,7 +44,7 @@ public class RulesService implements IRulesService {
     private ITransactionDAO transactionDAO;
 
     @Autowired
-    private ICustomerDAO customerDAO;
+    private ICustomerBaseDao customerBaseDAO;
 
     @Autowired
     private IAccountDAO accountDAO;
@@ -87,33 +89,8 @@ public class RulesService implements IRulesService {
         rulesDAO.deleteRules(scenarioId);
     }
 
-    /**
-     * @Override public String getRuleScript(int scenarioId) {
-     * List<RuleStep> rList = this.listStepByRule(scenarioId);
-     * if(null == rList || 0 == rList.size()){
-     * return null;
-     * }
-     * StringBuffer sb = new StringBuffer("package com.pwc.aml.rules.service\n"
-     * + "import com.pwc.aml.transation.entity.Transactions\n");
-     * for(RuleStep rs : rList){
-     * sb.append("\n");
-     * sb.append("rule \"").append(rs.getStepName()).append("\"\n");
-     * sb.append("  salience ").append(rs.getStepOrder()).append("\n");
-     * sb.append("  when\n");
-     * sb.append("    ").append(rs.getStepWhen()).append("\n");
-     * sb.append("  then\n");
-     * sb.append("    ").append(rs.getStepThen()).append("\n");
-     * sb.append("end\n");
-     * }
-     * //System.out.println(sb.toString());
-     * return sb.toString();
-     * }
-     **/
-
-
     @Override
     public Scenario saveOrUpdate(Scenario scenario, Users users) {
-
 
         if (scenario.getId() == 0) {
             scenario.setCreatedBy(users.getUserName());
@@ -201,8 +178,8 @@ public class RulesService implements IRulesService {
 
         String businessDay = keyValueDAO.get("BUSINESS_DAY");
 
-        List<Customers> customerList = customerDAO.findAll();
-        for (Customers c : customerList) {
+        List<CustomerBase> customerList = customerBaseDAO.findAll();
+        for (CustomerBase c : customerList) {
             List<Accounts> accountList = accountDAO.findByCustId(c.getCustomerId());
 
             if (null == accountList || 0 == accountList.size()) {
@@ -257,33 +234,6 @@ public class RulesService implements IRulesService {
 
             String ruleEngineScript = rulesDAO.findSingleScenario(scenarioId).getScenarioContent();
 
-            String case1 = "package com.pwc.aml.rules.service;\n" +
-                    "import com.pwc.aml.customers.entity.Customers;\n" +
-                    "import com.pwc.aml.common.hbase.HbaseDaoImp;\n" +
-                    "import com.pwc.aml.common.hbase.IHbaseDao;\n" +
-                    "import org.apache.hadoop.hbase.client.HTable;\n" +
-                    "import com.pwc.common.util.FormatUtils;\n"+
-                    "\n" +
-                    "rule \"CaseTest\"\n" +
-                    "    salience 1\n" +
-                    "    when\n" +
-                    "        $customer : Customers(totalTransAmt >= 30000 && totalTransCount >=3);\n" +
-                    "    then\n" +
-                    "        IHbaseDao hBaseDAO = new HbaseDaoImp();\n" +
-                    "        HTable table = hBaseDAO.getTable(\"aml:alerts\");\n" +
-                    "        String alertId = FormatUtils.GenerateId();\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertName\", \"Scenario 1 Conflict\");\n" +
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertContent\", \"Conflict with Transactions Amount > 30000 and in the last 3 days\");\n" +
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"customerId\", $customer.getCustomerId());\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"accountId\", $customer.getAccountIdArray());\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"transIdArray\", $customer.getTransIdArray());\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"scenarioId\", \"1\");\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"businessDate\", $customer.getBusinessDate());\n" +
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"totalAmt\", $customer.getTotalTransAmt().toString());\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"createdDate\", $customer.getAlertCreationDate());\n"+
-                    "        hBaseDAO.putData(table, alertId, \"f1\", \"alertDesc\", \"Alert Desc\");\n"+
-                    "        $customer.setAlertId(alertId);\n"+
-                    "end";
 
             String alertId = ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript)).getAlertId();
             if(StringUtils.isNotBlank(alertId)){

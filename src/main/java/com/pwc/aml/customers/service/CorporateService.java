@@ -2,8 +2,10 @@ package com.pwc.aml.customers.service;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.pwc.aml.customers.dao.ICorporateDao;
+import com.pwc.aml.customers.dao.IRepresentativeDao;
 import com.pwc.aml.customers.entity.Corporate;
 import com.pwc.aml.customers.entity.Corporate;
+import com.pwc.aml.customers.entity.Representative;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +23,20 @@ import java.util.UUID;
 public class CorporateService implements ICorporateService {
     @Autowired
     private ICorporateDao corporateDao;
+
+    @Autowired
+    private IRepresentativeDao representativeDao;
+
     @Override
-    public Corporate findByCustId(Corporate corporate) {
-        return corporateDao.findByCustId(corporate.getCustomerId());
+    public Corporate findByCustId(String custId) {
+
+        Corporate corporate= corporateDao.findByCustId(custId);
+
+        Representative representative= representativeDao.findByCustId(custId);
+
+        corporate.setRepresentative(representative);
+
+        return corporate;
     }
 
     @Override
@@ -43,7 +56,7 @@ public class CorporateService implements ICorporateService {
         FileUtils.writeByteArrayToFile(temp, file.getBytes());
         CSVReader reader = new CSVReader(new FileReader(temp));
         List<String[]> corporateList = reader.readAll();
-        for(int i=1;i<corporateList.size();i++) {
+        for (int i = 1; i < corporateList.size(); i++) {
             Corporate corporate = new Corporate();
             String[] item = corporateList.get(i);
             corporate.setCustomerId(item[0]);
@@ -52,7 +65,7 @@ public class CorporateService implements ICorporateService {
             corporate.setCustomerPhone(item[3]);
             corporate.setCustomerCity(item[4]);
             corporate.setCustomerCountry(item[5]);
-            boolean IsAMLSuspectCorporate=item[6].equals("Y")?true:false;
+            boolean IsAMLSuspectCorporate = item[6].equals("Y") ? true : false;
             corporate.setAMLSuspectCorporate(IsAMLSuspectCorporate);
 
             corporateDao.save(corporate);

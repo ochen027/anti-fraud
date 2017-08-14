@@ -3,7 +3,7 @@ package com.pwc.aml.alert.dao;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
 import com.pwc.aml.common.util.Constants;
-import com.pwc.aml.customers.dao.ICustomerDAO;
+import com.pwc.aml.customers.dao.ICustomerBaseDao;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.transation.entity.Transactions;
 import org.apache.hadoop.hbase.Cell;
@@ -30,7 +30,7 @@ public class AlertDAO implements IAlertDAO {
     private ITransactionDAO transactionDAO;
 
     @Autowired
-    private ICustomerDAO customerDAO;
+    private ICustomerBaseDao customerBaseDAO;
 
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
@@ -86,7 +86,7 @@ public class AlertDAO implements IAlertDAO {
                     continue;
                 case Constants.COLUMN_CUSTOMER_ID:
                     aBean.setCustomerId(Bytes.toString(CellUtil.cloneValue(c)));
-                    aBean.setCustomerName(customerDAO.findByCustId(aBean.getCustomerId()).getCustomerFullName());
+                    aBean.setCustomerName(customerBaseDAO.findByCustId(aBean.getCustomerId()).getCustomerFullName());
                     continue;
                 case Constants.COLUMN_SCENARIO_ID:
                     aBean.setScenarioId(Bytes.toString(CellUtil.cloneValue(c)));

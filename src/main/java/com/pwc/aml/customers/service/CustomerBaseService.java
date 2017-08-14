@@ -2,8 +2,14 @@ package com.pwc.aml.customers.service;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.pwc.aml.customers.dao.ICorporateDao;
+import com.pwc.aml.customers.dao.IIndividualDao;
+import com.pwc.aml.customers.dao.IRepresentativeDao;
+import com.pwc.aml.customers.entity.Corporate;
 import com.pwc.aml.customers.entity.CustomerBase;
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
+import com.pwc.aml.customers.entity.Individual;
+import com.pwc.aml.customers.entity.Representative;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +28,14 @@ public class CustomerBaseService implements ICustomerBaseService {
     @Autowired
     private ICustomerBaseDao customerBaseDAO;
 
+    @Autowired
+    private IIndividualDao individualDao;
+
+    @Autowired
+    private ICorporateService corporateService;
+
+
+
 
     @Override
     public void saveOrUpdateCustomerBase(CustomerBase customerBase) {
@@ -37,7 +51,18 @@ public class CustomerBaseService implements ICustomerBaseService {
 
     @Override
     public CustomerBase findByCustId(CustomerBase customerBase) {
-        return customerBaseDAO.findByCustId(customerBase.getCustomerId());
+
+        CustomerBase target=customerBaseDAO.findByCustId(customerBase.getCustomerId());
+
+        Individual individual= individualDao.findByCustId(customerBase.getCustomerId());
+
+        target.setIndividual(individual);
+
+        Corporate corporate= corporateService.findByCustId(customerBase.getCustomerId());
+
+        target.setCorporate(corporate);
+
+        return target;
     }
 
 
