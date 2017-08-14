@@ -19,6 +19,7 @@ public class WorkObj extends BaseEntity{
     private WorkflowEx workflowEx;
     private String customerId;
     private Double totalAmt;
+    private boolean IsSAR=false;
 
     public String getWorkObjId() {
         return workObjId;
@@ -84,5 +85,14 @@ public class WorkObj extends BaseEntity{
 
     public void setTotalAmt(Double totalAmt) {
         this.totalAmt = totalAmt;
+    }
+
+
+    public boolean isSAR() {
+        return IsSAR;
+    }
+
+    public void setSAR(boolean SAR) {
+        IsSAR = SAR;
     }
 }

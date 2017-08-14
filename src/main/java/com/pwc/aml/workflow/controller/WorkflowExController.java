@@ -84,7 +84,8 @@ public class WorkflowExController extends BaseController {
         Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users) userInfo.get("User");
         for (String id : workObjIds) {
-            doEvent("assign", id,user);
+            WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
+            doEvent("assign", workObj,user);
         }
         //assign to me
 
@@ -114,7 +115,8 @@ public class WorkflowExController extends BaseController {
 
 
         for (String id : workObjIds) {
-            doEvent("escalate", id,user);
+            WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
+            doEvent("escalate", workObj,user);
         }
         //un assign
         assignService.unAssign(user, workObjIds, user);
@@ -128,7 +130,24 @@ public class WorkflowExController extends BaseController {
         Users user = (Users) userInfo.get("User");
 
         for (String id : workObjIds) {
-            doEvent("close", id,user);
+            WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
+            doEvent("close", workObj,user);
+        }
+        //un assign
+        assignService.unAssign(user, workObjIds, user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("sar")
+    public ResponseEntity<Void> sar(@RequestBody List<String> workObjIds, HttpSession session) throws Exception {
+
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+
+        for (String id : workObjIds) {
+            WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
+            workObj.setSAR(true);
+            doEvent("sar", workObj,user);
         }
         //un assign
         assignService.unAssign(user, workObjIds, user);
@@ -140,7 +159,8 @@ public class WorkflowExController extends BaseController {
         Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users) userInfo.get("User");
         for (String id : workObjIds) {
-            doEvent("return", id,user);
+            WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
+            doEvent("return", workObj,user);
         }
         //un assign
 
@@ -163,8 +183,8 @@ public class WorkflowExController extends BaseController {
     }
 
 
-    private void doEvent(String eventName, String workObjId,Users users) throws Exception {
-        WorkObj workObj = workObjService.getWorkObjsByWorkObjId(workObjId);
+    private void doEvent(String eventName, WorkObj workObj,Users users) throws Exception {
+        //WorkObj workObj = workObjService.getWorkObjsByWorkObjId(workObjId);
         List<FlowEvent> flowEvents = workObj.getCurrentPoint().getPossibleEvents();
         for (FlowEvent targetEvent : flowEvents) {
             if (eventName.equalsIgnoreCase(targetEvent.getName())) {

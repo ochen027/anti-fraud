@@ -24,6 +24,8 @@ public class WorkObjSchema {
 
     public static final String roleId="roleId";
 
+    public static final String isSAR="isSAR";
+
     public static final String createdBy="createdBy";
     public static final String createdDate="createdDate";
     public static final String updateBy="updateBy";
