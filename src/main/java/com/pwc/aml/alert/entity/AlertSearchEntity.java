@@ -1,5 +1,6 @@
 package com.pwc.aml.alert.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class AlertSearchEntity {
@@ -8,10 +9,10 @@ public class AlertSearchEntity {
     private String customerName;
     private String alertId;
     private Double totalAmt;
-    private String createdFromDate;
-    private String createdToDate;
-    private String closedFromDate;
-    private String closedToDate;
+    private Date createdFromDate;
+    private Date createdToDate;
+    private Date closedFromDate;
+    private Date closedToDate;
     private String suspiciousLevel;
     private String colsedBy;
     private List<String> customerIdList;
@@ -49,35 +50,35 @@ public class AlertSearchEntity {
         this.totalAmt = totalAmt;
     }
 
-    public String getCreatedFromDate() {
+    public Date getCreatedFromDate() {
         return createdFromDate;
     }
 
-    public void setCreatedFromDate(String createdFromDate) {
+    public void setCreatedFromDate(Date createdFromDate) {
         this.createdFromDate = createdFromDate;
     }
 
-    public String getCreatedToDate() {
+    public Date getCreatedToDate() {
         return createdToDate;
     }
 
-    public void setCreatedToDate(String createdToDate) {
+    public void setCreatedToDate(Date createdToDate) {
         this.createdToDate = createdToDate;
     }
 
-    public String getClosedFromDate() {
+    public Date getClosedFromDate() {
         return closedFromDate;
     }
 
-    public void setClosedFromDate(String closedFromDate) {
+    public void setClosedFromDate(Date closedFromDate) {
         this.closedFromDate = closedFromDate;
     }
 
-    public String getClosedToDate() {
+    public Date getClosedToDate() {
         return closedToDate;
     }
 
-    public void setClosedToDate(String closedToDate) {
+    public void setClosedToDate(Date closedToDate) {
         this.closedToDate = closedToDate;
     }
 

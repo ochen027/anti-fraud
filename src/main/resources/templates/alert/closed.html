@@ -11,7 +11,9 @@
                     <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerId" />
 
                     <label class="label">Alert Create Date</label>
-                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertCreateDate" />
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdFromDate" />
+                    --
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdToDate" />
                 </div>
 
                 <div class="table-tr">
@@ -19,7 +21,9 @@
                     <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerName" />
 
                     <label class="label">Alert Close Date</label>
-                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertCloseDate" />
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.closedFromDate" />
+                    --
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.closedToDate" />
                 </div>
 
 
@@ -34,7 +38,7 @@
 
                 <div class="table-tr">
                     <label class="label">Total Amount(More Than)</label>
-                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.totalAmount" />
+                    <input type="text" class="text-input" placeholder="" ng-model="alertSearch.totalAmt" />
 
                     <label class="label">Alert Closed By</label>
                     <input type="text" class="text-input" placeholder="" ng-model="alertSearch.colsedBy" />
@@ -89,8 +93,8 @@
     <!-- total-->
 
     <div class="col-md-12">
-        <lable>total:</lable>
-        <span>10000.00</span>
+        <lable>Total Amount:</lable>
+        <span>{{getTotal() | currency}}</span>
     </div>
 
     <div class="col-md-12 text-right">
