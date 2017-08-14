@@ -66,6 +66,7 @@ public class WorkObjDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.historyEvents, mapper.writeValueAsString(workObj.getHistoryEvents()));
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
         saveColumn(WorkObjSchema.alertId, workObj.getAlerts().getAlertId());
+        saveColumn(WorkObjSchema.isSAR, workObj.isSAR() ? "true" : "false");
         saveColumn(WorkObjSchema.createdBy, workObj.getCreatedBy());
         saveColumn(WorkObjSchema.createdDate, workObj.getCreationDate().getTime());
         saveColumn(WorkObjSchema.updateBy, workObj.getLastUpdatedBy());
@@ -278,6 +279,10 @@ public class WorkObjDao implements IWorkObjDao {
                     Long days = ChronoUnit.DAYS.between(FormatUtils.StringToLocalDateNoDash(alerts.getCreatedDate()), LocalDate.now());
                     alerts.setDays(String.valueOf(days));
                     o.setAlerts(alerts);
+                    break;
+                case WorkObjSchema.isSAR:
+                    String isSAR = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setSAR(isSAR.equals("true"));
                     break;
                 case WorkObjSchema.createdBy:
                     String createdBy = Bytes.toString(CellUtil.cloneValue(c));
