@@ -39,9 +39,9 @@ public class CustomerController extends BaseController {
 
 
     @PostMapping("findByCustId")
-    public ResponseEntity<Customers> findByCustId(@RequestBody Customers customers) {
-        Customers target=  customerService.findByCustId(customers);
-        return new ResponseEntity<Customers>(target,HttpStatus.OK);
+    public ResponseEntity<CustomerBase> findByCustId(@RequestBody CustomerBase customerBase) {
+        CustomerBase target=  customerBaseService.findByCustId(customerBase);
+        return new ResponseEntity<CustomerBase>(target,HttpStatus.OK);
     }
 
 

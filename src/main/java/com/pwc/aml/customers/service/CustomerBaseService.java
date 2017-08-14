@@ -55,12 +55,17 @@ public class CustomerBaseService implements ICustomerBaseService {
         CustomerBase target=customerBaseDAO.findByCustId(customerBase.getCustomerId());
 
         Individual individual= individualDao.findByCustId(customerBase.getCustomerId());
+        if (individual!=null)
 
         target.setIndividual(individual);
-
-        Corporate corporate= corporateService.findByCustId(customerBase.getCustomerId());
-
-        target.setCorporate(corporate);
+        else{
+            Corporate corporate= corporateService.findByCustId(customerBase.getCustomerId());
+            target.setCorporate(corporate);
+        }
+//        Corporate corporate= corporateService.findByCustId(customerBase.getCustomerId());
+//        if (corporate!=null)
+//
+//        target.setCorporate(corporate);
 
         return target;
     }

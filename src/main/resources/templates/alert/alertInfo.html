@@ -66,7 +66,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Date of Birth</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerBirthDate"></input>
+                                <input class="form-control" type="text" ng-model="customer.individual.customerBirthDate"></input>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                             <label class="col-4 col-form-label">ID</label>
                             <div class="col-8">
                                 <input class="form-control" type="text"
-                                       ng-model="customer.customerCertificateNumber"></input>
+                                       ng-model="customer.individual.customerCertificateNumber"></input>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Occupation</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerOccupation"></input>
+                                <input class="form-control" type="text" ng-model="customer.individual.customerOccupation"></input>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">City</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerCity"></input>
+                                <input class="form-control" type="text" ng-model="customer.individual.customerCity"></input>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Country</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerCountry"></input>
+                                <input class="form-control" type="text" ng-model="customer.individual.customerCountry"></input>
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerPhone1"></input>
+                                <input class="form-control" type="text" ng-model="customer.individual.customerPhone"></input>
                             </div>
                         </div>
                     </div>
@@ -119,8 +119,8 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Is PEP</label>
                             <div class="col-8">
-                                <label><input type="radio" name="IsPEP" ng-model="customer.IsPEP" value="true"></input>Yes</label>
-                                <label><input type="radio" name="IsPEP" ng-model="customer.IsPEP" value="false"></input>
+                                <label><input type="radio" name="IsPEP" ng-model="customer.individual.IsPEP" value="true"></input>Yes</label>
+                                <label><input type="radio" name="IsPEP" ng-model="customer.individual.IsPEP" value="false"></input>
                                     No</label>
                             </div>
                         </div>
@@ -129,9 +129,9 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Is Non Resident</label>
                             <div class="col-8">
-                                <label><input type="radio" name="IsNonResident" ng-model="customer.IsNonResident"
+                                <label><input type="radio" name="IsNonResident" ng-model="customer.individual.IsNonResident"
                                               ng-value="true"></input>Yes</label>
-                                <label><input type="radio" name="IsNonResident" ng-model="customer.IsNonResident"
+                                <label><input type="radio" name="IsNonResident" ng-model="customer.individual.IsNonResident"
                                               ng-value="false"></input>No</label>
                             </div>
                         </div>
@@ -140,9 +140,9 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Is AML Suspect</label>
                             <div class="col-8">
-                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.IsAMLSuspect"
+                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.individual.IsAMLSuspect"
                                               ng-value="true"></input> Yes</label>
-                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.IsAMLSuspect"
+                                <label><input type="radio" name="IsAMLSuspect" ng-model="customer.individual.IsAMLSuspect"
                                               ng-value="false"></input> No</label>
 
                             </div>
@@ -159,7 +159,7 @@
                             <label class="col-4 col-form-label">Registration Num</label>
                             <div class="col-8">
                                 <input class="form-control" type="text"
-                                       ng-model="customer.customerCertificateNumberCorporate"></input>
+                                       ng-model="customer.corporate.customerCertificateNumberCorporate"></input>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Line of Business</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.custlineOfBusiness"></input>
+                                <input class="form-control" type="text" ng-model="customer.corporate.custLineOfBusiness"></input>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerPhone1"></input>
+                                <input class="form-control" type="text" ng-model="customer.corporate.customerPhone"></input>
                             </div>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">City</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerCity"></input>
+                                <input class="form-control" type="text" ng-model="customer.corporate.customerCity"></input>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Country</label>
                             <div class="col-8">
-                                <input class="form-control" type="text" ng-model="customer.customerCountry"></input>
+                                <input class="form-control" type="text" ng-model="customer.corporate.customerCountry"></input>
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                             <label class="col-4 col-form-label">Is AML Suspect</label>
                             <div class="col-8">
                                 <input class="form-control" type="text"
-                                       ng-model="customer.IsAMLSuspectCorporate"></input>
+                                       ng-model="customer.corporate.IsAMLSuspectCorporate"></input>
                             </div>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
                                 <label class="col-4 col-form-label">Date of Birth</label>
                                 <div class="col-8">
                                     <input class="form-control" type="text"
-                                           ng-model="customer.customerBirthDate"></input>
+                                           ng-model="customer.corporate.representative.representativeBirthDate"></input>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,65 @@
                                 <label class="col-4 col-form-label">ID</label>
                                 <div class="col-8">
                                     <input class="form-control" type="text"
-                                           ng-model="customer.representativeId"></input>
+                                           ng-model="customer.corporate.representative.representativeId"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Occupation</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.corporate.representative.representativeOccupation"></input>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">City</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.corporate.representative.representativeCity"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Country</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.corporate.representative.representativeCountry"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Phone</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" ng-model="customer.corporate.representative.representativePhone"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Is PEP</label>
+                                <div class="col-8">
+                                    <label><input type="radio" name="IsPEP" ng-model="customer.corporate.representative.IsPEP" value="true"></input>Yes</label>
+                                    <label><input type="radio" name="IsPEP" ng-model="customer.corporate.representative.IsPEP" value="false"></input>
+                                        No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Is Non Resident</label>
+                                <div class="col-8">
+                                    <label><input type="radio" name="IsNonResident" ng-model="customer.corporate.representative.IsNonResident"
+                                                  ng-value="true"></input>Yes</label>
+                                    <label><input type="radio" name="IsNonResident" ng-model="customer.corporate.representative.IsNonResident"
+                                                  ng-value="false"></input>No</label>
                                 </div>
                             </div>
                         </div>
@@ -234,8 +292,11 @@
                             <div class="form-group row">
                                 <label class="col-4 col-form-label">Is AML Suspect</label>
                                 <div class="col-8">
-                                    <input class="form-control" type="text"
-                                           ng-model="customer.IsAMLSuspectCorporate"></input>
+                                    <label><input type="radio" name="IsAMLSuspect" ng-model="customer.corporate.representative.IsAMLSuspect"
+                                                  ng-value="true"></input> Yes</label>
+                                    <label><input type="radio" name="IsAMLSuspect" ng-model="customer.corporate.representative.IsAMLSuspect"
+                                                  ng-value="false"></input> No</label>
+
                                 </div>
                             </div>
                         </div>
