@@ -4,7 +4,6 @@ import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
 import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
-import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.transation.entity.Transactions;
 import org.apache.hadoop.hbase.Cell;

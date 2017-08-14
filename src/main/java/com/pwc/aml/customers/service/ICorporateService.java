@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface ICorporateService {
-    Corporate findByCustId(Corporate corporate);
+    Corporate findByCustId(String custId);
 
 
     List<Corporate> findAll();
