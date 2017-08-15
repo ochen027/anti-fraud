@@ -55,7 +55,7 @@ public class WorkObjService implements IWorkObjService {
         obj.setLastUpdatedBy(users.getUserName());
         obj.setLastUpdateDate(date);
         obj.setStatus(true);
-        workObjDao.save(obj);
+        workObjDao.saveOrUpdate(obj);
         return getPossibleEvents(obj);
     }
 
@@ -78,7 +78,7 @@ public class WorkObjService implements IWorkObjService {
             workObj.setCreationDate(new Date());
             workObj.setLastUpdatedBy(users.getUserName());
             workObj.setLastUpdateDate(new Date());
-            workObjDao.save(workObj);
+            workObjDao.saveOrUpdate(workObj);
         }
 
         return getPossibleEvents(workObj);
