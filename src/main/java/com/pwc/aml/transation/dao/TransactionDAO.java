@@ -2,6 +2,7 @@ package com.pwc.aml.transation.dao;
 
 import com.jcraft.jsch.JSchException;
 import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.common.util.RunShellTool;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.common.util.FormatUtils;
@@ -11,10 +12,7 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.FilterList;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,7 +46,7 @@ public class TransactionDAO implements ITransactionDAO {
     @Override
     public List<Transactions> getAllTransData() throws Exception {
         Scan scan = new Scan();
-        HTable hTable = hBaseDAO.getTable("aml:trans");
+        HTable hTable = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
         ResultScanner rsscan = hTable.getScanner(scan);
         List<Transactions> list = new ArrayList<Transactions>();
         for (Result rs : rsscan) {
@@ -60,7 +58,7 @@ public class TransactionDAO implements ITransactionDAO {
 
     @Override
     public Transactions getSingleTrans(String transId) throws Exception {
-        HTable table = hBaseDAO.getTable("aml:trans");
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
         Scan scan = new Scan();
         Filter filter = new SingleColumnValueFilter(Bytes.toBytes("f1"), Bytes.toBytes("trans_id"),
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes(transId));
@@ -77,7 +75,7 @@ public class TransactionDAO implements ITransactionDAO {
 
     @Override
     public List<Transactions> getTransListById(String[] transIds) throws Exception {
-        HTable table = hBaseDAO.getTable("aml:trans");
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
         Scan scan = new Scan();
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
         for(String id : transIds){
@@ -98,20 +96,18 @@ public class TransactionDAO implements ITransactionDAO {
 
     @Override
     public void TruncateTrans() throws Exception {
-        hBaseDAO.deleteTable("aml:trans");
-        hBaseDAO.createTable("aml:trans");
+        hBaseDAO.deleteTable(Constants.HBASE_TABLE_TRANS);
+        hBaseDAO.createTable(Constants.HBASE_TABLE_TRANS);
     }
 
     @Override
     public List<Transactions> getTransDataByAccount(List<String> aIdList, String ruleDays, String businessDate) throws Exception {
-        HTable table = hBaseDAO.getTable("aml:trans");
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
         Scan scan = new Scan();
         LocalDate validDate = FormatUtils.StringToLocalDate(businessDate);
         LocalDate FromDate = validDate.minusDays(Long.parseLong(ruleDays)+1L);
         scan.setStartRow(Bytes.toBytes(FormatUtils.LocalDateToString(FromDate)));
         scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(validDate)));
-
-
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
         for(String accountId : aIdList){
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
@@ -129,12 +125,23 @@ public class TransactionDAO implements ITransactionDAO {
         return tList;
     }
 
+    @Override
+    public Integer getTransByDateCount(String businessDate) throws Exception {
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
+        Scan scan = new Scan();
+        LocalDate fromDate = FormatUtils.StringToLocalDateNoDash(businessDate).minusDays(1L);
+        LocalDate toDate = FormatUtils.StringToLocalDateNoDash(businessDate).plusDays(1L);
+        scan.setStartRow(Bytes.toBytes(FormatUtils.LocalDateToString(fromDate)));
+        scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(toDate)));
+        return this.getResultCount(table.getScanner(scan));
+    }
+
     private Transactions consistTrans(Cell[] cells) throws ParseException{
         Transactions tbean = new Transactions();
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
-                case "trans_id":
+                case Constants.COLUMN_TRANS_ID:
                     tbean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
                 case "acct_id":
@@ -188,4 +195,12 @@ public class TransactionDAO implements ITransactionDAO {
         return tbean;
     }
 
+
+    private Integer getResultCount(ResultScanner results){
+        int i =0;
+        for (Result r : results) {
+            i++;
+        }
+        return i;
+    }
 }

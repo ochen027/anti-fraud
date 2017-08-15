@@ -249,6 +249,52 @@ public class WorkObjDao implements IWorkObjDao {
         }
     }
 
+    @Override
+    public Integer getClosedAlertByDateCount(String endPointId, String businessDate) throws Exception {
+        initial();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                Bytes.toBytes(WorkObjSchema.currentPointId),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(endPointId)));
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(FormatUtils.StringToDateNoDash(businessDate).getTime())));
+        scan.setFilter(filterList);
+        return CountResultList(table.getScanner(scan));
+    }
+
+    @Override
+    public Integer getSARAlertByDateCount(String businessDate) throws Exception {
+        initial();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                Bytes.toBytes(WorkObjSchema.isSAR),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes("true")));
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(FormatUtils.StringToDateNoDash(businessDate).getTime())));
+        scan.setFilter(filterList);
+        return CountResultList(table.getScanner(scan));
+    }
+
+    @Override
+    public Integer getAlertByDateCount(String businessDate) throws Exception{
+        initial();
+        Scan scan = new Scan();
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(FormatUtils.StringToDateNoDash(businessDate).getTime())));
+        scan.setFilter(filterList);
+        return CountResultList(table.getScanner(scan));
+    }
+
+    private Integer CountResultList(ResultScanner rsscan){
+        int i = 0;
+        for(Result r : rsscan){
+            i++;
+        }
+        return i;
+    }
 
     private WorkObj CellToWorkObj(Cell[] cells) throws Exception {
         WorkObj o = new WorkObj();
@@ -339,30 +385,5 @@ public class WorkObjDao implements IWorkObjDao {
             hbaseDao.putData(table, rowKey, Constants.F1, key, (String)value);
         }
     }
-
-
-
-    public static void main(String[] args) {
-        String[] str = {"0000001", "000002", "00020", "0000032"};
-        String str1 = "20170810165819309546137955962109";
-        String keyWord = "2";
-        Pattern pn = Pattern.compile(keyWord+"\\w|\\w"+keyWord+"\\w|\\w"+keyWord);
-        String keyWord2 = "2017";
-        //Pattern pn = Pattern.compile(keyWord2+"\\w");
-        //Pattern pn = Pattern.compile(keyWord2+"[.]*");
-        Matcher mr = null;
-        /**
-        for (String s : str) {
-            mr = pn.matcher(s);
-            if (mr.find())
-                System.out.println(s);
-        }
-         **/
-        mr = pn.matcher(str1);
-        if (mr.find()){
-            System.out.println(str1);
-        }
-    }
-
 
 }
