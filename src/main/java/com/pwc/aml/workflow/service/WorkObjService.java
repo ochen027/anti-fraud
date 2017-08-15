@@ -3,6 +3,7 @@ package com.pwc.aml.workflow.service;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.customers.dao.ICustomerDAO;
+import com.pwc.common.util.FormatUtils;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.aml.workflow.dao.IFlowPointExDao;
 import com.pwc.aml.workflow.dao.IWorkObjDao;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,15 +44,16 @@ public class WorkObjService implements IWorkObjService {
     @Override
     public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,Users users) throws Exception {
         WorkObj obj = new WorkObj();
+        Date date = FormatUtils.LocalDateToDate(LocalDate.now());
         obj.setAlerts(alerts);
         obj.setWorkObjId(UUID.randomUUID().toString());//uuid
         obj.setWorkflowEx(workflow);
         obj.setCurrentPoint(workflow.getStartPoint());
         obj.setFlowId(workflow.getFlowId());
         obj.setCreatedBy(users.getUserName());
-        obj.setCreationDate(new Date());
+        obj.setCreationDate(date);
         obj.setLastUpdatedBy(users.getUserName());
-        obj.setLastUpdateDate(new Date());
+        obj.setLastUpdateDate(date);
         obj.setStatus(true);
         workObjDao.save(obj);
         return getPossibleEvents(obj);
@@ -131,6 +135,5 @@ public class WorkObjService implements IWorkObjService {
         }
         return workObjs;
     }
-
 
 }

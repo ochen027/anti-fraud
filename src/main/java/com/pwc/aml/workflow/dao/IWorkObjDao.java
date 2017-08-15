@@ -13,10 +13,15 @@ public interface IWorkObjDao {
 
     WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception;
 
-
     List<WorkObj> findWorkObjsByPointId(String flowPointId) throws Exception;
 
     void truncateTable() throws IOException;
 
     List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception;
+
+    Integer getAlertByDateCount(String businessDate) throws Exception;
+
+    Integer getClosedAlertByDateCount(String endPointId, String businessDate) throws Exception;
+
+    Integer getSARAlertByDateCount(String businessDate) throws Exception;
 }

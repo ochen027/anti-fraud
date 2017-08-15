@@ -4,51 +4,93 @@
 
     <div class="col-md-12">
 
-
-        <div class="col-md-6">
-                <div class="text-right">
-                    <button class="btn btn-default" ng-click="search()">Search</button>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Report Type</label>
+                <div class="col-10">
+                    <select ng-model="currentType"
+                            ng-options="option as option.label for option in selectType track by option.key"
+                            ng-change="typeChange()"
+                            class="form-control"></select>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Start Date</label>
+                        <div class="col-10">
+                            <p class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       ng-model="startDate"
+                                       is-open="popup.opened" datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close" alt-input-formats="altInputFormats"
+                                       ng-change="changeDatePicker()"/>
+                                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                        </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">To</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" value="{{endDate}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="text-right">
+                <button class="btn btn-default" ng-click="search()">Search</button>
+            </div>
         </div>
     </div>
     <br/>
     <br/>
     <!--  table part -->
     <div class="detail-table">
-    <table class="table table-striped table-bordered table-hover"
-           st-table="displayedData" st-safe-src="data">
-        <thead>
-        <tr class="detail-table-head">
-            <th st-sort="date">Date</th>
-            <th st-sort="totalNumberOfTransaction">Total Number of Transaction</th>
-            <th st-sort="totalNumberOfAlerts">Total Number of Alerts</th>
-            <th st-sort="totalNumberOfClosedAlert">Total Number of  Closed Alerts</th>
-            <th st-sort="totalNumberOfSuppressedAlert">Total Number of suppressed Alerts</th>
-            <th st-sort="totalNumberOfAlertsReportedToSAR">Total Number of Alerts Reported to SAR</th>
-            <th st-sort="totalNumberOfActiveAlerts">Total Number of Active Alerts</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="row in displayedData track by $index ">
-        <td>{{row.date}}</td>
-        <td>{{row.totalNumberOfTransaction}}</td>
-        <td>{{row.totalNumberOfAlerts}}</td>
-        <td>{{row.totalNumberOfClosedAlert}}</td>
-        <td>{{row.totalNumberOfSuppressedAlert}}</td>
-        <td>{{row.totalNumberOfAlertsReportedToSAR}}</td>
-        <td>{{row.totalNumberOfActiveAlerts}}</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="8" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage"
-                     st-displayed-pages="4"></div>
-            </td>
-        </tr>
-        </tfoot>
+        <table class="table table-striped table-bordered table-hover"
+               st-table="displayedData" st-safe-src="data">
+            <thead>
+            <tr class="detail-table-head">
+                <th st-sort="date">Date</th>
+                <th st-sort="totalNumberOfTransaction">Total Number of Transaction</th>
+                <th st-sort="totalNumberOfAlerts">Total Number of Alerts</th>
+                <th st-sort="totalNumberOfClosedAlert">Total Number of Closed Alerts</th>
+                <th st-sort="totalNumberOfSuppressedAlert">Total Number of suppressed Alerts</th>
+                <th st-sort="totalNumberOfAlertsReportedToSAR">Total Number of Alerts Reported to SAR</th>
+                <th st-sort="totalNumberOfActiveAlerts">Total Number of Active Alerts</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in displayedData track by $index ">
+                <td>{{row.date}}</td>
+                <td>{{row.totalNumberOfTransaction}}</td>
+                <td>{{row.totalNumberOfAlerts}}</td>
+                <td>{{row.totalNumberOfClosedAlert}}</td>
+                <td>{{row.totalNumberOfSuppressedAlert}}</td>
+                <td>{{row.totalNumberOfAlertsReportedToSAR}}</td>
+                <td>{{row.totalNumberOfActiveAlerts}}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="8" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage"
+                         st-displayed-pages="4"></div>
+                </td>
+            </tr>
+            </tfoot>
 
-    </table>
+        </table>
     </div>
 
     <!--end of title -->
@@ -63,6 +105,6 @@
     <div class="sepeartor">
     </div>
     <div class="col-md-12 text-right">
-        <button class="btn btn-primary">Export</button>
+        <button class="btn btn-primary" ng-click="export()" >Export</button>
     </div>
 </div>

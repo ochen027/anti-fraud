@@ -373,7 +373,7 @@ public class HbaseDaoImp implements IHbaseDao {
     public static void main(String[] args) throws Exception {
 //        System.out.println(System.getenv().get("HADOOP_HOME"));
         HbaseDaoImp hdao = new HbaseDaoImp();
-        HTable table = hdao.getTable("aml:assign");
+        HTable table = hdao.getTable("aml:trans");
         
         
         //hdao.deleteByColumnFamily(table, "trans_id", "f1");
@@ -397,61 +397,9 @@ public class HbaseDaoImp implements IHbaseDao {
         //hdao.getDataByColumn(table, "totalAmt", "19999");
         //hdao.getDataByColumn();
 
-        //hdao.createTable("aml:alerts");
-
-        /**
-        hdao.putData(table, "ALT900000000001", "f1", "alertName", "Warning");
-        hdao.putData(table, "ALT900000000001", "f1", "alertContents", "ALT900000000001->Warning->More Than 10000");
-        hdao.putData(table, "ALT900000000001", "f1", "transId", "900000000001,900000000002,900000000004");
-        hdao.putData(table, "ALT900000000001", "f1", "customerId", "CUST90001");
-        hdao.putData(table, "ALT900000000001", "f1", "accountId", "acct0000001");
-        hdao.putData(table, "ALT900000000001", "f1", "scenarioId", "1");
-        hdao.putData(table, "ALT900000000001", "f1", "documentId", "DOC90001,DOC90002");
-        hdao.putData(table, "ALT900000000001", "f1", "commentId", "COMT90001,COMT90002");
-        hdao.putData(table, "ALT900000000001", "f1", "businessDate", "2017-07-01");
-        hdao.putData(table, "ALT900000000001", "f1", "totalAmt", "19999");
-        hdao.putData(table, "ALT900000000001", "f1", "createdBy", "sysadmin");
-        hdao.putData(table, "ALT900000000001", "f1", "createdDate", "2017-07-20");
-        hdao.putData(table, "ALT900000000001", "f1", "alertDesc", "Alert1Desc");
 
 
-        hdao.putData(table, "ALT900000000002", "f1", "alertName", "Error");
-        hdao.putData(table, "ALT900000000002", "f1", "alertContents", "ALT900000000002->Error->More Than 50000");
-        hdao.putData(table, "ALT900000000002", "f1", "transId", "900000000008,900000000009,900000000010");
-        hdao.putData(table, "ALT900000000002", "f1", "customerId", "CUST90002");
-        hdao.putData(table, "ALT900000000002", "f1", "accountId", "acct0000002");
-        hdao.putData(table, "ALT900000000002", "f1", "scenarioId", "1");
-        hdao.putData(table, "ALT900000000002", "f1", "documentId", "DOC90003,DOC90004");
-        hdao.putData(table, "ALT900000000002", "f1", "commentId", "COMT90003,COMT90004");
-        hdao.putData(table, "ALT900000000002", "f1", "businessDate", "2017-07-01");
-        hdao.putData(table, "ALT900000000002", "f1", "totalAmt", "29999");
-        hdao.putData(table, "ALT900000000002", "f1", "createdBy", "sysadmin");
-        hdao.putData(table, "ALT900000000002", "f1", "createdDate", "2017-07-20");
-        hdao.putData(table, "ALT900000000002", "f1", "alertDesc", "Alert2Desc");
-
-        hdao.putData(table, "ALT900000000003", "f1", "alertName", "Info");
-        hdao.putData(table, "ALT900000000003", "f1", "alertContents", "ALT900000000003->Info->less Than 10000");
-        hdao.putData(table, "ALT900000000003", "f1", "transId", "900000000019,900000000018,900000000003");
-        hdao.putData(table, "ALT900000000003", "f1", "customerId", "CUST90003");
-        hdao.putData(table, "ALT900000000003", "f1", "accountId", "acct0000004");
-        hdao.putData(table, "ALT900000000003", "f1", "scenarioId", "1");
-        hdao.putData(table, "ALT900000000003", "f1", "documentId", "DOC90005,DOC90006");
-        hdao.putData(table, "ALT900000000003", "f1", "commentId", "COMT90005,COMT90006");
-        hdao.putData(table, "ALT900000000003", "f1", "businessDate", "2017-07-01");
-        hdao.putData(table, "ALT900000000003", "f1", "totalAmt", "39999");
-        hdao.putData(table, "ALT900000000003", "f1", "createdBy", "sysadmin");
-        hdao.putData(table, "ALT900000000003", "f1", "createdDate", "2017-07-20");
-        hdao.putData(table, "ALT900000000003", "f1", "alertDesc", "Alert3Desc");
-
-
-        hdao.putData(table, "0000001", "f1", "alertName", "Scenario 1 Conflict");
-        hdao.putData(table, "0000001", "f1", "alertContents", "Conflict with Transactions Amount > 30000 and in the last 3 days");
-        hdao.putData(table, "0000001", "f1", "scenarioId", "1");
-        hdao.putData(table, "0000001", "f1", "alertDesc", "Alert Desc");
-         **/
-
-
-        //hdao.scanData(table);
+        hdao.scanData(table);
 
 
         /**

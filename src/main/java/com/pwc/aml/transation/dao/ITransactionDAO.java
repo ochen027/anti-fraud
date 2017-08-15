@@ -18,4 +18,5 @@ public interface ITransactionDAO {
 
     List<Transactions> getTransDataByAccount(List<String> accountId, String ruleDays, String businessDate) throws Exception;
 
+    Integer getTransByDateCount(String businessDate) throws Exception;
 }

@@ -43,6 +43,10 @@ public class Constants {
     //For Scenario
     public static final String COLUMN_SCENARIO_ID = "scenarioId";
 
+    //For Transactions
+    public static final String HBASE_TABLE_TRANS = "aml:trans";
+    public static final String COLUMN_TRANS_ID = "transId";
+
 
 
 }
