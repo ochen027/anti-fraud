@@ -50,7 +50,7 @@ public class TransactionDAO implements ITransactionDAO {
         ResultScanner rsscan = hTable.getScanner(scan);
         List<Transactions> list = new ArrayList<Transactions>();
         for (Result rs : rsscan) {
-            Transactions tbean = this.consistTrans(rs.rawCells());
+            Transactions tbean = this.consistTrans(rs.rawCells(), Bytes.toString(rs.getRow()));
             list.add(tbean);
         }
         return list;
@@ -66,7 +66,7 @@ public class TransactionDAO implements ITransactionDAO {
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();
         for (Result r : rsscan) {
-            Transactions t = this.consistTrans(r.rawCells());
+            Transactions t = this.consistTrans(r.rawCells(), Bytes.toString(r.getRow()));
             tList.add(t);
         }
         rsscan.close();
@@ -87,7 +87,7 @@ public class TransactionDAO implements ITransactionDAO {
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();
         for (Result r : rsscan) {
-            Transactions t = this.consistTrans(r.rawCells());
+            Transactions t = this.consistTrans(r.rawCells(), Bytes.toString(r.getRow()));
             tList.add(t);
         }
         rsscan.close();
@@ -117,8 +117,8 @@ public class TransactionDAO implements ITransactionDAO {
         scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();
-        for (Result r : rsscan) {
-            Transactions t = this.consistTrans(r.rawCells());
+        for (Result rs : rsscan) {
+            Transactions t = this.consistTrans(rs.rawCells(), Bytes.toString(rs.getRow()));
             tList.add(t);
         }
         rsscan.close();
@@ -136,14 +136,12 @@ public class TransactionDAO implements ITransactionDAO {
         return this.getResultCount(table.getScanner(scan));
     }
 
-    private Transactions consistTrans(Cell[] cells) throws ParseException{
+    private Transactions consistTrans(Cell[] cells, String transId) throws ParseException{
         Transactions tbean = new Transactions();
+        tbean.setTransId(transId);
         for (Cell c : cells) {
             String key = Bytes.toString(CellUtil.cloneQualifier(c));
             switch(key){
-                case Constants.COLUMN_TRANS_ID:
-                    tbean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
-                    continue;
                 case "acct_id":
                     tbean.setAcctId(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
