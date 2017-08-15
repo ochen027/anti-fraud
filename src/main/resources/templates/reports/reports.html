@@ -58,7 +58,7 @@
     <!--  table part -->
     <div class="detail-table">
         <table class="table table-striped table-bordered table-hover"
-               st-table="displayedData" st-safe-src="data">
+               st-table="reportsDisplay" st-safe-src="reports">
             <thead>
             <tr class="detail-table-head">
                 <th st-sort="date">Date</th>
@@ -71,14 +71,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="row in displayedData track by $index ">
+            <tr ng-repeat="row in reportsDisplay track by $index ">
                 <td>{{row.date}}</td>
-                <td>{{row.totalNumberOfTransaction}}</td>
-                <td>{{row.totalNumberOfAlerts}}</td>
-                <td>{{row.totalNumberOfClosedAlert}}</td>
-                <td>{{row.totalNumberOfSuppressedAlert}}</td>
-                <td>{{row.totalNumberOfAlertsReportedToSAR}}</td>
-                <td>{{row.totalNumberOfActiveAlerts}}</td>
+                <td>{{row.transCount}}</td>
+                <td>{{row.alertCount}}</td>
+                <td>{{row.alertClosedCount}}</td>
+                <td>{{row.alertSuppressCount}}</td>
+                <td>{{row.alertSARCount}}</td>
+                <td>{{row.alertActiveCount}}</td>
             </tr>
             </tbody>
             <tfoot>
@@ -97,11 +97,7 @@
 
     <!-- total-->
 
-    <div class="sepeartor"></div>
-    <div>
-        <label>Total Amount:</label>
-        <span class="text"> ^^</span>
-    </div>
+
     <div class="sepeartor">
     </div>
     <div class="col-md-12 text-right">

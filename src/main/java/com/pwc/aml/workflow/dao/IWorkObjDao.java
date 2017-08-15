@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IWorkObjDao {
-    void save(WorkObj workObj) throws Exception;
+    void saveOrUpdate(WorkObj workObj) throws Exception;
 
     WorkObj findWorkObjByWorkObjId(String workObjId) throws Exception;
 

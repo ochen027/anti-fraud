@@ -8,6 +8,7 @@ import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
+import com.pwc.common.base.dao.HadoopBaseDao;
 import com.pwc.common.util.FormatUtils;
 import com.pwc.component.assign.entity.AssignSchema;
 import com.pwc.component.workflow.entity.FlowEvent;
@@ -35,14 +36,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Repository
-public class WorkObjDao implements IWorkObjDao {
-
-    @Autowired
-    private IHbaseDao hbaseDao;
+public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
 
-    @Autowired
-    private IWorkflowExDao workflowExDao;
 
     @Autowired
     private IAlertDAO alertDAO;
@@ -50,14 +46,12 @@ public class WorkObjDao implements IWorkObjDao {
     @Autowired
     private IFlowPointExDao flowPointExDao;
 
-    private HTable table;
-
-    private String rowKey;
-
-    private String tableKey = "aml:workObj";
+    public WorkObjDao(){
+        this.tableKey = "aml:workObj";
+    }
 
     @Override
-    public void save(WorkObj workObj) throws Exception {
+    public void saveOrUpdate(WorkObj workObj) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         initial(workObj.getWorkObjId());
         saveColumn(WorkObjSchema.workObjectId, workObj.getWorkObjId());
@@ -120,7 +114,7 @@ public class WorkObjDao implements IWorkObjDao {
     }
 
     @Override
-    public List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception{
+    public List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception {
         initial();
         Scan scan = new Scan();
 
@@ -215,7 +209,7 @@ public class WorkObjDao implements IWorkObjDao {
         }
 
 
-        if(null != ase.getCustomerIdList()) {
+        if (null != ase.getCustomerIdList()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
             for (String cId : ase.getCustomerIdList()) {
 
@@ -234,9 +228,9 @@ public class WorkObjDao implements IWorkObjDao {
                 woList.addAll(wList);
             }
             return woList;
-        }else if(null == ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName()))){
+        } else if (null == ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName()))) {
             return null;
-        }else{
+        } else {
             scan.setFilter(filterList);
             ResultScanner rsscan = table.getScanner(scan);
             List<WorkObj> wList = new ArrayList<WorkObj>();
@@ -362,28 +356,32 @@ public class WorkObjDao implements IWorkObjDao {
         return o;
     }
 
-    public void truncateTable() throws IOException {
-        hbaseDao.deleteTable(tableKey);
-        hbaseDao.createTable(tableKey);
-    }
 
-    public void initial() throws Exception {
-        table = hbaseDao.getTable(tableKey);
-    }
 
-    public void initial(String rowKey) throws Exception {
-        initial();
-        this.rowKey = rowKey;
-    }
 
-    public void saveColumn(String key, Object value) throws Exception {
-        if(value instanceof Double){
-            hbaseDao.putData(table, rowKey, Constants.F1, key, (Double)value);
-        }else if(value instanceof Long){
-            hbaseDao.putData(table, rowKey, Constants.F1, key, (Long)value);
-        }else{
-            hbaseDao.putData(table, rowKey, Constants.F1, key, (String)value);
+
+    public static void main(String[] args) {
+        String[] str = {"0000001", "000002", "00020", "0000032"};
+        String str1 = "20170810165819309546137955962109";
+        String keyWord = "2";
+        Pattern pn = Pattern.compile(keyWord + "\\w|\\w" + keyWord + "\\w|\\w" + keyWord);
+        String keyWord2 = "2017";
+        //Pattern pn = Pattern.compile(keyWord2+"\\w");
+        //Pattern pn = Pattern.compile(keyWord2+"[.]*");
+        Matcher mr = null;
+        /**
+         for (String s : str) {
+         mr = pn.matcher(s);
+         if (mr.find())
+         System.out.println(s);
+         }
+         **/
+        mr = pn.matcher(str1);
+        if (mr.find()) {
+            System.out.println(str1);
         }
     }
+
+
 
 }

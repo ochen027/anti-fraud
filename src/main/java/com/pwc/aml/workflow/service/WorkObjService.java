@@ -44,18 +44,17 @@ public class WorkObjService implements IWorkObjService {
     @Override
     public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,Users users) throws Exception {
         WorkObj obj = new WorkObj();
-        Date date = FormatUtils.LocalDateToDate(LocalDate.now());
         obj.setAlerts(alerts);
         obj.setWorkObjId(UUID.randomUUID().toString());//uuid
         obj.setWorkflowEx(workflow);
         obj.setCurrentPoint(workflow.getStartPoint());
         obj.setFlowId(workflow.getFlowId());
         obj.setCreatedBy(users.getUserName());
-        obj.setCreationDate(date);
+        obj.setCreationDate(FormatUtils.getCurrentDay());
         obj.setLastUpdatedBy(users.getUserName());
-        obj.setLastUpdateDate(date);
+        obj.setLastUpdateDate(FormatUtils.getCurrentDay());
         obj.setStatus(true);
-        workObjDao.save(obj);
+        workObjDao.saveOrUpdate(obj);
         return getPossibleEvents(obj);
     }
 
@@ -74,11 +73,9 @@ public class WorkObjService implements IWorkObjService {
             }
             oldEvents.add(flowEvent);
             workObj.setHistoryEvents(oldEvents);
-            workObj.setCreatedBy(users.getUserName());
-            workObj.setCreationDate(new Date());
             workObj.setLastUpdatedBy(users.getUserName());
-            workObj.setLastUpdateDate(new Date());
-            workObjDao.save(workObj);
+            workObj.setLastUpdateDate(FormatUtils.getCurrentDay());
+            workObjDao.saveOrUpdate(workObj);
         }
 
         return getPossibleEvents(workObj);

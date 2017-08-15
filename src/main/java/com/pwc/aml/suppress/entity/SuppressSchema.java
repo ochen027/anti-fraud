@@ -2,10 +2,10 @@ package com.pwc.aml.suppress.entity;
 
 
 public class SuppressSchema {
-
+    public static final String suppressId="suppressId";
     public static final String customersId="customersId";
 
-    public static final String ruleId="ruleId";
+    public static final String scenarioId="scenarioId";
 
     public static final String isPermanent="isPermanent";
 

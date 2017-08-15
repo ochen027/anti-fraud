@@ -57,4 +57,8 @@ public class FormatUtils {
 		return StringToDateNoDash(localDateString);
 	}
 
+	public static Date getCurrentDay() throws Exception{
+		return FormatUtils.LocalDateToDate(LocalDate.now());
+	}
+
 }

@@ -1,7 +1,8 @@
 package com.pwc.aml.suppress.entity;
 
 import com.pwc.aml.customers.entity.Customers;
-import com.pwc.aml.rules.entity.Rules;
+
+import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.common.base.entity.BaseEntity;
 
 import java.util.Date;
@@ -11,14 +12,15 @@ public class Suppress  extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private String suppressId;
+
     private Customers customers;
 
-    private Rules rules;
+    private Scenario scenario;
 
     private boolean isPermanent;
 
-    private String endDate;
-
+    private Date endDate;
 
     public Customers getCustomers() {
         return customers;
@@ -28,12 +30,12 @@ public class Suppress  extends BaseEntity {
         this.customers = customers;
     }
 
-    public Rules getRules() {
-        return rules;
+    public Scenario getScenario() {
+        return scenario;
     }
 
-    public void setRules(Rules rules) {
-        this.rules = rules;
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
     }
 
     public boolean isPermanent() {
@@ -44,11 +46,19 @@ public class Suppress  extends BaseEntity {
         isPermanent = permanent;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getSuppressId() {
+        return suppressId;
+    }
+
+    public void setSuppressId(String suppressId) {
+        this.suppressId = suppressId;
     }
 }
