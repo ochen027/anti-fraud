@@ -12,6 +12,7 @@ import org.thymeleaf.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class ReportsService implements IReportsService {
         if(!StringUtils.equals(startDate, endDate)){
             LocalDate sDate = FormatUtils.StringToLocalDate(startDate);
             LocalDate eDate = FormatUtils.StringToLocalDate(endDate);
-            Period period = Period.between (sDate, eDate);
-            rList = new ArrayList<Reports>(period.getDays());
-            for(int i=0; i < period.getDays()+1; i++){
+
+            long days = ChronoUnit.DAYS.between(sDate, eDate);
+
+            rList = new ArrayList<Reports>(Integer.parseInt(String.valueOf(days+1l)));
+            for(int i=0; i < Integer.parseInt(String.valueOf(days+1l)); i++){
                 Reports r = reportsDAO.searchReport(FormatUtils.LocalDateToString(sDate.plusDays((long)i)));
                 rList.add(r);
             }
