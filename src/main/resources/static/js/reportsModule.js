@@ -32,6 +32,8 @@ app.controller('ReportsCtrl', function ($scope, $http, $location, $state, $timeo
         }
     ];
 
+    $scope.reports=[];
+
     $scope.currentType = $scope.selectType[0];
 
 
@@ -43,18 +45,19 @@ app.controller('ReportsCtrl', function ($scope, $http, $location, $state, $timeo
     $scope.search=function(){
 
         var send={
-            "startDate":monent($scope.startDate).format("YYYY-MM-DD"),
+            "startDate":moment($scope.startDate).format("YYYY-MM-DD"),
             "endDate": $scope.endDate
         }
 
-        $http.get("/report/search",send).then(function(res){
-            debugger;
+        $http.post("/reports/search",send).then(function(res){
+            $scope.reports=res.data;
+            $scope.reportsDisplay=res.data.slice();
         });
     }
 
 
     $scope.export=function(){
-        window.open("/report/search?startDate="
+        window.open("/reports/export?startDate="
             +moment($scope.startDate).format("YYYY-MM-DD")+"&endDate="+$scope.endDate, "_blank");
     }
 

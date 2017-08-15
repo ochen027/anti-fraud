@@ -32,14 +32,14 @@ public class ReportController extends BaseController {
     private IReportsService reportsService;
 
     private List<Reports> rList;
-    @GetMapping("search")
+    @PostMapping("search")
     public ResponseEntity<List<Reports>> SearchReports(@RequestBody SearchEntity se) throws Exception{
         rList = reportsService.SearchByDate(se.getStartDate(), se.getEndDate());
         return new ResponseEntity<List<Reports>>(rList, HttpStatus.OK);
     }
 
     @GetMapping("export")
-    public ResponseEntity<Void> exportReport(@RequestBody SearchEntity se,HttpServletResponse response) throws Exception{
+    public ResponseEntity<Void> exportReport(SearchEntity se,HttpServletResponse response) throws Exception{
         if(null == rList){
             rList = reportsService.SearchByDate(se.getStartDate(), se.getEndDate());
         }
