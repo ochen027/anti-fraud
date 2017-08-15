@@ -134,7 +134,7 @@
                     <tr ng-repeat="row in individualDisplay">
                         <td>{{row.customerId}}</td>
                         <td>{{row.customerAge}}</td>
-                        <td>{{row.customerBirthDate}}</td>
+                        <td>{{row.customerBirthDate | date : 'yyyy-MM-dd'}}</td>
                         <td>{{row.customerCertificateNumber}}</td>
                         <td>{{row.customerOccupation}}</td>
                         <td>{{row.customerCity}}</td>
@@ -271,7 +271,7 @@
                         <td>{{row.customerId}}</td>
                         <td>{{row.representativeName}}</td>
                         <td>{{row.representativeAge}}</td>
-                        <td>{{row.representativeBirthDate}}</td>
+                        <td>{{row.representativeBirthDate | date : 'yyyy-MM-dd'}}</td>
                         <td>{{row.representativeId}}</td>
                         <td>{{row.representativeIdType}}</td>
                         <td>{{row.representativeOccupation}}</td>

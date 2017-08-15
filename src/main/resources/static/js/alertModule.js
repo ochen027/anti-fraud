@@ -266,6 +266,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.SuspiciousType = "Suspicious 1";
     $scope.commentList=[];
     $scope.comments={};
+    $scope.customerType='individual';
+
 
 
     $scope.selectSuspiciousType = function (type) {
@@ -340,6 +342,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 return;
             }
             $scope.customer = res.data;
+            if(res.data.individual===null){
+                $scope.customerType='corporate';
+            }
         });
     }
 
