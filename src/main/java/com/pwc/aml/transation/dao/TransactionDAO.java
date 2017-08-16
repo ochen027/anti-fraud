@@ -110,10 +110,35 @@ public class TransactionDAO implements ITransactionDAO {
         scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(validDate)));
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
         for(String accountId : aIdList){
-            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
-                    Bytes.toBytes("acct_id"),
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                    Bytes.toBytes(Constants.COLUMN_ACCT_ID),
                     CompareFilter.CompareOp.EQUAL,Bytes.toBytes(accountId)));
         }
+        scan.setFilter(filterList);
+        ResultScanner rsscan = table.getScanner(scan);
+        List<Transactions> tList = new ArrayList<Transactions>();
+        for (Result rs : rsscan) {
+            Transactions t = this.consistTrans(rs.rawCells(), Bytes.toString(rs.getRow()));
+            tList.add(t);
+        }
+        rsscan.close();
+        return tList;
+    }
+
+    @Override
+    public List<Transactions> getTransDataByAccount(String acctId, String ruleDays, String businessDate) throws Exception {
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
+        Scan scan = new Scan();
+        LocalDate validDate = FormatUtils.StringToLocalDate(businessDate);
+        LocalDate FromDate = validDate.minusDays(Long.parseLong(ruleDays)+1L);
+        scan.setStartRow(Bytes.toBytes(FormatUtils.LocalDateToString(FromDate)));
+        scan.setStopRow(Bytes.toBytes(FormatUtils.LocalDateToString(validDate)));
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+
+        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                Bytes.toBytes(Constants.COLUMN_ACCT_ID),
+                CompareFilter.CompareOp.EQUAL,Bytes.toBytes(acctId)));
+
         scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Transactions> tList = new ArrayList<Transactions>();

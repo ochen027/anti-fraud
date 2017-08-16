@@ -23,6 +23,7 @@ public class Alerts {
 	private String customerName;
 	private String days;
 	private String createdBy;
+	private String accountId;
 
 	public String getAlertId() {
 		return alertId;
@@ -142,5 +143,13 @@ public class Alerts {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 }

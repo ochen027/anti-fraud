@@ -44,10 +44,4 @@ public class AlertsController extends BaseController {
         return new ResponseEntity<List<WorkObj>>(alertService.searchClosedAlerts(se), HttpStatus.OK);
     }
 
-    @GetMapping("test")
-    public ResponseEntity<List<WorkObj>> test() throws Exception{
-        AlertSearchEntity ase = new AlertSearchEntity();
-        List<WorkObj> workObjList = alertService.searchClosedAlerts(ase);
-        return new ResponseEntity<List<WorkObj>>(workObjList, HttpStatus.OK);
-    }
 }

@@ -17,7 +17,7 @@ public interface IWorkObjDao {
 
     void truncateTable() throws IOException;
 
-    List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception;
+    List<WorkObj> searchAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception;
 
     Integer getAlertByDateCount(String businessDate) throws Exception;
 

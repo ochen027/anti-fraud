@@ -29,4 +29,5 @@ public interface IWorkObjService {
     FlowEvent getFlowEventByEventId(String eventId);
 
     List<WorkObj> getWorkObjsByAssigns(List<Assign> assigns) throws Exception;
+
 }

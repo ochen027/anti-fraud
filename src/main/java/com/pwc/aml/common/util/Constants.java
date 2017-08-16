@@ -35,6 +35,7 @@ public class Constants {
 
     //For Work Object
     public static final String COLUMN_WORK_OBJECT_ID = "workObjId";
+    public static final String COLUMN_CURRENT_POINT_ID = "currentPointId";
 
 
     //For Customer
@@ -48,5 +49,7 @@ public class Constants {
     public static final String COLUMN_TRANS_ID = "transId";
 
 
-
+    //For Accoount
+    public static final String COLUMN_ACCT_ID = "acct_id";
+    public static final String COLUMN_ACCOUNT_ID = "accountId";
 }

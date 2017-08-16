@@ -20,6 +20,8 @@ public class WorkObj extends BaseEntity{
     private String customerId;
     private Double totalAmt;
     private boolean IsSAR=false;
+    private String accountId;
+    private String transIdArray;
 
     public String getWorkObjId() {
         return workObjId;
@@ -95,5 +97,19 @@ public class WorkObj extends BaseEntity{
         IsSAR = SAR;
     }
 
+    public String getAccountId() {
+        return accountId;
+    }
 
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getTransIdArray() {
+        return transIdArray;
+    }
+
+    public void setTransIdArray(String transIdArray) {
+        this.transIdArray = transIdArray;
+    }
 }
