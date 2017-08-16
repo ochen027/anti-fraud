@@ -365,6 +365,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
 
+
     var getAlert = function () {
         $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
 
@@ -373,6 +374,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 return;
             }
             $scope.alerts = res.data.alerts;
+            $scope.transList=res.data.alerts.transList;
+            $scope.transListDisplay=res.data.alerts.transList.slice();
             $scope.workObj = res.data;
             if($scope.workObj.currentPoint.name.indexOf("available")>=0){
                 $scope.currentState=showState["available"];
@@ -381,6 +384,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
             }
             getCustomer(res.data.alerts.customerId);
         });
+    }
+    $scope.goBack = function () {
+        if($scope.workObj.currentPoint.name.indexOf("available")>=0){
+            $state.go("available");
+        }else{
+            $state.go("myAlert");
+        }
     }
 
     var getCustomer = function (customerId) {
