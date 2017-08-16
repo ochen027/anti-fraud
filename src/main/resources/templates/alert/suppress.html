@@ -2,45 +2,94 @@
     <h5>Suppressed Alerts:</h5>
     <hr/>
 
-    <div class="text-center">
-        <div class="customer-summary">
-            <form class="">
-                <div class="table-tr">
-                    <label class="label">Customer ID</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Suppress Date</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Customer Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+    <div class="search-condition">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Customer ID</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
                 </div>
-                <div class="table-tr">
-                    <label class="label">Alert ID</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Counterparty Name</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Scenario No</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Customer Name</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
                 </div>
-                <div class="table-tr">
-                    <label class="label">Total Amount(more than)</label>
-                    <input type="text" class="text-input" placeholder=""></input>
-                    <label class="label">Scenario Description</label>
-                    <input type="text" class="text-input" placeholder=""></input>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Suppress Date</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-        <div class="col-md-12 text-right">
-            <button class="btn btn-default" ng-click="reset()">Reset</button>
-            <button class="btn btn-default" ng-click="search()">Search</button>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Scenario No</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Scenario Desc</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right"> Alert ID</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="sepeartor"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Total Amount</label>
+                    <div class="col-8">
+                        <input class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Status</label>
+                    <div class="col-8">
+                        <label> <input name="status" type="radio"/> All</label>
+                        <label> <input name="status" type="radio"/> Active </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+
+
+    <div class="col-md-12 text-right">
+        <button class="btn btn-default" ng-click="reset()">Reset</button>
+        <button class="btn btn-default" ng-click="search()">Search</button>
+    </div>
+
     <!--  table part -->
     <table class="table table-striped table-bordered table-hover"
            st-table="dataDisplay" st-safe-src="data">
         <thead>
         <tr>
-            <th><input class="form-check-input custom-size" type="checkbox" ng-model="checkAll" ng-click="all()"></input></th>
+            <th><input class="form-check-input custom-size" type="checkbox" ng-model="checkAll"
+                       ng-click="all()"></input></th>
             <th st-sort="alertId">Alert ID</th>
             <th st-sort="accNumber">Acct Number</th>
             <th st-sort="custName">Cust Name</th>
@@ -54,7 +103,8 @@
         <tbody>
         <!-- ng-repeat="row in dataDisplay"-->
         <tr ng-repeat="row in dataDisplay track by $index">
-            <td><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll" ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
+            <td><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll"
+                       ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
             <td><a ui-sref="alertInfo({{row.alertId}})">{{row.alertId}}</a></td>
             <td>{{row.accNumber}}</td>
             <td>{{row.custName}}</td>
