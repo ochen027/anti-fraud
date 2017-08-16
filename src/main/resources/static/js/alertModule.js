@@ -78,7 +78,6 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
     };
 
     $timeout(function () {
-
         $scope.refresh();
     })
 
@@ -311,43 +310,65 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
     $scope.currentState={};
 
+    $scope.header="";
 
     $scope.selectSuspiciousType = function (type) {
         $scope.SuspiciousType = type;
     }
 
     $scope.addComments = function () {
-        $scope.comments.objId = $stateParams.id;
-        $http.post("/comments/create", $scope.comments).then(function (res) {
-            alert("comments add success!");
-            $scope.refreshComments();
-            $scope.comments = {};
-        })
+        return new Promise(function(resolve, reject){
+            $scope.comments.objId = $stateParams.id;
+            $http.post("/comments/create", $scope.comments).then(function (res) {
+                if(res.status!=200){
+                    console.log(res);
+                    reject();
+                }
+
+                alert("comments add success!");
+                $scope.refreshComments();
+                $scope.comments = {};
+                resolve();
+            })
+        });
     }
 
     $scope.refreshComments = function () {
-        $http.get("/comments/getByObjId/" + $stateParams.id).then(function (res) {
-            $scope.commentList = res.data;
+        return new Promise(function(resolve, reject) {
+            $http.get("/comments/getByObjId/" + $stateParams.id).then(function (res) {
+                if(res.status!=200){
+                    console.log(res);
+                    reject();
+                };
+
+                $scope.commentList = res.data;
+                resolve();
+            });
         });
     }
 
     $scope.refresh = function () {
-        $scope.refreshFile();
-        getAlert();
-        $scope.refreshComments();
+        $scope.refreshFile().then(function(){
+            return getAlert();
+        }).then(function(){
+            return $scope.refreshComments();
+        })
     }
 
     //upload file part
     $scope.uploadFiles = function (files) {
-        if (files && files.length) {
-            Upload.upload({
-                url: '/documents/upload',
-                data: {file: files[0], workObjId: $stateParams.id}
-            }).then(function (res) {
-                alert("file upload success!");
-                $scope.refresh();
-            });
-        }
+        return new Promise(function(resolve, reject) {
+            if (files && files.length) {
+                Upload.upload({
+                    url: '/documents/upload',
+                    data: {file: files[0], workObjId: $stateParams.id}
+                }).then(function (res) {
+                    alert("file upload success!");
+                    $scope.refresh();
+                    resolve();
+                });
+            }
+        });
     }
 
     $scope.fileDownload = function (fileName, filePath) {
@@ -355,34 +376,39 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.refreshFile = function () {
-        $http.get("/documents/getByAlertId/" + $stateParams.id).then(function (res) {
-            if (res.status !== 200) {
-                console.log(res);
-                return;
-            }
-            $scope.dataFiles = res.data;
+        return new Promise(function(resolve, reject) {
+            $http.get("/documents/getByAlertId/" + $stateParams.id).then(function (res) {
+                if (res.status !== 200) {
+                    console.log(res);
+                    reject();
+                }
+                $scope.dataFiles = res.data;
+                resolve();
+            });
         });
     }
 
 
 
-    var getAlert = function () {
-        $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
-
-            if (res.status != 200) {
-                console.log(res);
-                return;
-            }
-            $scope.alerts = res.data.alerts;
-            $scope.transList=res.data.alerts.transList;
-            $scope.transListDisplay=res.data.alerts.transList.slice();
-            $scope.workObj = res.data;
-            if($scope.workObj.currentPoint.name.indexOf("available")>=0){
-                $scope.currentState=showState["available"];
-            }else{
-                $scope.currentState=showState[$scope.workObj.currentPoint.name];
-            }
-            getCustomer(res.data.alerts.customerId);
+    $scope.getAlert = function () {
+        return new Promise(function(resolve, reject) {
+            $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
+                if (res.status != 200) {
+                    console.log(res);
+                    reject();
+                }
+                $scope.alerts = res.data.alerts;
+                $scope.transList = res.data.alerts.transList;
+                $scope.transListDisplay = res.data.alerts.transList.slice();
+                $scope.workObj = res.data;
+                if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
+                    $scope.currentState = showState["available"];
+                } else {
+                    $scope.currentState = showState[$scope.workObj.currentPoint.name];
+                }
+                getCustomer(res.data.alerts.customerId);
+                resolve();
+            });
         });
     }
     $scope.goBack = function () {
