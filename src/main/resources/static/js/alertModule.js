@@ -269,8 +269,47 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.customerType = 'individual';
 
     let showState = {
+        available:{
+            document:false,
+            comments:false,
+            returnButton:false,
+            escalate:false,
+            close:false,
+            suppress:false,
+        },
+        "L1 review":{
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:false,
+            suppress:false,
+        },
+        "l2 review":{
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:true,
+            suppress:true
+        },"QC review":{
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:true,
+            suppress:true
+        },"MLRO review":{
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:true,
+            suppress:true
+        }
+    };
 
-};
+    $scope.currentState={};
 
 
     $scope.selectSuspiciousType = function (type) {
@@ -335,6 +374,11 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
             }
             $scope.alerts = res.data.alerts;
             $scope.workObj = res.data;
+            if($scope.workObj.currentPoint.name.indexOf("available")>=0){
+                $scope.currentState=showState["available"];
+            }else{
+                $scope.currentState=showState[$scope.workObj.currentPoint.name];
+            }
             getCustomer(res.data.alerts.customerId);
         });
     }
