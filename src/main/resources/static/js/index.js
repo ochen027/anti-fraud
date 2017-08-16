@@ -1,5 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog']);
+    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog','LocalStorageModule']);
 app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
     $templateCache.put('template/smart-table/pagination.html',
@@ -8,6 +8,36 @@ app.run(['$templateCache', function ($templateCache) {
         '</ul></nav>');
 
 }]);
+
+
+app.run(function($rootScope, $state, localStorageService) {
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        var prefix = "stateParams.";
+        var fromStateName = prefix + fromState.name;
+        var toStateName = prefix + toState.name;
+        var f = true;
+        for (var k in toState.params) {
+            f = f && (JSON.stringify(toParams[k]) == JSON.stringify(toState.params[k]));
+        }
+        if (f && localStorageService.get(toStateName) != null) {
+            event.preventDefault();
+            var savedToParams = localStorageService.get(toStateName); //retrieving toParams from local storage
+            localStorageService.remove(toStateName);
+            for (var k in toState.params) {
+                toParams[k] = savedToParams[k]; //update only the params {} not url params
+            }
+            $state.transitionTo(toState,toParams);
+        } else {
+            var toSave = {};
+            for (var k in toState.params) {
+                toSave[k] = toParams[k]; //save only the params {} not url params
+            }
+            localStorageService.set(toStateName,toSave);
+        }
+    });
+});
+
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     let app = {};

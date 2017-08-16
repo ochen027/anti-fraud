@@ -33,6 +33,7 @@
     "mockjs": "1.0.1-beta3",
     "ng-dialog": "1.4.0",
     "glyphicons": "^0.0.2",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "angular-local-storage": "^0.7.1"
   }
 }
