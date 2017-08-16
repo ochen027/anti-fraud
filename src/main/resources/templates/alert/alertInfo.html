@@ -337,7 +337,7 @@
 
 
     <div class="detail-table">
-        <table class="table table-striped table-bordered table-hover" st-table="dataDisplay" st-safe-src="data">
+        <table class="table table-striped table-bordered table-hover" st-table="transListDisplay" st-safe-src="transList">
             <thead>
             <tr class="detail-table-head">
                 <th>Transaction Date</th>
@@ -360,19 +360,19 @@
             </thead>
             <tbody>
             <!-- ng-repeat="row in dataDisplay"-->
-            <tr ng-repeat="row in dataDisplay">
-                <td>{{row.transactionDate}}</td>
+            <tr ng-repeat="row in transListDisplay">
+                <td>{{row.transDt}}</td>
                 <td>{{row.accountType}}</td>
-                <td>{{row.accountNum}}</td>
-                <td>{{row.currency}}</td>
+                <td>{{row.accountId}}</td>
+                <td>{{row.currencyCd}}</td>
                 <td>{{row.transactionAmount}}</td>
-                <td>{{row.TransactionType}}</td>
+                <td>{{row.transType}}</td>
                 <td>{{row.fundReceivePay}}</td>
                 <td>{{row.transactionPurpose}}</td>
                 <td>{{row.accountOpenDate}}</td>
                 <td>{{row.accountCloseDate}}</td>
-                <td>{{row.Counterparty}}</td>
-                <td>{{row.counterbank}}</td>
+                <td>{{row.CounterpartyId}}</td>
+                <td>{{row.counterBank}}</td>
                 <td>{{row.counterBankLocation}}</td>
                 <td>{{row.representative}}</td>
                 <td>{{row.representativeId}}</td>
@@ -449,7 +449,7 @@
         <button class="btn btn-primary" ng-show="currentState.escalate" ng-click="escalate()">Escalate</button>
         <button class="btn btn-primary" ng-show="currentState.close" ng-click="close()">Close</button>
         <button class="btn btn-primary" ng-show="currentState.suppress">Suppress</button>
-        <button class="btn btn-primary" >Back</button>
+        <button class="btn btn-primary" ng-click="goBack()" >Back</button>
     </div>
 
 </div>
