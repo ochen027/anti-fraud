@@ -231,7 +231,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
     $scope.alertSearch = {};
     $scope.data = [];
     console.log("Close Alert Ctrl");
-    $scope.searchClosedAlert = function() {
+    $scope.searchClosedAlert = function () {
         $http.post("/workflow/getClosedAlerts", $scope.alertSearch)
             .then(function success(response) {
                 console.log(response);
@@ -241,7 +241,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
             });
     }
 
-    $scope.reset = function(){
+    $scope.reset = function () {
         $scope.data = [];
         $scope.alertSearch = {};
     }
@@ -264,10 +264,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.dataFiles = [];
     $scope.itemsByPage = 7;
     $scope.SuspiciousType = "Suspicious 1";
-    $scope.commentList=[];
-    $scope.comments={};
-    $scope.customerType='individual';
+    $scope.commentList = [];
+    $scope.comments = {};
+    $scope.customerType = 'individual';
 
+    let showState = {
+
+};
 
 
     $scope.selectSuspiciousType = function (type) {
@@ -275,17 +278,17 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.addComments = function () {
-        $scope.comments.objId=$stateParams.id;
-        $http.post("/comments/create",$scope.comments).then(function(res){
+        $scope.comments.objId = $stateParams.id;
+        $http.post("/comments/create", $scope.comments).then(function (res) {
             alert("comments add success!");
             $scope.refreshComments();
-            $scope.comments={};
+            $scope.comments = {};
         })
     }
 
-    $scope.refreshComments=function(){
-        $http.get("/comments/getByObjId/"+$stateParams.id).then(function(res){
-            $scope.commentList=res.data;
+    $scope.refreshComments = function () {
+        $http.get("/comments/getByObjId/" + $stateParams.id).then(function (res) {
+            $scope.commentList = res.data;
         });
     }
 
@@ -331,6 +334,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 return;
             }
             $scope.alerts = res.data.alerts;
+            $scope.workObj = res.data;
             getCustomer(res.data.alerts.customerId);
         });
     }
@@ -342,8 +346,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 return;
             }
             $scope.customer = res.data;
-            if(res.data.individual===null){
-                $scope.customerType='corporate';
+            if (res.data.individual === null) {
+                $scope.customerType = 'corporate';
             }
         });
     }
@@ -352,6 +356,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         $scope.refresh();
     });
 
+
+    $scope.showUpload = function () {
+        let result = false;
+
+
+        return result;
+    }
 
     $scope.escalate = function () {
         let escalateWorkObjIds = [$stateParams.id];

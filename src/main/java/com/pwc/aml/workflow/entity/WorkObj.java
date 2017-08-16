@@ -37,7 +37,6 @@ public class WorkObj extends BaseEntity{
         this.alerts = alerts;
     }
 
-    @JsonIgnore
     public FlowPointEx getCurrentPoint() {
         return currentPoint;
     }
@@ -95,4 +94,6 @@ public class WorkObj extends BaseEntity{
     public void setSAR(boolean SAR) {
         IsSAR = SAR;
     }
+
+
 }

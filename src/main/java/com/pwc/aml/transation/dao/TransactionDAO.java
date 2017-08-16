@@ -187,6 +187,9 @@ public class TransactionDAO implements ITransactionDAO {
                 case "counterparty_nm":
                     tbean.setCounterName(Bytes.toString(CellUtil.cloneValue(c)));
                     continue;
+                case "trans_id":
+                    tbean.setTransId(Bytes.toString(CellUtil.cloneValue(c)));
+                    continue;
             }
 
         }

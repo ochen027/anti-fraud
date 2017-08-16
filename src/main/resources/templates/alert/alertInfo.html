@@ -392,11 +392,11 @@
     </div>
     <div class="sepeartor"></div>
     <div>
-        <span class="text">total: $10000.00</span>
+        <span class="text">total: {{totalAmount}}</span>
     </div>
     <div class="sepeartor"></div>
     <br/>
-    <div class="upload">
+    <div class="upload" ng-show="showUpload()">
 
         <div ngf-drop="uploadFiles($files)" class="drop-box"
              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-keep="true"
@@ -405,7 +405,7 @@
 
     </div>
 
-    <div class="comments">
+    <div class="comments" ng-show="showComments()">
         <label class="text row pull-left label-comment">Comment:</label>
         <span class="pull-right row">
             <label class="text row display-block suspicious col-md-4">Suspicious</label>
@@ -445,11 +445,11 @@
     </div>
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-primary" ng-click="returnToQc()">Return</button>
-        <button class="btn btn-primary" ng-click="escalate()">Escalate</button>
-        <button class="btn btn-primary" ng-click="close()">Close</button>
-        <button class="btn btn-primary">Report to Authority</button>
-        <button class="btn btn-primary">Suppress</button>
+        <button class="btn btn-primary" ng-show="showReturn()" ng-click="returnToQc()">Return</button>
+        <button class="btn btn-primary" ng-show="showEscalate()" ng-click="escalate()">Escalate</button>
+        <button class="btn btn-primary" ng-show="showCloase()" ng-click="close()">Close</button>
+        <button class="btn btn-primary" ng-show="showCloase()">Suppress</button>
+        <button class="btn btn-primary" >Back</button>
     </div>
 
 </div>
