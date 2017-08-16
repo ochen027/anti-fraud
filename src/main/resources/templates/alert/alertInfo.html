@@ -1,5 +1,5 @@
 <div class="container" ng-controller="MyAlertInfoCtrl">
-    <h5>Available Alerts Info:</h5>
+    <div ><h5>{{header}}</h5></div>
     <hr/>
 
 
@@ -417,6 +417,7 @@
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 1')">Suspicious 1</a>
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 2')">Suspicious 2</a>
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 3')">Suspicious 3</a>
+                    <a class="dropdown-item" ng-click="selectSuspiciousType('Not Suspicious')">Not Suspicious </a>
                 </div>
             </div>
         </span>

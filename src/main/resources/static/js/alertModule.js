@@ -37,13 +37,15 @@ app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
 
     //Calculate Total Amount
     $scope.getMyAlertTotal = function () {
-        var totalAmt = 0.0;
+        var totalAlert=0;;
+        // var totalAmt = 0.0;
         for (var key in $scope.myAlertData) {
             if (parseFloat($scope.myAlertData[key].alerts.totalAmt)) {
-                totalAmt += parseFloat($scope.myAlertData[key].alerts.totalAmt);
+                // totalAmt += parseFloat($scope.myAlertData[key].alerts.totalAmt);
+                totalAlert++;
             }
         }
-        return totalAmt;
+        return totalAlert;
     }
 
     $scope.itemsByPage = 10;
@@ -267,6 +269,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.commentList = [];
     $scope.comments = {};
     $scope.customerType = 'individual';
+    $scope.header='';
 
     let showState = {
         available:{
@@ -330,10 +333,19 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
             $scope.commentList = res.data;
         });
     }
+    // let setHeader=function(){
+    //
+    //     if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
+    //         $scope.header = 'Available Alerts Info:';
+    //     } else {
+    //         $scope.header = 'My Alerts Info:';
+    //     }
+    // }
 
     $scope.refresh = function () {
         $scope.refreshFile();
         getAlert();
+        setHeader();
         $scope.refreshComments();
     }
 
@@ -379,8 +391,10 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
             $scope.workObj = res.data;
             if($scope.workObj.currentPoint.name.indexOf("available")>=0){
                 $scope.currentState=showState["available"];
+                $scope.header = 'Available Alerts Info:';
             }else{
                 $scope.currentState=showState[$scope.workObj.currentPoint.name];
+                $scope.header = 'My Alerts Info:';
             }
             getCustomer(res.data.alerts.customerId);
         });
