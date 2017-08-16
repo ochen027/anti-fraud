@@ -78,6 +78,7 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
     };
 
     $timeout(function () {
+
         $scope.refresh();
     })
 
@@ -266,6 +267,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.commentList = [];
     $scope.comments = {};
     $scope.customerType = 'individual';
+    $scope.header='';
 
     let showState = {
         available:{
@@ -310,7 +312,6 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
     $scope.currentState={};
 
-    $scope.header="";
 
     $scope.selectSuspiciousType = function (type) {
         $scope.SuspiciousType = type;
@@ -348,11 +349,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.refresh = function () {
-        $scope.refreshFile().then(function(){
-            return getAlert();
-        }).then(function(){
-            return $scope.refreshComments();
-        })
+        $scope.refreshFile();
+        getAlert();
+        $scope.refreshComments();
     }
 
     //upload file part
