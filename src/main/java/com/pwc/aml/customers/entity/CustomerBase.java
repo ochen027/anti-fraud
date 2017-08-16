@@ -35,6 +35,35 @@ public class CustomerBase extends BaseEntity{
     @Column(name = "full_nm")
     private String customerFullName;
 
+    @Column(name = "cust_open_br")
+    private String customerOpenBranch;//哪家网点开户的
+    @Column(name = "last_upd_by")
+    private String customerLastUpdatedBy;
+
+    @Transient
+    private Individual individual;
+    @Transient
+    private Corporate corporate;
+
+    @Transient
+    private BigDecimal totalTransAmt;
+    @Transient
+    private int totalTransCount;
+    @Transient
+    private String transIdArray;
+    @Transient
+    private String accountIdArray;
+    @Transient
+    private String businessDate;
+    @Transient
+    private String alertCreationDate;
+    @Transient
+    private String alertId;
+    @Transient
+    private String accountId;
+
+
+
     public String getCustomerId() {
         return customerId;
     }
@@ -175,30 +204,14 @@ public class CustomerBase extends BaseEntity{
         this.alertId = alertId;
     }
 
-    @Column(name = "cust_open_br")
-    private String customerOpenBranch;//哪家网点开户的
-    @Column(name = "last_upd_by")
-    private String customerLastUpdatedBy;
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
 
-    @Transient
-    private Individual individual;
-
-    @Transient
-    private Corporate corporate;
-
-    @Transient
-    private BigDecimal totalTransAmt;
-    @Transient
-    private int totalTransCount;
-    @Transient
-    private String transIdArray;
-    @Transient
-    private String accountIdArray;
-    @Transient
-    private String businessDate;
-    @Transient
-    private String alertCreationDate;
-    @Transient
-    private String alertId;
 }

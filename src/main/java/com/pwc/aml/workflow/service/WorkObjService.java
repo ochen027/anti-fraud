@@ -96,15 +96,7 @@ public class WorkObjService implements IWorkObjService {
         if(null == ase){
            return workObjDao.findWorkObjsByPointId(flowPointId);
         }else{
-            if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName())){
-                List<String> customerIdList = customerDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
-                if(null == customerIdList){
-                    ase.setCustomerIdList(null);
-                }else{
-                    ase.setCustomerIdList(customerIdList);
-                }
-            }
-            return workObjDao.searchClosedAlertWorkObject(flowPointId, ase);
+           return workObjDao.searchAlertWorkObject(flowPointId, ase);
         }
     }
 

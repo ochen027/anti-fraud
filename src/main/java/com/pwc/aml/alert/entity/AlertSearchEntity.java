@@ -16,7 +16,9 @@ public class AlertSearchEntity {
     private String suspiciousLevel;
     private String colsedBy;
     private List<String> customerIdList;
-
+    private String accountId;
+    private String transIdArray;
+    private String currentPointId;
 
     public String getCustomerId() {
         return customerId;
@@ -104,5 +106,29 @@ public class AlertSearchEntity {
 
     public void setCustomerIdList(List<String> customerIdList) {
         this.customerIdList = customerIdList;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getTransIdArray() {
+        return transIdArray;
+    }
+
+    public void setTransIdArray(String transIdArray) {
+        this.transIdArray = transIdArray;
+    }
+
+    public String getCurrentPointId() {
+        return currentPointId;
+    }
+
+    public void setCurrentPointId(String currentPointId) {
+        this.currentPointId = currentPointId;
     }
 }

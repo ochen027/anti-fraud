@@ -53,6 +53,7 @@ public class AlertService implements IAlertService{
         if(null == customerIdList){
             return null;
         }else{
+            ase.setCustomerIdList(customerIdList);
             String defaultEndId = workflowExService.getWorkflowByDefault().getEndPoint().getFlowPointId();
             List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId, ase);
             return workObjList;

@@ -33,4 +33,6 @@ public class WorkObjSchema {
     public static final String isActive="isActive";
     public static final String customerId = "customerId";
     public static final String totalAmt = "totalAmt";
+    public static final String transIdArray = "transIdArray";
+    public static final String accountId = "accountId";
 }

@@ -399,7 +399,7 @@ public class HbaseDaoImp implements IHbaseDao {
 
 
 
-        hdao.scanData(table);
+        //hdao.scanData(table);
 
 
         /**

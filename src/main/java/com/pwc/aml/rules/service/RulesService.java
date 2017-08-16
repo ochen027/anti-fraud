@@ -195,51 +195,62 @@ public class RulesService implements IRulesService {
 
             List<Transactions> transList = new ArrayList<Transactions>();
 
-            if(1==scenarioId){
-                transList = transactionDAO.getTransDataByAccount(accountIdList, keyValueDAO.get("RULES_DAY"), businessDay);
-            }else if(2==scenarioId){
-                String shortTermDays = keyValueDAO.get("SHORT_TERMS_DAY");
-                String longTermDays = keyValueDAO.get("LONG_TERMS_DAY");
-                LocalDate date = FormatUtils.StringToLocalDate(businessDay).minusDays(Long.parseLong(shortTermDays));
-                String days = String.valueOf(Integer.parseInt(longTermDays)-Integer.parseInt(shortTermDays));
-                transList = transactionDAO.getTransDataByAccount(accountIdList, days, FormatUtils.LocalDateToString(date));
-                if(null == transList || 0 == transList.size()){
-                    transList = transactionDAO.getTransDataByAccount(accountIdList, shortTermDays, businessDay);
+
+            for(String accountId : accountIdList){
+
+                if(1==scenarioId){
+                    transList = transactionDAO.getTransDataByAccount(accountId, keyValueDAO.get("RULES_DAY"), businessDay);
+                }else if(2==scenarioId){
+                    String shortTermDays = keyValueDAO.get("SHORT_TERMS_DAY");
+                    String longTermDays = keyValueDAO.get("LONG_TERMS_DAY");
+                    LocalDate date = FormatUtils.StringToLocalDate(businessDay).minusDays(Long.parseLong(shortTermDays));
+                    String days = String.valueOf(Integer.parseInt(longTermDays)-Integer.parseInt(shortTermDays));
+                    transList = transactionDAO.getTransDataByAccount(accountIdList, days, FormatUtils.LocalDateToString(date));
+                    if(null == transList || 0 == transList.size()){
+                        transList = transactionDAO.getTransDataByAccount(accountId, shortTermDays, businessDay);
+                    }else{
+                        continue;
+                    }
                 }else{
+                    //TODO
+                    System.out.println();
+                }
+
+
+                if (null == transList || 0 == transList.size()) {
                     continue;
                 }
-            }else{
-                //TODO
-                System.out.println();
+
+                BigDecimal tAmt = new BigDecimal("0");
+                StringBuilder sbTransId = new StringBuilder();
+                for (Transactions t : transList) {
+                    tAmt = tAmt.add(t.getTransBaseAmt());
+                    sbTransId.append(t.getTransId() + ",");
+                }
+
+                c.setTotalTransAmt(tAmt);
+                c.setTotalTransCount(transList.size());
+                c.setTransIdArray(sbTransId.substring(0, sbTransId.length() - 1));
+                c.setBusinessDate(keyValueDAO.get("BUSINESS_DAY").replace("-", ""));
+                //c.setAccountIdArray(sbAccountArray.substring(0, sbAccountArray.length()-1));
+                c.setAccountId(accountId);
+                c.setAlertCreationDate(FormatUtils.LocalDateToString(LocalDate.now()));
+
+
+                String ruleEngineScript = rulesDAO.findSingleScenario(scenarioId).getScenarioContent();
+
+
+                String alertId = ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript)).getAlertId();
+                if(StringUtils.isNotBlank(alertId)){
+                    workObjService.attach(alertDAO.getSingleAlert(alertId),
+                            workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)),users);
+                }
+
+
+
             }
 
 
-            if (null == transList || 0 == transList.size()) {
-                continue;
-            }
-
-            BigDecimal tAmt = new BigDecimal("0");
-            StringBuilder sbTransId = new StringBuilder();
-            for (Transactions t : transList) {
-                tAmt = tAmt.add(t.getTransBaseAmt());
-                sbTransId.append(t.getTransId() + ",");
-            }
-
-            c.setTotalTransAmt(tAmt);
-            c.setTotalTransCount(transList.size());
-            c.setTransIdArray(sbTransId.substring(0, sbTransId.length() - 1));
-            c.setBusinessDate(keyValueDAO.get("BUSINESS_DAY").replace("-", ""));
-            c.setAccountIdArray(sbAccountArray.substring(0, sbAccountArray.length()-1));
-            c.setAlertCreationDate(FormatUtils.LocalDateToString(LocalDate.now()));
-
-            String ruleEngineScript = rulesDAO.findSingleScenario(scenarioId).getScenarioContent();
-
-
-            String alertId = ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript)).getAlertId();
-            if(StringUtils.isNotBlank(alertId)){
-                workObjService.attach(alertDAO.getSingleAlert(alertId),
-                        workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)),users);
-            }
         }
     }
 

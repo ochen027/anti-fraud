@@ -5,6 +5,7 @@ import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.Constants;
+import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkObjSchema;
@@ -68,6 +69,8 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.isActive, workObj.isStatus() ? "true" : "false");
         saveColumn(WorkObjSchema.customerId, workObj.getAlerts().getCustomerId());
         saveColumn(WorkObjSchema.totalAmt, Double.valueOf(workObj.getAlerts().getTotalAmt()));
+        saveColumn(WorkObjSchema.transIdArray, this.generateTransIds(workObj.getAlerts().getTransList()));
+        saveColumn(WorkObjSchema.accountId, workObj.getAlerts().getAccountId());
     }
 
     @Override
@@ -114,34 +117,49 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
     }
 
     @Override
-    public List<WorkObj> searchClosedAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception {
+    public List<WorkObj> searchAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception {
         initial();
         Scan scan = new Scan();
-
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
 
-        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
-                Bytes.toBytes(WorkObjSchema.currentPointId),
-                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
+        //Filter for Closed Alert if flowPointId is not Null
+        if(StringUtils.isNotEmpty(flowPointId)){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                    Bytes.toBytes(WorkObjSchema.currentPointId),
+                    CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
+        }
 
+        //Filter Alert Id
         if (StringUtils.isNotEmpty(ase.getAlertId())) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_ALERT_ID),
                     CompareFilter.CompareOp.EQUAL, new RegexStringComparator("[.]*" + ase.getAlertId() + "[.]*")));
         }
 
+        //Filter Account Id
+        if (StringUtils.isNotEmpty(ase.getAccountId())) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_ACCOUNT_ID),
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator("[.]*" + ase.getAccountId() + "[.]*")));
+        }
+
+
+        //Filter Total Amount Value
         if (null != ase.getTotalAmt()) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TOTAL_AMOUNT),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(ase.getTotalAmt()))));
         }
 
-        if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
+        //Filter Current Point
+        if (null != ase.getCurrentPointId()) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_CURRENT_POINT_ID),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes(ase.getCurrentPointId()))));
+        }
 
+        //Filter Alert Created From Date to Date
+        if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
             LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-
             LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
-
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(fromDate.getTime()))));
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
@@ -151,22 +169,19 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         if (null != ase.getCreatedFromDate() && null == ase.getCreatedToDate()) {
             LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
         if (null == ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-
             LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
-
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
+        //Filter Alert Closed Date
         if (null != ase.getClosedFromDate() && null != ase.getClosedToDate()) {
-
             LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
 
@@ -190,19 +205,26 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         }
 
         if (null == ase.getClosedFromDate() && null != ase.getClosedToDate()) {
-
             LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
-
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
+        //Filter Alert Closed By
         if (StringUtils.isNotEmpty(ase.getColsedBy())) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
                     CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
                     "[.]*" + ase.getColsedBy() + "[.]*")));
         }
+
+        //Filter Alert Transactions Array
+        if(StringUtils.isNotEmpty(ase.getTransIdArray())){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TRANS_ID_ARRAY),
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
+                    "[.]*" + ase.getTransIdArray() + "[.]*")));
+        }
+
 
         if (StringUtils.isNotEmpty(ase.getSuspiciousLevel())) {
             //TODO
@@ -350,38 +372,24 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
                 case WorkObjSchema.totalAmt:
                     o.setTotalAmt(Bytes.toDouble(CellUtil.cloneValue(c)));
                     break;
+                case WorkObjSchema.accountId:
+                    o.setAccountId(Bytes.toString(CellUtil.cloneValue(c)));
+                    break;
+                case WorkObjSchema.transIdArray:
+                    o.setTransIdArray(Bytes.toString(CellUtil.cloneValue(c)));
+                    break;
             }
         }
 
         return o;
     }
 
-
-
-
-
-    public static void main(String[] args) {
-        String[] str = {"0000001", "000002", "00020", "0000032"};
-        String str1 = "20170810165819309546137955962109";
-        String keyWord = "2";
-        Pattern pn = Pattern.compile(keyWord + "\\w|\\w" + keyWord + "\\w|\\w" + keyWord);
-        String keyWord2 = "2017";
-        //Pattern pn = Pattern.compile(keyWord2+"\\w");
-        //Pattern pn = Pattern.compile(keyWord2+"[.]*");
-        Matcher mr = null;
-        /**
-         for (String s : str) {
-         mr = pn.matcher(s);
-         if (mr.find())
-         System.out.println(s);
-         }
-         **/
-        mr = pn.matcher(str1);
-        if (mr.find()) {
-            System.out.println(str1);
+    private String generateTransIds(List<Transactions> tList){
+        StringBuffer sb = new StringBuffer();
+        for(Transactions t : tList){
+            sb.append(t.getTransId()+Constants.COMMA);
         }
+        return sb.substring(0, sb.length()-1).toString();
     }
-
-
 
 }
