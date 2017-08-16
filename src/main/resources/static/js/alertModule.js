@@ -36,15 +36,15 @@ app.controller('MyAlertCtrl', function ($scope, $http, $location, $state) {
     }
 
     //Calculate Total Amount
-    $scope.getMyAlertTotal = function () {
-        var totalAmt = 0.0;
-        for (var key in $scope.myAlertData) {
-            if (parseFloat($scope.myAlertData[key].alerts.totalAmt)) {
-                totalAmt += parseFloat($scope.myAlertData[key].alerts.totalAmt);
-            }
-        }
-        return totalAmt;
-    }
+    // $scope.getMyAlertTotal = function () {
+    //     var totalAmt = 0.0;
+    //     for (var key in $scope.myAlertData) {
+    //         if (parseFloat($scope.myAlertData[key].alerts.totalAmt)) {
+    //             totalAmt += parseFloat($scope.myAlertData[key].alerts.totalAmt);
+    //         }
+    //     }
+    //     return totalAmt;
+    // }
 
     $scope.itemsByPage = 10;
 
@@ -349,9 +349,11 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.refresh = function () {
-        $scope.refreshFile();
-        getAlert();
-        $scope.refreshComments();
+        $scope.refreshFile().then(function(){
+            return $scope.getAlert();
+        }).then(function(){
+            return $scope.refreshComments();
+        })
     }
 
     //upload file part
@@ -402,8 +404,10 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 $scope.workObj = res.data;
                 if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
                     $scope.currentState = showState["available"];
+                    $scope.header = 'Available Alerts Info:';
                 } else {
                     $scope.currentState = showState[$scope.workObj.currentPoint.name];
+                    $scope.header = 'My Alerts Info:';
                 }
                 getCustomer(res.data.alerts.customerId);
                 resolve();
