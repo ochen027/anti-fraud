@@ -14,7 +14,7 @@ public class AlertSearchEntity {
     private Date closedFromDate;
     private Date closedToDate;
     private String suspiciousLevel;
-    private String colsedBy;
+    private String closedBy;
     private List<String> customerIdList;
     private String accountId;
     private String transIdArray;
@@ -92,12 +92,12 @@ public class AlertSearchEntity {
         this.suspiciousLevel = suspiciousLevel;
     }
 
-    public String getColsedBy() {
-        return colsedBy;
+    public String getClosedBy() {
+        return closedBy;
     }
 
-    public void setColsedBy(String colsedBy) {
-        this.colsedBy = colsedBy;
+    public void setClosedBy(String closedBy) {
+        this.closedBy = closedBy;
     }
 
     public List<String> getCustomerIdList() {

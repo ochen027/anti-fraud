@@ -212,10 +212,10 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         }
 
         //Filter Alert Closed By
-        if (StringUtils.isNotEmpty(ase.getColsedBy())) {
+        if (StringUtils.isNotEmpty(ase.getClosedBy())) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_BY),
                     CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
-                    "[.]*" + ase.getColsedBy() + "[.]*")));
+                    "[.]*" + ase.getClosedBy() + "[.]*")));
         }
 
         //Filter Alert Transactions Array
