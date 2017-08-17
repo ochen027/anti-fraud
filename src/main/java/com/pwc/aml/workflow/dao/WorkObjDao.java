@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -118,19 +119,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         return tList;
     }
 
-    @Override
-    public List<WorkObj> searchAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception {
-        initial();
-        Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-
-        //Filter for Closed Alert if flowPointId is not Null
-        if(StringUtils.isNotEmpty(flowPointId)){
-            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
-                    Bytes.toBytes(WorkObjSchema.currentPointId),
-                    CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
-        }
-
+    private FilterList generateFilterList(AlertSearchEntity ase, FilterList filterList) throws ParseException{
         //Filter Alert Id
         if (StringUtils.isNotEmpty(ase.getAlertId())) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_ALERT_ID),
@@ -192,11 +181,8 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         if (null != ase.getClosedFromDate() && null != ase.getClosedToDate()) {
             LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-
             LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
-
-
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
@@ -238,10 +224,28 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
             //TODO
         }
 
+        return filterList;
+    }
+
+
+    @Override
+    public List<WorkObj> searchAlertWorkObject(String flowPointId, AlertSearchEntity ase) throws Exception {
+        initial();
+        Scan scan = new Scan();
+
 
         if (null != ase.getCustomerIdList()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
-            for (String cId : ase.getCustomerIdList()) {
+            for(String cId : ase.getCustomerIdList()) {
+                //Filter for Closed Alert if flowPointId is not Null
+                FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+                if (StringUtils.isNotEmpty(flowPointId)) {
+                    filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                            Bytes.toBytes(WorkObjSchema.currentPointId),
+                            CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
+                }
+
+                filterList = this.generateFilterList(ase, filterList);
 
                 filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                         Bytes.toBytes(WorkObjSchema.customerId),
@@ -256,20 +260,11 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
                 }
                 rsscan.close();
                 woList.addAll(wList);
+
             }
             return woList;
-        } else if (null == ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName()))) {
+        }else {
             return null;
-        } else {
-            scan.setFilter(filterList);
-            ResultScanner rsscan = table.getScanner(scan);
-            List<WorkObj> wList = new ArrayList<WorkObj>();
-            for (Result r : rsscan) {
-                WorkObj t = this.CellToWorkObj(r.rawCells());
-                wList.add(t);
-            }
-            rsscan.close();
-            return wList;
         }
     }
 
