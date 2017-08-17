@@ -99,6 +99,9 @@ public class AlertDAO implements IAlertDAO {
                     List<Transactions> tList = transactionDAO.getTransListById(transArray);
                     aBean.setTransList(tList);
                     continue;
+                case Constants.COLUMN_ACCOUNT_ID:
+                    aBean.setAccountId(Bytes.toString(CellUtil.cloneValue(c)));
+                    continue;
             }
         }
         return aBean;

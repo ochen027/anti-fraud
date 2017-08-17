@@ -22,6 +22,7 @@ public class WorkObj extends BaseEntity{
     private boolean IsSAR=false;
     private String accountId;
     private String transIdArray;
+    private String scenarioId;
 
     public String getWorkObjId() {
         return workObjId;
@@ -111,5 +112,13 @@ public class WorkObj extends BaseEntity{
 
     public void setTransIdArray(String transIdArray) {
         this.transIdArray = transIdArray;
+    }
+
+    public String getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(String scenarioId) {
+        this.scenarioId = scenarioId;
     }
 }

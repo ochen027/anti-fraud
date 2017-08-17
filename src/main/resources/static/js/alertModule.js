@@ -230,7 +230,7 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
 app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
     $scope.alertSearch = {};
     $scope.data = [];
-    console.log("Close Alert Ctrl");
+
     $scope.searchClosedAlert = function () {
         $http.post("/workflow/getClosedAlerts", $scope.alertSearch)
             .then(function success(response) {

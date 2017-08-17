@@ -1,100 +1,92 @@
 <div class="container" ng-controller="AlertQueryCtrl">
         <h5>Alert Query:</h5>
         <hr/>
-        <div class="col-md-12 ">
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="label">Customer ID</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Customer Name</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Account ID</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Transaction ID</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
+        <div class="text-center">
+            <div class="customer-summary">
+            <form class="">
+            <div class="table-tr">
+
+                <label class="label">Customer ID</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerId" />
+
+                <label class="label">Alert ID</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.alertId" />
+
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="label">Alert ID</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Scenario ID</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Status</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
-                <div class="col-md-3">
-                    <label class="label">Alert Closed By</label>
-                    <input type="text" class="form-control" placeholder=""></input>
-                </div>
+
+            <div class="table-tr">
+                <label class="label">Customer Name</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.customerName" />
+
+                <label class="label">Scenario ID</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.scenarioId" />
+
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="label">Alert Closed Date</label>
-                    <input type="text" class="form-control" id="alertClosedDate" placeholder="yyyy-MM-dd"/>
-                </div>
-                <div class="col-md-9">
-                    <div class="text-right">
-                        <br/>
-                        <button class="btn btn-default" ng-click="reset()">Reset</button>
-                        <button class="btn btn-default" ng-click="search()">Search</button>
-                    </div>
-                </div>
+
+
+            <div class="table-tr">
+                <label class="label">Account ID</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.accountId" />
+
+                <label class="label">Status</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.currentPointId" />
+
             </div>
+
+            <div class="table-tr">
+                <label class="label">Transaction ID</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.transIdArray" />
+
+                <label class="label">Alert Closed By</label>
+                <input type="text" class="text-input" placeholder="" ng-model="alertSearch.closedBy" />
+            </div>
+
+            <div class="table-tr">
+                <label class="label">Alert Create Date</label>
+                <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdFromDate" />
+                --
+                <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdToDate" />
+
+                <label class="label">Alert Close Date</label>
+                <input type="date" class="text-input" placeholder="" ng-model="alertSearch.closedFromDate" />
+                --
+                <input type="date" class="text-input" placeholder="" ng-model="alertSearch.closedToDate" />
+            </div>
+
+            </form>
+            </div>
+
+            <div class="col-md-12 text-right">
+                <button class="btn btn-default" ng-click="reset()">Reset</button>
+                <button class="btn btn-default" ng-click="searchQueryAlert()">Search</button>
+            </div>
+
         </div>
         <!--  table part -->
     <div class="detail-table">
         <table class="table table-striped table-bordered table-hover"
                st-table="displayedData" st-safe-src="data">
             <thead>
-            <tr class="detail-table-head">
+
+            <tr>
                 <th st-sort="alertId">Alert ID</th>
-                <th st-sort="scenarioDescription">Scenario Description</th>
-                <th st-sort="transactionId">Transaction ID</th>
-                <th st-sort="transactionDate">Transaction Date</th>
-                <th st-sort="accountId">Account ID</th>
-                <th st-sort="transactionChannel">Transaction Channel</th>
-                <th st-sort="financialInstitutionName">Financial Institution Name</th>
-                <th st-sort="financialInstitutionCountry">Financial Institution Country</th>
-                <th st-sort="p2pAccountNumber">P2P Account Number</th>
-                <th st-sort="transactionCurrency">Transaction Currency</th>
-                <th st-sort="transactionBaseAmount">Transaction Base Amount</th>
-                <th st-sort="transactionDescription">Transaction Description</th>
-                <th st-sort="counterPartyName">Counter Party Name</th>
-                <th st-sort="counterPartyAccountNumber">Counter Party Account Number</th>
-                <th st-sort="receivingBankName">Receiving Bank's Name</th>
-                <th st-sort="ReceivingBankPlace">Receiving Bank's Place</th>
+                <th st-sort="custName">Customer Name</th>
+                <th st-sort="createDate">Create Date</th>
+                <th st-sort="scenario">Scenario</th>
+                <th st-sort="description" class="description">Description</th>
+                <th st-sort="triggeringValues">Triggering Values (USD)</th>
             </tr>
+
             </thead>
             <tbody>
             <!-- ng-repeat="row in dataDisplay"-->
             <tr ng-repeat="row in displayedData track by $index ">
-                <td><a ui-sref="AlertQueryInfo({{row.alertId}})">{{row.alertId}}</a></td>
-                <td>{{row.scenarioDescription}}</td>
-                <td class="td-date">{{row.transactionDate}}</td>
-                <td>{{row.transactionId}}</td>
-                <td>{{row.accountId}}</td>
-                <td>{{row.transactionChannel}}</td>
-                <td>{{row.financialInstitutionName}}</td>
-                <td class="td-date">{{row.financialInstitutionCountry}}</td>
-                <td>{{row.p2pAccountNumber}}</td>
-                <td>{{row.transactionCurrency}}</td>
-                <td>{{row.transactionBaseAmount}}</td>
-                <td>{{row.transactionDescription}}</td>
-                <td class="td-date">{{row.counterPartyName}}</td>
-                <td>{{row.counterPartyAccountNumber}}</td>
-                <td>{{row.receivingBankName}}</td>
-                <td>{{row.receivingBankPlace}}</td>
+                <td><a ui-sref="alertInfo({id:'{{row.workObjId}}'})">{{row.alerts.alertId}}</a></td>
+                <td>{{row.alerts.customerName}}</td>
+                <td class="td-date">{{row.alerts.createdDate}}</td>
+                <td>{{row.alerts.scenarioId}}</td>
+                <td class="description">{{row.alerts.alertDesc}}</td>
+                <td>{{row.alerts.totalAmt|currency}}</td>
             </tr>
             </tbody>
             <tfoot>
@@ -108,9 +100,9 @@
         </table>
     </div>
     <div class="sepeartor"></div>
-    <div>
+    <div class="col-md-12">
         <lable>Total Amount:</lable>
-        <span class="text">^^0</span>
+        <span>{{getTotal() | currency}}</span>
     </div>
     <div class="sepeartor"></div>
         <div class="col-md-12 text-right">
