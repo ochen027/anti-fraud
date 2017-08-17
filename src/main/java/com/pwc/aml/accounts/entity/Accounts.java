@@ -100,7 +100,7 @@ public class Accounts extends BaseEntity{
         return lastUpdateBr;
     }
 
-    public void setLastUpdateBr(String accountOpenBr) {
+    public void setLastUpdateBr(String lastUpdateBr) {
         this.lastUpdateBr = lastUpdateBr;
     }
 
