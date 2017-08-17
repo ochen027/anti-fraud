@@ -258,7 +258,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
     }
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload,$uibModal) {
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
     $scope.alerts = {};
     $scope.customer = {};
     $scope.dataFiles = [];
@@ -314,7 +314,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
 
     $scope.selectSuspiciousType = function (type) {
-        $scope.SuspiciousType = type;
+        $scope.workObj.suspiciousType = type;
 
         $http.post("/workflow/UpdateSuspiciousType", {workObjId: $stateParams.id, "suspiciousType": type});
 
@@ -381,12 +381,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.suppressDialog=function(){
-
-        var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'myModalContent.html',
+        $("#suppressModal").modal(function(){
+            $("#suppressModal").modal("show");
         });
     }
 

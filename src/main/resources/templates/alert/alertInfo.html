@@ -412,7 +412,7 @@
             <div class="dropdown col-md-8">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">{{SuspiciousType}}</button>
+                        aria-haspopup="true" aria-expanded="false">{{workObj.suspiciousType=="null"?"please select suspicious level":workObj.suspiciousType}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 1')">Suspicious 1</a>
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 2')">Suspicious 2</a>
@@ -445,22 +445,32 @@
         </div>
     </div>
 
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title" id="modal-title">Suppress</h3>
-        </div>
-        <div class="modal-body" id="modal-body">
+    <div class="modal fade" id="suppressModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Suppress period</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <label><input type="radio" name="isPermanent" /> Permanent</label>
+                        </div>
+                        <div class="col-md-12">
+                            <label><input type="radio" name="isPermanent" /> <input type="number" /> Month</label>
+                        </div>
 
-            content
-
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-
-    <div class="modal-parent">
     </div>
 
     <div class="col-md-12 text-right">
