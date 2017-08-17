@@ -151,7 +151,7 @@ insert into rolemenu values (100010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (110001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 2);
 insert into rolemenu values (110002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 2);
 insert into rolemenu values (110003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 2);
--- insert into rolemenu values (110004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 2);
+--insert into rolemenu values (110004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 2);
 -- insert into rolemenu values (110005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 2);
 insert into rolemenu values (110006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 2);
 -- insert into rolemenu values (110007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 2);
@@ -169,12 +169,13 @@ insert into rolemenu values (110010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 --insert into rolemenu values (110019, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19, 2);
 --insert into rolemenu values (110020, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 2);
 --insert into rolemenu values (110021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 2);
+insert into rolemenu values (110029, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 29, 2);
 
 -- qa menu
 insert into rolemenu values (120001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 3);
 insert into rolemenu values (120002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 3);
 -- insert into rolemenu values (120003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 3);
--- insert into rolemenu values (120004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 3);
+insert into rolemenu values (120004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 3);
 insert into rolemenu values (120005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 3);
 insert into rolemenu values (120006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 3);
 --insert into rolemenu values (120007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 3);
@@ -198,7 +199,7 @@ insert into rolemenu values (120010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (130001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 4);
 insert into rolemenu values (130002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 4);
 insert into rolemenu values (130003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 4);
--- insert into rolemenu values (130004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 4);
+--insert into rolemenu values (130004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 4);
 insert into rolemenu values (130005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 4);
 insert into rolemenu values (130006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 4);
 --insert into rolemenu values (130007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 4);
@@ -216,13 +217,14 @@ insert into rolemenu values (130010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 --insert into rolemenu values (130019, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19, 4);
 --insert into rolemenu values (130020, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 4);
 --insert into rolemenu values (130021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 4);
+insert into rolemenu values (110030, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 30, 4);
 
 
 -- ml menu
 insert into rolemenu values (140001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 5);
 insert into rolemenu values (140002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 5);
 insert into rolemenu values (140003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 3, 5);
--- insert into rolemenu values (140004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 5);
+--insert into rolemenu values (140004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 4, 5);
 insert into rolemenu values (140005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
 insert into rolemenu values (140006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 5);
 --insert into rolemenu values (140007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 5);
@@ -240,6 +242,7 @@ insert into rolemenu values (140010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 --insert into rolemenu values (140019, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 19, 5);
 --insert into rolemenu values (140020, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 20, 5);
 --insert into rolemenu values (140021, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 21, 5);
+insert into rolemenu values (110031, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 5);
 
 
 
