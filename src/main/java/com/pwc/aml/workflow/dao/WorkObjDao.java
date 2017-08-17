@@ -71,6 +71,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.totalAmt, Double.valueOf(workObj.getAlerts().getTotalAmt()));
         saveColumn(WorkObjSchema.transIdArray, this.generateTransIds(workObj.getAlerts().getTransList()));
         saveColumn(WorkObjSchema.accountId, workObj.getAlerts().getAccountId());
+        saveColumn(Constants.COLUMN_SCENARIO_ID, workObj.getAlerts().getScenarioId());
     }
 
     @Override
@@ -152,6 +153,12 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         if (null != ase.getCurrentPointId()) {
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_CURRENT_POINT_ID),
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes(ase.getCurrentPointId()))));
+        }
+
+        //Filter Scenario
+        if (null != ase.getScenarioId()) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_SCENARIO_ID),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes(ase.getScenarioId()))));
         }
 
         //Filter Alert Created From Date to Date
@@ -377,6 +384,9 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
                     break;
                 case WorkObjSchema.transIdArray:
                     o.setTransIdArray(Bytes.toString(CellUtil.cloneValue(c)));
+                    break;
+                case Constants.COLUMN_SCENARIO_ID:
+                    o.setScenarioId(Bytes.toString(CellUtil.cloneValue(c)));
                     break;
             }
         }

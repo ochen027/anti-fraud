@@ -19,6 +19,7 @@ public class AlertSearchEntity {
     private String accountId;
     private String transIdArray;
     private String currentPointId;
+    private String scenarioId;
 
     public String getCustomerId() {
         return customerId;
@@ -130,5 +131,13 @@ public class AlertSearchEntity {
 
     public void setCurrentPointId(String currentPointId) {
         this.currentPointId = currentPointId;
+    }
+
+    public String getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(String scenarioId) {
+        this.scenarioId = scenarioId;
     }
 }
