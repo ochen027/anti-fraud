@@ -19,8 +19,6 @@ public class FlowPointExDao implements IFlowPointExDao {
 
     @Autowired
     private IRolePointDao rolePointDao;
-
-
     @Autowired
     private IFlowPointDAO flowPointDAO;
 

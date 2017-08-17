@@ -125,4 +125,12 @@ public class WorkObjService implements IWorkObjService {
         return workObjs;
     }
 
+    @Override
+    public void updateWorkObj(WorkObj workObj,String userName) throws Exception {
+        workObj.setLastUpdatedBy(userName);
+        workObj.setLastUpdateDate(FormatUtils.getCurrentDay());
+        workObjDao.saveOrUpdate(workObj);
+    }
+
+
 }

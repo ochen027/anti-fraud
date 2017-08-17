@@ -26,6 +26,8 @@ public class WorkObjSchema {
 
     public static final String isSAR="isSAR";
 
+    public static final String suspiciousType="suspiciousType";
+
     public static final String createdBy="createdBy";
     public static final String createdDate="createdDate";
     public static final String updateBy="updateBy";
@@ -35,4 +37,6 @@ public class WorkObjSchema {
     public static final String totalAmt = "totalAmt";
     public static final String transIdArray = "transIdArray";
     public static final String accountId = "accountId";
+
+
 }

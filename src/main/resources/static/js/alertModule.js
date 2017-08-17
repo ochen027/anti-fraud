@@ -258,7 +258,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
     }
 });
 
-app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
+app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload,$uibModal) {
     $scope.alerts = {};
     $scope.customer = {};
     $scope.dataFiles = [];
@@ -267,61 +267,64 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.commentList = [];
     $scope.comments = {};
     $scope.customerType = 'individual';
-    $scope.header='';
+    $scope.header = '';
 
     let showState = {
-        available:{
-            document:false,
-            comments:false,
-            returnButton:false,
-            escalate:false,
-            close:false,
-            suppress:false,
+        available: {
+            document: false,
+            comments: false,
+            returnButton: false,
+            escalate: false,
+            close: false,
+            suppress: false,
         },
-        "L1 review":{
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:false,
-            suppress:false,
+        "L1 review": {
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: false,
+            suppress: false,
         },
-        "l2 review":{
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:true,
-            suppress:true
-        },"QC review":{
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:true,
-            suppress:true
-        },"MLRO review":{
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:true,
-            suppress:true
+        "l2 review": {
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: true,
+            suppress: true
+        }, "QC review": {
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: true,
+            suppress: true
+        }, "MLRO review": {
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: true,
+            suppress: true
         }
     };
 
-    $scope.currentState={};
+    $scope.currentState = {};
 
 
     $scope.selectSuspiciousType = function (type) {
         $scope.SuspiciousType = type;
+
+        $http.post("/workflow/UpdateSuspiciousType", {workObjId: $stateParams.id, "suspiciousType": type});
+
     }
 
     $scope.addComments = function () {
-        return new Promise(function(resolve, reject){
+        return new Promise(function (resolve, reject) {
             $scope.comments.objId = $stateParams.id;
             $http.post("/comments/create", $scope.comments).then(function (res) {
-                if(res.status!=200){
+                if (res.status != 200) {
                     console.log(res);
                     reject();
                 }
@@ -335,12 +338,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.refreshComments = function () {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             $http.get("/comments/getByObjId/" + $stateParams.id).then(function (res) {
-                if(res.status!=200){
+                if (res.status != 200) {
                     console.log(res);
                     reject();
-                };
+                }
+                ;
 
                 $scope.commentList = res.data;
                 resolve();
@@ -349,16 +353,16 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.refresh = function () {
-        $scope.refreshFile().then(function(){
+        $scope.refreshFile().then(function () {
             return $scope.getAlert();
-        }).then(function(){
+        }).then(function () {
             return $scope.refreshComments();
         })
     }
 
     //upload file part
     $scope.uploadFiles = function (files) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             if (files && files.length) {
                 Upload.upload({
                     url: '/documents/upload',
@@ -376,8 +380,19 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         window.location.href = "/documents/download/" + fileName + "/" + filePath;
     }
 
+    $scope.suppressDialog=function(){
+
+        var modalInstance = $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'myModalContent.html',
+        });
+    }
+
+
     $scope.refreshFile = function () {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             $http.get("/documents/getByAlertId/" + $stateParams.id).then(function (res) {
                 if (res.status !== 200) {
                     console.log(res);
@@ -390,9 +405,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
 
-
     $scope.getAlert = function () {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             $http.post("/workflow/getWorkObjById", $stateParams.id).then(function (res) {
                 if (res.status != 200) {
                     console.log(res);
@@ -415,9 +429,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         });
     }
     $scope.goBack = function () {
-        if($scope.workObj.currentPoint.name.indexOf("available")>=0){
+        if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
             $state.go("available");
-        }else{
+        } else {
             $state.go("myAlert");
         }
     }

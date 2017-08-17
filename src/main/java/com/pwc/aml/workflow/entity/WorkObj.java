@@ -23,6 +23,7 @@ public class WorkObj extends BaseEntity{
     private String accountId;
     private String transIdArray;
     private String scenarioId;
+    private String suspiciousType;
 
     public String getWorkObjId() {
         return workObjId;
@@ -120,5 +121,13 @@ public class WorkObj extends BaseEntity{
 
     public void setScenarioId(String scenarioId) {
         this.scenarioId = scenarioId;
+    }
+
+    public String getSuspiciousType() {
+        return suspiciousType;
+    }
+
+    public void setSuspiciousType(String suspiciousType) {
+        this.suspiciousType = suspiciousType;
     }
 }
