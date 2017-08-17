@@ -206,6 +206,15 @@ public class WorkflowExController extends BaseController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+
+    @PostMapping("UpdateSuspiciousType")
+    public ResponseEntity<Void> UpdateSuspiciousType(@RequestBody WorkObj workObj) throws Exception {
+        WorkObj target=workObjService.getWorkObjsByWorkObjId(workObj.getWorkObjId());
+        target.setSuspiciousType(workObj.getSuspiciousType());
+        workObjService.updateWorkObj(target,userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
     @PostMapping("setDefaultWorkflowId")
     public ResponseEntity<Void> setDefaultWorkflowId(@RequestBody Workflow workflow) {
         workflowExService.setDefaultWorkflowId(String.valueOf(workflow.getId()), userName);

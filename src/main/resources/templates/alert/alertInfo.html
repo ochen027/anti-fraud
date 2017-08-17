@@ -412,11 +412,12 @@
             <div class="dropdown col-md-8">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">{{SuspiciousType}}</button>
+                        aria-haspopup="true" aria-expanded="false">{{workObj.suspiciousType=="null"?"please select suspicious level":workObj.suspiciousType}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 1')">Suspicious 1</a>
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 2')">Suspicious 2</a>
                     <a class="dropdown-item" ng-click="selectSuspiciousType('Suspicious 3')">Suspicious 3</a>
+                    <a class="dropdown-item" ng-click="selectSuspiciousType('Not Suspicious')">Not Suspicious</a>
                 </div>
             </div>
         </span>
@@ -444,11 +445,39 @@
         </div>
     </div>
 
+    <div class="modal fade" id="suppressModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Suppress period</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <label><input type="radio" name="isPermanent" /> Permanent</label>
+                        </div>
+                        <div class="col-md-12">
+                            <label><input type="radio" name="isPermanent" /> <input type="number" /> Month</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12 text-right">
         <button class="btn btn-primary" ng-show="currentState.returnButton" ng-click="returnToQc()">Return</button>
         <button class="btn btn-primary" ng-show="currentState.escalate" ng-click="escalate()">Escalate</button>
         <button class="btn btn-primary" ng-show="currentState.close" ng-click="close()">Close</button>
-        <button class="btn btn-primary" ng-show="currentState.suppress">Suppress</button>
+        <button class="btn btn-primary" ng-show="currentState.suppress" ng-click="suppressDialog()">Suppress</button>
         <button class="btn btn-primary" ng-click="goBack()" >Back</button>
     </div>
 

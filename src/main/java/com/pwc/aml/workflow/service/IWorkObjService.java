@@ -30,4 +30,6 @@ public interface IWorkObjService {
 
     List<WorkObj> getWorkObjsByAssigns(List<Assign> assigns) throws Exception;
 
+    void updateWorkObj(WorkObj workObj,String userName) throws Exception;
+
 }

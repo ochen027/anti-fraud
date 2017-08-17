@@ -62,6 +62,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         saveColumn(WorkObjSchema.roleId, "" + workObj.getCurrentPoint().getRoleId());
         saveColumn(WorkObjSchema.alertId, workObj.getAlerts().getAlertId());
         saveColumn(WorkObjSchema.isSAR, workObj.isSAR() ? "true" : "false");
+        saveColumn(WorkObjSchema.suspiciousType, workObj.getSuspiciousType());
         saveColumn(WorkObjSchema.createdBy, workObj.getCreatedBy());
         saveColumn(WorkObjSchema.createdDate, workObj.getCreationDate().getTime());
         saveColumn(WorkObjSchema.updateBy, workObj.getLastUpdatedBy());
@@ -352,6 +353,10 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
                 case WorkObjSchema.isSAR:
                     String isSAR = Bytes.toString(CellUtil.cloneValue(c));
                     o.setSAR(isSAR.equals("true"));
+                    break;
+                case WorkObjSchema.suspiciousType:
+                    String suspiciousType = Bytes.toString(CellUtil.cloneValue(c));
+                    o.setSuspiciousType(suspiciousType);
                     break;
                 case WorkObjSchema.createdBy:
                     String createdBy = Bytes.toString(CellUtil.cloneValue(c));
