@@ -1,11 +1,14 @@
 package com.pwc.aml.transation.dao;
 
 import com.jcraft.jsch.JSchException;
+import com.pwc.aml.accounts.dao.IAccountDAO;
 import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.common.util.RunShellTool;
+import com.pwc.aml.transation.entity.SearchTransEntity;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.common.util.FormatUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
@@ -22,6 +25,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -29,6 +33,9 @@ public class TransactionDAO implements ITransactionDAO {
 
     @Autowired
     private IHbaseDao hBaseDAO;
+
+    @Autowired
+    IAccountDAO accountDAO;
 
 
     @Override
@@ -151,6 +158,49 @@ public class TransactionDAO implements ITransactionDAO {
     }
 
     @Override
+    public List<Transactions> searchTransByCondition(SearchTransEntity ste) throws Exception {
+        HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
+        Scan scan = new Scan();
+        if(null != ste.getCustomerIdList()){
+            List<Transactions> tList = new ArrayList<Transactions>();
+            List<String> accountIdList = accountDAO.findAccountIdByCust(ste.getCustomerIdList());
+            for(String aId : accountIdList) {
+                FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+                filterList = this.generateFilterList(ste, filterList);
+                filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                        Bytes.toBytes(Constants.COLUMN_ACCT_ID),
+                        CompareFilter.CompareOp.EQUAL, Bytes.toBytes(aId)));
+                scan.setFilter(filterList);
+                ResultScanner rsscan = table.getScanner(scan);
+                List<Transactions> transList = new ArrayList<Transactions>();
+                for (Result r : rsscan) {
+                    Transactions t = this.consistTrans(r.rawCells(), Bytes.toString(r.getRow()));
+                    transList.add(t);
+                }
+                rsscan.close();
+                tList.addAll(transList);
+            }
+            return tList;
+        }else if(null == ste.getCustomerIdList() && (StringUtils.isNotEmpty(ste.getCustomerId())||StringUtils.isNotEmpty(ste.getCustomerName()))){
+            return null;
+        }else{
+            FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+            filterList = this.generateFilterList(ste, filterList);
+            if(filterList.hasFilterRow()){
+                scan.setFilter(filterList);
+            }
+            ResultScanner rsscan = table.getScanner(scan);
+            List<Transactions> transList = new ArrayList<Transactions>();
+            for (Result r : rsscan) {
+                Transactions t = this.consistTrans(r.rawCells(), Bytes.toString(r.getRow()));
+                transList.add(t);
+            }
+            rsscan.close();
+            return transList;
+        }
+    }
+
+    @Override
     public Integer getTransByDateCount(String businessDate) throws Exception {
         HTable table = hBaseDAO.getTable(Constants.HBASE_TABLE_TRANS);
         Scan scan = new Scan();
@@ -228,5 +278,35 @@ public class TransactionDAO implements ITransactionDAO {
             i++;
         }
         return i;
+    }
+
+
+    private FilterList generateFilterList(SearchTransEntity ste, FilterList filterList) throws ParseException{
+        //Filter Transaction Id
+        if (StringUtils.isNotEmpty(ste.getTransId())) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TRANS_ID),
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator("[.]*" + ste.getTransId() + "[.]*")));
+        }
+
+        //Filter Account Id
+        if (StringUtils.isNotEmpty(ste.getAccountId())) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_ACCT_ID),
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator("[.]*" + ste.getAccountId() + "[.]*")));
+        }
+
+
+        //Filter Tranaction Date
+        if (null != ste.getTransDate()) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TRANS_DT),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes(FormatUtils.DateToStringNoDash(ste.getTransDate())))));
+        }
+
+        //Filter Transaction Type
+        if (StringUtils.isNotEmpty(ste.getTransType())) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.COLUMN_TRANS_TYPE),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes(ste.getTransType()))));
+        }
+
+        return filterList;
     }
 }

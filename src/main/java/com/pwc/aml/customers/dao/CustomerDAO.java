@@ -86,33 +86,5 @@ public class CustomerDAO implements ICustomerDAO {
         return customers;
     }
 
-    @Override
-    public List<String> findByIdAndName(String customerId, String customerName) {
-        String hql = null;
 
-        List<CustomerBase> list = new ArrayList<CustomerBase>();
-        if(StringUtils.isNotBlank(customerId) && StringUtils.isNotBlank(customerName)){
-            hql = "FROM CustomerBase WHERE customerId LIKE ? AND customerFullName LIKE ?";
-            list = em.createQuery(hql).setParameter(1, "%"+customerId+"%")
-                    .setParameter(2, "%"+customerName+"%").getResultList();
-        }else if(StringUtils.isNotBlank(customerId) && StringUtils.isBlank(customerName)){
-            hql = "FROM CustomerBase WHERE customerId LIKE ?";
-            list = em.createQuery(hql).setParameter(1, "%"+customerId+"%").getResultList();
-        }else if(StringUtils.isBlank(customerId) && StringUtils.isNotBlank(customerName)){
-            hql = "FROM CustomerBase WHERE customerFullName LIKE ?";
-            list = em.createQuery(hql).setParameter(1, "%"+customerName+"%").getResultList();
-        }else{
-            hql = "FROM CustomerBase";
-            list = em.createQuery(hql).getResultList();
-        }
-
-        if(list.size()>0){
-            List<String> customIdList = new ArrayList<String>();
-            for(CustomerBase cb : list){
-                customIdList.add(cb.getCustomerId());
-            }
-            return customIdList;
-        }
-        return null;
-    }
 }

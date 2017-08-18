@@ -1,7 +1,7 @@
 package com.pwc.aml.query.service;
 
 import com.pwc.aml.alert.entity.AlertSearchEntity;
-import com.pwc.aml.customers.dao.CustomerDAO;
+import com.pwc.aml.customers.dao.CustomerBaseDao;
 import com.pwc.aml.query.dao.QueryDAO;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.service.IWorkObjService;
@@ -14,7 +14,7 @@ import java.util.List;
 public class QueryService implements IQueryService {
 
     @Autowired
-    CustomerDAO customerDAO;
+    CustomerBaseDao customerBaseDAO;
 
     @Autowired
     QueryDAO queryDAO;
@@ -24,7 +24,7 @@ public class QueryService implements IQueryService {
 
     @Override
     public List<WorkObj> SearchQuery(AlertSearchEntity ase) throws Exception {
-        List<String> customerIdList = customerDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
+        List<String> customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
         if(null == customerIdList){
             return null;
         }else{

@@ -4,6 +4,7 @@ import com.pwc.aml.alert.dao.IAlertDAO;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.IHbaseDao;
+import com.pwc.aml.customers.dao.ICustomerBaseDao;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.customers.service.ICustomerService;
 import com.pwc.aml.workflow.entity.FlowPointEx;
@@ -30,7 +31,7 @@ public class AlertService implements IAlertService{
     private IWorkObjService workObjService;
 
     @Autowired
-    private ICustomerDAO customerDAO;
+    private ICustomerBaseDao customerBaseDAO;
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
@@ -49,7 +50,7 @@ public class AlertService implements IAlertService{
 
     @Override
     public List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception {
-        List<String> customerIdList = customerDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
+        List<String> customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
         if(null == customerIdList){
             return null;
         }else{

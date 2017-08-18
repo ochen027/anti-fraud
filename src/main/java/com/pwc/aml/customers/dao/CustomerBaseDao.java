@@ -1,6 +1,7 @@
 package com.pwc.aml.customers.dao;
 
 import com.pwc.aml.customers.entity.CustomerBase;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -79,6 +82,50 @@ public class CustomerBaseDao implements ICustomerBaseDao {
         CriteriaQuery<CustomerBase> all = cq.select(rootEntry);
         TypedQuery<CustomerBase> query = em.createQuery(all);
         List<CustomerBase> customerBase = query.getResultList();
+        return customerBase;
+    }
+
+    @Override
+    public List<String> findByIdAndName(String customerId, String customerName) {
+        String hql = null;
+
+        List<CustomerBase> list = new ArrayList<CustomerBase>();
+        if(StringUtils.isNotBlank(customerId) && StringUtils.isNotBlank(customerName)){
+            hql = "FROM CustomerBase WHERE customerId LIKE ? AND customerFullName LIKE ?";
+            list = em.createQuery(hql).setParameter(1, "%"+customerId+"%")
+                    .setParameter(2, "%"+customerName+"%").getResultList();
+        }else if(StringUtils.isNotBlank(customerId) && StringUtils.isBlank(customerName)){
+            hql = "FROM CustomerBase WHERE customerId LIKE ?";
+            list = em.createQuery(hql).setParameter(1, "%"+customerId+"%").getResultList();
+        }else if(StringUtils.isBlank(customerId) && StringUtils.isNotBlank(customerName)){
+            hql = "FROM CustomerBase WHERE customerFullName LIKE ?";
+            list = em.createQuery(hql).setParameter(1, "%"+customerName+"%").getResultList();
+        }else{
+            hql = "FROM CustomerBase";
+            list = em.createQuery(hql).getResultList();
+        }
+
+        if(list.size()>0){
+            List<String> customIdList = new ArrayList<String>();
+            for(CustomerBase cb : list){
+                customIdList.add(cb.getCustomerId());
+            }
+            return customIdList;
+        }
+        return null;
+    }
+
+    @Override
+    public CustomerBase findByAccountId(String accountId) {
+        String sql = "SELECT c.cust_id, c.full_nm from Accounts a, Customers c where a.cust_id = c.cust_id and a.acct_id = ?";
+        List list = em.createNativeQuery(sql).setParameter(1, accountId).getResultList();
+        Iterator iter = list.iterator();
+        CustomerBase customerBase = new CustomerBase();
+        while(iter.hasNext()){
+            Object[] obj = (Object[]) iter.next();
+            customerBase.setCustomerId((String)obj[0]);
+            customerBase.setCustomerFullName((String)obj[1]);
+        }
         return customerBase;
     }
 }

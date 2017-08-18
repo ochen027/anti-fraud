@@ -1,5 +1,6 @@
 package com.pwc.aml.transation.dao;
 
+import com.pwc.aml.transation.entity.SearchTransEntity;
 import com.pwc.aml.transation.entity.Transactions;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface ITransactionDAO {
     Integer getTransByDateCount(String businessDate) throws Exception;
 
     List<Transactions> getTransDataByAccount(String acctId, String ruleDays, String businessDate) throws Exception;
+
+    List<Transactions> searchTransByCondition(SearchTransEntity ste) throws Exception;
 }
