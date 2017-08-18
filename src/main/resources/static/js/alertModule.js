@@ -317,6 +317,22 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
     $scope.currentState = {};
 
+    $scope.suppress={
+        customers:{},
+        scenario:{},
+        permanent:true,
+        endDate:new Date(),
+    };
+
+    $scope.saveSuppress=function(){
+        debugger;
+        $scope.suppress.customers=$scope.customer;
+        $scope.suppress.scenario.id=$scope.alerts.scenarioId;
+        $http.post("/suppress/addSuppress",$scope.suppress).then(function(){
+            alert("suppress saved!");
+            $("#suppressModal").modal("hide");
+        });
+    }
 
     $scope.selectSuspiciousType = function (type) {
         $scope.workObj.suspiciousType = type;
@@ -385,9 +401,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.suppressDialog=function(){
-        $("#suppressModal").modal(function(){
+
             $("#suppressModal").modal("show");
-        });
+
     }
 
 
@@ -606,5 +622,41 @@ app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state
         $state.go("available");
     }
     $scope.itemsByPage = 4;
+});
+
+
+app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $timeout) {
+    $scope.transSearch = {};
+    $scope.transData = [];
+
+    $scope.search = function () {
+        $http.post("/transaction/search", $scope.transSearch)
+            .then(function success(response) {
+                console.log(response);
+                $scope.transData = response.data;
+            }, function error() {
+                console.log(error);
+        });
+    }
+
+
+    $scope.resetSearch = function () {
+        $scope.transData = [];
+        $scope.transSearch = {};
+    }
+
+    //Calculate Total Amount
+    $scope.getSearchTotal = function () {
+        var totalAmt = 0.0;
+        for (var key in $scope.transData) {
+            if (parseFloat($scope.transData[key].transBaseAmt)) {
+                totalAmt += parseFloat($scope.transData[key].transBaseAmt);
+            }
+        }
+        return totalAmt;
+    }
+
+
+
 });
 

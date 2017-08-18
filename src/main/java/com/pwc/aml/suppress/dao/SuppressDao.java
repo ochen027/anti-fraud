@@ -112,7 +112,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
                     suppress.setScenario(scenario);
                     break;
                 case SuppressSchema.isPermanent:
-                    suppress.setPermanent(Bytes.toBoolean(CellUtil.cloneValue(c)));
+                    suppress.setPermanent("true".equalsIgnoreCase(Bytes.toString(CellUtil.cloneValue(c))));
                     break;
                 case SuppressSchema.endDate:
                     Long endDate = Bytes.toLong(CellUtil.cloneValue(c));
@@ -133,7 +133,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
                     suppress.setLastUpdateDate(new Date(updateDate));
                     break;
                 case SuppressSchema.isActive:
-                    suppress.setStatus(Bytes.toBoolean(CellUtil.cloneValue(c)));
+                    suppress.setStatus("true".equalsIgnoreCase(Bytes.toString(CellUtil.cloneValue(c))));
                     break;
             }
         }

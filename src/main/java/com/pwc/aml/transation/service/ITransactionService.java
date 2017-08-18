@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.transation.entity.SearchTransEntity;
 import com.pwc.aml.transation.entity.Transactions;
 
 /**
@@ -19,5 +20,7 @@ public interface ITransactionService {
     List<Transactions> getAllTransData() throws Exception;
 
     void truncateTrans() throws Exception;
+
+    List<Transactions> searchTrans(SearchTransEntity ste) throws Exception;
 
 }

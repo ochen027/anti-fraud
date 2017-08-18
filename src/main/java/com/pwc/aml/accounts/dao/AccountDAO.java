@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -77,5 +79,20 @@ public class AccountDAO implements IAccountDAO{
         TypedQuery<Accounts> query = em.createQuery(all);
         List<Accounts> accounts = query.getResultList();
         return accounts;
+    }
+
+    @Override
+    public List<String> findAccountIdByCust(List<String> customerIds) {
+        if(null != customerIds){
+            StringBuffer sb = new StringBuffer();
+            for(String cId : customerIds){
+                sb.append("'"+cId+"',");
+            }
+            String whereClause = sb.substring(0,sb.length()-1);
+            String sql = "SELECT ACCT_ID FROM ACCOUNTS WHERE CUST_ID IN ( "+whereClause+" )";
+            List<String> list = em.createNativeQuery(sql).getResultList();
+            return list;
+        }
+        return null;
     }
 }
