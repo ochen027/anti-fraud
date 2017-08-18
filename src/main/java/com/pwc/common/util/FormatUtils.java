@@ -21,6 +21,11 @@ public class FormatUtils {
 		return sdf.format(date);
 	}
 
+	public static String DateToStringNoDash(Date date) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.format(date);
+	}
+
 	public static Date StringToDate(String date) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.parse(date);

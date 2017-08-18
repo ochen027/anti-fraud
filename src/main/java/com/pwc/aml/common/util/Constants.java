@@ -47,6 +47,8 @@ public class Constants {
     //For Transactions
     public static final String HBASE_TABLE_TRANS = "aml:trans";
     public static final String COLUMN_TRANS_ID = "transId";
+    public static final String COLUMN_TRANS_DT = "trans_dt";
+    public static final String COLUMN_TRANS_TYPE = "trans_type";
 
 
     //For Accoount

@@ -18,4 +18,6 @@ public interface IAccountDAO {
     void removeAll();
 
     List<Accounts> findAll();
+
+    List<String> findAccountIdByCust(List<String> customerIds);
 }

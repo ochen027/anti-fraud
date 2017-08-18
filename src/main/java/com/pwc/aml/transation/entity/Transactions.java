@@ -23,7 +23,8 @@ public class Transactions {
 	private String counterBankLocation;
 	private String counterName;
 	private String transType;
-
+	private String customerId;
+	private String customerName;
 
 	public String getTransId() {
 		return transId;
@@ -161,4 +162,19 @@ public class Transactions {
 		this.transType = transType;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 }

@@ -597,3 +597,27 @@ app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state
     $scope.itemsByPage = 4;
 });
 
+
+app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $timeout) {
+    $scope.transSearch = {};
+    $scope.transData = [];
+
+    $scope.search = function () {
+        $http.post("/transaction/search", $scope.transSearch)
+            .then(function success(response) {
+                console.log(response);
+                $scope.transData = response.data;
+            }, function error() {
+                console.log(error);
+        });
+    }
+
+
+    $scope.resetSearch = function () {
+        $scope.transData = [];
+        $scope.transSearch = {};
+    }
+
+
+});
+

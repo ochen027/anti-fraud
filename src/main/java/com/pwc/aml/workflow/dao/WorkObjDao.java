@@ -233,24 +233,23 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         initial();
         Scan scan = new Scan();
 
+        //Filter for Closed Alert if flowPointId is not Null
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        if (StringUtils.isNotEmpty(flowPointId)) {
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                    Bytes.toBytes(WorkObjSchema.currentPointId),
+                    CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
+        }
+
+        filterList = this.generateFilterList(ase, filterList);
 
         if (null != ase.getCustomerIdList()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
             for(String cId : ase.getCustomerIdList()) {
-                //Filter for Closed Alert if flowPointId is not Null
-                FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-                if (StringUtils.isNotEmpty(flowPointId)) {
-                    filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
-                            Bytes.toBytes(WorkObjSchema.currentPointId),
-                            CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
-                }
-
-                filterList = this.generateFilterList(ase, filterList);
 
                 filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                         Bytes.toBytes(WorkObjSchema.customerId),
                         CompareFilter.CompareOp.EQUAL, Bytes.toBytes(cId)));
-
                 scan.setFilter(filterList);
                 ResultScanner rsscan = table.getScanner(scan);
                 List<WorkObj> wList = new ArrayList<WorkObj>();
@@ -263,8 +262,18 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
             }
             return woList;
-        }else {
+        }else if(null != ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId())||StringUtils.isNotEmpty(ase.getCustomerName()))){
             return null;
+        }else{
+            scan.setFilter(filterList);
+            ResultScanner rsscan = table.getScanner(scan);
+            List<WorkObj> wList = new ArrayList<WorkObj>();
+            for (Result r : rsscan) {
+                WorkObj t = this.CellToWorkObj(r.rawCells());
+                wList.add(t);
+            }
+            rsscan.close();
+            return wList;
         }
     }
 

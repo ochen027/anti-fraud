@@ -18,4 +18,9 @@ public interface ICustomerBaseDao {
     void removeAll();
 
     List<CustomerBase> findAll();
+
+
+    List<String> findByIdAndName(String customerId, String customerName);
+
+    CustomerBase findByAccountId(String accountId);
 }

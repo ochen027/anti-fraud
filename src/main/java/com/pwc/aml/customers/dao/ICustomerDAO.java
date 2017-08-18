@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface ICustomerDAO {
 
-
     void save(Customers customers);
 
     Customers update(Customers customers);
@@ -19,5 +18,5 @@ public interface ICustomerDAO {
 
     List<Customers> findAll();
 
-    List<String> findByIdAndName(String customerId, String customerName);
+
 }
