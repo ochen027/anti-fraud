@@ -475,10 +475,12 @@
 
     <div class="col-md-12 text-right">
         <button class="btn btn-primary" ng-show="currentState.returnButton" ng-click="returnToQc()">Return</button>
+        <button class="btn btn-primary" ng-show="currentState.sar" ng-click="sar()">Sar</button>
         <button class="btn btn-primary" ng-show="currentState.escalate" ng-click="escalate()">Escalate</button>
         <button class="btn btn-primary" ng-show="currentState.close" ng-click="close()">Close</button>
         <button class="btn btn-primary" ng-show="currentState.suppress" ng-click="suppressDialog()">Suppress</button>
-        <button class="btn btn-primary" ng-click="goBack()" >Back</button>
+        <button class="btn btn-primary" onclick="history.back()">Back</button>
     </div>
+
 
 </div>

@@ -101,6 +101,7 @@ public class CustomerBaseService implements ICustomerBaseService {
             customerBase.setCustomerFullName(item[5]);
             customerBase.setCustomerOpenBranch(item[6]);
             customerBase.setCustomerLastUpdatedBy(item[7]);
+            customerBase.setCustomerRiskLevel(item[8]);
             customerBaseDAO.save(customerBase);
 //            int age=item[7].equals("")?0:Integer.parseInt(item[7]);
 //            customerBase.setCustomerBaseAge(age);
