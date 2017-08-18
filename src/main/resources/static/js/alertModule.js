@@ -312,6 +312,22 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
 
     $scope.currentState = {};
 
+    $scope.suppress={
+        customers:{},
+        scenario:{},
+        permanent:true,
+        endDate:new Date(),
+    };
+
+    $scope.saveSuppress=function(){
+        debugger;
+        $scope.suppress.customers=$scope.customer;
+        $scope.suppress.scenario.id=$scope.alerts.scenarioId;
+        $http.post("/suppress/addSuppress",$scope.suppress).then(function(){
+            alert("suppress saved!");
+            $("#suppressModal").modal("hide");
+        });
+    }
 
     $scope.selectSuspiciousType = function (type) {
         $scope.workObj.suspiciousType = type;
@@ -381,9 +397,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     }
 
     $scope.suppressDialog=function(){
-        $("#suppressModal").modal(function(){
+
             $("#suppressModal").modal("show");
-        });
+
     }
 
 

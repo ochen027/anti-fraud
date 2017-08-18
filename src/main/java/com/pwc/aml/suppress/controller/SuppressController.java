@@ -5,6 +5,7 @@ package com.pwc.aml.suppress.controller;
 import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.suppress.service.ISuppressService;
 import com.pwc.common.base.controller.BaseController;
+import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("suppress")
@@ -40,9 +42,12 @@ public class SuppressController extends BaseController {
 
 
     @PostMapping("addSuppress")
-    public ResponseEntity<Void> addSuppress(@RequestBody Suppress suppress, HttpSession session){
+    public ResponseEntity<Void> addSuppress(@RequestBody Suppress suppress, HttpSession session) throws Exception {
 
-      //  suppressService.addSuppress(suppress);
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+
+        suppressService.addSuppress(suppress,user);
 
         return new ResponseEntity<Void>( HttpStatus.OK);
     }

@@ -457,17 +457,17 @@
                 <div class="modal-body">
                     <div class="col-md-12">
                         <div class="col-md-12">
-                            <label><input type="radio" name="isPermanent" /> Permanent</label>
+                            <label><input type="radio" name="isPermanent" ng-model="suppress.permanent" ng-value="true"/> Permanent</label>
                         </div>
                         <div class="col-md-12">
-                            <label><input type="radio" name="isPermanent" /> <input type="number" /> Month</label>
+                            <label><input type="radio" name="isPermanent" ng-model="suppress.permanent" ng-value="false"/> End Date:<input type="date" ng-model="suppress.endDate" /> </label>
                         </div>
 
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveSuppress()">Save</button>
                 </div>
             </div>
         </div>

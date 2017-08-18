@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface ISuppressService {
 
-    void addSuppress(Suppress suppress, Users users);
+    void addSuppress(Suppress suppress, Users users) throws Exception;
 
     List<Suppress> findAll() throws Exception;
 
-    void inActiveSuppress(Suppress suppress, Users users);
+    void inActiveSuppress(Suppress suppress, Users users) throws Exception;
 
     List<Suppress> findAllActive() throws Exception;
 }
