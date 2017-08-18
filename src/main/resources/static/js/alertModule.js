@@ -270,43 +270,48 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.header = '';
 
     let showState = {
-        available: {
-            document: false,
-            comments: false,
-            returnButton: false,
-            escalate: false,
-            close: false,
-            suppress: false,
+        available:{
+            sar:false,
+            document:false,
+            comments:false,
+            returnButton:false,
+            escalate:false,
+            close:false,
+            suppress:false,
         },
-        "L1 review": {
-            document: true,
-            comments: true,
-            returnButton: false,
-            escalate: true,
-            close: false,
-            suppress: false,
+        "L1 review":{
+            sar:false,
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:false,
+            suppress:false,
         },
-        "l2 review": {
-            document: true,
-            comments: true,
-            returnButton: false,
-            escalate: true,
-            close: true,
-            suppress: true
-        }, "QC review": {
-            document: true,
-            comments: true,
-            returnButton: false,
-            escalate: true,
-            close: true,
-            suppress: true
-        }, "MLRO review": {
-            document: true,
-            comments: true,
-            returnButton: false,
-            escalate: true,
-            close: true,
-            suppress: true
+        "l2 review":{
+            sar:false,
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:true,
+            suppress:true
+        },"QC review":{
+            sar:false,
+            document:true,
+            comments:true,
+            returnButton:false,
+            escalate:true,
+            close:true,
+            suppress:true
+        },"MLRO review":{
+            sar:true,
+            document:true,
+            comments:true,
+            returnButton:true,
+            escalate:false,
+            close:false,
+            suppress:true
         }
     };
 
@@ -359,8 +364,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 if (res.status != 200) {
                     console.log(res);
                     reject();
-                }
-                ;
+                };
 
                 $scope.commentList = res.data;
                 resolve();
@@ -440,13 +444,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
             });
         });
     }
-    $scope.goBack = function () {
-        if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
-            $state.go("available");
-        } else {
-            $state.go("myAlert");
-        }
-    }
+    // $scope.goBack = function () {
+    //     if ($scope.workObj.currentPoint.name.indexOf("available") >= 0) {
+    //         $state.go("available");
+    //     } else {
+    //         $state.go("myAlert");
+    //     }
+    // }
 
     var getCustomer = function (customerId) {
         $http.post("/customer/findByCustId", {"customerId": customerId}).then(function (res) {
@@ -478,6 +482,13 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         $http.post("/workflow/escalate", escalateWorkObjIds).then(function (res) {
 
             alert("this Alert has been escalated!");
+        });
+    };
+    $scope.sar = function () {
+        let escalateWorkObjIds = [$stateParams.id];
+        $http.post("/workflow/sar", escalateWorkObjIds).then(function (res) {
+
+            alert("this Alert has been reported to SAR!");
         });
     };
 
