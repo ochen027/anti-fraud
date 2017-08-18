@@ -618,6 +618,18 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
         $scope.transSearch = {};
     }
 
+    //Calculate Total Amount
+    $scope.getSearchTotal = function () {
+        var totalAmt = 0.0;
+        for (var key in $scope.transData) {
+            if (parseFloat($scope.transData[key].transBaseAmt)) {
+                totalAmt += parseFloat($scope.transData[key].transBaseAmt);
+            }
+        }
+        return totalAmt;
+    }
+
+
 
 });
 

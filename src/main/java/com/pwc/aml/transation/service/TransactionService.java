@@ -62,15 +62,18 @@ public class TransactionService implements ITransactionService {
             ste.setCustomerIdList(cIdList);
         }
         List<Transactions> tList = transactionDAO.searchTransByCondition(ste);
-        List<Transactions> resultList = new ArrayList<Transactions>(tList.size());
-        for(Transactions trans : tList){
-            String accountId = trans.getAcctId();
-            CustomerBase custBase =  customerBaseDAO.findByAccountId(accountId);
-            trans.setCustomerId(custBase.getCustomerId());
-            trans.setCustomerName(custBase.getCustomerFullName());
-            resultList.add(trans);
+        if(null != tList){
+            List<Transactions> resultList = new ArrayList<Transactions>(tList.size());
+            for(Transactions trans : tList){
+                String accountId = trans.getAcctId();
+                CustomerBase custBase =  customerBaseDAO.findByAccountId(accountId);
+                trans.setCustomerId(custBase.getCustomerId());
+                trans.setCustomerName(custBase.getCustomerFullName());
+                resultList.add(trans);
+            }
+            return resultList;
         }
-        return resultList;
+        return null;
     }
 
 

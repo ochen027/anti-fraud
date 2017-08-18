@@ -90,14 +90,8 @@ public class AccountDAO implements IAccountDAO{
             }
             String whereClause = sb.substring(0,sb.length()-1);
             String sql = "SELECT ACCT_ID FROM ACCOUNTS WHERE CUST_ID IN ( "+whereClause+" )";
-            List list = em.createNativeQuery(sql).getResultList();
-            Iterator iter = list.iterator();
-            List<String> accountIdList = new ArrayList<String>();
-            while(iter.hasNext()){
-                Object[] obj = (Object[]) iter.next();
-                accountIdList.add((String)obj[0]);
-            }
-            return accountIdList;
+            List<String> list = em.createNativeQuery(sql).getResultList();
+            return list;
         }
         return null;
     }
