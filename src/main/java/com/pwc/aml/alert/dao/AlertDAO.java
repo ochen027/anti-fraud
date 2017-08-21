@@ -2,10 +2,16 @@ package com.pwc.aml.alert.dao;
 
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.common.hbase.HbaseDaoImp;
+import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.common.util.Constants;
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
+import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.workflow.dao.IWorkflowExDao;
+import com.pwc.aml.workflow.service.IWorkObjService;
+import com.pwc.common.util.FormatUtils;
+import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.HTable;
@@ -17,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +32,16 @@ import java.util.List;
 public class AlertDAO implements IAlertDAO {
 
     @Autowired
-    private HbaseDaoImp hbaseDao;
+    HbaseDaoImp hbaseDao;
 
     @Autowired
-    private ITransactionDAO transactionDAO;
+    ITransactionDAO transactionDAO;
 
     @Autowired
-    private ICustomerBaseDao customerBaseDAO;
+    ICustomerBaseDao customerBaseDAO;
+
+    @Autowired
+    IKeyValueDao keyValueDAO;
 
     @Override
     public Alerts getSingleAlert(String alertId) throws Exception {
@@ -55,6 +66,30 @@ public class AlertDAO implements IAlertDAO {
     public void truncateTable() throws IOException {
         hbaseDao.deleteTable(Constants.HBASE_TABLE_ALERT);
         hbaseDao.createTable(Constants.HBASE_TABLE_ALERT);
+    }
+
+    @Override
+    public String createByManually(List<Transactions> tList, Scenario scenario, String userName) throws Exception {
+        StringBuffer sbTransId = new StringBuffer();
+        BigDecimal totalAmount = new BigDecimal(0.00);
+        for(Transactions t : tList){
+            sbTransId.append(t.getTransId()+",");
+            totalAmount = totalAmount.add(t.getTransBaseAmt());
+        }
+        IHbaseDao hBaseDAO = new HbaseDaoImp();
+        HTable table = hBaseDAO.getTable("aml:alerts");
+        String alertId = FormatUtils.GenerateId();
+        hBaseDAO.putData(table, alertId, "f1", "alertName", scenario.getScenarioName()+" Conflict");
+        hBaseDAO.putData(table, alertId, "f1", "alertContent", scenario.getScenarioDesc());
+        hBaseDAO.putData(table, alertId, "f1", "customerId", tList.get(0).getCustomerId());
+        hBaseDAO.putData(table, alertId, "f1", "accountId", tList.get(0).getAcctId());
+        hBaseDAO.putData(table, alertId, "f1", "transIdArray", sbTransId.substring(0, sbTransId.length()-1));
+        hBaseDAO.putData(table, alertId, "f1", "scenarioId", String.valueOf(scenario.getId()));
+        hBaseDAO.putData(table, alertId, "f1", "businessDate", keyValueDAO.get("BUSINESS_DAY"));
+        hBaseDAO.putData(table, alertId, "f1", "totalAmt", totalAmount.toString());
+        hBaseDAO.putData(table, alertId, "f1", "createdDate", FormatUtils.LocalDateToString(LocalDate.now()));
+        hBaseDAO.putData(table, alertId, "f1", "alertDesc", "Alert Desc");
+        return alertId;
     }
 
     private Alerts consistAlerts(Cell[] cells, String id) throws Exception{

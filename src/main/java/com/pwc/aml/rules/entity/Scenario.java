@@ -20,6 +20,9 @@ public class Scenario extends BaseEntity{
 	@Column(name="SCENARIO_CONTENT",length=4096)
 	private String scenarioContent;
 
+	@Column(name="SCNEARIO_DESC")
+	private String scenarioDesc;
+
 	public String getScenarioName() {
 		return scenarioName;
 	}
@@ -42,5 +45,13 @@ public class Scenario extends BaseEntity{
 
 	public void setScenarioContent(String scenarioContent) {
 		this.scenarioContent = scenarioContent;
+	}
+
+	public String getScenarioDesc() {
+		return scenarioDesc;
+	}
+
+	public void setScenarioDesc(String scenarioDesc) {
+		this.scenarioDesc = scenarioDesc;
 	}
 }

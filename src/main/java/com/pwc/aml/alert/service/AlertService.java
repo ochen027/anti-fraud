@@ -7,11 +7,15 @@ import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.customers.service.ICustomerService;
+import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.aml.transation.entity.Transactions;
+import com.pwc.aml.workflow.dao.IWorkflowExDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.aml.workflow.service.IWorkObjService;
 import com.pwc.aml.workflow.service.IWorkflowExService;
+import com.pwc.component.systemConfig.dao.IKeyValueDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +26,25 @@ import java.util.List;
 public class AlertService implements IAlertService{
 
     @Autowired
-    private IAlertDAO alertDAO;
+    IAlertDAO alertDAO;
 
     @Autowired
-    private IWorkflowExService workflowExService;
+    IWorkflowExService workflowExService;
 
     @Autowired
-    private IWorkObjService workObjService;
+    IWorkObjService workObjService;
 
     @Autowired
-    private ICustomerBaseDao customerBaseDAO;
+    ICustomerBaseDao customerBaseDAO;
+
+    @Autowired
+    IKeyValueDao keyValueDAO;
+
+    @Autowired
+    IWorkflowExDao workflowExDao;
+
+
+    static String DEFAULT_WORKFLOW = "DEFAULT_WORKFLOW";
 
     @Override
     public List<Alerts> getAllAlertsData() throws Exception {
@@ -59,5 +72,11 @@ public class AlertService implements IAlertService{
             List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId, ase);
             return workObjList;
         }
+    }
+
+    @Override
+    public void createAlertByManually(List<Transactions> tList, Scenario scenario, String userName) throws Exception {
+        String alertId = alertDAO.createByManually(tList, scenario, userName);
+        workObjService.attach(this.getSingleAlert(alertId),workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)),userName);
     }
 }

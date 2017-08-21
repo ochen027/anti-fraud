@@ -42,16 +42,16 @@ public class WorkObjService implements IWorkObjService {
     private ICustomerDAO customerDAO;
 
     @Override
-    public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,Users users) throws Exception {
+    public List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,String userName) throws Exception {
         WorkObj obj = new WorkObj();
         obj.setAlerts(alerts);
         obj.setWorkObjId(UUID.randomUUID().toString());//uuid
         obj.setWorkflowEx(workflow);
         obj.setCurrentPoint(workflow.getStartPoint());
         obj.setFlowId(workflow.getFlowId());
-        obj.setCreatedBy(users.getUserName());
+        obj.setCreatedBy(userName);
         obj.setCreationDate(FormatUtils.getCurrentDay());
-        obj.setLastUpdatedBy(users.getUserName());
+        obj.setLastUpdatedBy(userName);
         obj.setLastUpdateDate(FormatUtils.getCurrentDay());
         obj.setStatus(true);
         workObjDao.saveOrUpdate(obj);
@@ -59,7 +59,7 @@ public class WorkObjService implements IWorkObjService {
     }
 
     @Override
-    public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent,Users users) throws Exception {
+    public List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent,String userName) throws Exception {
 
         //could do this action
         if(workObj.getCurrentPoint().getFlowPointId().equalsIgnoreCase(flowEvent.getFlowPointId()))
@@ -73,7 +73,7 @@ public class WorkObjService implements IWorkObjService {
             }
             oldEvents.add(flowEvent);
             workObj.setHistoryEvents(oldEvents);
-            workObj.setLastUpdatedBy(users.getUserName());
+            workObj.setLastUpdatedBy(userName);
             workObj.setLastUpdateDate(FormatUtils.getCurrentDay());
             workObjDao.saveOrUpdate(workObj);
         }

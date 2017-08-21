@@ -162,11 +162,11 @@ public class RulesService implements IRulesService {
     }
 
     @Override
-    public void runRule(int ruleId,Users users){
+    public void runRule(int ruleId,String userName){
         List<RuleScenario> list = rulesDAO.findRuleScenarioByRuleId(ruleId);
         for(RuleScenario rs : list){
             try {
-                this.executeRuleEngine(rs.getScenarioId(),users);
+                this.executeRuleEngine(rs.getScenarioId(),userName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -174,7 +174,7 @@ public class RulesService implements IRulesService {
     }
 
     @Override
-    public void executeRuleEngine(int scenarioId,Users users) throws Exception {
+    public void executeRuleEngine(int scenarioId,String userName) throws Exception {
 
         String businessDay = keyValueDAO.get("BUSINESS_DAY");
 
@@ -243,7 +243,7 @@ public class RulesService implements IRulesService {
                 String alertId = ExecuteDrools.CallDrools(c, StringEscapeUtils.unescapeJava(ruleEngineScript)).getAlertId();
                 if(StringUtils.isNotBlank(alertId)){
                     workObjService.attach(alertDAO.getSingleAlert(alertId),
-                            workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)),users);
+                            workflowExDao.getWorkflowByFlowId(keyValueDAO.get(DEFAULT_WORKFLOW)),userName);
                 }
 
 
