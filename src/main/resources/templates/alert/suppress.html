@@ -79,7 +79,6 @@
 
 
     <div class="col-md-12 text-right">
-        <button class="btn btn-default" ng-click="reset()">Reset</button>
         <button class="btn btn-default" ng-click="search()">Search</button>
     </div>
 
@@ -90,14 +89,12 @@
         <tr>
             <th><input class="form-check-input custom-size" type="checkbox" ng-model="checkAll"
                        ng-click="all()"></input></th>
-            <th st-sort="alertId">Alert ID</th>
-            <th st-sort="accNumber">Acct Number</th>
-            <th st-sort="custName">Cust Name</th>
-            <th st-sort="createDate">Creat Date</th>
-            <th st-sort="scenario">Scenario ID</th>
-            <th st-sort="description" class="description">Description</th>
-            <th st-sort="counterparty">Counterparty</th>
-            <th st-sort="frequency">Frequency</th>
+            <th >Alert ID</th>
+            <th >Customer Name</th>
+            <th >Scenario ID</th>
+            <th >Description</th>
+            <th >Create Date</th>
+            <th >Created By</th>
         </tr>
         </thead>
         <tbody>
@@ -106,13 +103,11 @@
             <td><input class="form-check-input custom-size" type="checkbox" ng-checked="checkAll"
                        ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
             <td><a ui-sref="alertInfo({{row.alertId}})">{{row.alertId}}</a></td>
-            <td>{{row.accNumber}}</td>
-            <td>{{row.custName}}</td>
-            <td class="td-date">{{row.createDate}}</td>
-            <td>{{row.scenario}}</td>
-            <td class="description">{{row.description}}</td>
-            <td>{{row.counterparty}}</td>
-            <td>{{row.frequency}}</td>
+            <td >Customer Name</td>
+            <td >Scenario ID</td>
+            <td >Description</td>
+            <td >Create Date</td>
+            <td >Created By</td>
         </tr>
         </tbody>
         <tfoot>
@@ -132,7 +127,7 @@
 
     <div class="col-md-12">
         <lable>total:</lable>
-        <span>$10000.00</span>
+        <span> </span>
     </div>
 
     <div class="col-md-12 text-right">

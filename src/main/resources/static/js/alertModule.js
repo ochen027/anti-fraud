@@ -162,65 +162,29 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
 });
 
 app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state) {
-    console.log("suppressed alert ctrl");
-    $scope.checkAll = false; //default false;
-    $http.get("/alert/suppressedAlert")
-        .then(function success(response) {
-            console.log(response);
-            $scope.data = response.data.result;
-        }, function error() {
-            console.log(error);
-        });
-    //combox check all/reverse
-    $scope.all = function () {
-        console.log("check all");
+
+
+
+    $scope.checkAll = function () {
 
     }
-    //combox select
-    $scope.checkList = [];
-    $scope.conf = [];
+
     $scope.select = function (action, record, index) {
-        console.log("checkbox select");
-        console.log($scope.conf[index]);
-        if (action.target.checked) {
-            $scope.checkList.push({"record": record, "index": index});
-        }
+
     }
+
     //export
     $scope.export = function () {
         console.log("export");
     }
+
     //clear select
     $scope.clearSelect = function () {
-        console.log("clear select");
-        $scope.checkAll = false;
-        if ($scope.conf.length != 0) {
-            angular.forEach($scope.conf, function (ele, index) {
-                $scope.conf[index] = false;
-            })
-        }
 
     }
+
     //remove
     $scope.remove = function () {
-        console.log("remove");
-        if ($scope.checkList.length != 0) {
-            //$http.delete
-            console.log("remove record");
-            angular.forEach($scope.checkList, function (ele, index) {
-                $scope.data.splice($scope.data.indexOf($scope.checkList[index].record), 1);
-            });
-
-        } else {
-            alert("please choose one record at least!");
-        }
-        $scope.checkList = [];
-        if ($scope.conf.length != 0) {
-            console.log("remove");
-            angular.forEach($scope.conf, function (ele, index) {
-                $scope.conf[index] = false;
-            })
-        }
 
     }
 
@@ -320,7 +284,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     };
 
     $scope.saveSuppress=function(){
-        debugger;
+
         $scope.suppress.customers=$scope.customer;
         $scope.suppress.scenario.id=$scope.alerts.scenarioId;
         $http.post("/suppress/addSuppress",$scope.suppress).then(function(){
