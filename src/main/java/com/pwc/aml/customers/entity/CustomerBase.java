@@ -39,6 +39,8 @@ public class CustomerBase extends BaseEntity{
     private String customerOpenBranch;//哪家网点开户的
     @Column(name = "last_upd_by")
     private String customerLastUpdatedBy;
+    @Column(name = "cust_risk_level")
+    private String customerRiskLevel;
 
     @Transient
     private Individual individual;
@@ -213,5 +215,11 @@ public class CustomerBase extends BaseEntity{
         this.accountId = accountId;
     }
 
+    public String getCustomerRiskLevel() {
+        return customerRiskLevel;
+    }
 
+    public void setCustomerRiskLevel(String customerRiskLevel) {
+        this.customerRiskLevel = customerRiskLevel;
+    }
 }

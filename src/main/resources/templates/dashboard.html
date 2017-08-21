@@ -1,78 +1,68 @@
 <div class="container" ng-controller="DashboardCtrl">
 
-    <h3>Dashboard:</h3>
+    <h3 style="text-align:center">Dashboard:</h3>
     <hr/>
 
 
     <div class="col-md-12">
 
-        <div class="text-center">
-            ---- here is some search condition ----
-        </div>
+        <ul class="nav nav-tabs" style="width: 50%; margin:0 auto;">
+            <li class="nav-item"  ng-click="navigate('day')" style="width: 50%; margin:0 auto;">
+                <a class="nav-link" ng-class="{'active':currentTab=='day'}">1Day</a>
+            </li>
+            <li class="nav-item"  ng-click="navigate('week')" style="width: 50%; margin:0 auto;">
+                <a class="nav-link" ng-class="{'active':currentTab=='week'}">1Week</a>
+            </li>
+            <li class="nav-item"  ng-click="navigate('month')" style="width: 50%; margin:0 auto;">
+                <a class="nav-link" ng-class="{'active':currentTab=='month'}">1Month</a>
+            </li>
 
-        <div class="row">
-            <h4> Alert:</h4>
-        </div>
-        <div class="row">
-            <div class="card col-md-4">
-                <canvas id="line" class="chart chart-line" chart-data="data"
-                        chart-labels="labels" chart-series="series" chart-options="options"
-                        chart-dataset-override="datasetOverride" chart-click="onClick">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text">Alert Trends</p>
-                </div>
-            </div>
-
-            <div class="card col-md-4">
-                <canvas id="bar" class="chart chart-bar"
-                        chart-data="data" chart-labels="labels" chart-series="series">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text"> Alert in Different year</p>
-                </div>
-            </div>
-
-            <div class="card col-md-4">
-                <canvas id="doughnut" class="chart chart-doughnut"
-                        chart-data="data3" chart-labels="labels3">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text">Alert Score</p>
-                </div>
-            </div>
+        </ul>
 
 
-        </div>
-        <div class="row">
-            <h4>Case:</h4>
-        </div>
 
         <div class="row">
             <div class="card col-md-4">
-                <canvas id="radar" class="chart chart-radar"
-                        chart-data="data4" chart-options="options" chart-labels="labels4">
+                <canvas id="level1" class="chart chart-doughnut"
+                        chart-data="dataL1" chart-options="optionsL1" chart-labels="labelsL1">
                 </canvas>
                 <div class="card-block">
-                    <p class="card-text">Case Pie</p>
+                    <p class="card-text" style="text-align:center">Alerts in Level1</p>
+                </div>
+            </div>
+            <div class="card col-md-4">
+                <canvas id="level2" class="chart chart-doughnut"
+                        chart-data="dataL2" chart-options="optionsL2" chart-labels="labelsL2">
+                </canvas>
+                <div class="card-block">
+                    <p class="card-text" style="text-align:center">Alerts in Level2</p>
+                </div>
+            </div>
+            <div class="card col-md-4">
+                <canvas id="QC" class="chart chart-doughnut"
+                        chart-data="dataQC" chart-options="optionsQC" chart-labels="labelsQC">
+                </canvas>
+                <div class="card-block">
+                    <p class="card-text" style="text-align:center">Alerts in QC</p>
                 </div>
             </div>
 
+        </div>
+        <div class="row" style="align-content: center">
             <div class="card col-md-4">
-                <canvas id="polar-area" class="chart chart-polar-area"
-                        chart-data="data5" chart-labels="labels5" chart-options="options">
+                <canvas id="MLRO" class="chart chart-doughnut"
+                        chart-data="dataMLRO" chart-options="optionsMLRO" chart-labels="labelsMLRO">
                 </canvas>
                 <div class="card-block">
-                    <p class="card-text">Case chart</p>
+                    <p class="card-text" style="text-align:center">Alerts in MLRO</p>
                 </div>
             </div>
-
             <div class="card col-md-4">
-                <canvas id="base" class="chart-bubble" chart-data="data6"
-                        chart-series="series6" >
+                <canvas id="Closed" class="chart chart-doughnut"
+                        chart-data="dataClosed" chart-options="optionsClosed" chart-labels="labelsClosed">
                 </canvas>
                 <div class="card-block">
-                    <p class="card-text">Case chart</p>
+                    <p class="card-text" style="text-align:center"> Closed Alerts</p>
                 </div>
             </div>
         </div>
