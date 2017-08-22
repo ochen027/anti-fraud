@@ -53,7 +53,7 @@ insert into menus values(4, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , 
 insert into menus values(5, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Suppressed Alerts', 2, 'suppressedAlert');
 insert into menus values(6, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Alerts', 2, 'closedAlert()');
 insert into menus values(7, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Create Alert', 2, 'CreateAlert()');
-insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', 0, NULL);
+--insert into menus values(8, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case', 0, NULL);
 insert into menus values(9, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Query', 0, NULL);
 insert into menus values(10, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Reports', 0, 'reports()' );
 insert into menus values(11, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'System', 0, NULL);
@@ -65,8 +65,8 @@ insert into menus values(15, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 --insert into menus values(17, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Detail', 10, 'reportDetail()');
 insert into menus values(18, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Alert Query', 9, 'alertQuery()');
 insert into menus values(19, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Case Query', 9, 'caseQuery()');
-insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, 'myCase()');
-insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, 'closedCase()');
+--insert into menus values(20, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'My Case', 8, 'myCase()');
+--insert into menus values(21, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Closed Case', 8, 'closedCase()');
 --insert into menus values(22, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Users', 11, '/#!/users/list');
 
 insert into menus values(23, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Import', 11, 'ImportData()');
@@ -132,7 +132,7 @@ insert into rolemenu values (100004, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 -- insert into rolemenu values (100005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 1);
 insert into rolemenu values (100006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 1);
 insert into rolemenu values (100007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 1);
-insert into rolemenu values (100008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
+--insert into rolemenu values (100008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 1);
 insert into rolemenu values (100009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 1);
 insert into rolemenu values (100010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 1);
 --insert into rolemenu values (100011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 1);
@@ -155,7 +155,7 @@ insert into rolemenu values (110003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 -- insert into rolemenu values (110005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 2);
 insert into rolemenu values (110006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 2);
 -- insert into rolemenu values (110007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 2);
-insert into rolemenu values (110008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 2);
+--insert into rolemenu values (110008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 2);
 insert into rolemenu values (110009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 2);
 insert into rolemenu values (110010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 2);
 --insert into rolemenu values (110011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 2);
@@ -203,7 +203,7 @@ insert into rolemenu values (130003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (130005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 4);
 insert into rolemenu values (130006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 4);
 --insert into rolemenu values (130007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 4);
-insert into rolemenu values (130008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 4);
+--insert into rolemenu values (130008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 4);
 insert into rolemenu values (130009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 4);
 insert into rolemenu values (130010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 4);
 --insert into rolemenu values (130011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 4);
@@ -228,7 +228,7 @@ insert into rolemenu values (140003, 'sysadmin', sysdate, sysdate, 'sysadmin', 1
 insert into rolemenu values (140005, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 5, 5);
 insert into rolemenu values (140006, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 6, 5);
 --insert into rolemenu values (140007, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 7, 5);
-insert into rolemenu values (140008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 5);
+--insert into rolemenu values (140008, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 8, 5);
 insert into rolemenu values (140009, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 9, 5);
 insert into rolemenu values (140010, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 10, 5);
 --insert into rolemenu values (140011, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 11, 5);
