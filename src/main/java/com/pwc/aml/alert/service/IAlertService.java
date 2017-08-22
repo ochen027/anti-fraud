@@ -2,6 +2,8 @@ package com.pwc.aml.alert.service;
 
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.workflow.entity.WorkObj;
 
 import java.io.IOException;
@@ -16,4 +18,6 @@ public interface IAlertService {
     void truncateTable() throws IOException;
 
     List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception;
+
+    void createAlertByManually(List<Transactions> tList, Scenario scenario, String userName) throws Exception;
 }

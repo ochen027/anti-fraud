@@ -14,9 +14,9 @@ import java.util.List;
 
 public interface IWorkObjService {
 
-    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,Users users) throws Exception;
+    List<FlowEvent> attach(Alerts alerts, WorkflowEx workflow,String userName) throws Exception;
 
-    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent,Users users) throws Exception;
+    List<FlowEvent> doEvent(WorkObj workObj, FlowEvent flowEvent,String userName) throws Exception;
 
     List<FlowEvent> getPossibleEvents(WorkObj workObj);
 

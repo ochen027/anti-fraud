@@ -85,7 +85,7 @@ public class WorkflowExController extends BaseController {
         Users user = (Users) userInfo.get("User");
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
-            doEvent("assign", workObj,user);
+            doEvent("assign", workObj);
         }
         //assign to me
 
@@ -113,10 +113,9 @@ public class WorkflowExController extends BaseController {
         Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
         Users user = (Users) userInfo.get("User");
 
-
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
-            doEvent("escalate", workObj,user);
+            doEvent("escalate", workObj);
         }
         //un assign
         assignService.unAssign(user, workObjIds, user);
@@ -131,7 +130,7 @@ public class WorkflowExController extends BaseController {
 
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
-            doEvent("close", workObj,user);
+            doEvent("close", workObj);
         }
         //un assign
         assignService.unAssign(user, workObjIds, user);
@@ -147,7 +146,7 @@ public class WorkflowExController extends BaseController {
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
             workObj.setSAR(true);
-            doEvent("sar", workObj,user);
+            doEvent("sar", workObj);
         }
         //un assign
         assignService.unAssign(user, workObjIds, user);
@@ -160,7 +159,7 @@ public class WorkflowExController extends BaseController {
         Users user = (Users) userInfo.get("User");
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
-            doEvent("return", workObj,user);
+            doEvent("return", workObj);
         }
         //un assign
 
@@ -183,14 +182,14 @@ public class WorkflowExController extends BaseController {
     }
 
 
-    private void doEvent(String eventName, WorkObj workObj,Users users) throws Exception {
+    private void doEvent(String eventName, WorkObj workObj) throws Exception {
         //WorkObj workObj = workObjService.getWorkObjsByWorkObjId(workObjId);
         List<FlowEvent> flowEvents = workObj.getCurrentPoint().getPossibleEvents();
         for (FlowEvent targetEvent : flowEvents) {
             if (eventName.equalsIgnoreCase(targetEvent.getName())) {
                 String eventId = targetEvent.getFlowEventId();
                 FlowEvent event = workObjService.getFlowEventByEventId(eventId);
-                List<FlowEvent> events = workObjService.doEvent(workObj, event,users);
+                List<FlowEvent> events = workObjService.doEvent(workObj, event, userName);
                 break;
             }
         }

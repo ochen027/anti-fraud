@@ -1,21 +1,22 @@
 package com.pwc.aml.alert.controller;
 
+import com.pwc.aml.alert.entity.AlertCreation;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.alert.service.IAlertService;
+import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.transation.service.ITransactionService;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.service.IWorkObjService;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.pwc.common.base.controller.BaseController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,10 +25,7 @@ import java.util.List;
 public class AlertsController extends BaseController {
 
     @Autowired
-    private IAlertService alertService;
-
-    @Autowired
-    private IWorkObjService workObjService;
+    IAlertService alertService;
 
     @GetMapping("getAllAlerts")
     public ResponseEntity<List<Alerts>> getAllAlerts() throws  Exception{
@@ -42,6 +40,12 @@ public class AlertsController extends BaseController {
     @GetMapping("searchClosedAlert")
     public ResponseEntity<List<WorkObj>> searchClosedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
         return new ResponseEntity<List<WorkObj>>(alertService.searchClosedAlerts(se), HttpStatus.OK);
+    }
+
+    @PostMapping("createAlert")
+    public ResponseEntity<Void> createAlertByManually(@RequestBody AlertCreation ac) throws Exception{
+        alertService.createAlertByManually(ac.getTransList(), ac.getScenario(), userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

@@ -68,9 +68,7 @@ public class RulesController extends BaseController{
 
 	@GetMapping("executeRules/{id}")
 	public ResponseEntity<Void> ExecuteRules(@PathVariable("id") int id, HttpSession session) throws Exception{
-		Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
-		Users user = (Users) userInfo.get("User");
-		rulesService.executeRuleEngine(id,user);
+		rulesService.executeRuleEngine(id,userName);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
@@ -116,9 +114,7 @@ public class RulesController extends BaseController{
 
     @GetMapping("runRule/{id}")
 	public ResponseEntity<Void> RunRule(@PathVariable("id") int ruleId, HttpSession session){
-		Map<String, Object> userInfo= (Map<String, Object>)session.getAttribute("UserInfo");
-		Users u=(Users) userInfo.get("User");
-		rulesService.runRule(ruleId,u);
+		rulesService.runRule(ruleId,userName);
     	return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

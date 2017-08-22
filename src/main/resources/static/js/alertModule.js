@@ -592,6 +592,8 @@ app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state
 app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $timeout) {
     $scope.transSearch = {};
     $scope.transData = [];
+    $scope.checkAll = false;
+    $scope.checkTrans = [];
 
     $scope.search = function () {
         $http.post("/transaction/search", $scope.transSearch)
@@ -600,7 +602,7 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
                 $scope.transData = response.data;
             }, function error() {
                 console.log(error);
-        });
+            });
     }
 
 
@@ -609,7 +611,6 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
         $scope.transSearch = {};
     }
 
-    //Calculate Total Amount
     $scope.getSearchTotal = function () {
         var totalAmt = 0.0;
         for (var key in $scope.transData) {
@@ -620,7 +621,142 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
         return totalAmt;
     }
 
+    $scope.selectall = function () {
+        if ($scope.checkAll) {
+            $scope.isChecked = true;
+        } else {
+            $scope.isChecked = false;
+        }
+    }
 
+
+    $scope.clearSelect = function () {
+        $scope.checkAll = false;
+        if ($scope.conf.length != 0) {
+            angular.forEach($scope.conf, function (ele, index) {
+                $scope.conf[index] = false;
+            })
+        }
+    }
+
+    //Select trans into List
+    $scope.checkList = [];
+    $scope.conf = [];
+    $scope.select = function (action, record, index) {
+        console.log("checkbox select");
+        console.log($scope.conf[index]);
+        if (action.target.checked) {
+            $scope.checkList.push({"record": record, "index": index});
+        }
+    }
+
+    //Select trans into Remove List
+    $scope.checkRemoveList = [];
+    $scope.confRemove = [];
+    $scope.selectRemove = function (action, record, index) {
+        console.log($scope.conf[index]);
+        if (action.target.checked) {
+            $scope.checkRemoveList.push({"record": record, "index": index});
+        }
+    }
+
+
+    $scope.removeFromList = function () {
+        if ($scope.checkRemoveList.length != 0) {
+            //remove the line
+            angular.forEach($scope.checkRemoveList, function (ele, index) {
+                $scope.checkTrans.splice($scope.checkTrans.indexOf($scope.checkRemoveList[index].record), 1);
+            });
+            //uncheck the line
+            angular.forEach($scope.confRemove, function (ele, index) {
+                $scope.confRemove[index] = false;
+            })
+        }
+        $scope.checkRemoveList = [];
+    }
+
+    $scope.addToList = function () {
+        if ($scope.checkList.length != 0) {
+            //add selected transaction into target array
+            angular.forEach($scope.checkList, function (transData) {
+                console.log($scope.checkTrans);
+                $scope.checkTrans.push(transData.record);
+            });
+            //remove the line
+            angular.forEach($scope.checkList, function (ele, index) {
+                $scope.transData.splice($scope.transData.indexOf($scope.checkList[index].record), 1);
+            });
+            //uncheck the line
+            angular.forEach($scope.conf, function (ele, index) {
+                $scope.conf[index] = false;
+            })
+
+        } else {
+            alert("Please select alerts!");
+        }
+        $scope.checkList = [];
+    }
+
+    $scope.getListTotal = function () {
+        var totalAmt = 0.0;
+        for (var key in $scope.checkTrans) {
+            if (parseFloat($scope.checkTrans[key].transBaseAmt)) {
+                totalAmt += parseFloat($scope.checkTrans[key].transBaseAmt);
+            }
+        }
+        return totalAmt;
+    }
+
+    $scope.scenarioData = [];
+    $timeout(function () {
+        $http.get("/rules/listAll").then(function sucess(result) {
+            console.log(result);
+            $scope.scenarioData = result.data
+        }, function error(error) {
+            console.log(error);
+        });
+    });
+
+    $scope.scenario = {};
+    $scope.getScenarioDetail = function (scenario) {
+        $scope.scenario = scenario;
+    }
+
+    $scope.create = function (){
+        if ($scope.checkTrans.length != 0) {
+            var keyCustomer = $scope.checkTrans[0].customerId;
+            for (var key in $scope.checkTrans) {
+                if (keyCustomer != $scope.checkTrans[key].customerId) {
+                    $scope.checkTrans = [];
+                    $scope.transSearch = {};
+                    $scope.transData = [];
+                    $scope.checkAll = false;
+                    $scope.checkTrans = [];
+                    $scope.scenario = {};
+                    alert("Please select transaction with same customer!");
+                    return;
+                }
+            }
+        }else{
+            alert("Please select at least one transaction to create alert by manually!");
+            return;
+        }
+
+        $scope.alertCreation = {transList:$scope.checkTrans,scenario:$scope.scenario};
+        $http.post("/alerts/createAlert",$scope.alertCreation).then(function success(response) {
+                console.log(response);
+                $scope.checkTrans = [];
+                $scope.transSearch = {};
+                $scope.transData = [];
+                $scope.checkAll = false;
+                $scope.checkTrans = [];
+                $scope.scenario = {};
+                alert("Create Successfully!");
+            }, function error() {
+                console.log(error);
+                alert("Create Failure, "+error);
+            });
+    }
 
 });
 
