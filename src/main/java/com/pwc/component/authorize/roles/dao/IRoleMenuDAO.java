@@ -1,6 +1,5 @@
 package com.pwc.component.authorize.roles.dao;
 
-;
 import com.pwc.component.authorize.roles.entity.RoleMenu;
 
 import java.util.List;
