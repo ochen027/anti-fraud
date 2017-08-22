@@ -2,7 +2,6 @@ package com.pwc.aml.workflow.dao;
 
 
 import com.pwc.aml.alert.entity.AlertSearchEntity;
-import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
 
 import java.io.IOException;
@@ -24,4 +23,5 @@ public interface IWorkObjDao {
     Integer getClosedAlertByDateCount(String endPointId, String businessDate) throws Exception;
 
     Integer getSARAlertByDateCount(String businessDate) throws Exception;
+    
 }
