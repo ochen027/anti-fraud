@@ -1,68 +1,38 @@
-<div class="container" ng-controller="DashboardCtrl">
+<div class="container dashboard" ng-controller="DashboardCtrl">
 
-    <h3 style="text-align:center">Dashboard:</h3>
+    <h3>Dashboard:</h3>
     <hr/>
 
 
     <div class="col-md-12">
 
-        <ul class="nav nav-tabs" style="width: 50%; margin:0 auto;">
-            <li class="nav-item"  ng-click="navigate('day')" style="width: 50%; margin:0 auto;">
-                <a class="nav-link" ng-class="{'active':currentTab=='day'}">1Day</a>
-            </li>
-            <li class="nav-item"  ng-click="navigate('week')" style="width: 50%; margin:0 auto;">
-                <a class="nav-link" ng-class="{'active':currentTab=='week'}">1Week</a>
-            </li>
-            <li class="nav-item"  ng-click="navigate('month')" style="width: 50%; margin:0 auto;">
-                <a class="nav-link" ng-class="{'active':currentTab=='month'}">1Month</a>
-            </li>
-
-        </ul>
+        <div class="col-md-12 text-center">
+            <div class="col-md-4">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item" ng-click="navigate('day')" >
+                        <a class="nav-link" ng-class="{'active':currentTab=='day'}">1 Day</a>
+                    </li>
+                    <li class="nav-item" ng-click="navigate('week')">
+                        <a class="nav-link" ng-class="{'active':currentTab=='week'}">1 Week</a>
+                    </li>
+                    <li class="nav-item" ng-click="navigate('month')">
+                        <a class="nav-link" ng-class="{'active':currentTab=='month'}">1 Month</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 
 
         <div class="row">
-            <div class="card col-md-4">
-                <canvas id="level1" class="chart chart-doughnut"
-                        chart-data="dataL1" chart-options="optionsL1" chart-labels="labelsL1">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text" style="text-align:center">Alerts in Level1</p>
-                </div>
-            </div>
-            <div class="card col-md-4">
-                <canvas id="level2" class="chart chart-doughnut"
-                        chart-data="dataL2" chart-options="optionsL2" chart-labels="labelsL2">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text" style="text-align:center">Alerts in Level2</p>
-                </div>
-            </div>
-            <div class="card col-md-4">
-                <canvas id="QC" class="chart chart-doughnut"
-                        chart-data="dataQC" chart-options="optionsQC" chart-labels="labelsQC">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text" style="text-align:center">Alerts in QC</p>
-                </div>
-            </div>
-
-        </div>
-        <div class="row" style="align-content: center">
-            <div class="card col-md-4">
-                <canvas id="MLRO" class="chart chart-doughnut"
-                        chart-data="dataMLRO" chart-options="optionsMLRO" chart-labels="labelsMLRO">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text" style="text-align:center">Alerts in MLRO</p>
-                </div>
-            </div>
-            <div class="card col-md-4">
-                <canvas id="Closed" class="chart chart-doughnut"
-                        chart-data="dataClosed" chart-options="optionsClosed" chart-labels="labelsClosed">
-                </canvas>
-                <div class="card-block">
-                    <p class="card-text" style="text-align:center"> Closed Alerts</p>
+            <div ng-repeat="item in dashboard" class="col-md-4 chart-content">
+                <div  class="card ">
+                    <canvas  class="chart chart-doughnut"
+                             chart-data="item.data" chart-options="chartOption" chart-labels="item.label">
+                    </canvas>
+                    <div class="card-block">
+                        <p class="card-text">Alerts in {{item.pointName}}</p>
+                    </div>
                 </div>
             </div>
         </div>

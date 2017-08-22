@@ -1,69 +1,42 @@
-/**
- * Created by whuang072 on 7/3/2017.
- */
-app.controller('DashboardCtrl', function ($scope, $http, $location, $state) {
+app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $timeout) {
+
+    $scope.currentTab="day"
+
     $scope.navigate = function (flag) {
-        $scope.currentTab=flag;
+        $scope.currentTab = flag;
     }
 
-    $scope.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
-    $scope.optionsL1 = {
+    $scope.workflow = {};
+
+    $scope.chartOption = {
         legend: {
             display: true
-
         }
-        // scales: {
-        //     yAxes: [
-        //         {
-        //             id: 'y-axis-1',
-        //             type: 'linear',
-        //             display: true,
-        //             position: 'left'
-        //         },
-        //         {
-        //             id: 'y-axis-2',
-        //             type: 'linear',
-        //             display: true,
-        //             position: 'right'
-        //         }
-        //     ]
-        // }
     };
-    $scope.optionsL2 = {
-        legend: {
-            display: true
 
-        }
+    $scope.getWorkflow = function () {
+
+        return new Promise(function (resolve, reject) {
+            //$http.get
+
+            $scope.dashboard = [{label: ["point1","others"], data:[20,80], pointName:"point1"},
+                {label: ["point2","total"], data:[30,80], pointName:"point2"},
+                {label: ["point3","total"], data:[40,80], pointName:"point3"},
+                {label: ["point4","total"], data:[10,80], pointName:"point4"},
+                {label: ["point5","total"], data:[10,80], pointName:"point5"},
+               ];
+
+            resolve();
+        });
     }
 
-    $scope.optionsQC = {
-        legend: {
-            display: true
+    //
+    $timeout(function () {
+        $scope.getWorkflow();
+    });
 
-        }
-    }
-    $scope.optionsMLRO = {
-        legend: {
-            display: true
 
-        }
-    }
-    $scope.optionsClosed = {
-        legend: {
-            display: true
 
-        }
-    }
-    $scope.labelsL1= ["Pending", "Finished"];
-    $scope.dataL1 = [25, 75];
-    $scope.labelsL2= ["Pending", "Finished"];
-    $scope.dataL2 = [20, 80];
-    $scope.labelsQC= ["Pending", "Finished"];
-    $scope.dataQC = [20, 70];
-    $scope.labelsMLRO= ["Pending", "Finished"];
-    $scope.dataMLRO = [10, 60];
-    $scope.labelsClosed= ["Pending", "Finished"];
-    $scope.dataClosed = [5, 75];
 });
 
 

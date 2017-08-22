@@ -254,3 +254,26 @@ for table or other requirement, leave it now
     border: dashed #9acfea;
     text-align: center;
 }
+
+
+
+/***
+start of dashboard
+ */
+
+.dashboard {
+    text-align: center;
+}
+
+.dashboard .chart-content{
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 20px; /* Added */
+
+}
+
+
+
+/****
+end of dashboard
+ */
