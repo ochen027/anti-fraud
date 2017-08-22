@@ -196,7 +196,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
     $scope.data = [];
 
     $scope.searchClosedAlert = function () {
-        $http.post("/workflow/getClosedAlerts", $scope.alertSearch)
+        $http.post("/alerts/searchClosedAlert", $scope.alertSearch)
             .then(function success(response) {
                 console.log(response);
                 $scope.data = response.data;
