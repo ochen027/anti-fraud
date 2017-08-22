@@ -1,6 +1,5 @@
 package com.pwc.component.authorize.users.dao;
 
-;
 import com.pwc.component.authorize.users.entity.UserGroup;
 
 import java.util.List;
