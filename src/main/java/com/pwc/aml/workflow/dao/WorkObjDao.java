@@ -243,7 +243,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
         filterList = this.generateFilterList(ase, filterList);
 
-        if (null != ase.getCustomerIdList()) {
+        if (null != ase.getCustomerIdList() && !ase.getAllCustomer()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
             for(String cId : ase.getCustomerIdList()) {
 

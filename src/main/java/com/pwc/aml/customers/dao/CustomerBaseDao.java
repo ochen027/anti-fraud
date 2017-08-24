@@ -100,9 +100,6 @@ public class CustomerBaseDao implements ICustomerBaseDao {
         }else if(StringUtils.isBlank(customerId) && StringUtils.isNotBlank(customerName)){
             hql = "FROM CustomerBase WHERE customerFullName LIKE ?";
             list = em.createQuery(hql).setParameter(1, "%"+customerName+"%").getResultList();
-        }else{
-            hql = "FROM CustomerBase";
-            list = em.createQuery(hql).getResultList();
         }
 
         if(list.size()>0){

@@ -20,6 +20,8 @@ public class AlertSearchEntity {
     private String transIdArray;
     private String currentPointId;
     private String scenarioId;
+    private Boolean isAllCustomer;
+
 
     public String getCustomerId() {
         return customerId;
@@ -139,5 +141,13 @@ public class AlertSearchEntity {
 
     public void setScenarioId(String scenarioId) {
         this.scenarioId = scenarioId;
+    }
+
+    public Boolean getAllCustomer() {
+        return isAllCustomer;
+    }
+
+    public void setAllCustomer(Boolean allCustomer) {
+        isAllCustomer = allCustomer;
     }
 }

@@ -16,6 +16,7 @@ import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.aml.workflow.service.IWorkObjService;
 import com.pwc.aml.workflow.service.IWorkflowExService;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,15 +64,22 @@ public class AlertService implements IAlertService{
 
     @Override
     public List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception {
-        List<String> customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
-        if(null == customerIdList){
-            return null;
-        }else{
+        List<String> customerIdList = null;
+        if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerId())){
+            customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
+            if(null == customerIdList){
+                return null;
+            }
+            ase.setAllCustomer(false);
             ase.setCustomerIdList(customerIdList);
-            String defaultEndId = workflowExService.getWorkflowByDefault().getEndPoint().getFlowPointId();
-            List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId, ase);
-            return workObjList;
+        }else{
+            ase.setAllCustomer(true);
         }
+
+        String defaultEndId = workflowExService.getWorkflowByDefault().getEndPoint().getFlowPointId();
+        List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId, ase);
+        return workObjList;
+
     }
 
     @Override
