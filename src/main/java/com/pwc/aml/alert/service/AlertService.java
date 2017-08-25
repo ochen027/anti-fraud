@@ -65,7 +65,7 @@ public class AlertService implements IAlertService{
     @Override
     public List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception {
         List<String> customerIdList = null;
-        if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerId())){
+        if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName())){
             customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
             if(null == customerIdList){
                 return null;
