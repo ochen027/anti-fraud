@@ -241,9 +241,11 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
                     CompareFilter.CompareOp.EQUAL, Bytes.toBytes(flowPointId)));
         }
 
-        filterList = this.generateFilterList(ase, filterList);
+        if(null != ase) {
+            filterList = this.generateFilterList(ase, filterList);
+        }
 
-        if (null != ase.getCustomerIdList() && !ase.getAllCustomer()) {
+        if (null != ase && null != ase.getCustomerIdList() && !ase.getAllCustomer()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
             for(String cId : ase.getCustomerIdList()) {
 
@@ -262,7 +264,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
             }
             return woList;
-        }else if(null != ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId())||StringUtils.isNotEmpty(ase.getCustomerName()))){
+        }else if(null != ase && null != ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId())||StringUtils.isNotEmpty(ase.getCustomerName()))){
             return null;
         }else{
             scan.setFilter(filterList);

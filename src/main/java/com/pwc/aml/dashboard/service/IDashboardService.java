@@ -7,6 +7,7 @@ import com.pwc.aml.dashboard.entity.DashboardSearch;
 
 public interface IDashboardService {
 	
-	public List<DashboardResult> getAlertDetail(DashboardSearch dashboardSearch) throws Exception;
+	List<DashboardResult> getAlertDetail(DashboardSearch dashboardSearch) throws Exception;
 
+	List<DashboardResult> getAssignStatus() throws Exception;
 }

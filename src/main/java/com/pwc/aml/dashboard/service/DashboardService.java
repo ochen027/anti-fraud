@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pwc.component.assign.dao.IAssignDao;
+import com.pwc.component.assign.entity.Assign;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class DashboardService implements IDashboardService {
 	
 	@Autowired
 	IWorkObjDao workObjDAO;
+
+	@Autowired
+	IAssignDao assignDAO;
 	
 	@Override
 	public List<DashboardResult> getAlertDetail(DashboardSearch dashboardSearch) throws Exception {
@@ -58,5 +63,39 @@ public class DashboardService implements IDashboardService {
 		}
 		return null;
 	}
-	
+
+	@Override
+	public List<DashboardResult> getAssignStatus() throws Exception {
+		List<FlowPoint> definedPointList = workflowExService.getWorkflowByDefault().getFlowPoints();
+		List<DashboardResult> result = new ArrayList<DashboardResult>(definedPointList.size());
+		for(FlowPoint fp : definedPointList){
+			List<WorkObj> workObjsList = workObjDAO.searchAlertWorkObject(fp.getFlowPointId(), null);
+			DashboardResult dr = new DashboardResult();
+			List<String> label = new ArrayList<String>(2);
+			label.add("Assigned");
+			label.add("NotAssigned");
+			List<Integer> data = new ArrayList<Integer>(2);
+			Integer assignCount = this.getAssignedCount(workObjsList);
+			data.add(assignCount);
+			data.add(workObjsList.size() - assignCount);
+			dr.setLabel(label);
+			dr.setData(data);
+			dr.setPointName(fp.getName());
+			result.add(dr);
+		}
+		return result;
+	}
+
+
+
+	private Integer getAssignedCount(List<WorkObj> woList) throws Exception{
+		Integer count = 0;
+		for(WorkObj wo : woList){
+			if(null != assignDAO.findByObjId(wo.getWorkObjId())){
+				count++;
+			}
+		}
+		return count;
+	}
+
 }
