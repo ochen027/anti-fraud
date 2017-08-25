@@ -2,6 +2,7 @@ package com.pwc.aml.suppress.controller;
 
 
 
+import com.pwc.aml.suppress.entity.RemoveSuppress;
 import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.suppress.service.ISuppressService;
 import com.pwc.common.base.controller.BaseController;
@@ -54,6 +55,15 @@ public class SuppressController extends BaseController {
 
 
 
+    @PostMapping("removeSuppress")
+    public ResponseEntity<Void> removeSuppress(@RequestBody RemoveSuppress removeSuppress, HttpSession session) throws Exception {
 
+        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
+        Users user = (Users) userInfo.get("User");
+
+//        suppressService.InActive(removeSuppress.getIds(),user);
+
+        return new ResponseEntity<Void>( HttpStatus.OK);
+    }
 
 }

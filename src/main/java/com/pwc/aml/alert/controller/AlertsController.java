@@ -5,6 +5,7 @@ import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
 import com.pwc.aml.alert.service.IAlertService;
 import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.transation.service.ITransactionService;
 import com.pwc.aml.workflow.entity.WorkObj;
@@ -40,6 +41,10 @@ public class AlertsController extends BaseController {
     @PostMapping("searchClosedAlert")
     public ResponseEntity<List<WorkObj>> searchClosedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
         return new ResponseEntity<List<WorkObj>>(alertService.searchClosedAlerts(se), HttpStatus.OK);
+    }
+    @PostMapping("searchSuppressedAlert")
+    public ResponseEntity<List<Suppress>> searchSuppressedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
+        return new ResponseEntity<List<Suppress>>(alertService.searchSuppressedAlerts(se), HttpStatus.OK);
     }
 
     @PostMapping("createAlert")

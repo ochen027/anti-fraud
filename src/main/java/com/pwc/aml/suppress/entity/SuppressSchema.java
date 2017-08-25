@@ -11,6 +11,9 @@ public class SuppressSchema {
 
     public static final String endDate="endDate";
 
+    public static final String alertId="alertId";
+
+
     public static final String createdBy="createdBy";
     public static final String createdDate="createdDate";
     public static final String updateBy="updateBy";

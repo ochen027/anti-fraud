@@ -1,6 +1,7 @@
 package com.pwc.aml.suppress.entity;
 
-import com.pwc.aml.customers.entity.Customers;
+import com.pwc.aml.alert.entity.Alerts;
+import com.pwc.aml.customers.entity.CustomerBase;
 
 import com.pwc.aml.rules.entity.Scenario;
 import com.pwc.common.base.entity.BaseEntity;
@@ -14,20 +15,22 @@ public class Suppress  extends BaseEntity {
 
     private String suppressId;
 
-    private Customers customers;
+    private CustomerBase customerBase;
 
     private Scenario scenario;
+
+    private Alerts alerts;
 
     private boolean isPermanent;
 
     private Date endDate;
 
-    public Customers getCustomers() {
-        return customers;
+    public CustomerBase getCustomerBase() {
+        return customerBase;
     }
 
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
+    public void setCustomerBase(CustomerBase customerBase) {
+        this.customerBase = customerBase;
     }
 
     public Scenario getScenario() {
@@ -60,5 +63,13 @@ public class Suppress  extends BaseEntity {
 
     public void setSuppressId(String suppressId) {
         this.suppressId = suppressId;
+    }
+
+    public Alerts getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(Alerts alerts) {
+        this.alerts = alerts;
     }
 }

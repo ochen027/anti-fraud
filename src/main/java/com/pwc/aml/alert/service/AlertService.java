@@ -8,6 +8,8 @@ import com.pwc.aml.customers.dao.ICustomerBaseDao;
 import com.pwc.aml.customers.dao.ICustomerDAO;
 import com.pwc.aml.customers.service.ICustomerService;
 import com.pwc.aml.rules.entity.Scenario;
+import com.pwc.aml.suppress.entity.Suppress;
+import com.pwc.aml.suppress.service.ISuppressService;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.workflow.dao.IWorkflowExDao;
 import com.pwc.aml.workflow.entity.FlowPointEx;
@@ -43,6 +45,8 @@ public class AlertService implements IAlertService{
 
     @Autowired
     IWorkflowExDao workflowExDao;
+    @Autowired
+    ISuppressService suppressService;
 
 
     static String DEFAULT_WORKFLOW = "DEFAULT_WORKFLOW";
@@ -80,6 +84,25 @@ public class AlertService implements IAlertService{
         List<WorkObj> workObjList = workObjService.getWorkObjsByPointId(defaultEndId, ase);
         return workObjList;
 
+    }
+
+    @Override
+    public List<Suppress> searchSuppressedAlerts(AlertSearchEntity ase) throws Exception {
+        List<String> customerIdList = null;
+        if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName())){
+            customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
+            if(null == customerIdList){
+                return null;
+            }
+            ase.setCustomerIdList(customerIdList);
+            ase.setAllCustomer(false);
+
+        }else{
+            ase.setAllCustomer(true);
+        }
+//        List<Suppress> SuppressList=suppressService.findAll();
+        List<Suppress> SuppressList=suppressService.findSuppress(ase);
+        return SuppressList;
     }
 
     @Override

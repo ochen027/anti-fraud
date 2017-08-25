@@ -1,5 +1,6 @@
 package com.pwc.aml.suppress.service;
 
+import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.suppress.dao.ISuppressDao;
 import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.common.util.FormatUtils;
@@ -32,6 +33,10 @@ public class SuppressService implements ISuppressService {
     @Override
     public List<Suppress> findAll() throws Exception {
         return suppressDao.findAll();
+    }
+    @Override
+    public List<Suppress> findSuppress(AlertSearchEntity ase) throws Exception {
+        return suppressDao.findSuppress(ase);
     }
 
     @Override

@@ -162,15 +162,38 @@ app.controller('AvailableAlertCtrl', function ($scope, $http, $location, $state,
 });
 
 app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state) {
+    $scope.alertSearch = {};
+    $scope.data = [];
+    $scope.checkAll = false; //default false;
+    $scope.checkids = [];
+    $scope.checkList = [];
+    $scope.conf = [];
+    $scope.all = function () {
 
-
-
-    $scope.checkAll = function () {
-
+        if ($scope.checkAll) {
+            $scope.isChecked = true;
+        } else {
+            $scope.isChecked = false;
+        }
     }
 
-    $scope.select = function (action, record, index) {
 
+    //combox select
+
+    $scope.select = function (action, record, index) {
+        console.log("checkbox select");
+        console.log($scope.conf[index]);
+        if (action.target.checked) {
+            $scope.checkList.push({"record": record, "index": index});
+        }
+    }
+
+
+    $scope.reset = function () {
+        $scope.data = [];
+        $scope.alertSearch = {};
+        $scope.suppressData=[];
+        $scope.suppressDataDisplay=[];
     }
 
     //export
@@ -180,12 +203,37 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
 
     //clear select
     $scope.clearSelect = function () {
-
+        console.log("clear select");
+        $scope.checkAll = false;
+        if ($scope.conf.length != 0) {
+            angular.forEach($scope.conf, function (ele, index) {
+                $scope.conf[index] = false;
+            })
+        }
     }
 
     //remove
     $scope.remove = function () {
 
+    }
+    // $scope.getTotal = function () {
+    //     var totalAmt = 0.0;
+    //     for (var key in $scope.data) {
+    //         if (parseFloat($scope.data[key].alerts.totalAmt)) {
+    //             totalAmt += parseFloat($scope.data[key].alerts.totalAmt);
+    //         }
+    //     }
+    //     return totalAmt;
+    // }
+    $scope.search = function () {
+        $http.post("/alerts/searchSuppressedAlert", $scope.alertSearch)
+            .then(function success(response) {
+                console.log(response);
+                $scope.suppressData = response.data;
+                $scope.suppressDataDisplay=response.data.slice();
+            }, function error() {
+                console.log(error);
+            });
     }
 
 
@@ -224,7 +272,7 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {
     $scope.alerts = {};
-    $scope.customer = {};
+    $scope.customerBase = {};
     $scope.dataFiles = [];
     $scope.itemsByPage = 7;
     $scope.SuspiciousType = "Suspicious 1";
@@ -234,65 +282,73 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
     $scope.header = '';
 
     let showState = {
-        available:{
-            sar:false,
-            document:false,
-            comments:false,
-            returnButton:false,
-            escalate:false,
-            close:false,
-            suppress:false,
+        available: {
+            sar: false,
+            document: false,
+            comments: false,
+            returnButton: false,
+            escalate: false,
+            close: false,
+            suppress: false,
         },
-        "L1 review":{
-            sar:false,
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:false,
-            suppress:false,
+        "L1 review": {
+            sar: false,
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: false,
+            suppress: false,
         },
-        "l2 review":{
-            sar:false,
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:true,
-            suppress:true
-        },"QC review":{
-            sar:false,
-            document:true,
-            comments:true,
-            returnButton:false,
-            escalate:true,
-            close:true,
-            suppress:true
-        },"MLRO review":{
-            sar:true,
-            document:true,
-            comments:true,
-            returnButton:true,
-            escalate:false,
-            close:false,
-            suppress:true
+        "l2 review": {
+            sar: false,
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: true,
+            suppress: true
+        }, "QC review": {
+            sar: false,
+            document: true,
+            comments: true,
+            returnButton: false,
+            escalate: true,
+            close: true,
+            suppress: true
+        }, "MLRO review": {
+            sar: true,
+            document: true,
+            comments: true,
+            returnButton: true,
+            escalate: false,
+            close: false,
+            suppress: true
         }
     };
 
     $scope.currentState = {};
 
-    $scope.suppress={
-        customers:{},
-        scenario:{},
-        permanent:true,
-        endDate:new Date(),
+    $scope.suppress = {
+        customerBase: {},
+        scenario: {},
+        alerts: {},
+        permanent: true,
+        endDate: new Date(),
     };
 
-    $scope.saveSuppress=function(){
+    $scope.saveSuppress = function () {
 
-        $scope.suppress.customers=$scope.customer;
-        $scope.suppress.scenario.id=$scope.alerts.scenarioId;
-        $http.post("/suppress/addSuppress",$scope.suppress).then(function(){
+        var otherParams = {
+            customerBase: $scope.customerBase,
+            scenario: {
+                id: $scope.alerts.scenarioId
+            },
+            alerts: $scope.alerts
+        };
+        angular.extend($scope.suppress, otherParams);
+
+        $http.post("/suppress/addSuppress", $scope.suppress).then(function () {
             alert("suppress saved!");
             $("#suppressModal").modal("hide");
         });
@@ -328,7 +384,8 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 if (res.status != 200) {
                     console.log(res);
                     reject();
-                };
+                }
+                ;
 
                 $scope.commentList = res.data;
                 resolve();
@@ -364,9 +421,9 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
         window.location.href = "/documents/download/" + fileName + "/" + filePath;
     }
 
-    $scope.suppressDialog=function(){
+    $scope.suppressDialog = function () {
 
-            $("#suppressModal").modal("show");
+        $("#suppressModal").modal("show");
 
     }
 
@@ -423,6 +480,7 @@ app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $s
                 return;
             }
             $scope.customer = res.data;
+            $scope.customerBase = res.data;
             if (res.data.individual === null) {
                 $scope.customerType = 'corporate';
             }
@@ -513,7 +571,6 @@ app.controller('AvailableAlertInfoCtrl', function ($scope, $http, $location, $st
 });
 
 app.controller('SuppressedAlertInfoCtrl', function ($scope, $http, $location, $state) {
-    console.log("avaliable alert info ctrl");
 
     $scope.summaryAction = false;
     $scope.customerAction = false;
@@ -533,17 +590,7 @@ app.controller('SuppressedAlertInfoCtrl', function ($scope, $http, $location, $s
             $scope.legalRepsAction = !$scope.legalRepsAction;
         }
     }
-    $http.get("/alert/suppressedInfo/12345")
-        .then(function sucess(result) {
-            console.log(result);
-            $scope.summary = result.data.summary;
-            $scope.individual = result.data.individual;
-            $scope.corporate = result.data.corporate;
-            $scope.legalRepresentative = result.data.legalRepresentative;
-            $scope.data = result.data.tableRecords;
-        }, function error(error) {
-            console.log(error);
-        });
+
     $scope.goBack = function () {
         $state.go("available");
     }
@@ -571,17 +618,19 @@ app.controller('ClosedAlertInfoCtrl', function ($scope, $http, $location, $state
             $scope.legalRepsAction = !$scope.legalRepsAction;
         }
     }
-    $http.get("/alert/closedAlertInfo/12345")
-        .then(function sucess(result) {
-            console.log(result);
-            $scope.summary = result.data.summary;
-            $scope.individual = result.data.individual;
-            $scope.corporate = result.data.corporate;
-            $scope.legalRepresentative = result.data.legalRepresentative;
-            $scope.data = result.data.tableRecords;
-        }, function error(error) {
-            console.log(error);
-        });
+
+    // 12345???
+    // $http.get("/alert/closedAlertInfo/12345")
+    //     .then(function sucess(result) {
+    //         console.log(result);
+    //         $scope.summary = result.data.summary;
+    //         $scope.individual = result.data.individual;
+    //         $scope.corporate = result.data.corporate;
+    //         $scope.legalRepresentative = result.data.legalRepresentative;
+    //         $scope.data = result.data.tableRecords;
+    //     }, function error(error) {
+    //         console.log(error);
+    //     });
     $scope.goBack = function () {
         $state.go("available");
     }
@@ -722,7 +771,7 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
         $scope.scenario = scenario;
     }
 
-    $scope.create = function (){
+    $scope.create = function () {
         if ($scope.checkTrans.length != 0) {
             var keyCustomer = $scope.checkTrans[0].customerId;
             for (var key in $scope.checkTrans) {
@@ -737,25 +786,25 @@ app.controller('CreateAlertCtrl', function ($scope, $http, $location, $state, $t
                     return;
                 }
             }
-        }else{
+        } else {
             alert("Please select at least one transaction to create alert by manually!");
             return;
         }
 
-        $scope.alertCreation = {transList:$scope.checkTrans,scenario:$scope.scenario};
-        $http.post("/alerts/createAlert",$scope.alertCreation).then(function success(response) {
-                console.log(response);
-                $scope.checkTrans = [];
-                $scope.transSearch = {};
-                $scope.transData = [];
-                $scope.checkAll = false;
-                $scope.checkTrans = [];
-                $scope.scenario = {};
-                alert("Create Successfully!");
-            }, function error() {
-                console.log(error);
-                alert("Create Failure, "+error);
-            });
+        $scope.alertCreation = {transList: $scope.checkTrans, scenario: $scope.scenario};
+        $http.post("/alerts/createAlert", $scope.alertCreation).then(function success(response) {
+            console.log(response);
+            $scope.checkTrans = [];
+            $scope.transSearch = {};
+            $scope.transData = [];
+            $scope.checkAll = false;
+            $scope.checkTrans = [];
+            $scope.scenario = {};
+            alert("Create Successfully!");
+        }, function error() {
+            console.log(error);
+            alert("Create Failure, " + error);
+        });
     }
 
 });
