@@ -33,4 +33,14 @@ public class DashboardsController {
 		return new ResponseEntity<List<DashboardResult>>(dashboardService.getAssignStatus(), HttpStatus.OK);
 	}
 
+	@GetMapping("sar")
+	public ResponseEntity<List<DashboardResult>> getSARStatus() throws Exception{
+		return new ResponseEntity<List<DashboardResult>>(dashboardService.getSARStatus(), HttpStatus.OK);
+	}
+
+	@GetMapping("due")
+	public ResponseEntity<List<DashboardResult>> getDueStatus() throws Exception{
+		return new ResponseEntity<List<DashboardResult>>(dashboardService.getDueStatus(), HttpStatus.OK);
+	}
+
 }

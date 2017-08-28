@@ -10,4 +10,8 @@ public interface IDashboardService {
 	List<DashboardResult> getAlertDetail(DashboardSearch dashboardSearch) throws Exception;
 
 	List<DashboardResult> getAssignStatus() throws Exception;
+
+	List<DashboardResult> getSARStatus() throws Exception;
+
+	List<DashboardResult> getDueStatus() throws Exception;
 }

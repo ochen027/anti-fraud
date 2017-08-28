@@ -5,8 +5,8 @@ import java.util.List;
 
 public class DashboardResult {
 	
-	private List<String> label = new ArrayList<String>(2);
-	private List<Integer> data = new ArrayList<Integer>(2);
+	private List<String> label;
+	private List<Integer> data;
 	private String pointName;
 	public List<String> getLabel() {
 		return label;

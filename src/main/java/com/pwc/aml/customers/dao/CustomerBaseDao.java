@@ -125,4 +125,20 @@ public class CustomerBaseDao implements ICustomerBaseDao {
         }
         return customerBase;
     }
+
+    @Override
+    public List<String> findHighRiskCustomer() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<CustomerBase> cq = cb.createQuery(CustomerBase.class);
+        Root<CustomerBase> rootEntry = cq.from(CustomerBase.class);
+        Predicate predicate = cb.equal(rootEntry.get("customerRiskLevel"), "H");
+        CriteriaQuery<CustomerBase> single = cq.select(rootEntry).where(predicate);
+        TypedQuery<CustomerBase> query = em.createQuery(single);
+        List<CustomerBase> cList = query.getResultList();
+        List<String> idList = new ArrayList<String>(cList.size());
+        for(CustomerBase c : cList){
+            idList.add(c.getCustomerId());
+        }
+        return idList;
+    }
 }
