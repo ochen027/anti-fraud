@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
+import com.pwc.aml.dashboard.entity.*;
 import com.pwc.component.assign.dao.IAssignDao;
 import com.pwc.component.assign.entity.Assign;
 import org.apache.commons.lang.StringUtils;
@@ -17,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pwc.aml.alert.entity.AlertSearchEntity;
-import com.pwc.aml.dashboard.entity.DashboardResult;
-import com.pwc.aml.dashboard.entity.DashboardSearch;
 import com.pwc.aml.workflow.dao.IWorkObjDao;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.service.IWorkflowExService;
@@ -39,7 +38,7 @@ public class DashboardService implements IDashboardService {
 
 	@Autowired
 	ICustomerBaseDao customerBaseDAO;
-	
+
 	@Override
 	public List<DashboardResult> getAlertDetail(DashboardSearch dashboardSearch) throws Exception {
 		if(StringUtils.isNotBlank(dashboardSearch.getStartDate()) && StringUtils.isNotBlank(dashboardSearch.getEndDate())){
@@ -72,31 +71,89 @@ public class DashboardService implements IDashboardService {
 	}
 
 	@Override
-	public List<DashboardResult> getAssignStatus() throws Exception {
+	public DashboardEntity getAssignStatus() throws Exception {
 		List<FlowPoint> definedPointList = workflowExService.getWorkflowByDefault().getFlowPoints();
-		List<DashboardResult> result = new ArrayList<DashboardResult>(definedPointList.size());
-		for(FlowPoint fp : definedPointList){
-			List<WorkObj> workObjsList = workObjDAO.searchAlertWorkObject(fp.getFlowPointId(), null);
-			DashboardResult dr = new DashboardResult();
-			List<String> label = new ArrayList<String>(2);
-			label.add("Assigned");
-			label.add("NotAssigned");
-			List<Integer> data = new ArrayList<Integer>(2);
-			Integer assignCount = this.getAssignCount(workObjsList);
-			data.add(assignCount);
-			data.add(workObjsList.size() - assignCount);
-			dr.setLabel(label);
-			dr.setData(data);
-			dr.setPointName(fp.getName());
-			result.add(dr);
+		DashboardEntity dashboardEntity = new DashboardEntity();
+		List<String> labels = new ArrayList<String>(4);
+		List<ArrayList<Integer>> data = new ArrayList<ArrayList<Integer>>(2);
+		List<String> series = new ArrayList<String>(2);
+		series.add("Assigned");
+		series.add("Not Assigned");
+		ArrayList<Integer> assignData = new ArrayList<Integer>(4);
+		ArrayList<Integer> notAssignData = new ArrayList<Integer>(4);
+
+		AlertAssigning aa = new AlertAssigning();
+
+		for(int i=0; i<definedPointList.size();i++){
+			List<WorkObj> workObjsList = workObjDAO.searchAlertWorkObject(definedPointList.get(i).getFlowPointId(), null);
+
+			String pointName = definedPointList.get(i).getName();
+			if(StringUtils.contains(pointName,"L1 available pool")){
+				aa.setUnAssignCountL1(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"L1 review")){
+				aa.setAssignCountL1(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"l2 review")){
+				aa.setAssignCountL2(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"L2 available pool")){
+				aa.setUnAssignCountL2(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"QC review")){
+				aa.setAssignCountQC(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"MLRO review")){
+				aa.setAssignCountML(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"Qc available pool")){
+				aa.setUnAssignCountQC(workObjsList.size());
+				continue;
+			}
+			if(StringUtils.contains(pointName,"MLRO available Pool")){
+				aa.setUnAssignCountML(workObjsList.size());
+				continue;
+			}
 		}
-		return result;
+
+		labels.add(0, "L1");
+		labels.add(1, "L2");
+		labels.add(2, "QC");
+		labels.add(3, "MLRO");
+
+		assignData.add(0, aa.getAssignCountL1());
+		assignData.add(1, aa.getAssignCountL2());
+		assignData.add(2, aa.getAssignCountQC());
+		assignData.add(3, aa.getAssignCountML());
+
+		notAssignData.add(0, aa.getUnAssignCountL1());
+		notAssignData.add(1, aa.getUnAssignCountL2());
+		notAssignData.add(2, aa.getUnAssignCountQC());
+		notAssignData.add(3, aa.getUnAssignCountML());
+
+		data.add(0,assignData);
+		data.add(1,notAssignData);
+		dashboardEntity.setData(data);
+		dashboardEntity.setLabels(labels);
+		dashboardEntity.setSeries(series);
+		return dashboardEntity;
 	}
 
 	@Override
-	public List<DashboardResult> getSARStatus() throws Exception {
+	public DashboardEntity getSARStatus() throws Exception {
 		LocalDate nowDate = LocalDate.now();
-		List<DashboardResult> drList = new ArrayList<DashboardResult>(12);
+		DashboardEntity de = new DashboardEntity();
+		List<String> labels = new ArrayList<String>(12);
+		List<ArrayList<Integer>> data = new ArrayList<ArrayList<Integer>>(3);
+		ArrayList<Integer> sarData = new ArrayList<Integer>(12);
+		ArrayList<Integer> restData = new ArrayList<Integer>(12);
+		ArrayList<Integer> highRiskData = new ArrayList<Integer>(12);
 		for(int i =0; i<12; i++){
 			LocalDate date = nowDate.minusMonths((long)i);
 			Date firstDay = FormatUtils.LocalDateToDate(date.with(TemporalAdjusters.firstDayOfMonth()));
@@ -105,86 +162,90 @@ public class DashboardService implements IDashboardService {
 			ase.setCreatedFromDate(firstDay);
 			ase.setCreatedToDate(lastDay);
 			List<WorkObj> alertsList = workObjDAO.searchAlertWorkObject(null, ase);
+			//Inert total Alerts
+			labels.add(i, date.getYear()+"-"+date.getMonthValue());
 
 			ase.setCustomerIdList(customerBaseDAO.findHighRiskCustomer());
 			ase.setAllCustomer(false);
 			List<WorkObj> highRiskAlertsList = workObjDAO.searchAlertWorkObject(null, ase);
 
-			DashboardResult dr = new DashboardResult();
-			List<String> label = new ArrayList<String>(3);
-			List<Integer> data = new ArrayList<Integer>(3);
-
-			label.add("totalCount");
-			label.add("sarCount");
-			label.add("highRiskCount");
-			data.add(alertsList.size());
-			data.add(this.getSARCount(alertsList));
-			data.add(highRiskAlertsList.size());
-
-			dr.setLabel(label);
-			dr.setData(data);
-			dr.setPointName(date.getYear()+"-"+date.getMonthValue());
-			drList.add(dr);
+			Integer sarCount = this.getSARCount(alertsList);
+			sarData.add(i, sarCount);
+			highRiskData.add(i, highRiskAlertsList.size());
+			restData.add(i, alertsList.size() - sarCount);
 		}
-		return drList;
+		data.add(0, sarData);
+		data.add(1, restData);
+		data.add(2, highRiskData);
+		de.setLabels(labels);
+		de.setData(data);
+		return de;
 	}
 
 	@Override
-	public List<DashboardResult> getDueStatus() throws Exception {
+	public DashboardEntity getDueStatus() throws Exception {
 		LocalDate nowDate = LocalDate.now();
-		List<DashboardResult> drList = new ArrayList<DashboardResult>(3);
 		List<FlowPoint> definedPointList = workflowExService.getWorkflowByDefault().getFlowPoints();
+		DashboardEntity de = new DashboardEntity();
 
 		Integer overdueDays = 14;
 		Integer cutdownDays = overdueDays*2/3;
 
 		Date firstFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays(1L));
 		Date firstToDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays-1)));
-
-		HashMap<String, Integer> map1 = this.getDueAlert(firstFromDate, firstToDate, definedPointList);
-		DashboardResult dr1 = new DashboardResult();
-		List<String> label1 = new ArrayList<String>(map1.size());
-		List<Integer> data1 = new ArrayList<Integer>(map1.size());
-		for(Map.Entry<String, Integer> entityMap : map1.entrySet()){
-			label1.add(entityMap.getKey());
-			data1.add(entityMap.getValue());
-		}
-		dr1.setLabel(label1);
-		dr1.setData(data1);
-		dr1.setPointName("1-"+cutdownDays);
-		drList.add(dr1);
-
+		AlertDue alertDue1= this.getDueAlert(firstFromDate, firstToDate, definedPointList);
 
 		Date secondFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays)));
 		Date secondToDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays-1)));
-		HashMap<String, Integer> map2 = this.getDueAlert(secondFromDate, secondToDate, definedPointList);
-		DashboardResult dr2 = new DashboardResult();
-		List<String> label2 = new ArrayList<String>(map2.size());
-		List<Integer> data2 = new ArrayList<Integer>(map2.size());
-		for(Map.Entry<String, Integer> entityMap : map2.entrySet()){
-			label2.add(entityMap.getKey());
-			data2.add(entityMap.getValue());
-		}
-		dr2.setLabel(label2);
-		dr2.setData(data2);
-		dr2.setPointName(cutdownDays+"-"+overdueDays);
-		drList.add(dr2);
+		AlertDue alertDue2 = this.getDueAlert(secondFromDate, secondToDate, definedPointList);
 
 		Date thirdFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays)));
-		HashMap<String, Integer> map3 = this.getDueAlert(thirdFromDate, null, definedPointList);
-		DashboardResult dr3 = new DashboardResult();
-		List<String> label3 = new ArrayList<String>(map3.size());
-		List<Integer> data3 = new ArrayList<Integer>(map3.size());
-		for(Map.Entry<String, Integer> entityMap : map3.entrySet()){
-			label3.add(entityMap.getKey());
-			data3.add(entityMap.getValue());
-		}
-		dr3.setLabel(label3);
-		dr3.setData(data3);
-		dr3.setPointName("overdue");
-		drList.add(dr3);
+		AlertDue alertDue3 = this.getDueAlert(thirdFromDate, null, definedPointList);
 
-		return drList;
+		ArrayList<Integer> data1List = new ArrayList<Integer>(3);
+		ArrayList<Integer> data2List = new ArrayList<Integer>(3);
+		ArrayList<Integer> data3List = new ArrayList<Integer>(3);
+		ArrayList<Integer> data4List = new ArrayList<Integer>(3);
+
+		data1List.add(0, alertDue1.getCountL1());
+		data1List.add(1, alertDue2.getCountL1());
+		data1List.add(2, alertDue3.getCountL1());
+
+		data2List.add(0, alertDue1.getCountL2());
+		data2List.add(1, alertDue2.getCountL2());
+		data2List.add(2, alertDue3.getCountL2());
+
+		data3List.add(0, alertDue1.getCountQC());
+		data3List.add(1, alertDue2.getCountQC());
+		data3List.add(2, alertDue3.getCountQC());
+
+		data4List.add(0, alertDue1.getCountML());
+		data4List.add(1, alertDue2.getCountML());
+		data4List.add(2, alertDue3.getCountML());
+
+
+		List<String> labels = new ArrayList<String>(3);
+		labels.add(0,"1-"+(cutdownDays+1));
+		labels.add(1, cutdownDays+1+"-"+overdueDays);
+		labels.add(2, "overdue");
+
+
+		List<String> series = new ArrayList<String>(4);
+		series.add(0, "L1");
+		series.add(1, "L2");
+		series.add(2, "QC");
+		series.add(3, "ML");
+
+		List<ArrayList<Integer>> data = new ArrayList<ArrayList<Integer>>(4);
+		data.add(0, data1List);
+		data.add(1, data2List);
+		data.add(2, data3List);
+		data.add(3, data4List);
+
+		de.setLabels(labels);
+		de.setSeries(series);
+		de.setData(data);
+		return de;
 	}
 
 
@@ -208,7 +269,7 @@ public class DashboardService implements IDashboardService {
 		return count;
 	}
 
-	private HashMap<String, Integer> getDueAlert(Date fromDate, Date EndDate, List<FlowPoint> fpList) throws Exception{
+	private AlertDue getDueAlert(Date fromDate, Date EndDate, List<FlowPoint> fpList) throws Exception{
 		HashMap<String, Integer> resultMap = new HashMap<String, Integer>();
 		for(FlowPoint fp : fpList){
 			String pointName = fp.getName();
@@ -219,8 +280,55 @@ public class DashboardService implements IDashboardService {
 			Integer count = woList.size();
 			resultMap.put(pointName, count);
 		}
-		return resultMap;
+		Integer countL1 = 0;
+		Integer countL2 = 0;
+		Integer countQC = 0;
+		Integer countML = 0;
+		for(Map.Entry<String, Integer> entry : resultMap.entrySet()){
+			if(StringUtils.contains(entry.getKey(), "L1 available pool")){
+				countL1 += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "L1 review")){
+				countL1 += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "l2 available pool")){
+				countL2 += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "L2 review")){
+				countL2 += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "Qc available pool")){
+				countQC += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "QC review")){
+				countQC += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "MLRO available Pool")){
+				countML += entry.getValue();
+				continue;
+			}
+			if(StringUtils.contains(entry.getKey(), "MLRO review")){
+				countML += entry.getValue();
+				continue;
+			}
+		}
+
+		AlertDue ad = new AlertDue();
+		ad.setCountL1(countL1);
+		ad.setCountL2(countL2);
+		ad.setCountQC(countQC);
+		ad.setCountML(countML);
+
+		return ad;
 	}
+
+
 
 
 }

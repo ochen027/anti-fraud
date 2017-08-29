@@ -6,6 +6,7 @@
 
     <div class="col-md-12">
 
+        <!--
         <div class="col-md-12 text-center">
             <div class="col-md-4 chart-content">
                 <ul class="nav nav-pills nav-justified">
@@ -36,7 +37,47 @@
                 </div>
             </div>
         </div>
+        -->
 
+        <div class="row">
+            <div class="col-md-10 chart-content">
+                <div  class="card ">
+                    <div class="card-block">
+                        <p class="card-text">Alerts Pending in Each Level</p>
+                    </div>
+                    <canvas id="status" class="chart chart-bar" chart-options="barDataOptions.options"
+                            chart-data="statusData.data" chart-labels="statusData.labels" chart-series="statusData.series">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 chart-content">
+                <div  class="card ">
+                    <div class="card-block">
+                        <p class="card-text">Alerts Detail by Month</p>
+                    </div>
+                    <canvas id="sar" class="chart-bar"
+                            chart-data="sarData.data" chart-labels="sarData.labels" chart-colors="colors"
+                            chart-dataset-override="datasetOverride" chart-options="mixOptions.options">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 chart-content">
+                <div  class="card ">
+                    <div class="card-block">
+                        <p class="card-text">Due Date Administration</p>
+                    </div>
+                    <canvas id="due" class="chart chart-bar" chart-options="barDataOptions.options"
+                            chart-data="dueData.data" chart-labels="dueData.labels" chart-series="dueData.series">
+                    </canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

@@ -2,6 +2,7 @@ package com.pwc.aml.dashboard.controller;
 
 import java.util.List;
 
+import com.pwc.aml.dashboard.entity.DashboardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +30,18 @@ public class DashboardsController {
 
 
 	@GetMapping("assign")
-	public ResponseEntity<List<DashboardResult>> getAssignStatus() throws Exception{
-		return new ResponseEntity<List<DashboardResult>>(dashboardService.getAssignStatus(), HttpStatus.OK);
+	public ResponseEntity<DashboardEntity> getAssignStatus() throws Exception{
+		return new ResponseEntity<DashboardEntity>(dashboardService.getAssignStatus(), HttpStatus.OK);
 	}
 
 	@GetMapping("sar")
-	public ResponseEntity<List<DashboardResult>> getSARStatus() throws Exception{
-		return new ResponseEntity<List<DashboardResult>>(dashboardService.getSARStatus(), HttpStatus.OK);
+	public ResponseEntity<DashboardEntity> getSARStatus() throws Exception{
+		return new ResponseEntity<DashboardEntity>(dashboardService.getSARStatus(), HttpStatus.OK);
 	}
 
 	@GetMapping("due")
-	public ResponseEntity<List<DashboardResult>> getDueStatus() throws Exception{
-		return new ResponseEntity<List<DashboardResult>>(dashboardService.getDueStatus(), HttpStatus.OK);
+	public ResponseEntity<DashboardEntity> getDueStatus() throws Exception{
+		return new ResponseEntity<DashboardEntity>(dashboardService.getDueStatus(), HttpStatus.OK);
 	}
 
 }
