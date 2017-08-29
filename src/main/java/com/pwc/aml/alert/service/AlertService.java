@@ -100,7 +100,7 @@ public class AlertService implements IAlertService{
         }else{
             ase.setAllCustomer(true);
         }
-//        List<Suppress> SuppressList=suppressService.findAll();
+//       List<Suppress> SuppressList=suppressService.findAllActive();
         List<Suppress> SuppressList=suppressService.findSuppress(ase);
         return SuppressList;
     }

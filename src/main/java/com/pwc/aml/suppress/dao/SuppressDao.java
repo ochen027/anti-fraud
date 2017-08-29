@@ -119,7 +119,11 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
-
+        if(null!=ase.getActive()&&true==ase.getActive()){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                    Bytes.toBytes(SuppressSchema.isActive),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("true"))));
+        }
 
         //Filter Alert Closed By
         if (StringUtils.isNotEmpty(ase.getClosedBy())) {
@@ -152,7 +156,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
     public List<Suppress> findSuppress( AlertSearchEntity ase) throws Exception {
         initial();
         Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
 
         filterList = this.generateFilterList(ase, filterList);
 
@@ -198,7 +202,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(SuppressSchema.isActive),
-                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(true)));
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes("true")));
         scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Suppress> tList = new ArrayList<Suppress>();

@@ -34,18 +34,18 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Scenario No</label>
                     <div class="col-8">
-                        <input class="form-control" ng-model="alertSearch.scenarioId" />
+                        <input class="form-control" ng-model="alertSearch.scenarioId"  />
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label text-right">Scenario Desc</label>
-                    <div class="col-8">
-                        <input class="form-control"/>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="col-md-4">-->
+                <!--<div class="form-group row">-->
+                    <!--<label class="col-4 col-form-label text-right" >Scenario Desc</label>-->
+                    <!--<div class="col-8">-->
+                        <!--<input class="form-control"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="col-md-4">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right"> Alert ID</label>
@@ -54,27 +54,36 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label text-right">Total Amount</label>
-                    <div class="col-8">
-                        <input class="form-control" ng-model="alertSearch.totalAmt" />
-                    </div>
-                </div>
-            </div>
             <div class="col-md-4">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Status</label>
                     <div class="col-8">
-                        <label> <input name="status" type="radio"/> All</label>
-                        <label> <input name="status" type="radio"/> Active </label>
+                        <label> <input type="radio" name="status" ng-model="alertSearch.active" ng-value="false" ng-checked="true"/> All</label>
+                        <label> <input type="radio" name="status" ng-model="alertSearch.active" ng-value="true"/> Active </label>
                     </div>
                 </div>
             </div>
-
         </div>
+        <!--<div class="row">-->
+            <!--<div class="col-md-4">-->
+                <!--<div class="form-group row">-->
+                    <!--<label class="col-4 col-form-label text-right">Total Amount</label>-->
+                    <!--<div class="col-8">-->
+                        <!--<input class="form-control" ng-model="alertSearch.totalAmt" />-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-4">-->
+                <!--<div class="form-group row">-->
+                    <!--<label class="col-4 col-form-label text-right">Status</label>-->
+                    <!--<div class="col-8">-->
+                        <!--<label> <input type="radio" name="status" ng-model="alertSearch.isActive" ng-value="false"/> All</label>-->
+                        <!--<label> <input type="radio" name="status" ng-model="alertSearch.isActive" ng-value="true"/> Active </label>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
     </div>
 
 
