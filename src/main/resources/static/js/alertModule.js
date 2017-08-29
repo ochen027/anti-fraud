@@ -198,6 +198,7 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
 
     //export
     $scope.export = function () {
+        window.open("/suppress/export",$scope.alertSearch);
         console.log("export");
     }
 
@@ -216,17 +217,9 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
     $scope.remove = function () {
 
     }
-    // $scope.getTotal = function () {
-    //     var totalAmt = 0.0;
-    //     for (var key in $scope.data) {
-    //         if (parseFloat($scope.data[key].alerts.totalAmt)) {
-    //             totalAmt += parseFloat($scope.data[key].alerts.totalAmt);
-    //         }
-    //     }
-    //     return totalAmt;
-    // }
+
     $scope.search = function () {
-        $http.post("/alerts/searchSuppressedAlert", $scope.alertSearch)
+        $http.post("/suppress/searchSuppress", $scope.alertSearch)
             .then(function success(response) {
                 console.log(response);
                 $scope.suppressData = response.data;

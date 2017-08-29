@@ -19,6 +19,6 @@ public interface IAlertService {
     void truncateTable() throws IOException;
 
     List<WorkObj> searchClosedAlerts(AlertSearchEntity ase) throws Exception;
-    List<Suppress> searchSuppressedAlerts(AlertSearchEntity ase) throws Exception;
+
     void createAlertByManually(List<Transactions> tList, Scenario scenario, String userName) throws Exception;
 }

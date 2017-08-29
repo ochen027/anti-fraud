@@ -4,7 +4,7 @@
 
     <div class="search-condition">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Customer ID</label>
                     <div class="col-8">
@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Customer Name</label>
                     <div class="col-8">
@@ -20,17 +20,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label text-right">Suppress Date</label>
-                    <div class="col-8">
-                        <input class="form-control"/>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Scenario No</label>
                     <div class="col-8">
@@ -46,7 +39,7 @@
                     <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right"> Alert ID</label>
                     <div class="col-8">
@@ -54,7 +47,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label text-right">Suppress Date</label>
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdFromDate" />
+                    --
+                    <input type="date" class="text-input" placeholder="" ng-model="alertSearch.createdToDate" />
+
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label class="col-4 col-form-label text-right">Status</label>
                     <div class="col-8">
@@ -64,6 +69,7 @@
                 </div>
             </div>
         </div>
+
         <!--<div class="row">-->
             <!--<div class="col-md-4">-->
                 <!--<div class="form-group row">-->
@@ -114,10 +120,10 @@
                        ng-model="$parent.conf[$index]" ng-click="select($event,row,$index)"></input></td>
             <td><a ui-sref="alertInfo({id:'{{row.workObjId}}'})">{{row.alerts.alertId}}</a></td>
             <td>{{row.alerts.customerName}}</td>
-            <td>{{row.alerts.scenarioId}}</td>
-            <td class="description">{{row.alerts.alertDesc}}</td>
-            <td class="td-date">{{row.alerts.createdDate}}</td>
-            <td>{{row.alerts.createdBy}}</td>
+            <td>{{row.scenario.id}}</td>
+            <td class="description">{{row.scenario.scenarioDesc}}</td>
+            <td class="td-date">{{row.endDate|date:'yyyy-MM-dd'}}</td>
+            <td>{{row.createdBy}}</td>
         </tr>
         </tbody>
         <tfoot>

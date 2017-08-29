@@ -97,7 +97,7 @@ public class ReportController extends BaseController {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Paragraph("Total Number of Active",keyfont));
+        cell = new PdfPCell(new Paragraph("Total Number oAf ctive",keyfont));
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(cell);
 

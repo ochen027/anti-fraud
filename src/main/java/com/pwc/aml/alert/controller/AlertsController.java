@@ -42,10 +42,6 @@ public class AlertsController extends BaseController {
     public ResponseEntity<List<WorkObj>> searchClosedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
         return new ResponseEntity<List<WorkObj>>(alertService.searchClosedAlerts(se), HttpStatus.OK);
     }
-    @PostMapping("searchSuppressedAlert")
-    public ResponseEntity<List<Suppress>> searchSuppressedAlerts(@RequestBody AlertSearchEntity se) throws Exception{
-        return new ResponseEntity<List<Suppress>>(alertService.searchSuppressedAlerts(se), HttpStatus.OK);
-    }
 
     @PostMapping("createAlert")
     public ResponseEntity<Void> createAlertByManually(@RequestBody AlertCreation ac) throws Exception{

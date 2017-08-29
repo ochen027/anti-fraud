@@ -3,7 +3,9 @@ package com.pwc.aml.suppress.service;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.component.authorize.users.entity.Users;
+import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ public interface ISuppressService {
     List<Suppress> findSuppress(AlertSearchEntity ase) throws Exception;
 
     void inActiveSuppress(Suppress suppress, Users users) throws Exception;
+    List<Suppress> searchSuppress(AlertSearchEntity ase) throws Exception;
 
     List<Suppress> findAllActive() throws Exception;
+    public ResponseEntity<Void> export(AlertSearchEntity ase, HttpServletResponse response) throws Exception;
 }

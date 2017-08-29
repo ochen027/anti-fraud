@@ -95,9 +95,9 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
 
         //Filter Alert Created From Date to Date
         if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(fromDate.getTime()))));
@@ -106,14 +106,14 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
         }
 
         if (null != ase.getCreatedFromDate() && null == ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
         if (null == ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
@@ -125,12 +125,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("true"))));
         }
 
-        //Filter Alert Closed By
-        if (StringUtils.isNotEmpty(ase.getClosedBy())) {
-            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.updateDate),
-                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
-                    "[.]*" + ase.getClosedBy() + "[.]*")));
-        }
+
 
         if (StringUtils.isNotEmpty(ase.getSuspiciousLevel())) {
             //TODO

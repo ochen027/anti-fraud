@@ -3,18 +3,12 @@ package com.pwc.aml.alert.service;
 import com.pwc.aml.alert.dao.IAlertDAO;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.entity.Alerts;
-import com.pwc.aml.common.hbase.IHbaseDao;
 import com.pwc.aml.customers.dao.ICustomerBaseDao;
-import com.pwc.aml.customers.dao.ICustomerDAO;
-import com.pwc.aml.customers.service.ICustomerService;
 import com.pwc.aml.rules.entity.Scenario;
-import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.suppress.service.ISuppressService;
 import com.pwc.aml.transation.entity.Transactions;
 import com.pwc.aml.workflow.dao.IWorkflowExDao;
-import com.pwc.aml.workflow.entity.FlowPointEx;
 import com.pwc.aml.workflow.entity.WorkObj;
-import com.pwc.aml.workflow.entity.WorkflowEx;
 import com.pwc.aml.workflow.service.IWorkObjService;
 import com.pwc.aml.workflow.service.IWorkflowExService;
 import com.pwc.component.systemConfig.dao.IKeyValueDao;
@@ -86,24 +80,6 @@ public class AlertService implements IAlertService{
 
     }
 
-    @Override
-    public List<Suppress> searchSuppressedAlerts(AlertSearchEntity ase) throws Exception {
-        List<String> customerIdList = null;
-        if(StringUtils.isNotEmpty(ase.getCustomerId()) || StringUtils.isNotEmpty(ase.getCustomerName())){
-            customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
-            if(null == customerIdList){
-                return null;
-            }
-            ase.setCustomerIdList(customerIdList);
-            ase.setAllCustomer(false);
-
-        }else{
-            ase.setAllCustomer(true);
-        }
-//       List<Suppress> SuppressList=suppressService.findAllActive();
-        List<Suppress> SuppressList=suppressService.findSuppress(ase);
-        return SuppressList;
-    }
 
     @Override
     public void createAlertByManually(List<Transactions> tList, Scenario scenario, String userName) throws Exception {
