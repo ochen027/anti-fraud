@@ -191,16 +191,16 @@ public class DashboardService implements IDashboardService {
 		Integer overdueDays = 14;
 		Integer cutdownDays = overdueDays*2/3;
 
-		Date firstFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays(1L));
-		Date firstToDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays-1)));
-		AlertDue alertDue1= this.getDueAlert(firstFromDate, firstToDate, definedPointList);
+		Date firstEndDate = FormatUtils.LocalDateToDate(nowDate.minusDays(1L));
+		Date firstFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays-1)));
+		AlertDue alertDue1= this.getDueAlert(firstFromDate, firstEndDate, definedPointList);
 
-		Date secondFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays)));
-		Date secondToDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays-1)));
-		AlertDue alertDue2 = this.getDueAlert(secondFromDate, secondToDate, definedPointList);
+		Date secondEndDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(cutdownDays)));
+		Date secondFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays-1)));
+		AlertDue alertDue2 = this.getDueAlert(secondFromDate, secondEndDate, definedPointList);
 
-		Date thirdFromDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays)));
-		AlertDue alertDue3 = this.getDueAlert(thirdFromDate, null, definedPointList);
+		Date thirdEndDate = FormatUtils.LocalDateToDate(nowDate.minusDays((long)(overdueDays)));
+		AlertDue alertDue3 = this.getDueAlert(null, thirdEndDate, definedPointList);
 
 		ArrayList<Integer> data1List = new ArrayList<Integer>(3);
 		ArrayList<Integer> data2List = new ArrayList<Integer>(3);
@@ -293,11 +293,11 @@ public class DashboardService implements IDashboardService {
 				countL1 += entry.getValue();
 				continue;
 			}
-			if(StringUtils.contains(entry.getKey(), "l2 available pool")){
+			if(StringUtils.contains(entry.getKey(), "L2 available pool")){
 				countL2 += entry.getValue();
 				continue;
 			}
-			if(StringUtils.contains(entry.getKey(), "L2 review")){
+			if(StringUtils.contains(entry.getKey(), "l2 review")){
 				countL2 += entry.getValue();
 				continue;
 			}
