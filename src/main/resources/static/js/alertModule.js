@@ -261,6 +261,11 @@ app.controller('ClosedAlertCtrl', function ($scope, $http, $location, $state) {
         }
         return totalAmt;
     }
+    //export
+    $scope.export = function () {
+        window.open("/alerts/exportClose",$scope.data);
+        console.log("Closed Alert Exported");
+    }
 });
 
 app.controller('MyAlertInfoCtrl', function ($scope, $http, $location, $state, $stateParams, $timeout, Upload) {

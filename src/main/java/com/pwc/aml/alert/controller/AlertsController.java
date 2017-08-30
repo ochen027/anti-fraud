@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import com.pwc.common.base.controller.BaseController;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -48,5 +49,11 @@ public class AlertsController extends BaseController {
         alertService.createAlertByManually(ac.getTransList(), ac.getScenario(), userName);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+    @GetMapping("exportClose")
+    public ResponseEntity<Void> exportClose( HttpServletResponse response) throws Exception{
+        return alertService.exportClose(response);
+
+    }
+
 
 }

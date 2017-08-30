@@ -342,8 +342,9 @@
             <tr class="detail-table-head">
                 <th>Transaction Date</th>
                 <th>Account Type</th>
-                <th>Account Number</th>
+                <th>Account Id</th>
                 <th>Currency</th>
+                <th>Transaction ID</th>
                 <th>Transaction Amount</th>
                 <th>Transaction Type</th>
                 <th>Fund Receive/Pay</th>
@@ -363,15 +364,16 @@
             <tr ng-repeat="row in transListDisplay">
                 <td>{{row.transDt}}</td>
                 <td>{{row.accountType}}</td>
-                <td>{{row.accountId}}</td>
+                <td>{{row.acctId}}</td>
                 <td>{{row.currencyCd}}</td>
-                <td>{{row.transactionAmount}}</td>
+                <td>{{row.transId}}</td>
+                <td>{{row.transBaseAmt}}</td>
                 <td>{{row.transType}}</td>
                 <td>{{row.fundReceivePay}}</td>
-                <td>{{row.transactionPurpose}}</td>
+                <td>{{row.transDesc}}</td>
                 <td>{{row.accountOpenDate}}</td>
                 <td>{{row.accountCloseDate}}</td>
-                <td>{{row.CounterpartyId}}</td>
+                <td>{{row.counterPartyId}}</td>
                 <td>{{row.counterBank}}</td>
                 <td>{{row.counterBankLocation}}</td>
                 <td>{{row.representative}}</td>
