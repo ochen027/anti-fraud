@@ -14,6 +14,7 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
         }
     };
 
+
     $scope.getWorkflow = function () {
 
         return new Promise(function (resolve, reject) {
@@ -33,8 +34,112 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
     //
     $timeout(function () {
         $scope.getWorkflow();
+        $scope.getStatusData();
+        $scope.getSARData();
+        $scope.getDueData();
+
     });
 
+
+    $scope.barDataOptions = {
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    }
+
+    $scope.statusData = {};
+    $scope.getStatusData = function () {
+            $http.get("/dashboard/assign").then(function sucess(result) {
+                console.log(result);
+                $scope.statusData = result.data
+            }, function error(error) {
+                console.log(error);
+    });
+    }
+
+    $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+
+    $scope.sarData = {};
+    $scope.getSARData = function () {
+        $http.get("/dashboard/sar").then(function sucess(result) {
+            console.log(result);
+            $scope.sarData = result.data
+        }, function error(error) {
+            console.log(error);
+        });
+    }
+
+    $scope.datasetOverride = [
+        {
+            label: "SAR",
+            borderWidth: 1,
+            type: 'bar',
+            yAxisID: 'y-axis-1'
+        },
+        {
+            label: "Total Alerts",
+            borderWidth: 1,
+            type: 'bar',
+            yAxisID: 'y-axis-2'
+        },
+        {
+            label: "High Risk Customer Alerts",
+            borderWidth: 3,
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)",
+            type: 'line',
+            yAxisID: 'y-axis-3'
+        }
+    ];
+
+
+    $scope.mixOptions = {
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [
+                {
+                    id: 'y-axis-1',
+                    display: false,
+                    position: 'left',
+                    stacked: true
+                },
+                {
+                    id: 'y-axis-2',
+                    display: true,
+                    position: 'left',
+                    stacked: true
+                },
+                {
+                    id: 'y-axis-3',
+                    type: 'linear',
+                    display: true,
+                    position: 'right'
+                },
+
+                ]
+            }
+        }
+    }
+
+    $scope.dueData = {};
+    $scope.getDueData = function () {
+        $http.get("/dashboard/due").then(function sucess(result) {
+            console.log(result);
+            $scope.dueData = result.data
+        }, function error(error) {
+            console.log(error);
+        });
+    }
 
 
 });

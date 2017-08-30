@@ -9,6 +9,7 @@ import java.util.List;
 public interface IAssignDao {
 
     void save(Assign assign) throws Exception;
+
     List<Assign> findByUserId(String userId) throws Exception;
 
     Assign findByObjId(String objId) throws Exception;

@@ -23,4 +23,6 @@ public interface ICustomerBaseDao {
     List<String> findByIdAndName(String customerId, String customerName);
 
     CustomerBase findByAccountId(String accountId);
+
+    List<String> findHighRiskCustomer();
 }

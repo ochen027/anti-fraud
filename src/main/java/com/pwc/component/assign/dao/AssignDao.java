@@ -1,6 +1,7 @@
 package com.pwc.component.assign.dao;
 
 
+import com.pwc.aml.common.util.Constants;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.component.assign.entity.AssignHistory;
 import com.pwc.component.assign.entity.AssignSchema;
@@ -13,6 +14,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -81,10 +83,10 @@ public class AssignDao implements IAssignDao {
     public Assign findByObjId(String objId) throws Exception {
         initial();
         Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
-        filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes("f1"),
+        Filter filter = new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(AssignSchema.objId),
-                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(objId)));
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(objId));
+        scan.setFilter(filter);
         ResultScanner rsscan = table.getScanner(scan);
         List<Assign> tList = new ArrayList<Assign>();
         for (Result r : rsscan) {
