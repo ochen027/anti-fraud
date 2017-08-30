@@ -18,10 +18,10 @@ public class KeyValueConfig extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 
-    @Column(name="KEY")
+    @Column(name="SYSKEY")
     private String key;
 
-    @Column(name="VALUE")
+    @Column(name="SYSVALUE")
     private String value;
 
     public KeyValueConfig(){
