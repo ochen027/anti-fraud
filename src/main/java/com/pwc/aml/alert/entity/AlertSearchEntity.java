@@ -21,6 +21,7 @@ public class AlertSearchEntity {
     private String currentPointId;
     private String scenarioId;
     private Boolean isAllCustomer;
+    private Boolean isActive;
 
 
     public String getCustomerId() {
@@ -149,5 +150,13 @@ public class AlertSearchEntity {
 
     public void setAllCustomer(Boolean allCustomer) {
         isAllCustomer = allCustomer;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

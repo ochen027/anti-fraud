@@ -95,9 +95,9 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
 
         //Filter Alert Created From Date to Date
         if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(fromDate.getTime()))));
@@ -106,27 +106,26 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
         }
 
         if (null != ase.getCreatedFromDate() && null == ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
         if (null == ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.createdDate),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
         }
 
-
-
-        //Filter Alert Closed By
-        if (StringUtils.isNotEmpty(ase.getClosedBy())) {
-            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(SuppressSchema.updateDate),
-                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(
-                    "[.]*" + ase.getClosedBy() + "[.]*")));
+        if(null!=ase.getActive()&&true==ase.getActive()){
+            filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
+                    Bytes.toBytes(SuppressSchema.isActive),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("true"))));
         }
+
+
 
         if (StringUtils.isNotEmpty(ase.getSuspiciousLevel())) {
             //TODO
@@ -152,7 +151,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
     public List<Suppress> findSuppress( AlertSearchEntity ase) throws Exception {
         initial();
         Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
 
         filterList = this.generateFilterList(ase, filterList);
 
@@ -198,7 +197,7 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
         FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ONE);
         filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                 Bytes.toBytes(SuppressSchema.isActive),
-                CompareFilter.CompareOp.EQUAL, Bytes.toBytes(true)));
+                CompareFilter.CompareOp.EQUAL, Bytes.toBytes("true")));
         scan.setFilter(filterList);
         ResultScanner rsscan = table.getScanner(scan);
         List<Suppress> tList = new ArrayList<Suppress>();
