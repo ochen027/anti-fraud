@@ -9,20 +9,13 @@ import com.pwc.common.base.entity.BaseEntity;
 import java.util.Date;
 
 
-public class Suppress  extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
+public class Suppress extends BaseEntity{
 
     private String suppressId;
-
     private CustomerBase customerBase;
-
     private Scenario scenario;
-
     private Alerts alerts;
-
     private boolean isPermanent;
-
     private Date endDate;
 
     public CustomerBase getCustomerBase() {

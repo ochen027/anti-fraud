@@ -17,6 +17,8 @@ import com.pwc.aml.customers.entity.CustomerBase;
 import com.pwc.aml.customers.entity.Customers;
 import com.pwc.aml.rules.entity.RuleScenario;
 import com.pwc.aml.rules.entity.Rules;
+import com.pwc.aml.suppress.dao.ISuppressDao;
+import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.transation.dao.ITransactionDAO;
 import com.pwc.aml.workflow.dao.IWorkflowExDao;
 import com.pwc.aml.workflow.service.IWorkObjService;
@@ -38,28 +40,31 @@ public class RulesService implements IRulesService {
 
 
     @Autowired
-    private IRulesDAO rulesDAO;
+    IRulesDAO rulesDAO;
 
     @Autowired
-    private ITransactionDAO transactionDAO;
+    ITransactionDAO transactionDAO;
 
     @Autowired
-    private ICustomerBaseDao customerBaseDAO;
+    ICustomerBaseDao customerBaseDAO;
 
     @Autowired
-    private IAccountDAO accountDAO;
+    IAccountDAO accountDAO;
 
     @Autowired
-    private IKeyValueDao keyValueDAO;
+    IKeyValueDao keyValueDAO;
 
     @Autowired
-    private IAlertDAO alertDAO;
+    IAlertDAO alertDAO;
 
     @Autowired
-    private IWorkflowExDao workflowExDao;
+    IWorkflowExDao workflowExDao;
 
     @Autowired
-    private IWorkObjService workObjService;
+    IWorkObjService workObjService;
+
+    @Autowired
+    ISuppressDao suppressDAO;
 
     private static String DEFAULT_RULE="DEFAULT_RULE";
     private static String DEFAULT_WORKFLOW = "DEFAULT_WORKFLOW";
@@ -175,10 +180,30 @@ public class RulesService implements IRulesService {
 
     @Override
     public void executeRuleEngine(int scenarioId,String userName) throws Exception {
-
         String businessDay = keyValueDAO.get("BUSINESS_DAY");
-
+        Date businessDate = FormatUtils.StringToDate(businessDay);
         List<CustomerBase> customerList = customerBaseDAO.findAll();
+
+        //Add suppress validation
+        List<Suppress> suppressList = suppressDAO.findAllActive();
+        if(suppressList.size()>0){
+            for(Suppress suppress : suppressList){
+                CustomerBase cb = suppress.getCustomerBase();
+                Date endDate = suppress.getEndDate();
+
+                if(suppress.isPermanent() && customerList.contains(cb)
+                        && scenarioId==suppress.getScenario().getId()){
+                    customerList.remove(cb);
+                }
+                if(endDate.getTime()>businessDate.getTime() && customerList.contains(cb)
+                        && scenarioId==suppress.getScenario().getId()){
+                    customerList.remove(cb);
+                }
+
+            }
+        }
+
+
         for (CustomerBase c : customerList) {
             List<Accounts> accountList = accountDAO.findByCustId(c.getCustomerId());
 
