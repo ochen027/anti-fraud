@@ -1,0 +1,1 @@
+nohup java -jar anti-fraud.jar >../logs/logs.out 2>1 &

@@ -153,9 +153,9 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
         //Filter Alert Created From Date to Date
         if (null != ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(Bytes.toBytes(fromDate.getTime()))));
@@ -164,14 +164,14 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         }
 
         if (null != ase.getCreatedFromDate() && null == ase.getCreatedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getCreatedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
         }
 
         if (null == ase.getCreatedFromDate() && null != ase.getCreatedToDate()) {
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getCreatedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.CREATED_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
@@ -179,9 +179,9 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
         //Filter Alert Closed Date
         if (null != ase.getClosedFromDate() && null != ase.getClosedToDate()) {
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.GREATER_OR_EQUAL, Bytes.toBytes(fromDate.getTime())));
@@ -191,7 +191,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
 
         if (null != ase.getClosedFromDate() && null == ase.getClosedToDate()) {
 
-            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate()).minusDays(1L);
+            LocalDate lDateFrom = FormatUtils.DateToLocalDate(ase.getClosedFromDate());
             Date fromDate = FormatUtils.LocalDateToDate(lDateFrom);
 
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
@@ -199,7 +199,7 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         }
 
         if (null == ase.getClosedFromDate() && null != ase.getClosedToDate()) {
-            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate()).plusDays(1L);
+            LocalDate lDateTo = FormatUtils.DateToLocalDate(ase.getClosedToDate());
             Date toDate = FormatUtils.LocalDateToDate(lDateTo);
             filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1), Bytes.toBytes(Constants.LAST_UPDATE_DATE),
                     CompareFilter.CompareOp.LESS_OR_EQUAL, Bytes.toBytes(toDate.getTime())));
@@ -248,7 +248,6 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         if (null != ase && null != ase.getCustomerIdList() && !ase.getAllCustomer()) {
             List<WorkObj> woList = new ArrayList<WorkObj>();
             for(String cId : ase.getCustomerIdList()) {
-
                 filterList.addFilter(new SingleColumnValueFilter(Bytes.toBytes(Constants.F1),
                         Bytes.toBytes(WorkObjSchema.customerId),
                         CompareFilter.CompareOp.EQUAL, Bytes.toBytes(cId)));
@@ -267,7 +266,9 @@ public class WorkObjDao extends HadoopBaseDao implements IWorkObjDao {
         }else if(null != ase && null != ase.getCustomerIdList() && (StringUtils.isNotEmpty(ase.getCustomerId())||StringUtils.isNotEmpty(ase.getCustomerName()))){
             return null;
         }else{
-            scan.setFilter(filterList);
+            if(filterList.hasFilterRow()){
+                scan.setFilter(filterList);
+            }
             ResultScanner rsscan = table.getScanner(scan);
             List<WorkObj> wList = new ArrayList<WorkObj>();
             for (Result r : rsscan) {

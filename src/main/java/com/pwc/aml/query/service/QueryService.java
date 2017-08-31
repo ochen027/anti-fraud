@@ -5,6 +5,7 @@ import com.pwc.aml.customers.dao.CustomerBaseDao;
 import com.pwc.aml.query.dao.QueryDAO;
 import com.pwc.aml.workflow.entity.WorkObj;
 import com.pwc.aml.workflow.service.IWorkObjService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,19 @@ public class QueryService implements IQueryService {
 
     @Override
     public List<WorkObj> SearchQuery(AlertSearchEntity ase) throws Exception {
-        List<String> customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
-        if(null == customerIdList){
-            return null;
+        List<String> customerIdList = null;
+        if(StringUtils.isEmpty(ase.getCustomerId()) && StringUtils.isEmpty(ase.getCustomerName())){
+            ase.setAllCustomer(true);
         }else{
+            ase.setAllCustomer(false);
+            customerIdList = customerBaseDAO.findByIdAndName(ase.getCustomerId(), ase.getCustomerName());
             ase.setCustomerIdList(customerIdList);
-            return workObjService.getWorkObjsByPointId(null,ase);
         }
+
+        if(null==customerIdList && !ase.getAllCustomer()){
+            return null;
+        }
+
+        return workObjService.getWorkObjsByPointId(null,ase);
     }
 }
