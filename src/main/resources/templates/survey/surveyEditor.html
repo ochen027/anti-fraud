@@ -1,3 +1,328 @@
 <div ng-controller="surveyEditorController">
-    surveyEditorController
+
+
+    <section id="surveyArea" class="survey-container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="center-align"></h5>
+            </div>
+            <div class="col-md-9 text-xs-right topButtonGroup ">
+                <button id="btnAddDependence" data-toggle="modal" onclick="surveyEdit.addDependence()" class="btn orange-btn">Add Dependence </button>
+                <button id="btnAddPage" data-toggle="modal" onclick="surveyEdit.addPage()" class="btn orange-btn">Add Page</button>
+                <button id="btnRunSurvey" data-toggle="modal" onclick="surveyEdit.runSurvey()" class="btn orange-btn">Review Survey</button>
+                <button id="btnCancel" onclick="cancelSurvey()" class="btn cancel-btn svb-pos-fix">Cancel</button>
+                <button id="btnSaveSurvey" data-toggle="modal" onclick="surveyEdit.saveSurvey()" class="btn orange-btn">Save Survey </button>
+            </div>
+        </div>
+        <div class="row contain">
+            <input type="hidden" id="survey" value=""/>
+            <input type="hidden" id="surveyID" value=""/>
+            <div class="col-xs-12 col-md-3">
+                <div class="card panel-primary">
+                    <h3 class="card-header">ToolBox</h3>
+                    <div class="panel-body">
+                        <ul id="questions" class="connectedSortable list-group">
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="checkbox">
+                                <img src="/img/survey/Checkbox.svg" class="survey_image"/>Checkbox
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="radiogroup">
+                                <img src="/img/survey/Radiogroup.svg" class="survey_image"/>Radiogroup
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="comment">
+                                <img src="/img/survey/Comment.svg" class="survey_image"/>Comment
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="dropdown">
+                                <img src="/img/survey/Dropdown.svg" class="survey_image"/>Dropdown
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="multipletext">
+                                <img src="/img/survey/MultipleText.svg" class="survey_image"/>Multiple Text
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="text">
+                                <img src="/img/survey/Text.svg" class="survey_image"/>Text
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="rating">
+                                <img src="/img/survey/Rating.svg" class="survey_image"/>Rating
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="html">
+                                <img src="/img/survey/html.svg" class="survey_image"/>HTML
+                            </li>
+                            <li class="ui-state-default list-group-item ui-draggable ui-draggable-handle" type="matrix">
+                                <img src="/img/survey/Matrix.svg" class="survey_image"/>Matrix(Single)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-9">
+
+                <div class="pageArea tab-content">
+
+                    <div class="page_divider" style="border-bottom: 3px solid #dddddd; padding:20px 0px 40px 0px;">
+                        <div class="custom_menu">
+                            <ul class="nav nav-tabs pageList custom_tabs surver_tabs" role="tablist">
+                                <a class="nav-link active" data-toggle="tab" href="#page1" role="tab">Page Name 1</a>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="right-delete">
+                        <a href="#" class="deleteBtn" onclick="surveyEdit.deleteCurrentPage()">
+                            <button class="btn orange-btn">Delete This Page</button>
+                        </a>
+                    </div>
+                    <div id="page1" data-pagename="page1" class="sortableQuestionArea tab-pane active ui-sortable"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addPageDialog" tabindex="-1" role="dialog" aria-labelledby="addPageDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="addPageDialogLabel" class="modal-title">Add Page</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="">
+                                    <form role="form" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="pageName" class="col-md-5 control-label">Page Name:</label>
+                                            <div class="col-md-7">
+                                                <input type="text" id="pageName" placeholder="Page Name" class="form-control input-md"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn orange-btn" onclick="surveyEdit.doAddPage()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="editPageDialog" tabindex="-1" role="dialog" aria-labelledby="addPageDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="editPageDialogLabel" class="modal-title">Edit Page Name</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <form role="form" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="pageName" class="col-md-5 control-label">Page Name:</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="editPageName" placeholder="Page name" class="form-control input-md"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn orange-btn" id="btn-change-page-name">Edit</button>
+                        <button type="button" data-dismiss="modal" class="btn cancel-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="deletePageDialog" tabindex="-1" role="dialog" aria-labelledby="deleteDialogLabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="deleteDialogLabel" class="modal-title">delete current page</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    Are you sure to delete current page?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn orange-btn">delete</button>
+                        <button type="button" data-dismiss="modal" class="btn cancel-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="saveSurveyDialog" tabindex="-1" role="dialog" aria-labelledby="saveSurveylabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content" id="saveSurveyDialogContent">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="saveSurveylabel" class="modal-title">Save Survey</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-md-3 control-label" for="surveyName">Survey Name:</label>
+                                            <div class="col-md-9">
+                                                <input id="surveyName" name="surveyName" type="text" placeholder="input survey name" class="form-control input-md dependenceValue"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 control-label" for="surveyTitle">Survey Title:</label>
+                                            <div class="col-md-9">
+                                                <input id="surveyTitle" name="surveyTitle" type="text" placeholder="input survey title" class="form-control input-md dependenceValue"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-md-3 control-label" for="surveyName">Description:</label>
+                                            <div class="col-md-9">
+                                                <textarea id="surveyDescription" name="surveyDescription" class="form-control input-md dependenceValue"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn orange-btn" onclick="doSaveSurvey()">Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="runSurveyDialog" tabindex="-1" role="dialog" aria-labelledby="runSurveylabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="runSurveylabel" class="modal-title">Run Survey</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div id="surveyContainer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="messageDialog" tabindex="-1" role="dialog" aria-labelledby="messagelabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="messagelabel" class="modal-title">Message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="center_text">some questions are not saved</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="messageSaveOrUpdateDialog" tabindex="-1" role="dialog" aria-labelledby="messagelabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="center_text message"></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="addDependenceDialog" tabindex="-1" role="dialog" aria-labelledby="addDependencelabel" class="modal fade">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_button" data-dismiss="modal">×</button>
+                        <h4 id="addDependencelabel" class="modal-title">Add Dependence</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="">
+                                    <div id="dependenceContainer">
+                                        <form class="form-horizontal">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 control-label">On</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control dependenceId">
+                                                        <option>select source question</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-4 control-label">Value</label>
+                                                <div class="col-md-8">
+                                                    <input class="input-md form-control dependenceValue"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-4 control-label">Page</label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control dependencePages">
+                                                        <option>select page</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-4 control-label">Dist Questions </label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control dependenceQuestions">
+                                                        <option>select dist question</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label">&nbsp;</label>
+                                            <div class="col-md-8">
+                                                <button type="button" class="btn  dependenceBtn orange-btn" onclick="surveyEdit.addDependences()">
+                                                    Add Dependence
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="page_box_content" style="padding: 0px;">
+                                            <table class="table table-striped table-hover  no-footer dataTable dependences" dependences="[]">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Value</th>
+                                                    <th>pages</th>
+                                                    <th>questions</th>
+                                                    <th>remove</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="dependenceContent">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
