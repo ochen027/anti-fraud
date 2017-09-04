@@ -88,6 +88,7 @@ insert into menus values(31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL ,
 insert into menus values(32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Menu', 11, 'menuList()');
 insert into menus values(33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Role Menu', 11, 'roleMenu()');
 insert into menus values(34, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'Report Test', 11, 'reportTest()');
+insert into menus values(35, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, NULL , NULL , 'surveyManager', 11, 'surveyManager()');
 -- initial role menu table
 -- sysadmin menu
 insert into rolemenu values (1, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 6);
@@ -123,7 +124,8 @@ insert into rolemenu values (30, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 30
 insert into rolemenu values (31, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 31, 6);
 insert into rolemenu values (32, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 32, 6);
 insert into rolemenu values (33, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 33, 6);
-
+--insert into rolemenu values (34, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 34, 6);
+insert into rolemenu values (35, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 35, 6);
 -- l1 menu
 insert into rolemenu values (100001, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 1, 1);
 insert into rolemenu values (100002, 'sysadmin', sysdate, sysdate, 'sysadmin', 1, 2, 1);

@@ -1,5 +1,5 @@
 let app = angular.module('AMLapp', ['ngAnimate', 'ngCookies', 'ui.router', 'anim-in-out',
-    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog','LocalStorageModule']);
+    'ui.bootstrap', 'chart.js', 'ngFileUpload', 'angularUUID2', 'smart-table', 'ngDialog', 'LocalStorageModule']);
 app.run(['$templateCache', function ($templateCache) {
     $templateCache.remove("template/smart-table/pagination.html");
     $templateCache.put('template/smart-table/pagination.html',
@@ -10,9 +10,9 @@ app.run(['$templateCache', function ($templateCache) {
 }]);
 
 
-app.run(function($rootScope, $state, localStorageService) {
+app.run(function ($rootScope, $state, localStorageService) {
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var prefix = "stateParams.";
         var fromStateName = prefix + fromState.name;
         var toStateName = prefix + toState.name;
@@ -27,13 +27,13 @@ app.run(function($rootScope, $state, localStorageService) {
             for (var k in toState.params) {
                 toParams[k] = savedToParams[k]; //update only the params {} not url params
             }
-            $state.transitionTo(toState,toParams);
+            $state.transitionTo(toState, toParams);
         } else {
             var toSave = {};
             for (var k in toState.params) {
                 toSave[k] = toParams[k]; //save only the params {} not url params
             }
-            localStorageService.set(toStateName,toSave);
+            localStorageService.set(toStateName, toSave);
         }
     });
 });
@@ -655,6 +655,54 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
         //params: {reports: null},
         controller: 'ReportsCtrl'
+    }];
+    app.survey = [{
+        name: "surveyEditor",
+        url: "/surveyEditor",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/survey/surveyEditor'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {surveyId: null},
+        controller: 'surveyEditorController'
+    },{
+        name: "surveyManager",
+        url: "/surveyManager",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/survey/surveyManager'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        controller: 'SurveyManagerController'
+    },{
+        name: "doSurvey",
+        url: "/doSurvey",
+        views: {
+            header: {
+                templateUrl: '/header'
+            },
+            content: {
+                templateUrl: '/survey/doSurvey'
+            },
+            footer: {
+                templateUrl: '/footer',
+            }
+        },
+        params: {surveyObjId: null},
+        controller: 'DoSurveyController'
     }];
     app.scenario = [
         {
