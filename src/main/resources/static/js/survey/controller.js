@@ -19,6 +19,8 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
 
     $timeout(function(){
 
+        debugger;
+
         window.surveyEdit = $(".contain").surveyEdit();
 
         function doSaveSurvey() {
