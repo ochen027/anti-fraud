@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("survey")
-public class SurveyController {
+public class SurveyRestController {
 
     @GetMapping("getAllSurvey")
     public ResponseEntity<List<Survey>> getAllSurvey() {
