@@ -10,8 +10,6 @@ import javax.persistence.Table;
 @Table(name = "Survey")
 public class Survey  extends BaseEntity {
 
-
-
     @Column(name="name")
     private String name;
 

@@ -13,7 +13,7 @@ public class SurveyObj extends BaseEntity {
 
 
     @Column(name="surveyId")
-    public int surveyId;
+    public String surveyId;
 
     @Column(name="answer")
     public String answer;
@@ -32,11 +32,11 @@ public class SurveyObj extends BaseEntity {
     @Column(name="surveyStatues")
     public String surveyStatues;
 
-    public int getSurveyId() {
+    public String getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(int surveyId) {
+    public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
     }
 

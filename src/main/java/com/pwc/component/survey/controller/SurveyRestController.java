@@ -1,7 +1,10 @@
 package com.pwc.component.survey.controller;
 
+import com.pwc.common.base.controller.BaseController;
 import com.pwc.component.survey.entity.Survey;
 import com.pwc.component.survey.entity.SurveyObj;
+import com.pwc.component.survey.service.ISurveyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,14 +18,14 @@ import java.util.List;
 
 @Controller
 @RequestMapping("survey")
-public class SurveyRestController {
+public class SurveyRestController extends BaseController{
+
+    @Autowired
+    ISurveyService surveyService;
 
     @GetMapping("getAllSurvey")
     public ResponseEntity<List<Survey>> getAllSurvey() {
-
-        List<Survey> surveys=new ArrayList<>();
-
-        return new ResponseEntity<List<Survey>>(surveys, HttpStatus.OK);
+        return new ResponseEntity<List<Survey>>(surveyService.getAllSurvey(), HttpStatus.OK);
     }
 
 
@@ -32,9 +35,9 @@ public class SurveyRestController {
      */
     @PostMapping("saveSurvey")
     public ResponseEntity<Void> saveOrUpdateSurvey(@RequestBody Survey survey) {
-
-
-
+        survey.setCreatedBy(userName);
+        survey.setLastUpdatedBy(userName);
+        surveyService.saveSurvey(survey);
         return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
@@ -45,18 +48,13 @@ public class SurveyRestController {
      */
     @PostMapping("delete")
     public ResponseEntity<Void> deleteSurvey(@RequestBody Survey survey) {
-
-
-
-        return new ResponseEntity<Void>( HttpStatus.OK);
+        survey.setLastUpdatedBy(userName);
+        surveyService.deleteSurvey(survey);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 
     //---------------------------end of survey; start with survey obj-----------------------------------------
-
-
-
-
 
 
     /***
@@ -67,10 +65,10 @@ public class SurveyRestController {
      */
     @PostMapping("generateSurveyObj")
     public ResponseEntity<SurveyObj> generateLink(@RequestBody SurveyObj surveyObj) {
-
-        //surveyObj=generateSomeInfo
-
-        return new ResponseEntity<SurveyObj>(surveyObj, HttpStatus.OK);
+        surveyObj.setCreatedBy(userName);
+        surveyObj.setLastUpdatedBy(userName);
+        SurveyObj so = surveyService.generateSurveyObj(surveyObj);
+        return new ResponseEntity<SurveyObj>(so, HttpStatus.OK);
     }
 
 
@@ -81,10 +79,9 @@ public class SurveyRestController {
      */
     @PostMapping("saveSurveyObj")
     public ResponseEntity<Void> saveSurveyObj(@RequestBody SurveyObj surveyObj) {
-
-        //surveyObj=generateSomeInfo
-
-        return new ResponseEntity<Void>( HttpStatus.OK);
+        surveyObj.setLastUpdatedBy(userName);
+        surveyService.saveSurveyObj(surveyObj);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     /**
@@ -94,10 +91,7 @@ public class SurveyRestController {
      */
     @GetMapping("getSurveyObj")
     public ResponseEntity<SurveyObj> getSurveyObj(@RequestBody SurveyObj surveyObj) {
-
-        //surveyObj=generateSomeInfo
-
-        return new ResponseEntity<SurveyObj>(surveyObj, HttpStatus.OK);
+        return new ResponseEntity<SurveyObj>(surveyService.getSurveyObj(surveyObj), HttpStatus.OK);
     }
 
     /***
@@ -107,10 +101,8 @@ public class SurveyRestController {
      */
     @PostMapping("submitSurvey")
     public ResponseEntity<Void> submitSurvey(@RequestBody SurveyObj surveyObj) {
-
-        //surveyObj=generateSomeInfo
-
-        return new ResponseEntity<Void>( HttpStatus.OK);
+        surveyService.submitSurvey(surveyObj);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }
