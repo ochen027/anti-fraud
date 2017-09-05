@@ -789,5 +789,72 @@ input[type="button"][value="Finalizar"] {
 #surveyComments td {
     word-break: break-word;
 }
+.page_title {
+    /*font-weight: bold;*/
+    /*font-size: 16px !important;*/
+    font-weight: normal;
+    font-size: 28px !important;
+    margin-top: 30px;
+    text-transform: lowercase;
+    line-height: normal;
+    text-shadow: 1px 1px 1px #fff;
+    display: inline-block;
+    margin-bottom: 24px !important;
+    color: #333;
+    font-family: arial;
+    /*font-family: Georgia;*/
+    /*font-style: italic;*/
+}
+
+.page_title::first-letter {
+    text-transform: capitalize;
+}
+.page_right_btn {
+    float: right;
+}
+.survey_container {
+    background-color: #fff;
+    margin-left: 2px;
+    margin-right: 0px;
+}
+.survey_wrapper .nav-tabs .nav-link {
+    font-family: arial;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.survey_wrapper {
+    background-color: #E3E1DD;
+    padding: 0px 15px 20px 20px;
+}
+
+.survey_wrapperbox {
+    background-color: #E3E1DD;
+    border: 1px solid #E3E1DD !important;
+}
+.page_box_title {
+    color: #333;
+    padding: 14px 20px;
+    font-size: 16px;
+    line-height: 30px;
+    background: #ffffff;
+    letter-spacing: .3px;
+    text-transform: lowercase !important;
+    font-weight: normal;
+    font-family: arial;
+    font-style: normal;
+    border: 1px solid #e7e7e8;
+    border-left: 0px;
+    /*background-color: #e7e7e8;*/
+    background-color: #fff;
+}
+
+.page_box_title::first-letter {
+    text-transform: capitalize !important;
+}
+.custom_tabs {
+    border-bottom: 0;
+    font-size: 16px;
+}
 
 
