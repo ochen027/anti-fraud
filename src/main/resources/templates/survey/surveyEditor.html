@@ -1,12 +1,12 @@
 <div ng-controller="surveyEditorController">
 
 
-    <section id="surveyArea" class="survey-container">
+    <section id="surveyArea" class="container-fluid">
         <div class="row">
             <div class="col-md-3">
                 <h5 class="center-align"></h5>
             </div>
-            <div class="col-md-9 text-xs-right topButtonGroup ">
+            <div class="col-md-9 text-right topButtonGroup ">
                 <button id="btnAddDependence" data-toggle="modal" onclick="surveyEdit.addDependence()" class="btn orange-btn">Add Dependence </button>
                 <button id="btnAddPage" data-toggle="modal" onclick="surveyEdit.addPage()" class="btn orange-btn">Add Page</button>
                 <button id="btnRunSurvey" data-toggle="modal" onclick="surveyEdit.runSurvey()" class="btn orange-btn">Review Survey</button>
@@ -14,9 +14,7 @@
                 <button id="btnSaveSurvey" data-toggle="modal" onclick="surveyEdit.saveSurvey()" class="btn orange-btn">Save Survey </button>
             </div>
         </div>
-        <div class="row contain">
-            <input type="hidden" id="survey" value=""/>
-            <input type="hidden" id="surveyID" value=""/>
+        <div class="row">
             <div class="col-xs-12 col-md-3">
                 <div class="card panel-primary">
                     <h3 class="card-header">ToolBox</h3>
