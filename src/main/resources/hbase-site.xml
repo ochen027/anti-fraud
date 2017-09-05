@@ -24,11 +24,13 @@
 
     <property >
         <name>hbase.tmp.dir</name>
-        <value>/data/Hadoop/cdh/hbase-0.98.6-hadoop2/datas</value>
+        <!-- <value>/data/Hadoop/cdh/hbase-0.98.6-hadoop2/datas</value> -->
+        <value>/data/local/hbase-1.2.6/datas</value>
     </property>
     <property >
         <name>hbase.rootdir</name>
-        <value>hdfs://172.27.69.76:8020/hbase</value>
+        <!--<value>hdfs://172.27.69.76:8020/hbase</value>-->
+        <value>hdfs://ochen027-1:9000/hbase</value>
     </property>
     <property >
         <name>hbase.cluster.distributed</name>
@@ -36,6 +38,7 @@
     </property>
     <property>
         <name>hbase.zookeeper.quorum</name>
-        <value>172.27.69.76</value>
+        <value>ochen027-1</value>
+        <!--<value>172.27.69.76</value> -->
     </property>
 </configuration>

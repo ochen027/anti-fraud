@@ -23,16 +23,22 @@
         <java.version>1.8</java.version>
         <drool.version>5.6.0.Final</drool.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--
         <hbase.version>0.98.6-cdh5.3.6</hbase.version>
         <hdfs.version>2.5.0-cdh5.3.6</hdfs.version>
         <hive.version>0.13.1-cdh5.3.6</hive.version>
+        -->
+        <hbase.version>1.2.6</hbase.version>
+        <hdfs.version>2.7.4</hdfs.version>
     </properties>
 
     <repositories>
+        <!--
         <repository>
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
+        -->
         <repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
@@ -108,13 +114,39 @@
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-server</artifactId>
-            <version>0.98.6-cdh5.3.6</version>
+            <version>${hbase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
             <version>${hdfs.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hdfs.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-auth</artifactId>
+            <version>${hdfs.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-annotations</artifactId>
+            <version>${hdfs.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hdfs.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
@@ -150,11 +182,13 @@
             <version>0.6.1</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-exec</artifactId>
             <version>${hive.version}</version>
         </dependency>
+		-->
 		<dependency>
 		    <groupId>org.apache.hbase</groupId>
 		    <artifactId>hbase</artifactId>
@@ -188,6 +222,20 @@
             <artifactId>itextpdf</artifactId>
             <version>5.5.11</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/au.com.bytecode/opencsv -->
+        <dependency>
+            <groupId>au.com.bytecode</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.4</version>
+        </dependency>
+
 
 
     </dependencies>
