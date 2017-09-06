@@ -60,11 +60,16 @@ public class SuppressService implements ISuppressService {
     }
 
     @Override
-    public void inActiveSuppress(Suppress suppress, Users users) throws Exception {
-        suppress.setStatus(false);
-        suppress.setLastUpdatedBy(users.getUserName());
-        suppress.setLastUpdateDate(FormatUtils.getCurrentDay());
-        suppressDao.createOrUpdate(suppress);
+    public void inActiveSuppress(List<String> idList, String userName) throws Exception {
+        if(null != idList && idList.size()>0){
+            for(String id : idList){
+                Suppress suppress = this.findSuppressById(id);
+                suppress.setStatus(false);
+                suppress.setLastUpdatedBy(userName);
+                suppress.setLastUpdateDate(FormatUtils.getCurrentDay());
+                suppressDao.createOrUpdate(suppress);
+            }
+        }
     }
     @Override
     public List<Suppress> searchSuppress(AlertSearchEntity ase) throws Exception {
@@ -200,5 +205,10 @@ public class SuppressService implements ISuppressService {
 
 
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
+    private Suppress findSuppressById(String suppressId) throws Exception{
+        return suppressDao.findSupressById(suppressId);
     }
 }

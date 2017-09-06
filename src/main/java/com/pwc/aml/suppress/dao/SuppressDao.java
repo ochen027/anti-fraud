@@ -209,6 +209,20 @@ public class SuppressDao extends HadoopBaseDao implements ISuppressDao {
         return tList;
     }
 
+    @Override
+    public Suppress findSupressById(String id) throws Exception {
+        initial();
+        Scan scan = new Scan();
+        Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(id.getBytes()));
+        scan.setFilter(filter);
+        ResultScanner rsscan = table.getScanner(scan);
+        Suppress supress = new Suppress();
+        for (Result r : rsscan) {
+            supress = this.CellToSuppress(r.rawCells());
+        }
+        rsscan.close();
+        return supress;
+    }
 
 
     private Suppress CellToSuppress(Cell[] cells) throws Exception {

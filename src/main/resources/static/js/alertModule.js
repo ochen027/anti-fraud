@@ -215,7 +215,34 @@ app.controller('SuppressedAlertCtrl', function ($scope, $http, $location, $state
 
     //remove
     $scope.remove = function () {
-
+        console.log("remove from suppress list");
+        if ($scope.checkList.length != 0) {
+            $scope.checkids = [];
+            //Create Ids Array
+            angular.forEach($scope.checkList, function (data) {
+                $scope.checkids.push(data.record.suppressId);
+            });
+            //remove the line
+            angular.forEach($scope.checkList, function (ele, index) {
+                $scope.suppressData.splice($scope.suppressData.indexOf($scope.checkList[index].record), 1);
+            });
+            //uncheck the line
+            angular.forEach($scope.conf, function (ele, index) {
+                $scope.conf[index] = false;
+            })
+            //Call REST API
+            $http.post("/suppress/removeSuppress", $scope.checkids).then(function (res) {
+                if (res.status !== 200) {
+                    console.log(res);
+                    return;
+                }
+                alert("Alerts have been removed from suppress list! ");
+            });
+        } else {
+            alert("Please select alerts!");
+        }
+        $scope.checkids = [];
+        $scope.checkList = [];
     }
 
     $scope.search = function () {

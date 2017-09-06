@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface ISuppressDao {
 
-
     void createOrUpdate(Suppress suppress) throws Exception;
 
     List<Suppress> findAll() throws Exception;
-    public List<Suppress> findSuppress( AlertSearchEntity ase) throws Exception;
+
+    List<Suppress> findSuppress(AlertSearchEntity ase) throws Exception;
 
     List<Suppress> findAllActive() throws Exception;
+
+    Suppress findSupressById(String id) throws Exception;
 }

@@ -16,11 +16,14 @@ public interface ISuppressService {
     void addSuppress(Suppress suppress, Users users) throws Exception;
 
     List<Suppress> findAll() throws Exception;
+
     List<Suppress> findSuppress(AlertSearchEntity ase) throws Exception;
 
-    void inActiveSuppress(Suppress suppress, Users users) throws Exception;
+    void inActiveSuppress(List<String> idList, String userName) throws Exception;
+
     List<Suppress> searchSuppress(AlertSearchEntity ase) throws Exception;
 
     List<Suppress> findAllActive() throws Exception;
-    public ResponseEntity<Void> export(AlertSearchEntity ase, HttpServletResponse response) throws Exception;
+
+    ResponseEntity<Void> export(AlertSearchEntity ase, HttpServletResponse response) throws Exception;
 }

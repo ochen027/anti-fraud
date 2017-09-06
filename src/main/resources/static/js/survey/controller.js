@@ -6,6 +6,17 @@
 app.controller('DoSurveyController', function ($scope, $http, $location, $state) {
 
 
+    $http.get("url to get survey").then(function (res) {
+        if(res.status==200){
+            console.log("error");
+            return;
+        }
+
+        $scope.surveyObject.questionData= res.data;
+        $scope.surveyObject.survey = new Survey.Survey(surveyObject.questionData, "surveyArea");
+
+    });
+
 });
 
 
@@ -15,9 +26,9 @@ app.controller('SurveyManagerController', function ($scope, $http, $location, $s
 });
 
 
-app.controller('surveyEditorController', function ($scope, $http, $location, $state,$timeout) {
+app.controller('surveyEditorController', function ($scope, $http, $location, $state, $timeout) {
 
-    $timeout(function(){
+    $timeout(function () {
 
         debugger;
 
@@ -26,7 +37,7 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
         function doSaveSurvey() {
             var surveyID = $("body").find("#surveyID").val();
             var sendInfo = surveyEdit.getSurveyInfo();
-            if(!sendInfo.title || !sendInfo.nType || !sendInfo.name){
+            if (!sendInfo.title || !sendInfo.nType || !sendInfo.name) {
                 alert('Survey ' + (!sendInfo.name ? ' NAME, ' : '') + (!sendInfo.nType ? ' TYPE, ' : '') + (!sendInfo.title ? ' TITLE, ' : '') + ' can not empty');
                 return;
             }
@@ -66,7 +77,8 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
                     }
                 }
                 $.ajaxEx(ajaxOption);
-            };
+            }
+            ;
 
         }
 
@@ -75,7 +87,7 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
         }
 
 
-        if($("body").find("#surveyID").val() != '')
+        if ($("body").find("#surveyID").val() != '')
             $('#surveyName').attr("disabled", true);
 
         $('[role=tablist]').on('dblclick', '[href*=#page]', function (e) {
