@@ -2,22 +2,12 @@ package com.pwc.aml.suppress.controller;
 
 
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.pwc.aml.alert.entity.AlertSearchEntity;
-import com.pwc.aml.reports.entity.Reports;
-import com.pwc.aml.reports.entity.SearchEntity;
-import com.pwc.aml.suppress.entity.RemoveSuppress;
 import com.pwc.aml.suppress.entity.Suppress;
 import com.pwc.aml.suppress.service.ISuppressService;
 import com.pwc.common.base.controller.BaseController;
 import com.pwc.component.authorize.users.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -72,17 +59,10 @@ public class SuppressController extends BaseController {
     }
 
 
-
-
     @PostMapping("removeSuppress")
-    public ResponseEntity<Void> removeSuppress(@RequestBody RemoveSuppress removeSuppress, HttpSession session) throws Exception {
-
-        Map<String, Object> userInfo = (Map<String, Object>) session.getAttribute("UserInfo");
-        Users user = (Users) userInfo.get("User");
-
-//        suppressService.InActive(removeSuppress.getIds(),user);
-
-        return new ResponseEntity<Void>( HttpStatus.OK);
+    public ResponseEntity<Void> removeSuppress(@RequestBody List<String> idList) throws Exception {
+        suppressService.inActiveSuppress(idList,userName);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("export")
