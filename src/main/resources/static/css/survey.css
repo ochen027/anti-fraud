@@ -205,6 +205,8 @@
     padding-left: 20px;
     background-size: 22px 22px;
     height: 30px;
+    background-image: url(../img/survey/Delete.svg);
+    background-color: #ffffff;
 }
 
 .question-button-delete:hover {
@@ -223,6 +225,8 @@
     padding-left: 18px;
     background-size: 22px 22px;
     height: 30px;
+    background-image: url(../img/survey/Save.svg);
+    background-color: #ffffff;
 }
 
 .plus_icon {

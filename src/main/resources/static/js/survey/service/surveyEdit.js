@@ -557,7 +557,7 @@ $.fn.surveyEdit = function () {
     };
 
     var questionItem = {
-        topButton: '<div class="col-md-6 text-right"><button class="btn btn-danger question-button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button><button class="btn question-button-save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div>',
+        topButton: '<div class="col-md-12 text-right"><button class="btn question-button-delete"></button><button class="btn question-button-save"></button></div>',
         questionTitle: '<div class="question-title-label">Question:</div><div class="form-group row"><div class="col-md-10"><textarea class="form-control input-md title" placeholder="Question"></textarea></div></div>',
         required: '<div class="col-xs-12 col-sm-12 col-md-4"><label class="">Required:</label><div class=""><select class="form-control isRequired"><option value="false">false</option><option value="true">true</option></select></div></div>',
         columnCol: '<div class="col-xs-12 col-sm-12 col-md-4"><label class="">Column Count:</label><div class=""><input type="text" class="form-control input-md colCount"></div></div>',
