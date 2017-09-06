@@ -19,14 +19,12 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://ochen027-1:9000</value>
-        <!--<value>hdfs://172.27.69.76:8020</value> -->
+        <value>hdfs://172.27.69.76:8020</value>
     </property>
 
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>/data/local/hadoop-2.7.4/tmp</value>
-        <!-- <value>/data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/data/tmp</value> -->
+        <value>/data/Hadoop/cdh/hadoop-2.5.0-cdh5.3.6/data/tmp</value>
     </property>
     <property>
         <name>hadoop.proxyuser.hadoop.hosts</name>

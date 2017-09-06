@@ -23,22 +23,21 @@
         <java.version>1.8</java.version>
         <drool.version>5.6.0.Final</drool.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--
+
         <hbase.version>0.98.6-cdh5.3.6</hbase.version>
         <hdfs.version>2.5.0-cdh5.3.6</hdfs.version>
         <hive.version>0.13.1-cdh5.3.6</hive.version>
-        -->
+        <!--
         <hbase.version>1.2.6</hbase.version>
         <hdfs.version>2.7.4</hdfs.version>
+        -->
     </properties>
 
     <repositories>
-        <!--
         <repository>
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
-        -->
         <repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
