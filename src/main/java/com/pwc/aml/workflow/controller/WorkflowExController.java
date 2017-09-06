@@ -3,6 +3,7 @@ package com.pwc.aml.workflow.controller;
 
 import com.pwc.aml.alert.entity.AlertSearchEntity;
 import com.pwc.aml.alert.service.IAlertService;
+import com.pwc.common.util.FormatUtils;
 import com.pwc.component.assign.entity.Assign;
 import com.pwc.component.assign.service.IAssignService;
 import com.pwc.aml.workflow.entity.WorkObj;
@@ -146,6 +147,7 @@ public class WorkflowExController extends BaseController {
         for (String id : workObjIds) {
             WorkObj workObj = workObjService.getWorkObjsByWorkObjId(id);
             workObj.setSAR(true);
+            workObjService.updateWorkObj(workObj, userName);
             doEvent("sar", workObj);
         }
         //un assign
