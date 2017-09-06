@@ -2,6 +2,8 @@
 .idea/
 src/main/resources/static/components/
 
+application.properties
+
 .classpath
 .project
 .settings

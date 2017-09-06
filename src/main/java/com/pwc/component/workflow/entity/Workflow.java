@@ -19,7 +19,7 @@ public class Workflow extends BaseEntity {
     @Column(name = "FLOWID")
     private String flowId;
 
-    @Column(name = "CHART_JSON", columnDefinition = "CLOB NOT NULL")
+    @Column(name = "CHART_JSON", columnDefinition = "TEXT")
     private String chartJson;
 
     @Column(name = "NAME")
