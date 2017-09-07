@@ -23,16 +23,17 @@
                         <p>Survey list</p>
                     </div>
                     <div class="custom_tab">
-                        <ul class="nav nav-tabs nav-justified" id="survey-list">
-                            <li class="nav-item "><a href="javascript:void(0)" data-toggle="tab" class="nav-link grad">
-                                <span class="col-md-6 span-left text-left">Survey 1</span>
-                                <span class="col-md-6 span-left text-right">
-                              <button class="btn reset-btn"></button>
-                              <button class="btn question-button-edit"></button>
+                        <ul class="list-group" id="survey-list">
+
+                            <li ng-repeat="survey in surveyList" class="list-group-item justify-content-between">
+                                {{survey.name}}
+                                <span class="badge  badge-pill">
+                                <button class="btn reset-btn" ng-click="sendSurvey()"></button>
+                                <button class="btn question-button-edit" ng-click="editSurvey()"></button>
                                 </span>
-                                <p class="text-left col-md-12">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                            </a>
                             </li>
+
+
                         </ul>
                     </div>
 
@@ -40,7 +41,7 @@
 
                 <div class="col-md-7 barcode">
                     <div class="page_box_title">
-                        <h3>Survey items:</h3>
+                        <h3>survey items:</h3>
                     </div>
                     <div class="tab-content">
 

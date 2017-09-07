@@ -7,12 +7,12 @@ app.controller('DoSurveyController', function ($scope, $http, $location, $state)
 
 
     $http.get("url to get survey").then(function (res) {
-        if(res.status==200){
+        if (res.status == 200) {
             console.log("error");
             return;
         }
 
-        $scope.surveyObject.questionData= res.data;
+        $scope.surveyObject.questionData = res.data;
         $scope.surveyObject.survey = new Survey.Survey(surveyObject.questionData, "surveyArea");
 
     });
@@ -20,23 +20,35 @@ app.controller('DoSurveyController', function ($scope, $http, $location, $state)
 });
 
 
-app.controller('SurveyManagerController', function ($scope, $http, $location, $state,$timeout) {
+app.controller('SurveyManagerController', function ($scope, $http, $location, $state, $timeout) {
 
 
-    $scope.createSurvey=function(){
+    $scope.surveyList = [];
+
+    $scope.createSurvey = function () {
         $state.go("surveyEditor");
     }
 
 
-    $scope.getSurveyList=function(){
+    $scope.getSurveyList = function () {
+        $http.get("/survey/getAllSurvey").then(function (res) {
+            $scope.surveyList=res.data;
+        })
+    }
+
+    $scope.getSurveyObjList = function () {
 
     }
 
-    $scope.getSurveyObjList=function(){
+    $scope.editSurvey=function(){
 
     }
 
-    $timeout(function(){
+    $scope.sendSurvey=function(){
+
+    }
+
+    $timeout(function () {
         $scope.getSurveyList();
         $scope.getSurveyObjList();
     });
@@ -48,18 +60,18 @@ app.controller('SurveyManagerController', function ($scope, $http, $location, $s
 app.controller('surveyEditorController', function ($scope, $http, $location, $state, $timeout) {
 
 
-    $scope.survey={};
+    $scope.survey = {};
 
-    $scope.doSaveSurvey=function () {
+    $scope.doSaveSurvey = function () {
 
-        $scope.survey.content =JSON.stringify(surveyEdit.getSurveyInfo());
+        $scope.survey.content = JSON.stringify(surveyEdit.getSurveyInfo());
         if (!$scope.survey.name) {
             alert('Survey name can not empty!');
             return;
         }
 
 
-        $http.post("/survey/saveSurvey",$scope.survey).then(function(res){
+        $http.post("/survey/saveSurvey", $scope.survey).then(function (res) {
             $("body").find("#surveyID").val(res.data.id);
             $("#saveSurveyDialog").modal("hide");
             $("#messageSaveOrUpdateDialog").find(".message").html("Survey is saved");
@@ -106,7 +118,7 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
     }
 
 
-    $scope.cancelSurvey =function() {
+    $scope.cancelSurvey = function () {
         $state.go("surveyManager");
     }
 
