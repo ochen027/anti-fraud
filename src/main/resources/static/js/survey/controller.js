@@ -52,13 +52,20 @@ app.controller('surveyEditorController', function ($scope, $http, $location, $st
 
     $scope.doSaveSurvey=function () {
 
-        $scope.survey = surveyEdit.getSurveyInfo();
-        if ($scope.survey.name) {
+        $scope.survey.content =JSON.stringify(surveyEdit.getSurveyInfo());
+        if (!$scope.survey.name) {
             alert('Survey name can not empty!');
             return;
         }
 
-        debugger;
+
+        $http.post("/survey/saveSurvey",$scope.survey).then(function(res){
+            $("body").find("#surveyID").val(res.data.id);
+            $("#saveSurveyDialog").modal("hide");
+            $("#messageSaveOrUpdateDialog").find(".message").html("Survey is saved");
+            $("#messageSaveOrUpdateDialog").modal("show");
+        });
+
         // if (surveyID) {
         //     sendInfo.uuid = surveyID;
         //     var ajaxOption = {

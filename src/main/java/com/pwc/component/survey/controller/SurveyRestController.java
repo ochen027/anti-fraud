@@ -34,11 +34,11 @@ public class SurveyRestController extends BaseController{
      * @return
      */
     @PostMapping("saveSurvey")
-    public ResponseEntity<Void> saveOrUpdateSurvey(@RequestBody Survey survey) {
+    public ResponseEntity<Survey> saveOrUpdateSurvey(@RequestBody Survey survey) {
         survey.setCreatedBy(userName);
         survey.setLastUpdatedBy(userName);
         surveyService.saveSurvey(survey);
-        return new ResponseEntity<Void>( HttpStatus.OK);
+        return new ResponseEntity<Survey>(survey, HttpStatus.OK);
     }
 
 
