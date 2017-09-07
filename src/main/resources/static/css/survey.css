@@ -819,8 +819,7 @@ input[type="button"][value="Finalizar"] {
     background-color: #fff;
     margin-left: 2px;
     margin-right: 0px;
-    box-shadow: 10px 5px 5px black;
-    border-radius: 10px 5%;
+    border: 1px rgba(0, 0, 0, 0.15) solid;
 }
 .survey_wrapper .nav-tabs .nav-link {
     font-family: arial;
@@ -847,7 +846,7 @@ input[type="button"][value="Finalizar"] {
     font-weight: normal;
     font-family: arial;
     font-style: normal;
-    border: 1px solid #e7e7e8;
+
     border-left: 0px;
     /*background-color: #e7e7e8;*/
 }

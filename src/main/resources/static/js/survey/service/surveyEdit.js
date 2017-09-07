@@ -89,6 +89,13 @@ $.fn.surveyEdit = function () {
         });
     }
 
+    var changePage=function(){
+        $(".pageList").on("click",".nav-link",function(){
+            $(".tab-pane").hide();
+            $($(this).attr("target")).show();
+        });
+    }
+    changePage();
     var initialUpdate = function () {
         if (surveyInfo.uuid) {
             self.parent().find("#surveyName").val(surveyInfo.name);
@@ -744,7 +751,7 @@ $.fn.surveyEdit = function () {
             var num = 0;
             if (pageName) {
                 self.find(".pageList li a").each(function (index, item) {
-                    if ($(item).attr("href") == ('#' + pageName)) {
+                    if ($(item).attr("target") == ('#' + pageName)) {
                         alert("You can not add a same page");
                         num = 1;
                     }
@@ -758,7 +765,7 @@ $.fn.surveyEdit = function () {
                 self.find(".pageArea").find(".deleteBtn").css("float", "right");
                 var len = self.find(".pageList").find("a").length + 1;
                 var id = "page" + len;
-                self.find(".pageList").append("<a class='nav-link pull-left' data-toggle='tab' href='#" + id + "' role='tab'>" + pageName.replace("<", "&lt;") + "</a>");
+                self.find(".pageList").append("<a class='nav-link pull-left' data-toggle='tab' target='#" + id + "' role='tab'>" + pageName.replace("<", "&lt;") + "</a>");
                 self.find(".tab-content").append("<div id=" + id + " data-pageName = " + pageName.replace("<", "&lt;") + " class='sortableQuestionArea tab-pane ui-sortable'></div>");
                 self.parent().find("#addPageDialog").modal("hide");
                 self.parent().find("#pageName").val("");
@@ -769,7 +776,7 @@ $.fn.surveyEdit = function () {
         },
 
         deleteCurrentPage: function () {
-            var currentPage = self.find(".pageList").find(".active").attr("href");
+            var currentPage = self.find(".pageList").find(".active").attr("target");
             var nextPage = self.find(".pageList").find(".active").next();
             self.find(".pageList").find(".active").remove();
             // if(nextPage.length==0){
@@ -857,36 +864,36 @@ $.fn.surveyEdit = function () {
             UnescapeTitle();
             survey.onCurrentPageChanged.add(UnescapeTitle);
 
-            window.currentLanguage = "en";
-            function i18n() {
-                updateText();
-                $("button[type='button']").on('click', function () {
-                    var language = $(this).attr("language")
-                    if (language != undefined)
-                        window.currentLanguage = language;
-                    updateText();
-                });
-                $("input[type='button']").on('click', function () {
-                    var language = $(this).attr("language")
-                    if (language != undefined)
-                        window.currentLanguage = language;
-                    updateText();
-                });
-            }
-
-            function updateText() {
-                var i18n = $.i18n();
-                i18n.locale = window.currentLanguage;
-                i18n.load('/js/survey/i18n/survey-' + i18n.locale + '.json', i18n.locale).done(function () {
-
-                    $("span.data-bind").each(function (key, value) {
-                        var data = $(value).attr("key");
-                        $(value).html($.i18n(data));
-                    });
-                });
-            }
-
-            i18n();
+            // window.currentLanguage = "en";
+            // function i18n() {
+            //     updateText();
+            //     $("button[type='button']").on('click', function () {
+            //         var language = $(this).attr("language")
+            //         if (language != undefined)
+            //             window.currentLanguage = language;
+            //         updateText();
+            //     });
+            //     $("input[type='button']").on('click', function () {
+            //         var language = $(this).attr("language")
+            //         if (language != undefined)
+            //             window.currentLanguage = language;
+            //         updateText();
+            //     });
+            // }
+            //
+            // function updateText() {
+            //     var i18n = $.i18n();
+            //     i18n.locale = window.currentLanguage;
+            //     i18n.load('/js/survey/i18n/survey-' + i18n.locale + '.json', i18n.locale).done(function () {
+            //
+            //         $("span.data-bind").each(function (key, value) {
+            //             var data = $(value).attr("key");
+            //             $(value).html($.i18n(data));
+            //         });
+            //     });
+            // }
+            //
+            // i18n();
         },
 
         saveSurvey: function () {

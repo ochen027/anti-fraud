@@ -8,9 +8,9 @@
             </div>
             <div class="col-md-9 text-right topButtonGroup ">
                 <button id="btnAddDependence" data-toggle="modal" onclick="surveyEdit.addDependence()" class="btn orange-btn">Add Dependence </button>
-                <button id="btnAddPage" data-toggle="modal" onclick="surveyEdit.addPage()" class="btn orange-btn">Add Page</button>
+                <!--<button id="btnAddPage" data-toggle="modal" onclick="surveyEdit.addPage()" class="btn orange-btn">Add Page</button>-->
                 <button id="btnRunSurvey" data-toggle="modal" onclick="surveyEdit.runSurvey()" class="btn orange-btn">Review Survey</button>
-                <button id="btnCancel" onclick="cancelSurvey()" class="btn cancel-btn svb-pos-fix">Cancel</button>
+                <button id="btnCancel" ng-click="cancelSurvey()" class="btn cancel-btn svb-pos-fix">Cancel</button>
                 <button id="btnSaveSurvey" data-toggle="modal" onclick="surveyEdit.saveSurvey()" class="btn orange-btn">Save Survey </button>
             </div>
         </div>
@@ -58,7 +58,7 @@
                     <div class="page_divider" style="border-bottom: 3px solid #dddddd; padding:20px 0px 40px 0px;">
                         <div class="custom_menu">
                             <ul class="nav nav-tabs pageList custom_tabs surver_tabs" role="tablist">
-                                <a class="nav-link active" data-toggle="tab" href="#page1" role="tab">Page Name 1</a>
+                                <a class="nav-link active" data-toggle="tab" target="#page1" role="tab">Page Name 1</a>
                             </ul>
                         </div>
                     </div>
@@ -193,7 +193,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn orange-btn" onclick="doSaveSurvey()">Save</button>
+                        <button type="button" class="btn orange-btn" ng-click="doSaveSurvey()">Save</button>
 
                     </div>
                 </div>
