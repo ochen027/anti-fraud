@@ -33,7 +33,7 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
 
     //
     $timeout(function () {
-        $scope.getWorkflow();
+        //$scope.getWorkflow();
         $scope.getStatusData();
         $scope.getSARData();
         $scope.getDueData();
@@ -55,6 +55,7 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
     }
 
     $scope.statusData = {};
+
     $scope.getStatusData = function () {
             $http.get("/dashboard/assign").then(function sucess(result) {
                 console.log(result);
@@ -64,9 +65,12 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
     });
     }
 
+
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.sarData = {};
+
+
     $scope.getSARData = function () {
         $http.get("/dashboard/sar").then(function sucess(result) {
             console.log(result);
@@ -76,26 +80,34 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
         });
     }
 
-    $scope.datasetOverride = [
+    /**
+    $scope.getSARData = function () {
+        $scope.sarData = {
+            labels:["Jan", "Feb", "Mar", "Apr", "May"],
+            data:[
+                ["10","10","30","70","98"],
+                ["12","90","80","26","19"],
+                ["19","28","34","18","87"]
+            ]
+        }
+    }
+    **/
+
+
+    $scope.dsOverride = [
         {
             label: "SAR",
-            borderWidth: 1,
-            type: 'bar',
-            yAxisID: 'y-axis-1'
+            yAxisID: "bar-stacked"
         },
         {
             label: "Total Alerts",
-            borderWidth: 1,
-            type: 'bar',
-            yAxisID: 'y-axis-2'
+            yAxisID: "bar-stacked"
         },
         {
             label: "High Risk Customer Alerts",
-            borderWidth: 3,
             hoverBackgroundColor: "rgba(255,99,132,0.4)",
             hoverBorderColor: "rgba(255,99,132,1)",
-            type: 'line',
-            yAxisID: 'y-axis-3'
+            type: 'line'
         }
     ];
 
@@ -107,25 +119,23 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
                     stacked: true
                 }],
                 yAxes: [
-                {
-                    id: 'y-axis-1',
-                    display: false,
-                    position: 'left',
-                    stacked: true
-                },
-                {
-                    id: 'y-axis-2',
-                    display: true,
-                    position: 'left',
-                    stacked: true
-                },
-                {
-                    id: 'y-axis-3',
-                    type: 'linear',
-                    display: true,
-                    position: 'right'
-                },
-
+                    {
+                        stacked: false,
+                        position: "right",
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }, {
+                        id: "bar-stacked",
+                        stacked: true,
+                        position: "left",
+                        display: true, //optional if both yAxes use the same scale
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        type: 'linear'
+                    }
                 ]
             }
         }
@@ -140,6 +150,12 @@ app.controller('DashboardCtrl', function ($scope, $http, $location, $state, $tim
             console.log(error);
         });
     }
+
+
+
+
+
+
 
 
 });
