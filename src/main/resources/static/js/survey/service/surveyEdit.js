@@ -902,6 +902,7 @@ $.fn.surveyEdit = function () {
             // }
             if (isSave.length === 0) {
                 $("#saveSurveyDialog").modal("show");
+                $("#surveyName").removeAttr("disabled");
             } else {
                 $("#messageDialog").modal("show");
             }
