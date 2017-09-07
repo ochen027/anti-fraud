@@ -169,22 +169,16 @@
                                 <div class="">
                                     <form class="form-horizontal">
                                         <div class="form-group row">
-                                            <label class="col-md-3 control-label" for="surveyName">Survey Name:</label>
-                                            <div class="col-md-9">
-                                                <input id="surveyName" name="surveyName" type="text" placeholder="input survey name" class="form-control input-md dependenceValue" enabled="enabled"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label" for="surveyTitle">Survey Title:</label>
-                                            <div class="col-md-9">
-                                                <input id="surveyTitle" name="surveyTitle" type="text" placeholder="input survey title" class="form-control input-md dependenceValue"/>
+                                            <label class="col-md-4 control-label" >Survey name:</label>
+                                            <div class="col-md-8">
+                                                <input ng-model="survey.name"  type="text" placeholder="input survey title" class="form-control input-md "/>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-md-3 control-label" for="surveyName">Description:</label>
-                                            <div class="col-md-9">
-                                                <textarea id="surveyDescription" name="surveyDescription" class="form-control input-md dependenceValue"></textarea>
+                                            <label class="col-md-4 control-label" >Description:</label>
+                                            <div class="col-md-8">
+                                                <textarea ng-model="survey.description" class="form-control input-md dependenceValue"></textarea>
                                             </div>
                                         </div>
                                     </form>

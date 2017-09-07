@@ -48,15 +48,15 @@ app.controller('SurveyManagerController', function ($scope, $http, $location, $s
 app.controller('surveyEditorController', function ($scope, $http, $location, $state, $timeout) {
 
 
+    $scope.survey={};
+
     $scope.doSaveSurvey=function () {
-        var surveyID = $("body").find("#surveyID").val();
-        var sendInfo = surveyEdit.getSurveyInfo();
-        if (!sendInfo.title || !sendInfo.nType || !sendInfo.name) {
-            alert('Survey ' + (!sendInfo.name ? ' NAME, ' : '') + (!sendInfo.nType ? ' TYPE, ' : '') + (!sendInfo.title ? ' TITLE, ' : '') + ' can not empty');
+
+        $scope.survey = surveyEdit.getSurveyInfo();
+        if ($scope.survey.name) {
+            alert('Survey name can not empty!');
             return;
         }
-
-
 
         debugger;
         // if (surveyID) {
